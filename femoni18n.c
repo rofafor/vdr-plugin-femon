@@ -940,25 +940,6 @@ const tI18nPhrase Phrases[] = {
     "Ú³æ", // ÀãááÚØÙ (Russian)
     "kHz", // Hrvatski (Croatian)
   },
-  { "MPEG Layer", // English
-    "MPEG Layer", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "MPEG-kerros", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ (Greek)
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
-    "", // ÀãááÚØÙ (Russian)
-    "", // Hrvatski (Croatian)
-  },
   { "Nid", // English
     "Nid", // Deutsch
     "Nid", // Slovenski
@@ -1015,6 +996,557 @@ const tI18nPhrase Phrases[] = {
     "Rid", // Català
     "Rid", // ÀãááÚØÙ (Russian)
     "Rid", // Hrvatski (Croatian)
+  },
+  { "dB", // English
+    "dB", // Deutsch
+    "dB", // Slovenski
+    "dB", // Italiano
+    "dB", // Nederlands
+    "dB", // Português
+    "dB", // Français
+    "dB", // Norsk
+    "dB", // suomi
+    "dB", // Polski   
+    "dB", // Español
+    "dB", // ÅëëçíéêÜ (Greek)
+    "dB", // Svenska
+    "dB", // Romaneste
+    "dB", // Magyar
+    "dB", // Català
+    "dB", // ÀãááÚØÙ (Russian)
+    "dB", // Hrvatski (Croatian)
+  },
+  { "not indicated", // English
+    "", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "ei ilmaistu", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "AC-3", // English
+    "AC-3", // Deutsch
+    "AC-3", // Slovenski
+    "AC-3", // Italiano
+    "AC-3", // Nederlands
+    "AC-3", // Português
+    "AC-3", // Français
+    "AC-3", // Norsk
+    "AC-3", // suomi
+    "AC-3", // Polski
+    "AC-3", // Español
+    "AC-3", // ÅëëçíéêÜ (Greek)
+    "AC-3", // Svenska
+    "AC-3", // Romaneste
+    "AC-3", // Magyar
+    "AC-3", // Català
+    "AC-3", // ÀãááÚØÙ (Russian)
+    "AC-3", // Hrvatski (Croatian)
+  },
+  { "AC-3 Stream", // English
+    "AC-3 Stream", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "AC-3 ääniraita", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Frame Size", // English
+    "Frame Größe", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kehyksen koko", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Bit Stream Mode", // English
+    "Bitstream Modus", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Lähetteen tyyppi", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Audio Coding Mode", // English
+    "Audio Coding Modus", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Äänikoodaus", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Center Mix Level", // English
+    "Center Mix Pegel", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Keskikanavan taso", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Surround Mix Level", // English
+    "Surround Mix Pegel", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Tehostekanavien taso", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Dolby Surround Mode", // English
+    "Dolby Surround Modus", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Dolby Surround -moodi", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Low Frequency Effects", // English
+    "Tieftöner Effekte", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "LFE-kanava", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Dialogue Normalization", // English
+    "Dialog Normalisierung", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Dialogin normalisointi", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Complete Main (CM)", // English
+    "Complete Main (CM)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Pääasiallinen (CM)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Music and Effects (ME)", // English
+    "Musik und Effekte (ME)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Musiikki ja tehosteet (ME)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Visually Impaired (VI)", // English
+    "Sehbehindert (VI)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Näkörajoitteinen (VI)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Hearing Impaired (HI)", // English
+    "Hörbehindert (HI)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kuulorajoitteinen (HI)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Dialogue (D)", // English
+    "Dialog (D)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Vuoropuhelu (D)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Commentary (C)", // English
+    "Kommentar (C)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kommentointi (C)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Emergency (E)", // English
+    "Notfall (E)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Hätätiedote (E)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Voice Over (VO)", // English
+    "überlagerte Stimme (VO)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Päälle puhuttu (VO)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Karaoke", // English
+    "Karaoke", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Karaoke", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Ch1", // English "Channel 1"
+    "Kan1", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "kan. 1", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Ch2", // English "Channel 2"
+    "Kan2", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "kan. 2", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "C", // English "Center"
+    "C", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "K", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "L", // English "Left"
+    "L", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "V", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "R", // English "Right"
+    "R", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "O", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "S", // English "Surround"
+    "S", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "T", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "SL", // English "Surround Left"
+    "SL", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "TV", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "SR", // English "Surround Right"
+    "SR", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "TO", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
   },
   { NULL }
 };

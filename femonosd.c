@@ -18,6 +18,9 @@
 #include "symbols/ar43.xpm"
 #include "symbols/ntsc.xpm"
 #include "symbols/pal.xpm"
+#include "symbols/dolbydigital.xpm"
+#include "symbols/dolbydigital20.xpm"
+#include "symbols/dolbydigital51.xpm"
 
 #define FRONTEND_DEVICE          "/dev/dvb/adapter%d/frontend%d"
 #define CHANNELINPUT_TIMEOUT     1000
@@ -45,6 +48,9 @@ cBitmap cFemonOsd::bmAspectRatio_2_21_1(ar2211_xpm);
 cBitmap cFemonOsd::bmAspectRatio_4_3(ar43_xpm);
 cBitmap cFemonOsd::bmPAL(pal_xpm);
 cBitmap cFemonOsd::bmNTSC(ntsc_xpm);
+cBitmap cFemonOsd::bmDD(dolbydigital_xpm);
+cBitmap cFemonOsd::bmDD20(dolbydigital20_xpm);
+cBitmap cFemonOsd::bmDD51(dolbydigital51_xpm);
 
 cFemonOsd::cFemonOsd(void)
 :cOsdObject(true), cThread("femon osd")
@@ -135,6 +141,26 @@ void cFemonOsd::DrawStatusWindow(void)
            if (y < 0) y = 0;
            m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmAspectRatio_2_21_1, clrBlack, clrWhite);
            }
+        if (m_Receiver && m_Receiver->AC3Valid()) {
+           if (m_Receiver->AC3_5_1()) {
+              x -= bmDD51.Width() + SPACING;
+              y = (m_Font->Height() - bmDD51.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD51, clrBlack, clrWhite);
+              }
+           else if (m_Receiver->AC3_2_0()) {
+              x -= bmDD20.Width() + SPACING;
+              y = (m_Font->Height() - bmDD20.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD20, clrBlack, clrWhite);
+              }
+           else {
+              x -= bmDD.Width() + SPACING;
+              y = (m_Font->Height() - bmDD.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD, clrBlack, clrWhite);
+              }
+           }
         }
      offset += m_Font->Height();
      if (signal > 0) {
@@ -181,9 +207,9 @@ void cFemonOsd::DrawStatusWindow(void)
      m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), "UNC:", clrWhite, clrBackground, m_Font);
      snprintf(buf, sizeof(buf), "%08x", m_UNC);
      m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%s:", tr("Audio"));
+     snprintf(buf, sizeof(buf), "%s:", (m_Receiver && m_Receiver->AC3Valid()) ? tr("AC-3") : tr("Audio"));
      m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", m_Receiver->AudioBitrate(), tr("kbit/s"));
+     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", m_Receiver->AC3Valid() ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate(), tr("kbit/s"));
      else            snprintf(buf, sizeof(buf), "--- %s", tr("kbit/s"));
      m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
      offset += m_Font->Height();
@@ -500,6 +526,99 @@ void cFemonOsd::DrawInfoWindow(void)
            }
         else                         snprintf(buf, sizeof(buf), "---");
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        }
+     else if (m_DisplayMode == modeAC3) {
+        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrBackground);
+        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+m_Font->Height()-1), clrWhite);
+        snprintf(buf, sizeof(buf), "%s - %s #%d", tr("Stream Information"), tr("AC-3 Stream"), channel->Dpid1());
+        m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, clrBackground, clrWhite, m_Font);
+        offset += m_Font->Height();
+        if (m_Receiver && m_Receiver->AC3Valid()) {
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_Font);
+           snprintf(buf, sizeof(buf), "%.0f %s (%0.f %s)", m_Receiver->AC3StreamBitrate(), tr("kbit/s"), m_Receiver->AC3Bitrate(), tr("kbit/s"));
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sampling Frequency"), clrWhite, clrBackground, m_Font);
+           snprintf(buf, sizeof(buf), "%.1f %s", m_Receiver->AC3SamplingFreq() / 1000., tr("kHz"));
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frame Size"), clrWhite, clrBackground, m_Font);
+           snprintf(buf, sizeof(buf), "%d", m_Receiver->AC3FrameSize());
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bit Stream Mode"), clrWhite, clrBackground, m_Font);
+           switch (m_Receiver->AC3BitStreamMode()) {
+             case 0: snprintf(buf, sizeof(buf), tr("Complete Main (CM)"));     break;
+             case 1: snprintf(buf, sizeof(buf), tr("Music and Effects (ME)")); break;
+             case 2: snprintf(buf, sizeof(buf), tr("Visually Impaired (VI)")); break;
+             case 3: snprintf(buf, sizeof(buf), tr("Hearing Impaired (HI)"));  break;
+             case 4: snprintf(buf, sizeof(buf), tr("Dialogue (D)"));           break;
+             case 5: snprintf(buf, sizeof(buf), tr("Commentary (C)"));         break;
+             case 6: snprintf(buf, sizeof(buf), tr("Emergency (E)"));          break;
+             case 7: (m_Receiver->AC3AudioCodingMode() == 1) ? snprintf(buf, sizeof(buf), tr("Voice Over (VO)")) : snprintf(buf, sizeof(buf), tr("Karaoke")); break;
+             default: snprintf(buf, sizeof(buf), "---");
+             }
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Coding Mode"), clrWhite, clrBackground, m_Font);
+           if (m_Receiver->AC3BitStreamMode() != 7) {
+              switch (m_Receiver->AC3AudioCodingMode()) {
+                case 0:  snprintf(buf, sizeof(buf), "1+1 - %s, %s",             tr("Ch1"), tr("Ch2"));                           break;
+                case 1:  snprintf(buf, sizeof(buf), "1/0 - %s",                 tr("C"));                                        break;
+                case 2:  snprintf(buf, sizeof(buf), "2/0 - %s, %s",             tr("L"), tr("R"));                               break;
+                case 3:  snprintf(buf, sizeof(buf), "3/0 - %s, %s, %s",         tr("L"), tr("C"), tr("R"));                      break;
+                case 4:  snprintf(buf, sizeof(buf), "2/1 - %s, %s, %s",         tr("L"), tr("R"), tr("S"));                      break;
+                case 5:  snprintf(buf, sizeof(buf), "3/1 - %s, %s, %s, %s",     tr("L"), tr("C"), tr("R"),  tr("S"));            break;
+                case 6:  snprintf(buf, sizeof(buf), "2/2 - %s, %s, %s, %s",     tr("L"), tr("R"), tr("SL"), tr("SR"));           break;
+                case 7:  snprintf(buf, sizeof(buf), "3/2 - %s, %s, %s, %s, %s", tr("L"), tr("C"), tr("R"),  tr("SL"), tr("SR")); break;
+                default: snprintf(buf, sizeof(buf), "---");
+                }
+             }
+	   else snprintf(buf, sizeof(buf), "---");
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Center Mix Level"), clrWhite, clrBackground, m_Font);
+           switch (m_Receiver->AC3CenterMixLevel()) {
+             case CML_MINUS_3dB:   snprintf(buf, sizeof(buf), "-3.0 %s", tr("dB"));  break;
+             case CML_MINUS_4_5dB: snprintf(buf, sizeof(buf), "-4.5 %s", tr("dB"));  break;
+             case CML_MINUS_6dB:   snprintf(buf, sizeof(buf), "-6.0 %s", tr("dB"));  break;
+             case CML_RESERVED:    snprintf(buf, sizeof(buf), "%s", tr("reserved")); break;
+             default:              snprintf(buf, sizeof(buf), "---");
+             }
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Surround Mix Level"), clrWhite, clrBackground, m_Font);
+           switch (m_Receiver->AC3SurroundMixLevel()) {
+             case SML_MINUS_3dB: snprintf(buf, sizeof(buf), "-3 %s", tr("dB"));    break;
+             case SML_MINUS_6dB: snprintf(buf, sizeof(buf), "-6 %s", tr("dB"));    break;
+             case SML_0_dB:      snprintf(buf, sizeof(buf), "0 %s", tr("dB"));     break;
+             case SML_RESERVED:  snprintf(buf, sizeof(buf), "%s", tr("reserved")); break;
+             default:            snprintf(buf, sizeof(buf), "---");
+             }
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Dolby Surround Mode"), clrWhite, clrBackground, m_Font);
+           switch (m_Receiver->AC3DolbySurroundMode()) {
+             case DSM_NOT_INDICATED:     snprintf(buf, sizeof(buf), "%s", tr("not indicated")); break;
+             case DSM_NOT_DOLBYSURROUND: snprintf(buf, sizeof(buf), "%s", tr("no"));            break;
+             case DSM_DOLBYSURROUND:     snprintf(buf, sizeof(buf), "%s", tr("yes"));           break;
+             case DSM_RESERVED:          snprintf(buf, sizeof(buf), "%s", tr("reserved"));      break;
+             default:                    snprintf(buf, sizeof(buf), "---");
+             }
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Low Frequency Effects"), clrWhite, clrBackground, m_Font);
+           snprintf(buf, sizeof(buf), "%s", m_Receiver->AC3LfeOn() ? tr("On") : tr("Off"));
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Dialogue Normalization"), clrWhite, clrBackground, m_Font);
+           value = m_Receiver->AC3DialogLevel();
+           if (value > 0) snprintf(buf, sizeof(buf), "-%d %s", value, tr("dB"));
+           else           snprintf(buf, sizeof(buf), "---");
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+           offset += m_Font->Height();
+           }
         }
      else /* modeBasic */ {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent);
@@ -564,8 +683,8 @@ void cFemonOsd::Show(void)
      if (m_Receiver)
         delete m_Receiver;
      if (femonConfig.analyzestream) {
-        int channelNumber = cDevice::CurrentChannel();
-        m_Receiver = new cFemonReceiver(Channels.GetByNumber(channelNumber)->Ca(), Channels.GetByNumber(channelNumber)->Vpid(), Channels.GetByNumber(channelNumber)->Apid1());
+        cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+        m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid1(), channel->Dpid1());
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      Start();
@@ -596,8 +715,8 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   if (m_Receiver)
      delete m_Receiver;
   if (femonConfig.analyzestream) {
-     channelNumber = cDevice::CurrentChannel();
-     m_Receiver = new cFemonReceiver(Channels.GetByNumber(channelNumber)->Ca(), Channels.GetByNumber(channelNumber)->Vpid(), Channels.GetByNumber(channelNumber)->Apid1());
+     cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+     m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid1(), channel->Dpid1());
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
 }
@@ -668,7 +787,9 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                }
             break;
        case kOk:
-            if (++m_DisplayMode >= modeMaxNumber) m_DisplayMode = 0; // toggle between display modes
+            // toggle between display modes
+            if (++m_DisplayMode == modeAC3 && !Channels.GetByNumber(cDevice::CurrentChannel())->Dpid1()) m_DisplayMode++;
+            if (m_DisplayMode >= modeMaxNumber) m_DisplayMode = 0;
             DrawInfoWindow();
             break;
        default:

@@ -85,9 +85,10 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
 
 cMenuFemonSetup::cMenuFemonSetup(void)
 {
-  dispmodes[0] = tr("basic");
-  dispmodes[1] = tr("transponder");
-  dispmodes[2] = tr("stream");
+  dispmodes[modeBasic]       = tr("basic");
+  dispmodes[modeTransponder] = tr("transponder");
+  dispmodes[modeStream]      = tr("stream");
+  dispmodes[modeAC3]         = tr("AC-3");
   Setup();
 }
 
