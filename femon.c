@@ -6,9 +6,11 @@
  * $Id$
  */
 
-#include "femon.h"
-#include "femonosd.h"
+#include "femoncfg.h"
 #include "femoni18n.h"
+#include "femonreceiver.h"
+#include "femonosd.h"
+#include "femon.h"
 
 cPluginFemon::cPluginFemon(void)
 {

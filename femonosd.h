@@ -9,7 +9,7 @@
 #include <vdr/status.h>
 #include <vdr/channels.h>
 #include <vdr/font.h>
-#include "femonreceiver.h"
+#include <vdr/device.h> // only for TS_SIZE
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:

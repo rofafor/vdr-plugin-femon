@@ -1,6 +1,7 @@
 #ifndef __FEMONRECEIVER_H
 #define __FEMONRECEIVER_H
 
+#include <vdr/device.h> // only for TS_SIZE
 #include <vdr/receiver.h>
 
 class cFemonReceiver : public cReceiver {

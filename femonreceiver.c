@@ -8,8 +8,6 @@
 
 #include "femonreceiver.h"
 
-#define TS_SIZE 188
-
 cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid)
 :cReceiver(Ca, -1, 2, Vpid, Apid)
 {
@@ -34,11 +32,13 @@ void cFemonReceiver::Receive(uchar *Data, int Length)
 {
   //printf("cFemonReceiver::Receive()\n");
   if (Length == TS_SIZE) {
-     int pid = ((Data[1]&0x1f) << 8) | (Data[2]);
-     if (pid == m_VPid)
+     int pid = ((Data[1] & 0x1f) << 8) | (Data[2]);
+     if (pid == m_VPid) {
         m_VideoCount++;
-     if (pid == m_APid)
+        }
+     else if (pid == m_APid) {
         m_AudioCount++;
+        }
      }
 }
 
