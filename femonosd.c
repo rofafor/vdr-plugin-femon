@@ -372,7 +372,7 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Dpid"), clrWhite, clrBackground, m_Font);
         snprintf(buf, sizeof(buf), "%d", channel->Dpid(0));
         value = 1;
-        while (channel->Dpid(value) && (value < MAXAPIDS)) {
+        while (channel->Dpid(value) && (value < MAXDPIDS)) {
            snprintf(buf2, sizeof(buf2), ", %d", channel->Dpid(value++));
            strncat(buf, buf2, sizeof(buf));
            }
