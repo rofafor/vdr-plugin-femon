@@ -25,8 +25,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Монитор качества сигнала"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Монитор качества сигнала", // Русский (Russian)
 #endif
   },
   { "Signal Information", // English
@@ -45,8 +45,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Сигнал"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Сигнал", // Русский (Russian)
 #endif
   },
   { "Position", // English
@@ -65,8 +65,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Размещение окна"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Размещение окна", // Русский (Russian)
 #endif
   },
   { "Default Display Mode", // English
@@ -85,19 +85,19 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar  
     "", // Catalр  
-#if VDRVERSNUM >= 10300
-    "Режим по умолчанию"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Режим по умолчанию", // Русский (Russian)
 #endif
   },
-  { "simple", // English
-    "einfach", // Deutsch
+  { "basic", // English
+    "Standard", // Deutsch
     "", // Slovenski
-    "semplice", // Italiano
+    "", // Italiano
     "", // Nederlands
     "", // Portuguъs
     "", // Franчais 
     "", // Norsk
-    "suppea", // suomi
+    "perus", // suomi
     "", // Polski   
     "", // Espaёol  
     "", // Хыычэщъм (Greek)
@@ -105,19 +105,19 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar  
     "", // Catalр  
-#if VDRVERSNUM >= 10300
-    "простой"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
 #endif
   },
-  { "advanced", // English
-    "fortgeschritten", // Deutsch
+  { "transponder", // English
+    "Transponder", // Deutsch
     "", // Slovenski
-    "avanzato", // Italiano
+    "", // Italiano
     "", // Nederlands
     "", // Portuguъs
     "", // Franчais 
     "", // Norsk
-    "laaja", // suomi
+    "transponderi", // suomi
     "", // Polski   
     "", // Espaёol  
     "", // Хыычэщъм (Greek)
@@ -125,8 +125,28 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar  
     "", // Catalр  
-#if VDRVERSNUM >= 10300
-    "расширенный"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "stream", // English
+    "Stream", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais 
+    "", // Norsk
+    "lфhete", // suomi
+    "", // Polski   
+    "", // Espaёol  
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Catalр  
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
 #endif
   },
   { "Hide Mainmenu Entry", // English
@@ -145,8 +165,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Скрыть команду в главном меню"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Скрыть команду в главном меню", // Русский (Russian)
 #endif
   },
   { "OSD Update Interval [0.1s]", // English
@@ -165,19 +185,19 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Частота обновления (0,1 сек)"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Частота обновления (0,1 сек)", // Русский (Russian)
 #endif
   },
-  { "Bitrate Calculation", // English
-    "Bitratenberechnung", // Deutsch
+  { "Analyze Stream", // English
+    "Stream analysieren", // Deutsch
     "", // Slovenski
-    "Calcolo Bitrate", // Italiano
+    "", // Italiano
     "", // Nederlands
     "", // Portuguъs
     "", // Franчais
     "", // Norsk
-    "Siirtonopeuden laskenta", // suomi
+    "Lфhetteen analysointi", // suomi
     "", // Polski
     "", // Espaёol
     "", // Хыычэщъм (Greek)
@@ -185,8 +205,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Расчёт скорости потока данных"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Расчёт скорости потока данных", // Русский (Russian)
 #endif
   },
   { "Calculation Interval [0.1s]", // English
@@ -205,8 +225,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Частота пересчёта (0,1 сек)"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Частота пересчёта (0,1 сек)", // Русский (Russian)
 #endif
   },
   { "Red Limit [%]", // English
@@ -225,8 +245,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Красная зона слабого сигнала до (%)"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Красная зона слабого сигнала до (%)", // Русский (Russian)
 #endif
   },
   { "Green Limit [%]", // English
@@ -245,8 +265,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Зелёная зона сильного сигнала от (%)"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Зелёная зона сильного сигнала от (%)", // Русский (Russian)
 #endif
   },
   { "Transponder Information", // English
@@ -265,8 +285,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Сведения о канале"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Сведения о канале", // Русский (Russian)
 #endif
   },
   { "Satellite Card", // English
@@ -285,8 +305,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Плата спутникового приёма"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Плата спутникового приёма", // Русский (Russian)
 #endif
   },
   { "Cable Card", // English
@@ -305,8 +325,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Плата кабельного приёма"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Плата кабельного приёма", // Русский (Russian)
 #endif
   },
   { "Terrestial Card", // English
@@ -325,8 +345,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Плата эфирного приёма"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Плата эфирного приёма", // Русский (Russian)
 #endif
   },
   { "Use Syslog Output", // English
@@ -345,8 +365,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Использовать службу syslog"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Использовать службу syslog", // Русский (Russian)
 #endif
   },
   { "LOCK", // English
@@ -365,8 +385,8 @@ const tI18nPhrase Phrases[] = {
     "LOCK", // Romaneste
     "LOCK", // Magyar
     "LOCK", // Catalр
-#if VDRVERSNUM >= 10300
-    "ЗАХВАТ"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "ЗАХВАТ", // Русский (Russian)
 #endif
   },
   { "SIGNAL", // English
@@ -385,8 +405,8 @@ const tI18nPhrase Phrases[] = {
     "SIGNAL", // Romaneste
     "SIGNAL", // Magyar
     "SIGNAL", // Catalр
-#if VDRVERSNUM >= 10300
-    "СИГНАЛ"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "СИГНАЛ", // Русский (Russian)
 #endif
   },
   { "CARRIER", // English
@@ -405,8 +425,8 @@ const tI18nPhrase Phrases[] = {
     "CARRIER", // Romaneste
     "CARRIER", // Magyar
     "CARRIER", // Catalр
-#if VDRVERSNUM >= 10300
-    "НЕСУЩАЯ"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "НЕСУЩАЯ", // Русский (Russian)
 #endif
   },
   { "VITERBI", // English
@@ -425,8 +445,8 @@ const tI18nPhrase Phrases[] = {
     "VITERBI", // Romaneste
     "VITERBI", // Magyar
     "VITERBI", // Catalр
-#if VDRVERSNUM >= 10300
-    "ВИТЕРБИ"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "ВИТЕРБИ", // Русский (Russian)
 #endif
   },
   { "SYNC", // English
@@ -445,8 +465,8 @@ const tI18nPhrase Phrases[] = {
     "SYNC", // Romaneste
     "SYNC", // Magyar
     "SYNC", // Catalр
-#if VDRVERSNUM >= 10300
-    "СИНХР"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "СИНХР", // Русский (Russian)
 #endif
   },
   { "Audio", // English
@@ -457,7 +477,7 @@ const tI18nPhrase Phrases[] = {
     "Audio", // Portuguъs
     "Audio", // Franчais
     "Audio", // Norsk
-    "Audio", // suomi
+    "Ффni", // suomi
     "Audio", // Polski
     "Audio", // Espaёol
     "Audio", // Хыычэщъм (Greek)
@@ -465,8 +485,8 @@ const tI18nPhrase Phrases[] = {
     "Audio", // Romaneste
     "Audio", // Magyar
     "Audio", // Catalр
-#if VDRVERSNUM >= 10300
-    "Аудио"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Аудио", // Русский (Russian)
 #endif
   },
   { "Video", // English
@@ -477,7 +497,7 @@ const tI18nPhrase Phrases[] = {
     "Video", // Portuguъs
     "Video", // Franчais
     "Video", // Norsk
-    "Video", // suomi
+    "Kuva", // suomi
     "Video", // Polski
     "Video", // Espaёol
     "Video", // Хыычэщъм (Greek)
@@ -485,8 +505,8 @@ const tI18nPhrase Phrases[] = {
     "Video", // Romaneste
     "Video", // Magyar
     "Video", // Catalр
-#if VDRVERSNUM >= 10300
-    "Видео"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Видео", // Русский (Russian)
 #endif
   },
   { "Auto", // English
@@ -505,8 +525,8 @@ const tI18nPhrase Phrases[] = {
     "Auto", // Romaneste
     "Auto", // Magyar
     "Auto", // Catalр
-#if VDRVERSNUM >= 10300
-    "авто"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "авто", // Русский (Russian)
 #endif
   },
   { "None", // English
@@ -525,8 +545,8 @@ const tI18nPhrase Phrases[] = {
     "None", // Romaneste
     "None", // Magyar
     "None", // Catalр
-#if VDRVERSNUM >= 10300
-    "нет"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "нет", // Русский (Russian)
 #endif
   },
   { "Off", // English
@@ -545,8 +565,8 @@ const tI18nPhrase Phrases[] = {
     "Off", // Romaneste
     "Off", // Magyar
     "Off", // Catalр
-#if VDRVERSNUM >= 10300
-    "выкл"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "выкл", // Русский (Russian)
 #endif
   },
   { "On", // English
@@ -565,8 +585,8 @@ const tI18nPhrase Phrases[] = {
     "On", // Romaneste
     "On", // Magyar
     "On", // Catalр
-#if VDRVERSNUM >= 10300
-    "вкл"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "вкл", // Русский (Russian)
 #endif
   },
   { "MHz", // English
@@ -585,8 +605,8 @@ const tI18nPhrase Phrases[] = {
     "MHz", // Romaneste
     "MHz", // Magyar
     "MHz", // Catalр
-#if VDRVERSNUM >= 10300
-    "МГц"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "МГц", // Русский (Russian)
 #endif
   },
   { "Mbit/s", // English
@@ -605,8 +625,8 @@ const tI18nPhrase Phrases[] = {
     "Mbit/s", // Romaneste
     "Mbit/s", // Magyar
     "Mbit/s", // Catalр
-#if VDRVERSNUM >= 10300
-    "Мбит/с"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "Мбит/с", // Русский (Russian)
 #endif
   },
   { "kbit/s", // English
@@ -625,8 +645,368 @@ const tI18nPhrase Phrases[] = {
     "kbit/s", // Romaneste
     "kbit/s", // Magyar
     "kbit/s", // Catalр
-#if VDRVERSNUM >= 10300
-    "кбит/с"  // Русский (Russian)
+#if VDRVERSNUM >= 10302
+    "кбит/с", // Русский (Russian)
+#endif
+  },
+  { "Stream Information", // English
+    "Streaminformation", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Lфhetteen tiedot", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "MPEG Layer", // English
+    "MPEG Layer", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "MPEG-taso", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "Video Stream", // English
+    "Video Stream", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Kuvaraita", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "Bitrate", // English
+    "Bitrate", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Bittinopeus", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar 
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "Frame Rate", // English
+    "Bildrate", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Ruudunpфivitysnopeus", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "Hz", // English
+    "Hz", // Deutsch
+    "Hz", // Slovenski
+    "Hz", // Italiano
+    "Hz", // Nederlands
+    "Hz", // Portuguъs
+    "Hz", // Franчais
+    "Hz", // Norsk
+    "Hz", // suomi
+    "Hz", // Polski   
+    "Hz", // Espaёol
+    "Hz", // Хыычэщъм (Greek)
+    "Hz", // Svenska
+    "Hz", // Romaneste
+    "Hz", // Magyar
+    "Hz", // Catalр
+#if VDRVERSNUM >= 10302
+    "Hz", // Русский (Russian)
+#endif
+  },
+  { "Aspect Ratio", // English
+    "Seitenverhфltnis", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Kuvasuhde", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "reserved", // English
+    "belegt", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "varattu", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "free", // English
+    "frei", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "vapaa", // suomi
+    "", // Polski   
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "Video Format", // English
+    "Bildformat", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Kuvaformaatti", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "PAL", // English
+    "PAL", // Deutsch
+    "PAL", // Slovenski
+    "PAL", // Italiano
+    "PAL", // Nederlands
+    "PAL", // Portuguъs
+    "PAL", // Franчais
+    "PAL", // Norsk
+    "PAL", // suomi
+    "PAL", // Polski
+    "PAL", // Espaёol
+    "PAL", // Хыычэщъм (Greek)
+    "PAL", // Svenska
+    "PAL", // Romaneste
+    "PAL", // Magyar
+    "PAL", // Catalр
+#if VDRVERSNUM >= 10302
+    "PAL", // Русский (Russian)
+#endif
+  },
+  { "NTSC", // English
+    "NTSC", // Deutsch
+    "NTSC", // Slovenski
+    "NTSC", // Italiano
+    "NTSC", // Nederlands
+    "NTSC", // Portuguъs
+    "NTSC", // Franчais
+    "NTSC", // Norsk
+    "NTSC", // suomi
+    "NTSC", // Polski
+    "NTSC", // Espaёol
+    "NTSC", // Хыычэщъм (Greek)
+    "NTSC", // Svenska
+    "NTSC", // Romaneste
+    "NTSC", // Magyar
+    "NTSC", // Catalр
+#if VDRVERSNUM >= 10302
+    "NTSC", // Русский (Russian)
+#endif
+  },
+  { "unknown", // English
+    "unbekannt", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "tuntematon", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "Resolution", // English
+    "Auflіsung", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Resoluutio", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "Audio Stream", // English
+    "Audio Stream", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Ффniraita", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "Sampling Frequency", // English
+    "Abtastrate", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "Nфytteenottotaajuus", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
+#endif
+  },
+  { "kHz", // English
+    "kHz", // Deutsch
+    "kHz", // Slovenski
+    "kHz", // Italiano
+    "kHz", // Nederlands
+    "kHz", // Portuguъs
+    "kHz", // Franчais
+    "kHz", // Norsk
+    "kHz", // suomi
+    "kHz", // Polski   
+    "kHz", // Espaёol
+    "kHz", // Хыычэщъм (Greek)
+    "kHz", // Svenska
+    "kHz", // Romaneste
+    "kHz", // Magyar
+    "kHz", // Catalр
+#if VDRVERSNUM >= 10302
+    "kHz", // Русский (Russian)
+#endif
+  },
+  { "MPEG Layer", // English
+    "MPEG Layer", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Portuguъs
+    "", // Franчais
+    "", // Norsk
+    "MPEG-kerros", // suomi
+    "", // Polski
+    "", // Espaёol
+    "", // Хыычэщъм (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Catalр
+#if VDRVERSNUM >= 10302
+    "", // Русский (Russian)
 #endif
   },
   { NULL }

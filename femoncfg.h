@@ -9,6 +9,13 @@
 #ifndef __FEMONCFG_H
 #define __FEMONCFG_H
 
+enum dispModes {
+  modeBasic,
+  modeTransponder,
+  modeStream,
+  modeMaxNumber
+  };
+
 struct cFemonConfig
 {
 public:
@@ -19,7 +26,7 @@ public:
   int redlimit;
   int greenlimit;
   int updateinterval;
-  int showbitrate;
+  int analyzestream;
   int calcinterval;
   int syslogoutput;
 };

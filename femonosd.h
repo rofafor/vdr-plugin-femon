@@ -36,6 +36,7 @@ private:
   uint32_t m_UNC;
   fe_status_t m_FrontendStatus;
   int m_DisplayMode;
+  eDvbFont m_Font;
   cMutex* m_Mutex;
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);

@@ -18,7 +18,7 @@ cFemonConfig::cFemonConfig(void)
   redlimit       = 33;
   greenlimit     = 66;
   updateinterval = 5;
-  showbitrate    = 1;
+  analyzestream  = 1;
   calcinterval   = 20;
   syslogoutput   = 0;
 }
