@@ -30,7 +30,7 @@ Metzler Brothers.
 Terminology:
 
 --------------------------------------------------------------
-|## Channel Name ######################### [DD][AR][VF][A][D]|
+|## Channel Name ########################## [AR][VF][A/DD][D]|
 |[=====Signal Strength in % ==============|=================]|
 |[=====Signal-to-Noise Ratio in % ========|=================]|
 | STR: #0000 (0%)       BER: #00000000       Video: 0 Mbit/s |
@@ -51,10 +51,9 @@ CARRIER - Found a DVB signal
 VITERBI - FEC (forward error correction) is stable
 SYNC    - Found sync bytes
 
-DD      - AC-3 stream (optional)
 AR      - Aspect Ratio: 1:1/4:3/16:9/2.21:1 (optional)
 VF      - Video format: PAL/NTSC (optional)
-A       - Audio track: 1..2 (optional)
+A/DD    - Audio (0..5) / AC-3 track (optional)
 D       - Device number: 0..3 (optional)
 
 Controls:
@@ -63,9 +62,10 @@ ChanUp/ChanDn - Switch channel up/down
 Up/Down       - Switch channel up/down
 0-9           - Select channel
 Ok            - Switch between display modes: basic, transponder, stream, AC-3
-Right/Left    - Switch to next/previous device that provides the current channel
-Green         - Select language (APID)
+Green         - Select next audio track
+Yellow        - Select audio channel: stereo, mono left, mono right
 Back          - Exit plugin
+(Left/Right   - Switch to next/previous device that provides the current channel)
 
 Installation:
 
@@ -82,14 +82,14 @@ Notes:
 - The plugin supports only those DVB cards with _one_ frontend (do any cards
   with multiple frontends even exist?), because I haven't yet figured howto do
   it without patching the VDR core.
-- Sometimes (read always) ttxtsubs plugin messes up the OSD - user should disable
-  ttxtsubs, but closing and reopening the femon plugin might help temporarily as
-  well. Btw., this same thing happens with OSDTeletext plugin too :)
 - Disable the stream analyze to speed up heavy zapping sessions.
 - The signal strength and signal-to-noise ratio values are comparable only
   between the same brand/model frontends. Due to the lack of proper frontend
   specifications those values cannot be calculated into any real units.
-- Shrinked OSD is available for NTSC users: make NTSC_SYSTEM=1
+- If the OSD isn't visible, you've configured the OSD height too big or too
+  small. Please, try to adjust the variable on the setup page before writing
+  any bug reports.
+- There's a shrinked default OSD height for NTSC users: make NTSC_SYSTEM=1
 - The device switching feature is still non-functional.
 
 "Femon - A real womon who lives according to her natural feminine inclinations."

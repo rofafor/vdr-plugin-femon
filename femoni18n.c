@@ -72,6 +72,27 @@ const tI18nPhrase Phrases[] = {
     "", // Eesti
     "", // Dansk
   },
+  { "Height", // English
+    "Höhe", // Deutsch
+    "", // Slovenski
+    "Altezza", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Korkeus", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "²ëáŞâĞ", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
+  },
   { "Default Display Mode", // English
     "Standard Anzeigemodus", // Deutsch
     "", // Slovenski
@@ -1037,6 +1058,48 @@ const tI18nPhrase Phrases[] = {
     "kHz", // Hrvatski (Croatian)
     "kHz", // Eesti
     "kHz", // Dansk
+  },
+  { "Apid", // English
+    "Apid", // Deutsch
+    "Apid", // Slovenski
+    "Apid", // Italiano
+    "Apid", // Nederlands
+    "Apid", // Português
+    "Apid", // Français
+    "Apid", // Norsk
+    "Ääni PID", // suomi
+    "Apid", // Polski
+    "Apid", // Español
+    "Apid", // ÅëëçíéêÜ (Greek)
+    "Apid", // Svenska
+    "Apid", // Romaneste
+    "Apid", // Magyar
+    "Apid", // Català
+    "Apid", // ÀãááÚØÙ (Russian)
+    "Apid", // Hrvatski (Croatian)
+    "Apid", // Eesti
+    "Apid", // Dansk
+  },
+  { "Dpid", // English
+    "Dpid", // Deutsch
+    "Dpid", // Slovenski
+    "Dpid", // Italiano
+    "Dpid", // Nederlands
+    "Dpid", // Português
+    "Dpid", // Français
+    "Dpid", // Norsk
+    "Dolby PID", // suomi
+    "Dpid", // Polski
+    "Dpid", // Español
+    "Dpid", // ÅëëçíéêÜ (Greek)
+    "Dpid", // Svenska
+    "Dpid", // Romaneste
+    "Dpid", // Magyar
+    "Dpid", // Català
+    "Dpid", // ÀãááÚØÙ (Russian)
+    "Dpid", // Hrvatski (Croatian)
+    "Dpid", // Eesti
+    "Dpid", // Dansk
   },
   { "Nid", // English
     "Nid", // Deutsch

@@ -17,6 +17,7 @@
 #include <vdr/status.h>
 #include <vdr/channels.h>
 #include <vdr/transfer.h>
+#include <vdr/tools.h>
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
@@ -27,7 +28,6 @@ private:
   struct dvb_frontend_info m_FrontendInfo;
   int m_Number;
   int m_OldNumber;
-  int m_InputTime;
   uint16_t m_SNR;
   uint16_t m_Signal;
   uint32_t m_BER;
@@ -35,15 +35,18 @@ private:
   fe_status_t m_FrontendStatus;
   int m_DisplayMode;
   const cFont *m_Font;
+  cTimeMs m_InputTime;
   cMutex* m_Mutex;
-  static cBitmap bmDevice0, bmDevice1, bmDevice2, bmDevice3, bmApid1, bmApid2, bmDD, bmDD20, bmDD51;
-  static cBitmap bmPAL, bmNTSC, bmAspectRatio_1_1, bmAspectRatio_16_9, bmAspectRatio_2_21_1, bmAspectRatio_4_3;
+  static cBitmap bmStereo, bmMonoLeft, bmMonoRight, bmDD, bmDD20, bmDD51;
+  static cBitmap bmZero, bmDevice, bmPAL, bmNTSC, bmOne, bmTwo, bmThree, bmFour, bmFive;
+  static cBitmap bmAspectRatio_1_1, bmAspectRatio_16_9, bmAspectRatio_2_21_1, bmAspectRatio_4_3;
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);
 
 protected:
   virtual void Action(void);
   virtual void ChannelSwitch(const cDevice * device, int channelNumber);
+  virtual void SetAudioTrack(int Index, const char * const *Tracks);
 
 public:
   cFemonOsd(void);

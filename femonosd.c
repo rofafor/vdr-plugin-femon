@@ -12,12 +12,16 @@
 #include "femonreceiver.h"
 #include "femonosd.h"
 
-#include "symbols/dev0.xpm"
-#include "symbols/dev1.xpm"
-#include "symbols/dev2.xpm"
-#include "symbols/dev3.xpm"
-#include "symbols/apid1.xpm"
-#include "symbols/apid2.xpm"
+#include "symbols/device.xpm"
+#include "symbols/stereo.xpm"
+#include "symbols/monoleft.xpm"
+#include "symbols/monoright.xpm"
+#include "symbols/zero.xpm"
+#include "symbols/one.xpm"
+#include "symbols/two.xpm"
+#include "symbols/three.xpm"
+#include "symbols/four.xpm"
+#include "symbols/five.xpm"
 #include "symbols/ar11.xpm"
 #include "symbols/ar169.xpm"
 #include "symbols/ar2211.xpm"
@@ -31,12 +35,8 @@
 #define FRONTEND_DEVICE          "/dev/dvb/adapter%d/frontend%d"
 #define CHANNELINPUT_TIMEOUT     1000
 
-#ifdef NTSC_SYSTEM
-#define OSDHEIGHT                420 // in pixels
-#else
-#define OSDHEIGHT                480 // in pixels
-#endif
-#define OSDWIDTH                 600 // in pixels
+#define OSDHEIGHT                femonConfig.osdheight   // in pixels
+#define OSDWIDTH                 600                     // in pixels
 #define OSDINFOHEIGHT            (m_Font->Height() * 11) // in pixels (11 rows)
 #define OSDSTATUSHEIGHT          (m_Font->Height() * 6)  // in pixels (6 rows)
 
@@ -50,12 +50,16 @@
 
 #define clrBackground            clrGray50 // this should be tied somehow into current theme
 
-cBitmap cFemonOsd::bmDevice0(dev0_xpm);
-cBitmap cFemonOsd::bmDevice1(dev1_xpm);
-cBitmap cFemonOsd::bmDevice2(dev2_xpm);
-cBitmap cFemonOsd::bmDevice3(dev3_xpm);
-cBitmap cFemonOsd::bmApid1(apid1_xpm);
-cBitmap cFemonOsd::bmApid2(apid2_xpm);
+cBitmap cFemonOsd::bmDevice(device_xpm);
+cBitmap cFemonOsd::bmStereo(stereo_xpm);
+cBitmap cFemonOsd::bmMonoLeft(monoleft_xpm);
+cBitmap cFemonOsd::bmMonoRight(monoright_xpm);
+cBitmap cFemonOsd::bmZero(zero_xpm);
+cBitmap cFemonOsd::bmOne(one_xpm);
+cBitmap cFemonOsd::bmTwo(two_xpm);
+cBitmap cFemonOsd::bmThree(three_xpm);
+cBitmap cFemonOsd::bmFour(four_xpm);
+cBitmap cFemonOsd::bmFive(five_xpm);
 cBitmap cFemonOsd::bmAspectRatio_1_1(ar11_xpm);
 cBitmap cFemonOsd::bmAspectRatio_16_9(ar169_xpm);
 cBitmap cFemonOsd::bmAspectRatio_2_21_1(ar2211_xpm);
@@ -69,19 +73,19 @@ cBitmap cFemonOsd::bmDD51(dolbydigital51_xpm);
 cFemonOsd::cFemonOsd(void)
 :cOsdObject(true), cThread("femon osd")
 {
-  //printf("cFemonOsd::cFemonOsd()\n");
+  debug(printf("cFemonOsd::cFemonOsd()\n"));
   m_Osd = NULL;
   m_Receiver = NULL;
   m_Frontend = -1;
   m_Active = false;
   m_Number = 0;
   m_OldNumber = 0;
-  m_InputTime = 0;
   m_Signal = 0;
   m_SNR = 0;
   m_BER = 0;
   m_UNC = 0;
   m_DisplayMode = femonConfig.displaymode;
+  m_InputTime.Set(0);
   m_Mutex = new cMutex();
   if (Setup.UseSmallFont == 0) {
      // Dirty hack to force the small fonts...
@@ -95,7 +99,7 @@ cFemonOsd::cFemonOsd(void)
 
 cFemonOsd::~cFemonOsd(void)
 {
-  //printf("cFemonOsd::~cFemonOsd()\n");
+  debug(printf("cFemonOsd::~cFemonOsd()\n"));
   if (m_Active) {
      m_Active = false;
      Cancel(3);
@@ -109,60 +113,127 @@ cFemonOsd::~cFemonOsd(void)
 void cFemonOsd::DrawStatusWindow(void)
 {
   cMutexLock lock(m_Mutex);
-  //printf("cFemonOsd::DrawStatusWindow()\n");
+  debug(printf("cFemonOsd::DrawStatusWindow()\n"));
   char buf[128];
   int snr = m_SNR / 655;
   int signal = m_Signal / 655;
   int offset = 0;
   int x = OSDWIDTH;
   int y = 0;
+  int value = 0;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   if (m_Osd) {
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrBackground);
-     snprintf(buf, sizeof(buf), "%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true));
+     snprintf(buf, sizeof(buf), "%d%s %s (%s)", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true), channel->Provider());
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset+m_Font->Height()-1), clrWhite);
      m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), buf, clrBlack, clrWhite, m_Font);
      if (m_Receiver) {
-        int value = cDevice::ActualDevice()->CardIndex();
-        if (value == 0) {
-           x -= bmDevice0.Width() + SPACING;
-           y = (m_Font->Height() - bmDevice0.Height()) / 2;
+        value = cDevice::ActualDevice()->CardIndex();
+        if (value == 1) {
+           x -= bmOne.Width() + SPACING;
+           y = (m_Font->Height() - bmOne.Height()) / 2;
            if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDevice0, clrBlack, clrWhite);
-           }
-        else if (value == 1) {
-           x -= bmDevice1.Width() + SPACING;
-           y = (m_Font->Height() - bmDevice1.Height()) / 2;
-           if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDevice1, clrBlack, clrWhite);
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmOne, clrBlack, clrWhite);
            }
         else if (value == 2) {
-           x -= bmDevice2.Width() + SPACING;
-           y = (m_Font->Height() - bmDevice2.Height()) / 2;
+           x -= bmTwo.Width() + SPACING;
+           y = (m_Font->Height() - bmTwo.Height()) / 2;
            if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDevice2, clrBlack, clrWhite);
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmTwo, clrBlack, clrWhite);
            }
         else if (value == 3) {
-           x -= bmDevice3.Width() + SPACING;
-           y = (m_Font->Height() - bmDevice3.Height()) / 2;
+           x -= bmThree.Width() + SPACING;
+           y = (m_Font->Height() - bmThree.Height()) / 2;
            if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDevice3, clrBlack, clrWhite);
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmThree, clrBlack, clrWhite);
            }
-        value = -1;
-        const char **AudioTracks = cDevice::PrimaryDevice()->GetAudioTracks(&value);
-        if (AudioTracks) {
-           if (value == 0) {
-              x -= bmApid1.Width() + SPACING;
-              y = (m_Font->Height() - bmApid1.Height()) / 2;
+        else {
+           x -= bmZero.Width() + SPACING;
+           y = (m_Font->Height() - bmZero.Height()) / 2;
+           if (y < 0) y = 0;
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmZero, clrBlack, clrWhite);
+           }
+        x -= bmDevice.Width();
+        y = (m_Font->Height() - bmDevice.Height()) / 2;
+        if (y < 0) y = 0;
+        m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDevice, clrBlack, clrWhite);
+        if (IS_AUDIO_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) {
+           value = int(cDevice::PrimaryDevice()->GetCurrentAudioTrack() - ttAudioFirst);
+           if (value == 1) {
+              x -= bmOne.Width() + SPACING;
+              y = (m_Font->Height() - bmOne.Height()) / 2;
               if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmApid1, clrBlack, clrWhite);
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmOne, clrBlack, clrWhite);
               }
-           else if (value == 1) {
-              x -= bmApid2.Width() + SPACING;
-              y = (m_Font->Height() - bmApid2.Height()) / 2;
+           else if (value == 2) {
+              x -= bmTwo.Width() + SPACING;
+              y = (m_Font->Height() - bmTwo.Height()) / 2;
               if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmApid2, clrBlack, clrWhite);
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmTwo, clrBlack, clrWhite);
+              }
+           else if (value == 3) {
+              x -= bmThree.Width() + SPACING;
+              y = (m_Font->Height() - bmThree.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmThree, clrBlack, clrWhite);
+              }
+           else if (value == 4) {
+              x -= bmFour.Width() + SPACING;
+              y = (m_Font->Height() - bmFour.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmFour, clrBlack, clrWhite);
+              }
+           else if (value == 5) {
+              x -= bmFive.Width() + SPACING;
+              y = (m_Font->Height() - bmFive.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmFive, clrBlack, clrWhite);
+              }
+           else {
+              x -= bmZero.Width() + SPACING;
+              y = (m_Font->Height() - bmZero.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmZero, clrBlack, clrWhite);
+              }
+           value = cDevice::PrimaryDevice()->GetAudioChannel();
+           if (value == 1) {
+              x -= bmMonoLeft.Width();
+              y = (m_Font->Height() - bmMonoLeft.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmMonoLeft, clrBlack, clrWhite);
+              }
+           else if (value == 2) {
+              x -= bmMonoRight.Width();
+              y = (m_Font->Height() - bmMonoRight.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmMonoRight, clrBlack, clrWhite);
+              }
+           else {
+              x -= bmStereo.Width();
+              y = (m_Font->Height() - bmStereo.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmStereo, clrBlack, clrWhite);
+              }
+           }
+        else if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) {
+           if (m_Receiver->AC3_5_1()) {
+              x -= bmDD51.Width() + SPACING;
+              y = (m_Font->Height() - bmDD51.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD51, clrBlack, clrWhite);
+              }
+           else if (m_Receiver->AC3_2_0()) {
+              x -= bmDD20.Width() + SPACING;
+              y = (m_Font->Height() - bmDD20.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD20, clrBlack, clrWhite);
+              }
+           else {
+              x -= bmDD.Width() + SPACING;
+              y = (m_Font->Height() - bmDD.Height()) / 2;
+              if (y < 0) y = 0;
+              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD, clrBlack, clrWhite);
               }
            }
         value = m_Receiver->VideoFormat();
@@ -202,26 +273,6 @@ void cFemonOsd::DrawStatusWindow(void)
            y = (m_Font->Height() - bmAspectRatio_2_21_1.Height()) / 2;
            if (y < 0) y = 0;
            m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmAspectRatio_2_21_1, clrBlack, clrWhite);
-           }
-        if (m_Receiver && m_Receiver->AC3Valid()) {
-           if (m_Receiver->AC3_5_1()) {
-              x -= bmDD51.Width() + SPACING;
-              y = (m_Font->Height() - bmDD51.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD51, clrBlack, clrWhite);
-              }
-           else if (m_Receiver->AC3_2_0()) {
-              x -= bmDD20.Width() + SPACING;
-              y = (m_Font->Height() - bmDD20.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD20, clrBlack, clrWhite);
-              }
-           else {
-              x -= bmDD.Width() + SPACING;
-              y = (m_Font->Height() - bmDD.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD, clrBlack, clrWhite);
-              }
            }
         }
      offset += m_Font->Height();
@@ -269,9 +320,9 @@ void cFemonOsd::DrawStatusWindow(void)
      m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), "UNC:", clrWhite, clrBackground, m_Font);
      snprintf(buf, sizeof(buf), "%08x", m_UNC);
      m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%s:", (m_Receiver && m_Receiver->AC3Valid()) ? tr("AC-3") : tr("Audio"));
+     snprintf(buf, sizeof(buf), "%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) ? tr("AC-3") : tr("Audio"));
      m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", m_Receiver->AC3Valid() ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate(), tr("kbit/s"));
+     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", (m_Receiver->AC3Valid() && IS_DOLBY_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate(), tr("kbit/s"));
      else            snprintf(buf, sizeof(buf), "--- %s", tr("kbit/s"));
      m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
      offset += m_Font->Height();
@@ -287,7 +338,7 @@ void cFemonOsd::DrawStatusWindow(void)
 void cFemonOsd::DrawInfoWindow(void)
 {
   cMutexLock lock(m_Mutex);
-  //printf("cFemonOsd::DrawInfoWindow()\n");
+  debug(printf("cFemonOsd::DrawInfoWindow()\n"));
   char buf[128];
   char buf2[20];
   int offset = 0;
@@ -308,15 +359,21 @@ void cFemonOsd::DrawInfoWindow(void)
         snprintf(buf, sizeof(buf), "%d", channel->Ppid());
         m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         offset += m_Font->Height();
-        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Apid1"), clrWhite, clrBackground, m_Font);
-        value = channel->Apid2();
-        if (value) snprintf(buf, sizeof(buf), "%d, %d", channel->Apid1(), value);
-        else       snprintf(buf, sizeof(buf), "%d", channel->Apid1());
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Apid"), clrWhite, clrBackground, m_Font);
+        snprintf(buf, sizeof(buf), "%d", channel->Apid(0));
+        value = 1;
+        while (channel->Apid(value) && (value < MAXAPIDS)) {
+           snprintf(buf2, sizeof(buf2), ", %d", channel->Apid(value++));
+           strncat(buf, buf2, sizeof(buf));
+           }
         m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Dpid1"), clrWhite, clrBackground, m_Font);
-        value = channel->Dpid2();
-        if (value) snprintf(buf, sizeof(buf), "%d, %d", channel->Dpid1(), value);
-        else       snprintf(buf, sizeof(buf), "%d", channel->Dpid1());
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Dpid"), clrWhite, clrBackground, m_Font);
+        snprintf(buf, sizeof(buf), "%d", channel->Dpid(0));
+        value = 1;
+        while (channel->Dpid(value) && (value < MAXAPIDS)) {
+           snprintf(buf2, sizeof(buf2), ", %d", channel->Dpid(value++));
+           strncat(buf, buf2, sizeof(buf));
+           }
         m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         offset += m_Font->Height();
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), clrWhite, clrBackground, m_Font);
@@ -419,7 +476,7 @@ void cFemonOsd::DrawInfoWindow(void)
                snprintf(buf, sizeof(buf), "%d %s", value, tr("MHz"));
                m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
                m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Source"), clrWhite, clrBackground, m_Font);
-               snprintf(buf, sizeof(buf), "%s", cSource::ToString(channel->Source()));
+               snprintf(buf, sizeof(buf), "%s", *cSource::ToString(channel->Source()));
                m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
                offset += m_Font->Height();
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Srate"), clrWhite, clrBackground, m_Font);
@@ -460,7 +517,7 @@ void cFemonOsd::DrawInfoWindow(void)
                snprintf(buf, sizeof(buf), "%d %s", value, tr("MHz"));
                m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
                m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Source"), clrWhite, clrBackground, m_Font);
-               snprintf(buf, sizeof(buf), "%s", cSource::ToString(channel->Source()));
+               snprintf(buf, sizeof(buf), "%s", *cSource::ToString(channel->Source()));
                m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
                offset += m_Font->Height();
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Srate"), clrWhite, clrBackground, m_Font);
@@ -630,9 +687,8 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         offset += m_Font->Height();
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Stream"), clrYellow, clrBackground, m_Font);
-        value = -1;
-        cDevice::PrimaryDevice()->GetAudioTracks(&value);
-        snprintf(buf, sizeof(buf), "#%d", (value > 0 ? channel->Apid2() : channel->Apid1()));
+        value = int(cDevice::PrimaryDevice()->GetCurrentAudioTrack());
+        snprintf(buf, sizeof(buf), "#%d", IS_AUDIO_TRACK(value) ? channel->Apid(value - ttAudioFirst) : channel->Apid(0));
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         offset += m_Font->Height();
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_Font);
@@ -663,10 +719,11 @@ void cFemonOsd::DrawInfoWindow(void)
      else if (m_DisplayMode == modeAC3) {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+m_Font->Height()-1), clrWhite);
-        snprintf(buf, sizeof(buf), "%s - %s #%d", tr("Stream Information"), tr("AC-3 Stream"), channel->Dpid1());
+        value = int(cDevice::PrimaryDevice()->GetCurrentAudioTrack());
+        snprintf(buf, sizeof(buf), "%s - %s #%d", tr("Stream Information"), tr("AC-3 Stream"), IS_DOLBY_TRACK(value) ? channel->Dpid(value - ttDolbyFirst) : 0);
         m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, clrBackground, clrWhite, m_Font);
         offset += m_Font->Height();
-        if (m_Receiver && m_Receiver->AC3Valid()) {
+        if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) {
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_Font);
            snprintf(buf, sizeof(buf), "%.0f %s (%0.f %s)", m_Receiver->AC3StreamBitrate(), tr("kbit/s"), m_Receiver->AC3Bitrate(), tr("kbit/s"));
            m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
@@ -761,11 +818,11 @@ void cFemonOsd::DrawInfoWindow(void)
 
 void cFemonOsd::Action(void)
 {
-  int t0;
-  //printf("cFemonOsd::Action()\n");
+  debug(printf("cFemonOsd::Action()\n"));
+  cTimeMs t;
   m_Active = true;
   while (m_Active) {
-    t0 = time_ms();
+    t.Set(0);
     if (m_Frontend != -1) {
        CHECK(ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus));
        CHECK(ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal));
@@ -778,13 +835,15 @@ void cFemonOsd::Action(void)
           isyslog("Card #%d (%s) STR: %04x SNR: %04x BER: %08x UNC: %08x |%c|%c|%c|%c|%c|", cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name, m_Signal, m_SNR, m_BER, m_UNC, (m_FrontendStatus & FE_HAS_LOCK) ? 'L' : ' ', (m_FrontendStatus & FE_HAS_SIGNAL) ? 'S' : ' ', (m_FrontendStatus & FE_HAS_CARRIER) ? 'C' : ' ', (m_FrontendStatus & FE_HAS_VITERBI) ? 'V' : ' ', (m_FrontendStatus & FE_HAS_SYNC) ? 'Z' : ' ');
           }
        }
-    cCondWait::SleepMs(100 * femonConfig.updateinterval - (time_ms() - t0));
+    cCondWait::SleepMs(100 * femonConfig.updateinterval - t.Elapsed());
     }
 }
 
 void cFemonOsd::Show(void)
 {
-  //printf("cFemonOsd::Show()\n");
+  debug(printf("cFemonOsd::Show()\n"));
+  eTrackType track = ttNone;
+  int apid = 0, dpid = 0;
   char *dev = NULL;
   asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
@@ -817,8 +876,11 @@ void cFemonOsd::Show(void)
      if (m_Receiver)
         delete m_Receiver;
      if (femonConfig.analyzestream) {
+        track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
+        if (IS_AUDIO_TRACK(track)) apid = int(track - ttAudioFirst);
+        else if (IS_DOLBY_TRACK(track)) dpid = int(track - ttDolbyFirst);
         cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-        m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid1(), channel->Dpid1());
+        m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid(apid), channel->Dpid(dpid));
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      Start();
@@ -827,7 +889,9 @@ void cFemonOsd::Show(void)
 
 void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 {
-  //printf("cFemonOsd::ChannelSwitch()\n");
+  debug(printf("cFemonOsd::ChannelSwitch()\n"));
+  eTrackType track = ttNone;
+  int apid = 0, dpid = 0;
   char *dev = NULL;
   if (!device->IsPrimaryDevice() || !channelNumber || cDevice::PrimaryDevice()->CurrentChannel() != channelNumber)
      return;
@@ -849,8 +913,28 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   if (m_Receiver)
      delete m_Receiver;
   if (femonConfig.analyzestream) {
+     track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
+     if (IS_AUDIO_TRACK(track)) apid = int(track - ttAudioFirst);
+     else if (IS_DOLBY_TRACK(track)) dpid = int(track - ttDolbyFirst);
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-     m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid1(), channel->Dpid1());
+     m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid(apid), channel->Dpid(dpid));
+     cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+     }
+}
+
+void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
+{
+  debug(printf("cFemonOsd::SetAudioTrack()\n"));
+  eTrackType track = ttNone;
+  int apid = 0, dpid = 0;
+  if (m_Receiver)
+     delete m_Receiver;
+  if (femonConfig.analyzestream) {
+     track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
+     if (IS_AUDIO_TRACK(track)) apid = int(track - ttAudioFirst);
+     else if (IS_DOLBY_TRACK(track)) dpid = int(track - ttDolbyFirst);
+     cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+     m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid(apid), channel->Dpid(dpid));
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
 }
@@ -874,7 +958,7 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                if (m_Number > 0) {
                   DrawStatusWindow();
                   cChannel *ch = Channels.GetByNumber(m_Number);
-                  m_InputTime = time_ms();
+                  m_InputTime.Set(0);
                   // Lets see if there can be any useful further input:
                   int n = ch ? m_Number * 10 : 0;
                   while (ch && (ch = Channels.Next(ch)) != NULL) {
@@ -900,22 +984,39 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
             return osEnd;
        case kGreen:
             {
-            int CurrentAudioTrack = -1;
-            const char **AudioTracks = cDevice::PrimaryDevice()->GetAudioTracks(&CurrentAudioTrack);
-            if (AudioTracks) {
-               const char **at = &AudioTracks[CurrentAudioTrack];
-               if (!*++at)
-                  at = AudioTracks;
-               cDevice::PrimaryDevice()->SetAudioTrack(at - AudioTracks);
-               if (femonConfig.analyzestream) {
-                  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-                  if (m_Receiver)
-                     delete m_Receiver;
-                  m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), (at - AudioTracks) ? channel->Apid2() : channel->Apid1(), channel->Dpid1());
-                  cDevice::ActualDevice()->AttachReceiver(m_Receiver);
-                  }
+            eTrackType types[ttMaxTrackTypes];
+            eTrackType CurrentAudioTrack = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
+            int numTracks = 0;
+            int oldTrack = 0;
+            int track = 0;
+            for (int i = ttAudioFirst; i <= ttDolbyLast; i++) {
+                const tTrackId *TrackId = cDevice::PrimaryDevice()->GetTrack(eTrackType(i));
+                if (TrackId && TrackId->id) {
+                   types[numTracks] = eTrackType(i);
+                   if (i == CurrentAudioTrack)
+                      track = numTracks;
+                   numTracks++;
+                   }
+                }
+            oldTrack = track;
+            if (++track >= numTracks)
+               track = 0;
+            if (track != oldTrack) {
+               cDevice::PrimaryDevice()->SetCurrentAudioTrack(types[track]);
+               Setup.CurrentDolby = IS_DOLBY_TRACK(types[track]);
                }
             }
+            break;
+       case kYellow:
+            if (IS_AUDIO_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) {
+               int audioChannel = cDevice::PrimaryDevice()->GetAudioChannel();
+               int oldAudioChannel = audioChannel;
+               if (++audioChannel > 2)
+                  audioChannel = 0;
+               if (audioChannel != oldAudioChannel) {
+                  cDevice::PrimaryDevice()->SetAudioChannel(audioChannel);
+                  }
+               }
             break;
        case kRight:
        case kLeft:
@@ -924,7 +1025,7 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
             if (device >= 0) {
                cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
                for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
-                   if (NORMALKEY(Key) == kRight) {
+                   if (NORMALKEY(Key) == kBlue) {
                       if (++device >= cDevice::NumDevices()) device = 0;
                       }
                    else {
@@ -933,7 +1034,7 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                    if (cDevice::GetDevice(device)->ProvidesChannel(channel)) {
                       //cStatus::MsgChannelSwitch(cDevice::GetDevice(device), 0);
                       //implement some tuning mechanism here
-                      //cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apid1(), channel->Apid2(), channel->Dpid1(), channel->Dpid2()));
+                      //cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apid(0), channel->Apid(1), channel->Dpid(0), channel->Dpid(1)));
                       //cStatus::MsgChannelSwitch(cDevice::GetDevice(device), channel->Number());
                       break;
                       }
@@ -950,21 +1051,21 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
             m_Number = 0;
             break;
        case kNone:
-            if (m_Number && (time_ms() - m_InputTime > CHANNELINPUT_TIMEOUT)) {
+            if (m_Number && (m_InputTime.Elapsed() > CHANNELINPUT_TIMEOUT)) {
                if (Channels.GetByNumber(m_Number)) {
                   m_OldNumber = cDevice::CurrentChannel();
                   Channels.SwitchTo(m_Number);
                   m_Number = 0;
                   }
                else {
-                  m_InputTime = time_ms();
+                  m_InputTime.Set(0);
                   m_Number = 0;
                   }
                }
             break;
        case kOk:
             // toggle between display modes
-            if (++m_DisplayMode == modeAC3 && !Channels.GetByNumber(cDevice::CurrentChannel())->Dpid1()) m_DisplayMode++;
+            if (++m_DisplayMode == modeAC3 && !Channels.GetByNumber(cDevice::CurrentChannel())->Dpid(0)) m_DisplayMode++;
             if (m_DisplayMode >= modeMaxNumber) m_DisplayMode = 0;
             DrawInfoWindow();
             break;

@@ -9,6 +9,12 @@
 #ifndef __FEMONCFG_H
 #define __FEMONCFG_H
 
+#ifdef DEBUG
+#define debug(x) (x);
+#else
+#define debug(x) ;
+#endif
+
 enum dispModes {
   modeBasic,
   modeTransponder,
@@ -31,6 +37,7 @@ public:
   int calcinterval;
   int syslogoutput;
   int showcasystem;
+  int osdheight;
 };
 
 extern cFemonConfig femonConfig;

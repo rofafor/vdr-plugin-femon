@@ -111,3 +111,10 @@ VDR Plugin 'femon' Revision History
 
 - Updated for vdr-1.3.17.
 - Fixed receiver related crash (Thanks to Marco Schluessler).
+
+2005-01-15: Version 0.7.7
+
+- Updated for vdr-1.3.18.
+- Added DEBUG mode (make DEBUG=1 plugins).
+- OSD height is now user configurable.
+- Added audio channel selection into Yellow key.

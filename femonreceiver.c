@@ -7,6 +7,7 @@
  */
 
 #include <unistd.h>
+#include <vdr/tools.h>
 #include "femoncfg.h"
 #include "femonreceiver.h"
 
@@ -19,7 +20,7 @@
 cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid, int Dpid)
 :cReceiver(Ca, -1, 3, Vpid, Apid, Dpid), cThread("femon receiver")
 {
-  //printf("cFemonReceiver::cFemonReceiver()\n");
+  debug(printf("cFemonReceiver::cFemonReceiver()\n"));
   m_Active = false;
   m_VideoPid = Vpid;
   m_AudioPid = Apid;
@@ -57,7 +58,7 @@ cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid, int Dpid)
  
 cFemonReceiver::~cFemonReceiver(void)
 {
-  //printf("cFemonReceiver::~cFemonReceiver()\n");
+  debug(printf("cFemonReceiver::~cFemonReceiver()\n"));
   Detach();
   if (m_Active) {
      m_Active = false;
@@ -68,7 +69,7 @@ cFemonReceiver::~cFemonReceiver(void)
 /* The following function originates from libdvbmpeg: */
 void cFemonReceiver::GetVideoInfo(uint8_t *mbuf, int count)
 {
-  //printf("cFemonReceiver::GetVideoInfo()\n");
+  debug(printf("cFemonReceiver::GetVideoInfo()\n"));
   uint8_t *headr;
   int found = 0;
   int c = 0;
@@ -161,7 +162,7 @@ static unsigned int samplerates[4] =
 /* The following function originates from libdvbmpeg: */
 void cFemonReceiver::GetAudioInfo(uint8_t *mbuf, int count)
 {
-  //printf("cFemonReceiver::GetAudioInfo()\n");
+  debug(printf("cFemonReceiver::GetAudioInfo()\n"));
   uint8_t *headr;
   int found = 0;
   int c = 0;
@@ -253,7 +254,7 @@ void cFemonReceiver::GetAC3Info(uint8_t *mbuf, int count)
 
 void cFemonReceiver::Activate(bool On)
 {
-  //printf("cFemonReceiver::Activate()\n");
+  debug(printf("cFemonReceiver::Activate()\n"));
   if (On) {
      if (!m_Active)
         Start();
@@ -266,7 +267,7 @@ void cFemonReceiver::Activate(bool On)
 
 void cFemonReceiver::Receive(uchar *Data, int Length)
 {
-  //printf("cFemonReceiver::Receive()\n");
+  debug(printf("cFemonReceiver::Receive()\n"));
   // TS packet length: TS_SIZE
   if (Length == TS_SIZE) {
      int pid = ((Data[1] & 0x1f) << 8) | (Data[2]);
@@ -309,11 +310,11 @@ void cFemonReceiver::Receive(uchar *Data, int Length)
 
 void cFemonReceiver::Action(void)
 {
-  int t0;
-  //printf("cFemonReceiver::Action()\n");
+  debug(printf("cFemonReceiver::Action()\n"));
+  cTimeMs t;
   m_Active = true;
   while (m_Active) {
-        t0 = time_ms();
+        t.Set(0);
         // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
         m_VideoBitrate = (8.0 * 184.0 * m_VideoPacketCount) / (femonConfig.calcinterval * 100000.0);
         m_VideoPacketCount = 0;
@@ -321,6 +322,6 @@ void cFemonReceiver::Action(void)
         m_AudioPacketCount = 0;
         m_AC3Bitrate   = (8.0 * 184.0 * m_AC3PacketCount)   / (femonConfig.calcinterval * 100.0);
         m_AC3PacketCount = 0;
-        cCondWait::SleepMs(100 * femonConfig.calcinterval - (time_ms() - t0));
+        cCondWait::SleepMs(100 * femonConfig.calcinterval - t.Elapsed());
     }
 }
