@@ -120,7 +120,7 @@ void cFemonOsd::DrawStatusWindow(void)
 
   if (m_Osd) {
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrBackground);
-     snprintf(buf, sizeof(buf), "%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->Name());
+     snprintf(buf, sizeof(buf), "%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true));
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset+m_Font->Height()-1), clrWhite);
      m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), buf, clrBlack, clrWhite, m_Font);
      if (m_Receiver) {
@@ -761,9 +761,11 @@ void cFemonOsd::DrawInfoWindow(void)
 
 void cFemonOsd::Action(void)
 {
+  int t0;
   //printf("cFemonOsd::Action()\n");
   m_Active = true;
   while (m_Active) {
+    t0 = time_ms();
     if (m_Frontend != -1) {
        CHECK(ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus));
        CHECK(ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal));
@@ -776,7 +778,7 @@ void cFemonOsd::Action(void)
           isyslog("Card #%d (%s) STR: %04x SNR: %04x BER: %08x UNC: %08x |%c|%c|%c|%c|%c|", cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name, m_Signal, m_SNR, m_BER, m_UNC, (m_FrontendStatus & FE_HAS_LOCK) ? 'L' : ' ', (m_FrontendStatus & FE_HAS_SIGNAL) ? 'S' : ' ', (m_FrontendStatus & FE_HAS_CARRIER) ? 'C' : ' ', (m_FrontendStatus & FE_HAS_VITERBI) ? 'V' : ' ', (m_FrontendStatus & FE_HAS_SYNC) ? 'Z' : ' ');
           }
        }
-    usleep(100000L * femonConfig.updateinterval);
+    cCondWait::SleepMs(100 * femonConfig.updateinterval - (time_ms() - t0));
     }
 }
 

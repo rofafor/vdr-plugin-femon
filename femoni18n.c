@@ -27,6 +27,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "¼ŞİØâŞà ÚĞçÕáâÒĞ áØÓİĞÛĞ", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Signal Information", // English
     "Signalinformationen", // Deutsch
@@ -46,6 +48,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ÁØÓİĞÛ", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Position", // English
     "Position", // Deutsch
@@ -65,6 +69,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ÀĞ×ÜÕéÕİØÕ ŞÚİĞ", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Default Display Mode", // English
     "Standard Anzeigemodus", // Deutsch
@@ -84,6 +90,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català  
     "ÀÕÖØÜ ßŞ ãÜŞÛçĞİØî", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "basic", // English
     "Standard", // Deutsch
@@ -103,6 +111,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català  
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "transponder", // English
     "Transponder", // Deutsch
@@ -122,6 +132,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català  
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "stream", // English
     "Stream", // Deutsch
@@ -141,6 +153,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català  
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Hide Mainmenu Entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
@@ -160,6 +174,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ÁÚàëâì ÚŞÜĞİÔã Ò ÓÛĞÒİŞÜ ÜÕİî", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "OSD Update Interval [0.1s]", // English
     "OSD Updateintervall [0.1s]", // Deutsch
@@ -179,6 +195,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ÇĞáâŞâĞ ŞÑİŞÒÛÕİØï (0,1 áÕÚ)", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Analyze Stream", // English
     "Stream analysieren", // Deutsch
@@ -198,6 +216,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ÀĞáçñâ áÚŞàŞáâØ ßŞâŞÚĞ ÔĞİİëå", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Calculation Interval [0.1s]", // English
     "Berechnungsintervall [0.1s]", // Deutsch
@@ -217,6 +237,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ÇĞáâŞâĞ ßÕàÕáçñâĞ (0,1 áÕÚ)", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Red Limit [%]", // English
     "Grenze Rot [%]", // Deutsch
@@ -236,6 +258,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ºàĞáİĞï ×ŞİĞ áÛĞÑŞÓŞ áØÓİĞÛĞ ÔŞ (%)", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Green Limit [%]", // English
     "Grenze Grün [%]", // Deutsch
@@ -255,6 +279,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "·ÕÛñİĞï ×ŞİĞ áØÛìİŞÓŞ áØÓİĞÛĞ Şâ (%)", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Transponder Information", // English
     "Transponderinformation", // Deutsch
@@ -274,6 +300,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ÁÒÕÔÕİØï Ş ÚĞİĞÛÕ", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Satellite Card", // English
     "Satellitenkarte", // Deutsch
@@ -293,6 +321,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "¿ÛĞâĞ áßãâİØÚŞÒŞÓŞ ßàØñÜĞ", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Cable Card", // English
     "Kabelkarte", // Deutsch
@@ -312,6 +342,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "¿ÛĞâĞ ÚĞÑÕÛìİŞÓŞ ßàØñÜĞ", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Terrestial Card", // English
     "Terrestrische Karte", // Deutsch
@@ -331,6 +363,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "¿ÛĞâĞ íäØàİŞÓŞ ßàØñÜĞ", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Use Syslog Output", // English
     "Benutze syslog Ausgabe", // Deutsch
@@ -350,6 +384,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "¸áßŞÛì×ŞÒĞâì áÛãÖÑã syslog", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "LOCK", // English
     "LOCK", // Deutsch
@@ -369,6 +405,8 @@ const tI18nPhrase Phrases[] = {
     "LOCK", // Català
     "·°Å²°Â", // ÀãááÚØÙ (Russian)
     "LOCK", // Hrvatski (Croatian)
+    "LOCK", // Eesti
+    "LOCK", // Dansk
   },
   { "SIGNAL", // English
     "SIGNAL", // Deutsch
@@ -388,6 +426,8 @@ const tI18nPhrase Phrases[] = {
     "SIGNAL", // Català
     "Á¸³½°»", // ÀãááÚØÙ (Russian)
     "SIGNAL", // Hrvatski (Croatian)
+    "SIGNAL", // Eesti
+    "SIGNAL", // Dansk
   },
   { "CARRIER", // English
     "CARRIER", // Deutsch
@@ -407,6 +447,8 @@ const tI18nPhrase Phrases[] = {
     "CARRIER", // Català
     "½µÁÃÉ°Ï", // ÀãááÚØÙ (Russian)
     "CARRIER", // Hrvatski (Croatian)
+    "CARRIER", // Eesti
+    "CARRIER", // Dansk
   },
   { "VITERBI", // English
     "VITERBI", // Deutsch
@@ -426,6 +468,8 @@ const tI18nPhrase Phrases[] = {
     "VITERBI", // Català
     "²¸ÂµÀ±¸", // ÀãááÚØÙ (Russian)
     "VITERBI", // Hrvatski (Croatian)
+    "VITERBI", // Eesti
+    "VITERBI", // Dansk
   },
   { "SYNC", // English
     "SYNC", // Deutsch
@@ -445,6 +489,8 @@ const tI18nPhrase Phrases[] = {
     "SYNC", // Català
     "Á¸½ÅÀ", // ÀãááÚØÙ (Russian)
     "SYNC", // Hrvatski (Croatian)
+    "SYNC", // Eesti
+    "SYNC", // Dansk
   },
   { "Audio", // English
     "Audio", // Deutsch
@@ -464,6 +510,8 @@ const tI18nPhrase Phrases[] = {
     "Audio", // Català
     "°ãÔØŞ", // ÀãááÚØÙ (Russian)
     "Audio", // Hrvatski (Croatian)
+    "Audio", // Eesti
+    "Audio", // Dansk
   },
   { "Video", // English
     "Video", // Deutsch
@@ -483,6 +531,8 @@ const tI18nPhrase Phrases[] = {
     "Video", // Català
     "²ØÔÕŞ", // ÀãááÚØÙ (Russian)
     "Video", // Hrvatski (Croatian)
+    "Video", // Eesti
+    "Video", // Dansk
   },
   { "Auto", // English
     "Auto", // Deutsch
@@ -502,6 +552,8 @@ const tI18nPhrase Phrases[] = {
     "Auto", // Català
     "ĞÒâŞ", // ÀãááÚØÙ (Russian)
     "Auto", // Hrvatski (Croatian)
+    "Auto", // Eesti
+    "Auto", // Dansk
   },
   { "None", // English
     "None", // Deutsch
@@ -521,6 +573,8 @@ const tI18nPhrase Phrases[] = {
     "None", // Català
     "İÕâ", // ÀãááÚØÙ (Russian)
     "None", // Hrvatski (Croatian)
+    "None", // Eesti
+    "None", // Dansk
   },
   { "Off", // English
     "Off", // Deutsch
@@ -540,6 +594,8 @@ const tI18nPhrase Phrases[] = {
     "Off", // Català
     "ÒëÚÛ", // ÀãááÚØÙ (Russian)
     "Off", // Hrvatski (Croatian)
+    "Off", // Eesti
+    "Off", // Dansk
   },
   { "On", // English
     "On", // Deutsch
@@ -559,6 +615,8 @@ const tI18nPhrase Phrases[] = {
     "On", // Català
     "ÒÚÛ", // ÀãááÚØÙ (Russian)
     "On", // Hrvatski (Croatian)
+    "On", // Eesti
+    "On", // Dansk
   },
   { "MHz", // English
     "MHz", // Deutsch
@@ -578,6 +636,8 @@ const tI18nPhrase Phrases[] = {
     "MHz", // Català
     "¼³æ", // ÀãááÚØÙ (Russian)
     "MHz", // Hrvatski (Croatian)
+    "MHz", // Eesti
+    "MHz", // Dansk
   },
   { "Mbit/s", // English
     "Mbit/s", // Deutsch
@@ -597,6 +657,8 @@ const tI18nPhrase Phrases[] = {
     "Mbit/s", // Català
     "¼ÑØâ/á", // ÀãááÚØÙ (Russian)
     "Mbit/s", // Hrvatski (Croatian)
+    "Mbit/s", // Eesti
+    "Mbit/s", // Dansk
   },
   { "kbit/s", // English
     "kbit/s", // Deutsch
@@ -616,6 +678,8 @@ const tI18nPhrase Phrases[] = {
     "kbit/s", // Català
     "ÚÑØâ/á", // ÀãááÚØÙ (Russian)
     "kbit/s", // Hrvatski (Croatian)
+    "kbit/s", // Eesti
+    "kbit/s", // Dansk
   },
   { "Stream Information", // English
     "Streaminformation", // Deutsch
@@ -635,6 +699,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "MPEG Layer", // English
     "MPEG Layer", // Deutsch
@@ -654,6 +720,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Video Stream", // English
     "Video Stream", // Deutsch
@@ -673,6 +741,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Bitrate", // English
     "Bitrate", // Deutsch
@@ -692,6 +762,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Frame Rate", // English
     "Bildrate", // Deutsch
@@ -711,6 +783,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Hz", // English
     "Hz", // Deutsch
@@ -730,6 +804,8 @@ const tI18nPhrase Phrases[] = {
     "Hz", // Català
     "³æ", // ÀãááÚØÙ (Russian)
     "Hz", // Hrvatski (Croatian)
+    "Hz", // Eesti
+    "Hz", // Dansk
   },
   { "Aspect Ratio", // English
     "Seitenverhältnis", // Deutsch
@@ -749,6 +825,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "reserved", // English
     "belegt", // Deutsch
@@ -768,6 +846,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "free", // English
     "frei", // Deutsch
@@ -787,6 +867,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Video Format", // English
     "Bildformat", // Deutsch
@@ -806,6 +888,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "PAL", // English
     "PAL", // Deutsch
@@ -825,6 +909,8 @@ const tI18nPhrase Phrases[] = {
     "PAL", // Català
     "PAL", // ÀãááÚØÙ (Russian)
     "PAL", // Hrvatski (Croatian)
+    "PAL", // Eesti
+    "PAL", // Dansk
   },
   { "NTSC", // English
     "NTSC", // Deutsch
@@ -844,6 +930,8 @@ const tI18nPhrase Phrases[] = {
     "NTSC", // Català
     "NTSC", // ÀãááÚØÙ (Russian)
     "NTSC", // Hrvatski (Croatian)
+    "NTSC", // Eesti
+    "NTSC", // Dansk
   },
   { "unknown", // English
     "unbekannt", // Deutsch
@@ -863,6 +951,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Resolution", // English
     "Auflösung", // Deutsch
@@ -882,6 +972,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Audio Stream", // English
     "Audio Stream", // Deutsch
@@ -901,6 +993,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Sampling Frequency", // English
     "Abtastrate", // Deutsch
@@ -920,6 +1014,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "kHz", // English
     "kHz", // Deutsch
@@ -939,6 +1035,8 @@ const tI18nPhrase Phrases[] = {
     "kHz", // Català
     "Ú³æ", // ÀãááÚØÙ (Russian)
     "kHz", // Hrvatski (Croatian)
+    "kHz", // Eesti
+    "kHz", // Dansk
   },
   { "Nid", // English
     "Nid", // Deutsch
@@ -958,6 +1056,8 @@ const tI18nPhrase Phrases[] = {
     "Nid", // Català
     "Nid", // ÀãááÚØÙ (Russian)
     "Nid", // Hrvatski (Croatian)
+    "Nid", // Eesti
+    "Nid", // Dansk
   },
   { "Tid", // English
     "Tid", // Deutsch
@@ -977,6 +1077,8 @@ const tI18nPhrase Phrases[] = {
     "Tid", // Català
     "Tid", // ÀãááÚØÙ (Russian)
     "Tid", // Hrvatski (Croatian)
+    "Tid", // Eesti
+    "Tid", // Dansk
   },
   { "Rid", // English
     "Rid", // Deutsch
@@ -996,6 +1098,8 @@ const tI18nPhrase Phrases[] = {
     "Rid", // Català
     "Rid", // ÀãááÚØÙ (Russian)
     "Rid", // Hrvatski (Croatian)
+    "Rid", // Eesti
+    "Rid", // Dansk
   },
   { "dB", // English
     "dB", // Deutsch
@@ -1015,6 +1119,8 @@ const tI18nPhrase Phrases[] = {
     "dB", // Català
     "dB", // ÀãááÚØÙ (Russian)
     "dB", // Hrvatski (Croatian)
+    "dB", // Eesti
+    "dB", // Dansk
   },
   { "not indicated", // English
     "", // Deutsch
@@ -1034,6 +1140,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "AC-3", // English
     "AC-3", // Deutsch
@@ -1053,6 +1161,8 @@ const tI18nPhrase Phrases[] = {
     "AC-3", // Català
     "AC-3", // ÀãááÚØÙ (Russian)
     "AC-3", // Hrvatski (Croatian)
+    "AC-3", // Eesti
+    "AC-3", // Dansk
   },
   { "AC-3 Stream", // English
     "AC-3 Stream", // Deutsch
@@ -1072,6 +1182,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Frame Size", // English
     "Frame Größe", // Deutsch
@@ -1091,6 +1203,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Bit Stream Mode", // English
     "Bitstream Modus", // Deutsch
@@ -1110,6 +1224,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Audio Coding Mode", // English
     "Audio Coding Modus", // Deutsch
@@ -1129,6 +1245,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Center Mix Level", // English
     "Center Mix Pegel", // Deutsch
@@ -1148,6 +1266,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Surround Mix Level", // English
     "Surround Mix Pegel", // Deutsch
@@ -1167,6 +1287,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Dolby Surround Mode", // English
     "Dolby Surround Modus", // Deutsch
@@ -1186,6 +1308,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Low Frequency Effects", // English
     "Tieftöner Effekte", // Deutsch
@@ -1205,6 +1329,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Dialogue Normalization", // English
     "Dialog Normalisierung", // Deutsch
@@ -1224,6 +1350,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Complete Main (CM)", // English
     "Complete Main (CM)", // Deutsch
@@ -1243,6 +1371,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Music and Effects (ME)", // English
     "Musik und Effekte (ME)", // Deutsch
@@ -1262,6 +1392,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Visually Impaired (VI)", // English
     "Sehbehindert (VI)", // Deutsch
@@ -1281,6 +1413,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Hearing Impaired (HI)", // English
     "Hörbehindert (HI)", // Deutsch
@@ -1300,6 +1434,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Dialogue (D)", // English
     "Dialog (D)", // Deutsch
@@ -1319,6 +1455,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Commentary (C)", // English
     "Kommentar (C)", // Deutsch
@@ -1338,6 +1476,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Emergency (E)", // English
     "Notfall (E)", // Deutsch
@@ -1357,6 +1497,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Voice Over (VO)", // English
     "überlagerte Stimme (VO)", // Deutsch
@@ -1376,6 +1518,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Karaoke", // English
     "Karaoke", // Deutsch
@@ -1395,6 +1539,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Ch1", // English "Channel 1"
     "Kan1", // Deutsch
@@ -1414,6 +1560,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Ch2", // English "Channel 2"
     "Kan2", // Deutsch
@@ -1433,6 +1581,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "C", // English "Center"
     "C", // Deutsch
@@ -1452,6 +1602,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "L", // English "Left"
     "L", // Deutsch
@@ -1471,6 +1623,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "R", // English "Right"
     "R", // Deutsch
@@ -1490,6 +1644,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "S", // English "Surround"
     "S", // Deutsch
@@ -1509,6 +1665,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "SL", // English "Surround Left"
     "SL", // Deutsch
@@ -1528,6 +1686,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "SR", // English "Surround Right"
     "SR", // Deutsch
@@ -1547,6 +1707,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Show CA System", // English
     "CA System anzeigen", // Deutsch
@@ -1566,6 +1728,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Fixed", // English
     "Fest", // Deutsch
@@ -1585,6 +1749,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Free to Air", // English
     "Free to Air", // Deutsch
@@ -1604,6 +1770,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "SECA/Mediaguard", // English
     "SECA/Mediaguard", // Deutsch
@@ -1623,6 +1791,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Viaccess", // English
     "Viaccess", // Deutsch
@@ -1642,6 +1812,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Irdeto", // English
     "Irdeto", // Deutsch
@@ -1661,6 +1833,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "NDS/Videoguard", // English
     "NDS/Videoguard", // Deutsch
@@ -1680,6 +1854,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "Conax", // English
     "Conax", // Deutsch
@@ -1699,6 +1875,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "CryptoWorks", // English
     "CryptoWorks", // Deutsch
@@ -1718,6 +1896,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "PowerVu", // English
     "PowerVu", // Deutsch
@@ -1737,6 +1917,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "BetaCrypt", // English
     "BetaCrypt", // Deutsch
@@ -1756,6 +1938,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "NagraVision", // English
     "NagraVision", // Deutsch
@@ -1775,6 +1959,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { "SkyCrypt", // English
     "SkyCrypt", // Deutsch
@@ -1794,6 +1980,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
   },
   { NULL }
 };
