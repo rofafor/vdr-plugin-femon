@@ -95,7 +95,7 @@ protected:
   virtual void Action(void);
 
 public:
-  cFemonReceiver(int Ca, int Vpid, int Apid, int Dpid);
+  cFemonReceiver(int Ca, int Vpid, int Apid[], int Dpid[]);
   virtual ~cFemonReceiver();
 
   bool VideoValid(void)           { return m_VideoValid; };          // boolean

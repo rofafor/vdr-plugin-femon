@@ -12,7 +12,7 @@
 #include "femonosd.h"
 #include "femon.h"
 
-#if VDRVERSNUM && VDRVERSNUM < 10318
+#if VDRVERSNUM && VDRVERSNUM < 10319
 #error "You don't exist! Go away!"
 #endif
 

@@ -17,14 +17,14 @@
 #define PAYLOAD       0x10
 #define PTS_DTS_FLAGS 0xC0
 
-cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid, int Dpid)
-:cReceiver(Ca, -1, 3, Vpid, Apid, Dpid), cThread("femon receiver")
+cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid[], int Dpid[])
+:cReceiver(Ca, -1, Vpid, Apid, Dpid, NULL), cThread("femon receiver")
 {
   debug(printf("cFemonReceiver::cFemonReceiver()\n"));
   m_Active = false;
   m_VideoPid = Vpid;
-  m_AudioPid = Apid;
-  m_AC3Pid = Dpid;      
+  m_AudioPid = Apid[0];
+  m_AC3Pid = Dpid[0];      
   m_VideoValid = false;
   m_VideoPacketCount = 0;
   m_VideoHorizontalSize = 0;
