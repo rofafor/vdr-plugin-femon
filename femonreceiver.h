@@ -32,8 +32,8 @@ public:
   cFemonReceiver(int Ca, int Vpid, int Apid);
   virtual ~cFemonReceiver();
 
-  double VideoBitrate(void) { return m_VideoBitrate; };
-  double AudioBitrate(void) { return m_AudioBitrate; };
+  double VideoBitrate(void) { return m_VideoBitrate; }; // Mbit/s
+  double AudioBitrate(void) { return m_AudioBitrate; }; // kbit/s
   };
 
 #endif //__FEMONRECEIVER_H

@@ -32,7 +32,7 @@ cFemonReceiver::~cFemonReceiver(void)
   //printf("cFemonReceiver::~cFemonReceiver()\n");
   if (m_Active) {
      m_Active = false;
-     Cancel(5);
+     Cancel(3);
      }
 }
 
@@ -60,11 +60,11 @@ void cFemonReceiver::Action(void)
 {
   //printf("cFemonReceiver::Action()\n");
 #if (VDRVERSNUM < 10300)
-	isyslog("femon receiver: thread started (pid = %d)", getpid());
+  isyslog("femon receiver: thread started (pid = %d)", getpid());
 #endif
   m_Active = true;
   while (m_Active) {
-        // should we do some averaging to smooth the bitrates ?
+        // should we strip the 4 byte header off from TS packet ?
         m_VideoBitrate = (8.0 * TS_SIZE * m_VideoPacketCount) / (femonConfig.calcinterval * 102.4 * 1024.0);
         m_VideoPacketCount = 0;
         m_AudioBitrate = (8.0 * TS_SIZE * m_AudioPacketCount) / (femonConfig.calcinterval * 102.4);
@@ -72,6 +72,6 @@ void cFemonReceiver::Action(void)
         usleep(100000L * femonConfig.calcinterval);
     }
 #if (VDRVERSNUM < 10300)
-	isyslog("femon receiver: thread stopped (pid = %d)", getpid());
+  isyslog("femon receiver: thread stopped (pid = %d)", getpid());
 #endif
 }

@@ -20,4 +20,5 @@ cFemonConfig::cFemonConfig(void)
   updateinterval = 5;
   showbitrate    = 1;
   calcinterval   = 20;
+  syslogoutput   = 0;
 }

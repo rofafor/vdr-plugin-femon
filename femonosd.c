@@ -16,8 +16,11 @@
 #warning You should consider using the small fonts!
 #endif
 
-#define FE_DEVICE            "/dev/dvb/adapter%d/frontend%d"
+#define FRONTEND_DEVICE      "/dev/dvb/adapter%d/frontend%d"
 #define CHANNELINPUT_TIMEOUT 1000
+
+#define SCREENWIDTH     720
+#define SCREENHEIGHT    576
 
 #define OSDWIDTH        46
 #define OSDINFOHEIGHT   11
@@ -85,15 +88,16 @@ void cFemonOsd::DrawStatusWindow(void)
   int snr = m_SNR / 655;
   int signal = m_Signal / 655;
   int lines = 0;
+  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   if (m_Osd) {
 #if (VDRVERSNUM >= 10300) || defined(ELCHIAIOVERSION)
      eDvbFont OldFont = m_Osd->SetFont(fontSml);
 #endif
      m_Osd->Clear(m_StatusWindow);
-     snprintf(buf, sizeof(buf), "%d%s %s", m_Number ? m_Number : Channels.GetByNumber(cDevice::CurrentChannel())->Number(), m_Number ? "-" : "", Channels.GetByNumber(cDevice::CurrentChannel())->Name());
+     snprintf(buf, sizeof(buf), "%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->Name());
      m_Osd->Fill(0, femonConfig.position ? 0 : (OSDINFOHEIGHT + OSDGAPHEIGHT) * cOsd::LineHeight(), OSDWIDTH * cOsd::CellWidth(), femonConfig.position ? cOsd::LineHeight() - 1 : (OSDINFOHEIGHT + OSDGAPHEIGHT + 1) * cOsd::LineHeight() - 1, clrWhite, m_StatusWindow);
-     m_Osd->Text(OSDSTATUSCOL1 * cOsd::CellWidth(), femonConfig.position ? 0 : (OSDINFOHEIGHT + OSDGAPHEIGHT + 0) * cOsd::LineHeight(), buf, clrBlack, clrWhite, m_StatusWindow);
+     m_Osd->Text(OSDSTATUSCOL1 * cOsd::CellWidth(), femonConfig.position ? 0 : (OSDINFOHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight(), buf, clrBlack, clrWhite, m_StatusWindow);
      lines++;
      if (signal > 0) {
         signal = (OSDWIDTH * cOsd::CellWidth()) * signal / 100;
@@ -123,7 +127,7 @@ void cFemonOsd::DrawStatusWindow(void)
      m_Osd->Text(OSDSTATUSCOL2 * cOsd::CellWidth(), femonConfig.position ? lines * cOsd::LineHeight() : (OSDINFOHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight(), buf, clrWhite /*signal < femonConfig.redlimit ? clrRed : signal < femonConfig.greenlimit ? clrYellow : clrGreen*/, clrBackground, m_StatusWindow);
      snprintf(buf, sizeof(buf), "BER: %08x", m_BER);
      m_Osd->Text(OSDSTATUSCOL3 * cOsd::CellWidth(), femonConfig.position ? lines * cOsd::LineHeight() : (OSDINFOHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight(), buf, clrWhite, clrBackground, m_StatusWindow);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "Video: %.2f Mbit/s",m_Receiver->VideoBitrate());
+     if (m_Receiver) snprintf(buf, sizeof(buf), "Video: %.2f Mbit/s", m_Receiver->VideoBitrate());
      else            snprintf(buf, sizeof(buf), "Video: --- Mbit/s");
      m_Osd->Text(OSDSTATUSCOL4 * cOsd::CellWidth(), femonConfig.position ? lines * cOsd::LineHeight() : (OSDINFOHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight(), buf, clrWhite, clrBackground, m_StatusWindow);
      lines++;
@@ -133,7 +137,7 @@ void cFemonOsd::DrawStatusWindow(void)
      m_Osd->Text(OSDSTATUSCOL2 * cOsd::CellWidth(), femonConfig.position ? lines * cOsd::LineHeight() : (OSDINFOHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight(), buf, clrWhite /*snr < femonConfig.redlimit ? clrRed : snr < femonConfig.greenlimit ? clrYellow : clrGreen*/, clrBackground, m_StatusWindow);
      snprintf(buf, sizeof(buf), "UNC: %08x", m_UNC);
      m_Osd->Text(OSDSTATUSCOL3 * cOsd::CellWidth(), femonConfig.position ? lines * cOsd::LineHeight() : (OSDINFOHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight(), buf, clrWhite, clrBackground, m_StatusWindow);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "Audio: %.0f kbit/s",m_Receiver->AudioBitrate());
+     if (m_Receiver) snprintf(buf, sizeof(buf), "Audio: %.0f kbit/s", m_Receiver->AudioBitrate());
      else            snprintf(buf, sizeof(buf), "Audio: --- kbit/s");
      m_Osd->Text(OSDSTATUSCOL4 * cOsd::CellWidth(), femonConfig.position ? lines * cOsd::LineHeight() : (OSDINFOHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight(), buf, clrWhite, clrBackground, m_StatusWindow);
      lines++;
@@ -157,6 +161,7 @@ void cFemonOsd::DrawInfoWindow(void)
   char buf2[20];
   int lines = 0;
   int value = 0;
+  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   if (m_Osd) {
      if (m_DisplayMode) {
@@ -168,76 +173,85 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->Text( OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines, tr("Transponder Information"), clrBackground, clrWhite, m_InfoWindow);
         lines++;
         m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Vpid"), clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Vpid());
+        snprintf(buf, sizeof(buf), "%d", channel->Vpid());
         m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
         m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Ppid"), clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Ppid());
+        snprintf(buf, sizeof(buf), "%d", channel->Ppid());
         m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
         lines++;
         m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Apid1"), clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Apid1());
+        value = channel->Apid2();
+        if (value) snprintf(buf, sizeof(buf), "%d, %d", channel->Apid1(), value);
+        else       snprintf(buf, sizeof(buf), "%d", channel->Apid1());
         m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
-        m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Tpid"), clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Tpid());
+        m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Dpid1"), clrWhite, clrBackground, m_InfoWindow);
+        value = channel->Dpid2();
+        if (value) snprintf(buf, sizeof(buf), "%d, %d", channel->Dpid1(), value);
+        else       snprintf(buf, sizeof(buf), "%d", channel->Dpid1());
         m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
         lines++;
         m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("CA"), clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Ca());
+        snprintf(buf, sizeof(buf), "%d", channel->Ca());
         m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
-        m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Sid"), clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Sid());
+        m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Tpid"), clrWhite, clrBackground, m_InfoWindow);
+        snprintf(buf, sizeof(buf), "%d", channel->Tpid());
         m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
         lines++;
+        m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Sid"), clrWhite, clrBackground, m_InfoWindow);
+        snprintf(buf, sizeof(buf), "%d", channel->Sid());
+        m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
 #if (VDRVERSNUM >= 10300)
-        m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), "Nid", clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Nid());
-        m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
-        m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), "Tid" /*tr("Tid")*/, clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Tid());
+        m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), "Nid", clrWhite, clrBackground, m_InfoWindow);
+        snprintf(buf, sizeof(buf), "%d", channel->Nid());
         m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
         lines++;
-        m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), "Rid" /*tr("Rid")*/, clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Rid());
+        m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), "Tid" /*tr("Tid")*/, clrWhite, clrBackground, m_InfoWindow);
+        snprintf(buf, sizeof(buf), "%d", channel->Tid());
         m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
-        lines++;
+        m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), "Rid" /*tr("Rid")*/, clrWhite, clrBackground, m_InfoWindow);
+        snprintf(buf, sizeof(buf), "%d", channel->Rid());
+        m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
 #endif
+        lines++;
         switch (m_FrontendInfo.type) {
           case FE_QPSK:
                snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Satellite Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Frequency"), clrWhite, clrBackground, m_InfoWindow);
-               snprintf(buf, sizeof(buf), "%d kHz", Channels.GetByNumber(cDevice::CurrentChannel())->Frequency());
+               value = channel->Frequency();
+               while (value > 20000) value /= 1000;
+               snprintf(buf, sizeof(buf), "%d MHz", value);
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Source"), clrWhite, clrBackground, m_InfoWindow);
-               snprintf(buf, sizeof(buf), "%s", cSource::ToString(Channels.GetByNumber(cDevice::CurrentChannel())->Source()));
+               snprintf(buf, sizeof(buf), "%s", cSource::ToString(channel->Source()));
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Srate"), clrWhite, clrBackground, m_InfoWindow);
-               snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Srate());
+               snprintf(buf, sizeof(buf), "%d", channel->Srate());
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Polarization"), clrWhite, clrBackground, m_InfoWindow);
-               snprintf(buf, sizeof(buf), "%c", toupper(Channels.GetByNumber(cDevice::CurrentChannel())->Polarization()));
+               snprintf(buf, sizeof(buf), "%c", toupper(channel->Polarization()));
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Inversion"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Inversion();
-               if      (value == 0) snprintf(buf, sizeof(buf), "Off");
-               else if (value == 1) snprintf(buf, sizeof(buf), "On");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->Inversion();
+               if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), "Off");
+               else if (value == INVERSION_ON)    snprintf(buf, sizeof(buf), "On");
+               else            /*INVERSION_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("CoderateH"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->CoderateH();
-               if      (value == 0) snprintf(buf, sizeof(buf), "None");
-               else if (value == 1) snprintf(buf, sizeof(buf), "1/2");
-               else if (value == 2) snprintf(buf, sizeof(buf), "2/3");
-               else if (value == 3) snprintf(buf, sizeof(buf), "3/4");
-               else if (value == 4) snprintf(buf, sizeof(buf), "4/5");
-               else if (value == 5) snprintf(buf, sizeof(buf), "5/6");
-               else if (value == 6) snprintf(buf, sizeof(buf), "6/7");
-               else if (value == 7) snprintf(buf, sizeof(buf), "7/8");
-               else if (value == 8) snprintf(buf, sizeof(buf), "8/9");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->CoderateH();
+               if      (value == FEC_NONE)  snprintf(buf, sizeof(buf), "None");
+               else if (value == FEC_1_2)   snprintf(buf, sizeof(buf), "1/2");
+               else if (value == FEC_2_3)   snprintf(buf, sizeof(buf), "2/3");
+               else if (value == FEC_3_4)   snprintf(buf, sizeof(buf), "3/4");
+               else if (value == FEC_4_5)   snprintf(buf, sizeof(buf), "4/5");
+               else if (value == FEC_5_6)   snprintf(buf, sizeof(buf), "5/6");
+               else if (value == FEC_6_7)   snprintf(buf, sizeof(buf), "6/7");
+               else if (value == FEC_7_8)   snprintf(buf, sizeof(buf), "7/8");
+               else if (value == FEC_8_9)   snprintf(buf, sizeof(buf), "8/9");
+               else            /*FEC_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                break;
 
@@ -246,44 +260,46 @@ void cFemonOsd::DrawInfoWindow(void)
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Frequency"), clrWhite, clrBackground, m_InfoWindow);
-               snprintf(buf, sizeof(buf), "%d kHz", Channels.GetByNumber(cDevice::CurrentChannel())->Frequency());
+               value = channel->Frequency();
+               while (value > 20000) value /= 1000;
+               snprintf(buf, sizeof(buf), "%d MHz", value);
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Source"), clrWhite, clrBackground, m_InfoWindow);
-               snprintf(buf, sizeof(buf), "%s", cSource::ToString(Channels.GetByNumber(cDevice::CurrentChannel())->Source()));
+               snprintf(buf, sizeof(buf), "%s", cSource::ToString(channel->Source()));
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Srate"), clrWhite, clrBackground, m_InfoWindow);
-               snprintf(buf, sizeof(buf), "%d", Channels.GetByNumber(cDevice::CurrentChannel())->Srate());
+               snprintf(buf, sizeof(buf), "%d", channel->Srate());
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Modulation"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Modulation();
-               if      (value == 0) snprintf(buf, sizeof(buf), "QPSK");
-               else if (value == 1) snprintf(buf, sizeof(buf), "QAM 16");
-               else if (value == 2) snprintf(buf, sizeof(buf), "QAM 32");
-               else if (value == 3) snprintf(buf, sizeof(buf), "QAM 64");
-               else if (value == 4) snprintf(buf, sizeof(buf), "QAM 128");
-               else if (value == 5) snprintf(buf, sizeof(buf), "QAM 256");
-               else                 snprintf(buf, sizeof(buf), "QAM Auto");
+               value = channel->Modulation();
+               if      (value == QPSK)      snprintf(buf, sizeof(buf), "QPSK");
+               else if (value == QAM_16)    snprintf(buf, sizeof(buf), "QAM 16");
+               else if (value == QAM_32)    snprintf(buf, sizeof(buf), "QAM 32");
+               else if (value == QAM_64)    snprintf(buf, sizeof(buf), "QAM 64");
+               else if (value == QAM_128)   snprintf(buf, sizeof(buf), "QAM 128");
+               else if (value == QAM_256)   snprintf(buf, sizeof(buf), "QAM 256");
+               else            /*QAM_AUTO*/ snprintf(buf, sizeof(buf), "QAM Auto");
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Inversion"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Inversion();
-               if      (value == 0) snprintf(buf, sizeof(buf), "Off");
-               else if (value == 1) snprintf(buf, sizeof(buf), "On");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->Inversion();
+               if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), "Off");
+               else if (value == INVERSION_ON)    snprintf(buf, sizeof(buf), "On");
+               else            /*INVERSION_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("CoderateH"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->CoderateH();
-               if      (value == 0) snprintf(buf, sizeof(buf), "None");
-               else if (value == 1) snprintf(buf, sizeof(buf), "1/2");
-               else if (value == 2) snprintf(buf, sizeof(buf), "2/3");
-               else if (value == 3) snprintf(buf, sizeof(buf), "3/4");
-               else if (value == 4) snprintf(buf, sizeof(buf), "4/5");
-               else if (value == 5) snprintf(buf, sizeof(buf), "5/6");
-               else if (value == 6) snprintf(buf, sizeof(buf), "6/7");
-               else if (value == 7) snprintf(buf, sizeof(buf), "7/8");
-               else if (value == 8) snprintf(buf, sizeof(buf), "8/9");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->CoderateH();
+               if      (value == FEC_NONE)  snprintf(buf, sizeof(buf), "None");
+               else if (value == FEC_1_2)   snprintf(buf, sizeof(buf), "1/2");
+               else if (value == FEC_2_3)   snprintf(buf, sizeof(buf), "2/3");
+               else if (value == FEC_3_4)   snprintf(buf, sizeof(buf), "3/4");
+               else if (value == FEC_4_5)   snprintf(buf, sizeof(buf), "4/5");
+               else if (value == FEC_5_6)   snprintf(buf, sizeof(buf), "5/6");
+               else if (value == FEC_6_7)   snprintf(buf, sizeof(buf), "6/7");
+               else if (value == FEC_7_8)   snprintf(buf, sizeof(buf), "7/8");
+               else if (value == FEC_8_9)   snprintf(buf, sizeof(buf), "8/9");
+               else            /*FEC_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                break;
 
@@ -292,79 +308,82 @@ void cFemonOsd::DrawInfoWindow(void)
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Frequency"), clrWhite, clrBackground, m_InfoWindow);
-               snprintf(buf, sizeof(buf), "%d kHz", Channels.GetByNumber(cDevice::CurrentChannel())->Frequency() / 1000);
+               value = channel->Frequency();
+               while (value > 20000) value /= 1000;
+               snprintf(buf, sizeof(buf), "%d MHz", value);
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Transmission"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Transmission();
-               if      (value == 0) snprintf(buf, sizeof(buf), "2K");
-               else if (value == 1) snprintf(buf, sizeof(buf), "8K");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->Transmission();
+               if      (value == TRANSMISSION_MODE_2K)    snprintf(buf, sizeof(buf), "2K");
+               else if (value == TRANSMISSION_MODE_8K)    snprintf(buf, sizeof(buf), "8K");
+               else            /*TRANSMISSION_MODE_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text( OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Bandwidth"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Bandwidth();
-               if      (value == 0) snprintf(buf, sizeof(buf), "6 MHz");
-               else if (value == 1) snprintf(buf, sizeof(buf), "7 MHz");
-               else if (value == 2) snprintf(buf, sizeof(buf), "8 MHz");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->Bandwidth();
+               if      (value == BANDWIDTH_8_MHZ) snprintf(buf, sizeof(buf), "8 MHz");
+               else if (value == BANDWIDTH_7_MHZ) snprintf(buf, sizeof(buf), "7 MHz");
+               else if (value == BANDWIDTH_6_MHZ) snprintf(buf, sizeof(buf), "6 MHz");
+               else            /*BANDWIDTH_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Modulation"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Modulation();
-               if      (value == 0) snprintf(buf, sizeof(buf), "QPSK");
-               else if (value == 1) snprintf(buf, sizeof(buf), "QAM 16");
-               else if (value == 2) snprintf(buf, sizeof(buf), "QAM 32");
-               else if (value == 3) snprintf(buf, sizeof(buf), "QAM 64");
-               else if (value == 4) snprintf(buf, sizeof(buf), "QAM 128");
-               else if (value == 5) snprintf(buf, sizeof(buf), "QAM 256");
-               else                 snprintf(buf, sizeof(buf), "QAM Auto");
+               value = channel->Modulation();
+               if      (value == QPSK)      snprintf(buf, sizeof(buf), "QPSK");
+               else if (value == QAM_16)    snprintf(buf, sizeof(buf), "QAM 16");
+               else if (value == QAM_32)    snprintf(buf, sizeof(buf), "QAM 32");
+               else if (value == QAM_64)    snprintf(buf, sizeof(buf), "QAM 64");
+               else if (value == QAM_128)   snprintf(buf, sizeof(buf), "QAM 128");
+               else if (value == QAM_256)   snprintf(buf, sizeof(buf), "QAM 256");
+               else            /*QAM_AUTO*/ snprintf(buf, sizeof(buf), "QAM Auto");
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Inversion"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Inversion();
-               if      (value == 0) snprintf(buf, sizeof(buf), "Off");
-               else if (value == 1) snprintf(buf, sizeof(buf), "On");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->Inversion();
+               if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), "Off");
+               else if (value == INVERSION_ON)    snprintf(buf, sizeof(buf), "On");
+               else            /*INVERSION_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("CoderateH"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->CoderateH();
-               if      (value == 0) snprintf(buf, sizeof(buf), "None");
-               else if (value == 1) snprintf(buf, sizeof(buf), "1/2");
-               else if (value == 2) snprintf(buf, sizeof(buf), "2/3");
-               else if (value == 3) snprintf(buf, sizeof(buf), "3/4");
-               else if (value == 4) snprintf(buf, sizeof(buf), "4/5");
-               else if (value == 5) snprintf(buf, sizeof(buf), "5/6");
-               else if (value == 6) snprintf(buf, sizeof(buf), "6/7");
-               else if (value == 7) snprintf(buf, sizeof(buf), "7/8");
-               else if (value == 8) snprintf(buf, sizeof(buf), "8/9");
-               else                 snprintf(buf, sizeof(buf), "Auto");
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->CoderateL();
-               if      (value == 0) snprintf(buf2, sizeof(buf2), " - None");
-               else if (value == 1) snprintf(buf2, sizeof(buf2), " - 1/2");
-               else if (value == 2) snprintf(buf2, sizeof(buf2), " - 2/3");
-               else if (value == 3) snprintf(buf2, sizeof(buf2), " - 3/4");
-               else if (value == 4) snprintf(buf2, sizeof(buf2), " - 4/5");
-               else if (value == 5) snprintf(buf2, sizeof(buf2), " - 5/6");
-               else if (value == 6) snprintf(buf2, sizeof(buf2), " - 6/7");
-               else if (value == 7) snprintf(buf2, sizeof(buf2), " - 7/8");
-               else if (value == 8) snprintf(buf2, sizeof(buf2), " - 8/9");
-               else                 snprintf(buf2, sizeof(buf2), " - Auto");
+               value = channel->CoderateH();
+               if      (value == FEC_NONE)  snprintf(buf, sizeof(buf), "None");
+               else if (value == FEC_1_2)   snprintf(buf, sizeof(buf), "1/2");
+               else if (value == FEC_2_3)   snprintf(buf, sizeof(buf), "2/3");
+               else if (value == FEC_3_4)   snprintf(buf, sizeof(buf), "3/4");
+               else if (value == FEC_4_5)   snprintf(buf, sizeof(buf), "4/5");
+               else if (value == FEC_5_6)   snprintf(buf, sizeof(buf), "5/6");
+               else if (value == FEC_6_7)   snprintf(buf, sizeof(buf), "6/7");
+               else if (value == FEC_7_8)   snprintf(buf, sizeof(buf), "7/8");
+               else if (value == FEC_8_9)   snprintf(buf, sizeof(buf), "8/9");
+               else            /*FEC_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
+               value = channel->CoderateL();
+               if      (value == FEC_NONE)  snprintf(buf2, sizeof(buf2), " - None");
+               else if (value == FEC_1_2)   snprintf(buf2, sizeof(buf2), " - 1/2");
+               else if (value == FEC_2_3)   snprintf(buf2, sizeof(buf2), " - 2/3");
+               else if (value == FEC_3_4)   snprintf(buf2, sizeof(buf2), " - 3/4");
+               else if (value == FEC_4_5)   snprintf(buf2, sizeof(buf2), " - 4/5");
+               else if (value == FEC_5_6)   snprintf(buf2, sizeof(buf2), " - 5/6");
+               else if (value == FEC_6_7)   snprintf(buf2, sizeof(buf2), " - 6/7");
+               else if (value == FEC_7_8)   snprintf(buf2, sizeof(buf2), " - 7/8");
+               else if (value == FEC_8_9)   snprintf(buf2, sizeof(buf2), " - 8/9");
+               else            /*FEC_AUTO*/ snprintf(buf2, sizeof(buf2), " - Auto");
                strncat(buf, buf2, sizeof(buf));
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                lines++;
                m_Osd->Text(OSDINFOLCOL1 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Hierarchy"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Hierarchy();
-               if      (value == 0) snprintf(buf, sizeof(buf), "None");
-               else if (value == 1) snprintf(buf, sizeof(buf), "1");
-               else if (value == 2) snprintf(buf, sizeof(buf), "2");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->Hierarchy();
+               if      (value == HIERARCHY_NONE)  snprintf(buf, sizeof(buf), "None");
+               else if (value == HIERARCHY_1)     snprintf(buf, sizeof(buf), "1");
+               else if (value == HIERARCHY_2)     snprintf(buf, sizeof(buf), "2");
+               else if (value == HIERARCHY_4)     snprintf(buf, sizeof(buf), "4");
+               else            /*HIERARCHY_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL2 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOLCOL3 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), tr("Guard"), clrWhite, clrBackground, m_InfoWindow);
-               value = Channels.GetByNumber(cDevice::CurrentChannel())->Guard();
-               if      (value == 0) snprintf(buf, sizeof(buf), "1/4");
-               else if (value == 1) snprintf(buf, sizeof(buf), "1/8");
-               else if (value == 2) snprintf(buf, sizeof(buf), "1/16");
-               else if (value == 3) snprintf(buf, sizeof(buf), "1/32");
-               else                 snprintf(buf, sizeof(buf), "Auto");
+               value = channel->Guard();
+               if      (value == GUARD_INTERVAL_1_32)  snprintf(buf, sizeof(buf), "1/32");
+               else if (value == GUARD_INTERVAL_1_16)  snprintf(buf, sizeof(buf), "1/16");
+               else if (value == GUARD_INTERVAL_1_8)   snprintf(buf, sizeof(buf), "1/8");
+               else if (value == GUARD_INTERVAL_1_4)   snprintf(buf, sizeof(buf), "1/4");
+               else            /*GUARD_INTERVAL_AUTO*/ snprintf(buf, sizeof(buf), "Auto");
                m_Osd->Text(OSDINFOLCOL4 * cOsd::CellWidth(), femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT + lines) * cOsd::LineHeight() : lines * cOsd::LineHeight(), buf, clrYellow, clrBackground, m_InfoWindow);
                break;
           }
@@ -395,6 +414,9 @@ void cFemonOsd::Action(void)
        CHECK(ioctl(m_Frontend, FE_READ_UNCORRECTED_BLOCKS, &m_UNC));
        DrawInfoWindow();
        DrawStatusWindow();
+       if (femonConfig.syslogoutput) {
+          isyslog("Card #%d (%s) STR: %04x SNR: %04x BER: %08x UNC: %08x |%c|%c|%c|%c|%c|", cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name, m_Signal, m_SNR, m_BER, m_UNC, (m_FrontendStatus & FE_HAS_LOCK) ? 'L' : ' ', (m_FrontendStatus & FE_HAS_SIGNAL) ? 'S' : ' ', (m_FrontendStatus & FE_HAS_CARRIER) ? 'C' : ' ', (m_FrontendStatus & FE_HAS_VITERBI) ? 'V' : ' ', (m_FrontendStatus & FE_HAS_SYNC) ? 'Z' : ' ');
+          }
        }
     usleep(100000L * femonConfig.updateinterval);
     }
@@ -407,7 +429,7 @@ void cFemonOsd::Show(void)
 {
   //printf("cFemonOsd::Show()\n");
   char *dev = NULL;
-  asprintf(&dev, FE_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
+  asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
   free(dev);
   if (m_Frontend < 0) {
@@ -421,7 +443,7 @@ void cFemonOsd::Show(void)
      close(m_Frontend);
      return;
      }
-  m_Osd = cOsd::OpenRaw((720 - OSDWIDTH * cOsd::CellWidth()) / 2, (576 - (OSDSTATUSHEIGHT + OSDINFOHEIGHT + OSDGAPHEIGHT) * cOsd::LineHeight()) / 2);
+  m_Osd = cOsd::OpenRaw((SCREENWIDTH - OSDWIDTH * cOsd::CellWidth()) / 2, (SCREENHEIGHT - (OSDSTATUSHEIGHT + OSDINFOHEIGHT + OSDGAPHEIGHT) * cOsd::LineHeight()) / 2);
   if (m_Osd) {
      m_StatusWindow = m_Osd->Create(0, femonConfig.position ? 0 : (OSDINFOHEIGHT + OSDGAPHEIGHT) * cOsd::LineHeight(), OSDWIDTH * cOsd::CellWidth(), OSDSTATUSHEIGHT * cOsd::LineHeight(), 4);
      m_InfoWindow = m_Osd->Create(0, femonConfig.position ? (OSDSTATUSHEIGHT + OSDGAPHEIGHT) * cOsd::LineHeight() : 0, OSDWIDTH * cOsd::CellWidth(), OSDINFOHEIGHT * cOsd::LineHeight(), 2);
@@ -431,7 +453,8 @@ void cFemonOsd::Show(void)
      if (m_Receiver)
         delete m_Receiver;
      if (femonConfig.showbitrate) {
-        m_Receiver = new cFemonReceiver(Channels.GetByNumber(cDevice::CurrentChannel())->Ca(), Channels.GetByNumber(cDevice::CurrentChannel())->Vpid(), Channels.GetByNumber(cDevice::CurrentChannel())->Apid1());
+        int channelNumber = cDevice::CurrentChannel();
+        m_Receiver = new cFemonReceiver(Channels.GetByNumber(channelNumber)->Ca(), Channels.GetByNumber(channelNumber)->Vpid(), Channels.GetByNumber(channelNumber)->Apid1());
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      Start();
@@ -443,7 +466,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   //printf("cFemonOsd::ChannelSwitch()\n");
   char *dev = NULL;
   close(m_Frontend);
-  asprintf(&dev, FE_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
+  asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
   free(dev);
   if (m_Frontend < 0) {
@@ -460,7 +483,8 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   if (m_Receiver)
      delete m_Receiver;
   if (femonConfig.showbitrate) {
-     m_Receiver = new cFemonReceiver(Channels.GetByNumber(cDevice::CurrentChannel())->Ca(), Channels.GetByNumber(cDevice::CurrentChannel())->Vpid(), Channels.GetByNumber(cDevice::CurrentChannel())->Apid1());
+     channelNumber = cDevice::CurrentChannel();
+     m_Receiver = new cFemonReceiver(Channels.GetByNumber(channelNumber)->Ca(), Channels.GetByNumber(channelNumber)->Vpid(), Channels.GetByNumber(channelNumber)->Apid1());
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
 }

@@ -11,7 +11,7 @@ See the file COPYING for license information.
 Requirements:
 
 Ph.D. in Astro Physics and preferably a six-pack waiting in a fridge.
-Never trust a Klingon.
+Never trust a Klingon. "Qu'vaD lI' De'vam"
 
 Description:
 
@@ -28,7 +28,7 @@ excellent 'OSD Picture-In-Picture' plugin by Sascha Volkenandt <sascha@akv-soft.
 and Andreas Regel <andreas.regel@powarman.de>. The bitrate calculation algorithm
 originates from the 'dvbstream' application by Dave Chapman <dave@dchapman.com>.
 
-Shortcomings / Todo list:
+Shortcomings / Todo list / Notes:
 
 - The current version is a kind of Proof In Concept to replace the old 'tech
   patch', and it's now eating many unnecessary cpu clock cycles - this will be
@@ -41,3 +41,5 @@ Shortcomings / Todo list:
   well. Btw., this same thing happens with OSDTeletext plugin too :)
 - The plugin GUI is designed for _small fonts_, so stable vdr-1.2.6 users should
   consider a small font patch (e.g. ElchiAIO4a) to maximize the visual effect :)
+- The stream information is still missing.
+- Disable bitrate calculation to speed up heavy zapping sessions.

@@ -12,7 +12,7 @@ const tI18nPhrase Phrases[] = {
   { "DVB Signal Information Monitor (OSD)", // English
     "DVB Signal Informationsanzeige (OSD)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Visualizza le informazioni sul segnale DVB", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -32,7 +32,7 @@ const tI18nPhrase Phrases[] = {
   { "Signal Information", // English
     "Signalinformationen", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Informazioni sul segnale", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -72,7 +72,7 @@ const tI18nPhrase Phrases[] = {
   { "Default Display Mode", // English
     "Standard Anzeigemodus", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Modo di visualizzazione standard", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français 
@@ -92,7 +92,7 @@ const tI18nPhrase Phrases[] = {
   { "simple", // English
     "einfach", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "semplice", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français 
@@ -112,7 +112,7 @@ const tI18nPhrase Phrases[] = {
   { "advanced", // English
     "fortgeschritten", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "avanzato", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français 
@@ -132,7 +132,7 @@ const tI18nPhrase Phrases[] = {
   { "Hide Mainmenu Entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
     "", // Slovenski
-    "Nascondere Voce Menu", // Italiano
+    "Nascondi voce menù", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -172,7 +172,7 @@ const tI18nPhrase Phrases[] = {
   { "Bitrate Calculation", // English
     "Bitratenberechnung", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Calcolo Bitrate", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -192,7 +192,7 @@ const tI18nPhrase Phrases[] = {
   { "Calculation Interval [0.1s]", // English
     "Berechnungsintervall [0.1s]", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Intervallo di calcolo [0.1s]", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -212,7 +212,7 @@ const tI18nPhrase Phrases[] = {
   { "Red Limit [%]", // English
     "Grenze Rot [%]", // Deutsch
     "", // Slovenski
-    "Limite Rosso [%]", // Italiano
+    "Limite rosso [%]", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -232,7 +232,7 @@ const tI18nPhrase Phrases[] = {
   { "Green Limit [%]", // English
     "Grenze Grün [%]", // Deutsch
     "", // Slovenski
-    "Limite Verde [%]", // Italiano
+    "Limite verde [%]", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -252,7 +252,7 @@ const tI18nPhrase Phrases[] = {
   { "Transponder Information", // English
     "Transponderinformation", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Informazioni transponder", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -272,7 +272,7 @@ const tI18nPhrase Phrases[] = {
   { "Satellite Card", // English
     "Satellitenkarte", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Scheda satellitare", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -292,7 +292,7 @@ const tI18nPhrase Phrases[] = {
   { "Cable Card", // English
     "Kabelkarte", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Scheda via cavo", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -312,12 +312,32 @@ const tI18nPhrase Phrases[] = {
   { "Terrestial Card", // English
     "Terrestrische Karte", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Scheda terrestre", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
     "", // Norsk
     "Terrestiaalikortti", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ
+#endif
+  },
+  { "Use Syslog Output", // English
+    "Benutze syslog Ausgabe", // Deutsch
+    "", // Slovenski
+    "Registra su syslog", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kirjaa systeemilokiin", // suomi
     "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ

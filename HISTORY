@@ -29,3 +29,9 @@ VDR Plugin 'femon' Revision History
 - Transponder information is now available in advanced display mode:
   Press 'OK' key to switch between the simple and the advanced display mode.
 - Moved bitrate calculation to it's own thread for improved accurancy.
+
+2004-03-07: Version 0.0.3a
+
+- Fixed frequency, guard and bandwidth units in transponder information.
+- Added Apid2, Dpid1, Dpid2 information.
+- Added option to write signal information into system log.

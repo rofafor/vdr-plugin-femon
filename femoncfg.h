@@ -13,14 +13,15 @@ struct cFemonConfig
 {
 public:
   cFemonConfig(void);
-  int  hidemenu;
-  int  displaymode;
-  int  position;
-  int  redlimit;
-  int  greenlimit;
-  int  updateinterval;
-  int  showbitrate;
-  int  calcinterval;
+  int hidemenu;
+  int displaymode;
+  int position;
+  int redlimit;
+  int greenlimit;
+  int updateinterval;
+  int showbitrate;
+  int calcinterval;
+  int syslogoutput;
 };
 
 extern cFemonConfig femonConfig;
