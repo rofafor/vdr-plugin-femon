@@ -93,7 +93,28 @@ const tI18nPhrase Phrases[] = {
     "Kõrgus", // Eesti
     "", // Dansk
   },
-  { "Default Display Mode", // English
+  { "Horizontal offset", // English
+    "", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Vaakakeskitys", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
+  },
+  { "Default display mode", // English
     "Standard Anzeigemodus", // Deutsch
     "", // Slovenski
     "Modo di visualizzazione standard", // Italiano
@@ -177,7 +198,91 @@ const tI18nPhrase Phrases[] = {
     "striim", // Eesti
     "", // Dansk
   },
-  { "Hide Mainmenu Entry", // English
+  { "Theme", // English
+    "Thema", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français 
+    "", // Norsk
+    "Teema", // suomi
+    "", // Polski   
+    "", // Español  
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Català  
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "Teema", // Eesti
+    "", // Dansk
+  },
+  { "Classic", // English
+    "Klassischer", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français 
+    "", // Norsk
+    "Klassinen", // suomi
+    "", // Polski   
+    "", // Español  
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Català  
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "Klassikaline", // Eesti
+    "", // Dansk
+  },
+  { "Elchi", // English
+    "Elchi", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français 
+    "", // Norsk
+    "Elchi", // suomi
+    "", // Polski   
+    "", // Español  
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Català  
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "Elchi", // Eesti
+    "", // Dansk
+  },
+  { "DeepBlue", // English
+    "DeepBlue", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français 
+    "", // Norsk
+    "DeepBlue", // suomi
+    "", // Polski   
+    "", // Español  
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Català  
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "DeepBlue", // Eesti
+    "", // Dansk
+  },
+  { "Hide main menu entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
     "", // Slovenski
     "Nascondi voce menù", // Italiano
@@ -198,7 +303,7 @@ const tI18nPhrase Phrases[] = {
     "Peida valik peamenüüs", // Eesti
     "", // Dansk
   },
-  { "OSD Update Interval [0.1s]", // English
+  { "OSD update interval [0.1s]", // English
     "OSD Updateintervall [0.1s]", // Deutsch
     "", // Slovenski
     "Intervallo di aggiornamento [0.1s]", // Italiano
@@ -219,7 +324,7 @@ const tI18nPhrase Phrases[] = {
     "Uuendusintervall [0,1s]", // Eesti
     "", // Dansk
   },
-  { "Analyze Stream", // English
+  { "Analyze stream", // English
     "Stream analysieren", // Deutsch
     "", // Slovenski
     "", // Italiano
@@ -240,7 +345,7 @@ const tI18nPhrase Phrases[] = {
     "Striimi analüüs", // Eesti
     "", // Dansk
   },
-  { "Calculation Interval [0.1s]", // English
+  { "Calculation interval [0.1s]", // English
     "Berechnungsintervall [0.1s]", // Deutsch
     "", // Slovenski
     "Intervallo di calcolo [0.1s]", // Italiano
@@ -261,7 +366,7 @@ const tI18nPhrase Phrases[] = {
     "Kalkulatsiooni intervall [0,1s]", // Eesti
     "", // Dansk
   },
-  { "Red Limit [%]", // English
+  { "Red limit [%]", // English
     "Grenze Rot [%]", // Deutsch
     "", // Slovenski
     "Limite rosso [%]", // Italiano
@@ -282,7 +387,7 @@ const tI18nPhrase Phrases[] = {
     "Punase limiit [%]", // Eesti
     "", // Dansk
   },
-  { "Green Limit [%]", // English
+  { "Green limit [%]", // English
     "Grenze Grün [%]", // Deutsch
     "", // Slovenski
     "Limite verde [%]", // Italiano
@@ -387,7 +492,7 @@ const tI18nPhrase Phrases[] = {
     "Terrestiaalkaart", // Eesti
     "", // Dansk
   },
-  { "Use Syslog Output", // English
+  { "Use syslog output", // English
     "Benutze syslog Ausgabe", // Deutsch
     "", // Slovenski
     "Registra su syslog", // Italiano
@@ -407,111 +512,6 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kirjuta süsteemilogisse", // Eesti
     "", // Dansk
-  },
-  { "LOCK", // English
-    "LOCK", // Deutsch
-    "LOCK", // Slovenski
-    "LOCK", // Italiano
-    "LOCK", // Nederlands
-    "LOCK", // Português
-    "LOCK", // Français
-    "LOCK", // Norsk
-    "LOCK", // suomi
-    "LOCK", // Polski
-    "LOCK", // Español
-    "LOCK", // ÅëëçíéêÜ (Greek)
-    "LOCK", // Svenska
-    "LOCK", // Romaneste
-    "LOCK", // Magyar
-    "LOCK", // Català
-    "·°Å²°Â", // ÀãááÚØÙ (Russian)
-    "LOCK", // Hrvatski (Croatian)
-    "LOCK", // Eesti
-    "LOCK", // Dansk
-  },
-  { "SIGNAL", // English
-    "SIGNAL", // Deutsch
-    "SIGNAL", // Slovenski
-    "SIGNAL", // Italiano
-    "SIGNAL", // Nederlands
-    "SIGNAL", // Português
-    "SIGNAL", // Français
-    "SIGNAL", // Norsk
-    "SIGNAL", // suomi
-    "SIGNAL", // Polski
-    "SIGNAL", // Español
-    "SIGNAL", // ÅëëçíéêÜ (Greek)
-    "SIGNAL", // Svenska
-    "SIGNAL", // Romaneste
-    "SIGNAL", // Magyar
-    "SIGNAL", // Català
-    "Á¸³½°»", // ÀãááÚØÙ (Russian)
-    "SIGNAL", // Hrvatski (Croatian)
-    "SIGNAL", // Eesti
-    "SIGNAL", // Dansk
-  },
-  { "CARRIER", // English
-    "CARRIER", // Deutsch
-    "CARRIER", // Slovenski
-    "CARRIER", // Italiano
-    "CARRIER", // Nederlands
-    "CARRIER", // Português
-    "CARRIER", // Français
-    "CARRIER", // Norsk
-    "CARRIER", // suomi
-    "CARRIER", // Polski
-    "CARRIER", // Español
-    "CARRIER", // ÅëëçíéêÜ (Greek)
-    "CARRIER", // Svenska
-    "CARRIER", // Romaneste
-    "CARRIER", // Magyar
-    "CARRIER", // Català
-    "½µÁÃÉ°Ï", // ÀãááÚØÙ (Russian)
-    "CARRIER", // Hrvatski (Croatian)
-    "CARRIER", // Eesti
-    "CARRIER", // Dansk
-  },
-  { "VITERBI", // English
-    "VITERBI", // Deutsch
-    "VITERBI", // Slovenski
-    "VITERBI", // Italiano
-    "VITERBI", // Nederlands
-    "VITERBI", // Português
-    "VITERBI", // Français
-    "VITERBI", // Norsk
-    "VITERBI", // suomi
-    "VITERBI", // Polski
-    "VITERBI", // Español
-    "VITERBI", // ÅëëçíéêÜ
-    "VITERBI", // Svenska
-    "VITERBI", // Romaneste
-    "VITERBI", // Magyar
-    "VITERBI", // Català
-    "²¸ÂµÀ±¸", // ÀãááÚØÙ (Russian)
-    "VITERBI", // Hrvatski (Croatian)
-    "VITERBI", // Eesti
-    "VITERBI", // Dansk
-  },
-  { "SYNC", // English
-    "SYNC", // Deutsch
-    "SYNC", // Slovenski
-    "SYNC", // Italiano
-    "SYNC", // Nederlands
-    "SYNC", // Português
-    "SYNC", // Français
-    "SYNC", // Norsk
-    "SYNC", // suomi
-    "SYNC", // Polski
-    "SYNC", // Español
-    "SYNC", // ÅëëçíéêÜ (Greek)
-    "SYNC", // Svenska
-    "SYNC", // Romaneste
-    "SYNC", // Magyar
-    "SYNC", // Català
-    "Á¸½ÅÀ", // ÀãááÚØÙ (Russian)
-    "SYNC", // Hrvatski (Croatian)
-    "SYNC", // Eesti
-    "SYNC", // Dansk
   },
   { "Audio", // English
     "Audio", // Deutsch
@@ -1773,7 +1773,7 @@ const tI18nPhrase Phrases[] = {
     "SR", // Eesti
     "", // Dansk
   },
-  { "Show CA System", // English
+  { "Show CA system", // English
     "CA System anzeigen", // Deutsch
     "", // Slovenski
     "", // Italiano

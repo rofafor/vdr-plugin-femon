@@ -20,11 +20,11 @@
 cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid[], int Dpid[])
 :cReceiver(Ca, -1, Vpid, Apid, Dpid, NULL), cThread("femon receiver")
 {
-  debug(printf("cFemonReceiver::cFemonReceiver()\n"));
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
   m_Active = false;
   m_VideoPid = Vpid;
   m_AudioPid = Apid[0];
-  m_AC3Pid = Dpid[0];      
+  m_AC3Pid = Dpid[0];
   m_VideoValid = false;
   m_VideoPacketCount = 0;
   m_VideoHorizontalSize = 0;
@@ -58,7 +58,7 @@ cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid[], int Dpid[])
  
 cFemonReceiver::~cFemonReceiver(void)
 {
-  debug(printf("cFemonReceiver::~cFemonReceiver()\n"));
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
   Detach();
   if (m_Active) {
      m_Active = false;
@@ -69,7 +69,6 @@ cFemonReceiver::~cFemonReceiver(void)
 /* The following function originates from libdvbmpeg: */
 void cFemonReceiver::GetVideoInfo(uint8_t *mbuf, int count)
 {
-  debug(printf("cFemonReceiver::GetVideoInfo()\n"));
   uint8_t *headr;
   int found = 0;
   int c = 0;
@@ -162,7 +161,6 @@ static unsigned int samplerates[4] =
 /* The following function originates from libdvbmpeg: */
 void cFemonReceiver::GetAudioInfo(uint8_t *mbuf, int count)
 {
-  debug(printf("cFemonReceiver::GetAudioInfo()\n"));
   uint8_t *headr;
   int found = 0;
   int c = 0;
@@ -254,7 +252,7 @@ void cFemonReceiver::GetAC3Info(uint8_t *mbuf, int count)
 
 void cFemonReceiver::Activate(bool On)
 {
-  debug(printf("cFemonReceiver::Activate()\n"));
+  Dprintf("%s(%d)\n", __PRETTY_FUNCTION__, On);
   if (On) {
      if (!m_Active)
         Start();
@@ -267,7 +265,6 @@ void cFemonReceiver::Activate(bool On)
 
 void cFemonReceiver::Receive(uchar *Data, int Length)
 {
-  debug(printf("cFemonReceiver::Receive()\n"));
   // TS packet length: TS_SIZE
   if (Length == TS_SIZE) {
      int pid = ((Data[1] & 0x1f) << 8) | (Data[2]);
@@ -310,7 +307,7 @@ void cFemonReceiver::Receive(uchar *Data, int Length)
 
 void cFemonReceiver::Action(void)
 {
-  debug(printf("cFemonReceiver::Action()\n"));
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
   cTimeMs t;
   m_Active = true;
   while (m_Active) {

@@ -48,6 +48,10 @@ ifdef NTSC_SYSTEM
 DEFINES += -DNTSC_SYSTEM
 endif
 
+ifdef DEBUG
+DEFINES += -DDEBUG
+endif
+
 ### The object files (add further files here):
 
 OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femoni18n.o

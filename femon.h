@@ -11,7 +11,7 @@
 
 #include <vdr/plugin.h>
 
-static const char *VERSION        = "0.8.1";
+static const char *VERSION        = "0.8.5";
 static const char *DESCRIPTION    = "DVB Signal Information Monitor (OSD)";
 static const char *MAINMENUENTRY  = "Signal Information";
 
@@ -27,6 +27,7 @@ public:
   virtual bool ProcessArgs(int argc, char *argv[]);
   virtual bool Initialize(void);
   virtual bool Start(void);
+  virtual void Stop(void);
   virtual void Housekeeping(void);
   virtual const char *MainMenuEntry(void) { return (femonConfig.hidemenu ? NULL : tr(MAINMENUENTRY)); }
   virtual cOsdObject *MainMenuAction(void);
@@ -36,7 +37,8 @@ public:
 
 class cMenuFemonSetup : public cMenuSetupPage {
   private:
-    const char *dispmodes[modeMaxNumber];
+    const char *dispmodes[eFemonModeMaxNumber];
+    const char *themes[eFemonThemeMaxNumber];
     virtual void Setup(void);
   protected:
     virtual eOSState ProcessKey(eKeys Key);

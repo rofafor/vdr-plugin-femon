@@ -40,6 +40,7 @@ private:
   static cBitmap bmStereo, bmMonoLeft, bmMonoRight, bmDD, bmDD20, bmDD51;
   static cBitmap bmZero, bmDevice, bmPAL, bmNTSC, bmOne, bmTwo, bmThree, bmFour, bmFive;
   static cBitmap bmAspectRatio_1_1, bmAspectRatio_16_9, bmAspectRatio_2_21_1, bmAspectRatio_4_3;
+  static cBitmap bmLock, bmSignal, bmCarrier, bmViterbi, bmSync;
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);
 

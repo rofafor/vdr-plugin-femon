@@ -130,3 +130,10 @@ VDR Plugin 'femon' Revision History
 2005-01-24: Version 0.8.1
 
 - Added Estonian translations (Thanks to Arthur Konovalov).
+
+2005-02-24: Version 0.8.5
+
+- Updated for vdr-1.3.21.
+- Minor modification for DEBUG mode.
+- Added preliminary support for themes and some GUI tweaks.
+- Added horizontal offset setup option.

@@ -10,18 +10,19 @@
 #define __FEMONCFG_H
 
 #ifdef DEBUG
-#define debug(x) (x);
+#define Dprintf(x...) printf(x);
 #else
-#define debug(x) ;
+#define Dprintf(x...) ;
 #endif
 
-enum dispModes {
-  modeBasic,
-  modeTransponder,
-  modeStream,
-  modeAC3,
-  modeMaxNumber
-  };
+enum eFemonModes
+{
+  eFemonModeBasic,
+  eFemonModeTransponder,
+  eFemonModeStream,
+  eFemonModeAC3,
+  eFemonModeMaxNumber
+};
 
 struct cFemonConfig
 {
@@ -29,6 +30,7 @@ public:
   cFemonConfig(void);
   int hidemenu;
   int displaymode;
+  int theme;
   int position;
   int redlimit;
   int greenlimit;
@@ -38,8 +40,31 @@ public:
   int syslogoutput;
   int showcasystem;
   int osdheight;
+  int osdoffset;
 };
 
 extern cFemonConfig femonConfig;
+
+enum eFemonThemes
+{
+  eFemonThemeClassic,
+  eFemonThemeElchi,
+  eFemonThemeDeepBlue,
+  eFemonThemeMaxNumber
+};
+
+struct cFemonTheme
+{
+  int clrBackground;
+  int clrTitleBackground;
+  int clrTitleText;
+  int clrActiveText;
+  int clrInactiveText;
+  int clrRed;
+  int clrYellow;
+  int clrGreen;
+};
+
+extern const cFemonTheme femonTheme[eFemonThemeMaxNumber];
 
 #endif // __FEMONCFG_H
