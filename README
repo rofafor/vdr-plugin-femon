@@ -31,7 +31,7 @@ Terminology:
 
 --------------------------------------------------------------
 |## Channel Name ######################### [DD][AR][VF][A][D]|
-|[=====Signal Strength in %  =============|=================]|
+|[=====Signal Strength in % ==============|=================]|
 |[=====Signal-to-Noise Ratio in % ========|=================]|
 | STR: #0000 (0%)       BER: #00000000       Video: 0 Mbit/s |
 | SNR: #0000 (0%)       UNC: #00000000       Audio: 0 kbit/s |
@@ -86,3 +86,10 @@ Notes:
   ttxtsubs, but closing and reopening the femon plugin might help temporarily as
   well. Btw., this same thing happens with OSDTeletext plugin too :)
 - Disable the stream analyze to speed up heavy zapping sessions.
+- The signal strength and signal-to-noise ratio values are comparable only
+  between the same brand/model frontends. Due to a lack of proper frontend
+  specifications those values cannot be calculated into any real unit.
+- Shrinked OSD is available for NTSC users: make NTSC_SYSTEM=1
+- The device switching feature is still non-functional.
+
+"Femon - A real womon who lives according to her natural feminine inclinations."

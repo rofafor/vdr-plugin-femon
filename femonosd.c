@@ -31,10 +31,12 @@
 #define FRONTEND_DEVICE          "/dev/dvb/adapter%d/frontend%d"
 #define CHANNELINPUT_TIMEOUT     1000
 
-#define SCREENWIDTH              720 // in pixels
-#define SCREENHEIGHT             576 // in pixels
-#define OSDWIDTH                 600 // in pixels
+#ifdef NTSC_SYSTEM
+#define OSDHEIGHT                420 // in pixels
+#else
 #define OSDHEIGHT                480 // in pixels
+#endif
+#define OSDWIDTH                 600 // in pixels
 #define OSDINFOHEIGHT            (m_Font->Height() * 11) // in pixels (11 rows)
 #define OSDSTATUSHEIGHT          (m_Font->Height() * 6)  // in pixels (6 rows)
 
@@ -42,7 +44,7 @@
 #define OSDINFOWIN_X(col)        ((col == 4) ? 470 : (col == 3) ? 300 : (col==2) ? 180 : 15)
 #define OSDSTATUSWIN_Y(offset)   (femonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
 #define OSDSTATUSWIN_X(col)      ((col == 7) ? 475 : (col == 6) ? 410 : (col == 5) ? 275 : (col == 4) ? 220 : (col == 3) ? 125 : (col==2) ? 70 : 15)
-#define OSDSTATUSWIN_XC(col,txt) (((col - 1) * SCREENWIDTH / 6) + ((SCREENWIDTH / 6 - m_Font->Width(txt)) / 2))
+#define OSDSTATUSWIN_XC(col,txt) (((col - 1) * OSDWIDTH / 5) + ((OSDWIDTH / 5 - m_Font->Width(txt)) / 2))
 #define BARWIDTH(x)              (OSDWIDTH * x / 100)
 #define SPACING                  5
 
@@ -80,8 +82,15 @@ cFemonOsd::cFemonOsd(void)
   m_BER = 0;
   m_UNC = 0;
   m_DisplayMode = femonConfig.displaymode;
-  m_Font = cFont::GetFont(fontSml);
   m_Mutex = new cMutex();
+  if (Setup.UseSmallFont == 0) {
+     // Dirty hack to force the small fonts...
+     Setup.UseSmallFont = 1;
+     m_Font = cFont::GetFont(fontSml);
+     Setup.UseSmallFont = 0;
+     }
+  else
+     m_Font = cFont::GetFont(fontSml);
 }
 
 cFemonOsd::~cFemonOsd(void)
@@ -311,7 +320,7 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         offset += m_Font->Height();
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), clrWhite, clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Ca());
+        snprintf(buf, sizeof(buf), "%X", channel->Ca());
         m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Tpid"), clrWhite, clrBackground, m_Font);
         snprintf(buf, sizeof(buf), "%d", channel->Tpid());

@@ -44,6 +44,10 @@ INCLUDES += -I$(VDRDIR)/include -I$(DVBDIR)/include
 
 DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
+ifdef NTSC_SYSTEM
+DEFINES += -DNTSC_SYSTEM
+endif
+
 ### The object files (add further files here):
 
 OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femoni18n.o

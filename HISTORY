@@ -87,3 +87,10 @@ VDR Plugin 'femon' Revision History
 - Added some new symbols and beautified the old ones.
 - Added audio track selection feature.
 - Added preliminary device switching feature (disabled at the moment).
+
+2004-08-18: Version 0.1.5
+
+- Fixed OSDSTATUSWIN_XC define.
+- Added preliminary NTSC support (make NTSC_SYSTEM=1 plugins).
+- Fixed "Setup/OSD/Use Small Fonts" bug (Thanks to Winni for reporting this one).
+- Added patches directory: CA system names by Lauri Tischler.

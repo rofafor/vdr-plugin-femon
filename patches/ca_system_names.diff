@@ -1,0 +1,52 @@
+--- femonosd.c.orig	2004-08-19 19:42:32.000000000 +0300
++++ femonosd.c	2004-08-19 20:02:31.000000000 +0300
+@@ -320,7 +320,48 @@
+         m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+         offset += m_Font->Height();
+         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), clrWhite, clrBackground, m_Font);
+-        snprintf(buf, sizeof(buf), "%X", channel->Ca());
++        value = channel->Ca();
++        switch (value >> 8) {
++          case 0x0:
++               if (value)
++                  snprintf(buf, sizeof(buf), "%s", "Fixed");
++               else
++                  snprintf(buf, sizeof(buf), "%s", "Free to Air");
++               break;
++          case 0x1:
++               snprintf(buf, sizeof(buf), "%s", "SECA/Mediaguard");
++               break;
++          case 0x5:
++               snprintf(buf, sizeof(buf), "%s", "Viaccess");
++               break;
++          case 0x6:
++               snprintf(buf, sizeof(buf), "%s", "Irdeto");
++               break;
++          case 0x9:
++               snprintf(buf, sizeof(buf), "%s", "NDS/Videoguard");
++               break;
++          case 0xB:
++               snprintf(buf, sizeof(buf), "%s", "Conax");
++               break;
++          case 0xD:
++               snprintf(buf, sizeof(buf), "%s", "CryptoWorks");
++               break;
++          case 0xE:
++               snprintf(buf, sizeof(buf), "%s", "PowerVu");
++               break;
++          case 0x17:
++               snprintf(buf, sizeof(buf), "%s", "BetaCrypt");
++               break;
++          case 0x18:
++               snprintf(buf, sizeof(buf), "%s", "NagraVision");
++               break;
++          case 0x4A:
++               snprintf(buf, sizeof(buf), "%s", "SkyCrypt");
++               break;
++          default:
++               snprintf(buf, sizeof(buf), "%X", value);
++               break;
++          }
+         m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Tpid"), clrWhite, clrBackground, m_Font);
+         snprintf(buf, sizeof(buf), "%d", channel->Tpid());
