@@ -758,7 +758,7 @@ const tI18nPhrase Phrases[] = {
     "Hz", // Français
     "Hz", // Norsk
     "Hz", // suomi
-    "Hz", // Polski   
+    "Hz", // Polski
     "Hz", // Español
     "Hz", // ÅëëçíéêÜ (Greek)
     "Hz", // Svenska
@@ -766,7 +766,7 @@ const tI18nPhrase Phrases[] = {
     "Hz", // Magyar
     "Hz", // Català
 #if VDRVERSNUM >= 10302
-    "Hz", // ÀãááÚØÙ (Russian)
+    "³æ", // ÀãááÚØÙ (Russian)
 #endif
   },
   { "Aspect Ratio", // English
@@ -986,27 +986,7 @@ const tI18nPhrase Phrases[] = {
     "kHz", // Magyar
     "kHz", // Català
 #if VDRVERSNUM >= 10302
-    "kHz", // ÀãááÚØÙ (Russian)
-#endif
-  },
-  { "MPEG Layer", // English
-    "MPEG Layer", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "MPEG-kerros", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ (Greek)
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
-#if VDRVERSNUM >= 10302
-    "", // ÀãááÚØÙ (Russian)
+    "Ú³æ", // ÀãááÚØÙ (Russian)
 #endif
   },
   { "Nid", // English
@@ -1067,6 +1047,586 @@ const tI18nPhrase Phrases[] = {
     "Rid", // Català
 #if VDRVERSNUM >= 10302
     "Rid", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "dB", // English
+    "dB", // Deutsch
+    "dB", // Slovenski
+    "dB", // Italiano
+    "dB", // Nederlands
+    "dB", // Português
+    "dB", // Français
+    "dB", // Norsk
+    "dB", // suomi
+    "dB", // Polski   
+    "dB", // Español
+    "dB", // ÅëëçíéêÜ (Greek)
+    "dB", // Svenska
+    "dB", // Romaneste
+    "dB", // Magyar
+    "dB", // Català
+#if VDRVERSNUM >= 10302
+    "dB", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "not indicated", // English
+    "nicht angezeigt", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "ei ilmaistu", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "AC-3", // English
+    "AC-3", // Deutsch
+    "AC-3", // Slovenski
+    "AC-3", // Italiano
+    "AC-3", // Nederlands
+    "AC-3", // Português
+    "AC-3", // Français
+    "AC-3", // Norsk
+    "AC-3", // suomi
+    "AC-3", // Polski
+    "AC-3", // Español
+    "AC-3", // ÅëëçíéêÜ (Greek)
+    "AC-3", // Svenska
+    "AC-3", // Romaneste
+    "AC-3", // Magyar
+    "AC-3", // Català
+#if VDRVERSNUM >= 10302
+    "AC-3", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "AC-3 Stream", // English
+    "AC-3 Stream", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "AC-3 ääniraita", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Frame Size", // English
+    "Frame Größe", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kehyksen koko", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Bit Stream Mode", // English
+    "Bitstream Modus", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Lähetteen tyyppi", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Audio Coding Mode", // English
+    "Audio Coding Modus", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Äänikoodaus", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Center Mix Level", // English
+    "Center Mix Pegel", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Keskikanavan taso", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Surround Mix Level", // English
+    "Surround Mix Pegel", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Tehostekanavien taso", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Dolby Surround Mode", // English
+    "Dolby Surround Modus", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Dolby Surround -moodi", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Low Frequency Effects", // English
+    "Tieftöner Effekt", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "LFE-kanava", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Dialogue Normalization", // English
+    "Dialog Normalisation", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Dialogin normalisointi", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Complete Main (CM)", // English
+    "Complete Main (CM)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Pääasiallinen (CM)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Music and Effects (ME)", // English
+    "Musik und Effekte (ME)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Musiikki ja tehosteet (ME)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Visually Impaired (VI)", // English
+    "Sehbehindert (VI)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Näkörajoitteinen (VI)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Hearing Impaired (HI)", // English
+    "Hörbehindert (HI)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kuulorajoitteinen (HI)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Dialogue (D)", // English
+    "Dialog (D)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Vuoropuhelu (D)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Commentary (C)", // English
+    "Kommentar (C)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kommentointi (C)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Emergency (E)", // English
+    "Notfall (E)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Hätätiedote (E)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Voice Over (VO)", // English
+    "überlagerte Stimme (VO)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Päälle puhuttu (VO)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Karaoke", // English
+    "Karaoke", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Karaoke", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Ch1", // English "Channel 1"
+    "Kanal1", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "kan. 1", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "Ch2", // English "Channel 2"
+    "Kanal2", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "kan. 2", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "C", // English "Center"
+    "C", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "K", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "L", // English "Left"
+    "L", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "V", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "R", // English "Right"
+    "R", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "O", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "S", // English "Surround"
+    "S", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "T", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "SL", // English "Surround Left"
+    "SL", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "TV", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
+#endif
+  },
+  { "SR", // English "Surround Right"
+    "SR", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "TO", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    "", // ÀãááÚØÙ (Russian)
 #endif
   },
   { NULL }

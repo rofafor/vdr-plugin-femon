@@ -13,6 +13,7 @@ enum dispModes {
   modeBasic,
   modeTransponder,
   modeStream,
+  modeAC3,
   modeMaxNumber
   };
 

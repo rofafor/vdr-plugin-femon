@@ -10,9 +10,7 @@ See the file COPYING for license information.
 
 Requirements:
 
-Ph.D. in Astro Physics and preferably a six-pack waiting in a fridge.
-Never trust a Klingon. "Qu'vaD lI' De'vam". Beam me up, Scotty!
-You're number six! I'm number two. YARRR!
+VDR & DVB. BMW & Ph.D.. BEER. YARRR!
 
 Description:
 
@@ -30,7 +28,41 @@ bitrate calculation algorithm originates from the 'dvbstream' application by
 Dave Chapman and the stream information routines from the 'libdvb' library by
 Metzler Brothers.
 
-Shortcomings / Todo list / Important Notes:
+Terminology:
+
+--------------------------------------------------------------
+|## Channel Name ############################# DD 16:9 PAL ##|
+|[=====Signal Strength in %  =============|=================]|
+|[=====Signal-to-Noise Ratio in % ========|=================]|
+| STR: #0000 (0%)       BER: #00000000       Video: 0 Mbit/s |
+| SNR: #0000 (0%)       UNC: #00000000       Audio: 0 kbit/s |
+| [LOCK]     [SIGNAL]     [CARRIER]     [VITERBI]     [SYNC] |
+--------------------------------------------------------------
+
+STR     - Signal strength
+SNR     - Signal-to-noise ratio
+BER     - Bit error rate
+UNC     - Uncorrected blocks
+Video   - Calculated video bitrate in Mbit/s
+Audio   - Calculated audio / AC-3 bitrate in kbit/s (only first PID)
+
+LOCK    - Everything's working...
+SIGNAL  - Found something above the noise level
+CARRIER - Found a DVB signal
+VITERBI - FEC (forward error correction) is stable
+SYNC    - Found sync bytes
+
+Installation:
+
+cd /put/your/path/here/VDR/PLUGINS/src
+tar -xzf /put/your/path/here/vdr-femon-X.Y.Z.tar.gz
+ln -s femon-X.Y.Z femon
+cd /put/your/path/here/VDR
+make
+make plugins
+./vdr -Pfemon
+
+Notes:
 
 - The plugin supports only those DVB cards with _one_ frontend (do any cards
   with multiple frontends even exist?), because I haven't yet figured howto do

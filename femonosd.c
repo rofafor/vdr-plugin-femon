@@ -32,6 +32,7 @@
 #define OSDSTATUSWIN_X(col)      ((col == 7) ? 475 : (col == 6) ? 410 : (col == 5) ? 275 : (col == 4) ? 220 : (col == 3) ? 125 : (col==2) ? 70 : 15)
 #define OSDSTATUSWIN_XC(col,txt) (((col - 1) * SCREENWIDTH / 6) + ((SCREENWIDTH / 6 - cOsd::WidthInCells(txt) * cOsd::CellWidth()) / 2))
 #define BARWIDTH(x)              (OSDWIDTH * x / 100)
+#define DELTA                    2
 
 cFemonOsd::cFemonOsd(void)
 #if VDRVERSNUM >= 10300
@@ -103,7 +104,7 @@ void cFemonOsd::DrawStatusWindow(void)
            m_Osd->Fill(BARWIDTH(femonConfig.greenlimit), OSDSTATUSWIN_Y(offset+3), signal, OSDSTATUSWIN_Y(offset+cOsd::LineHeight()-3), clrGreen, m_StatusWindow);
            }
         }
-     offset += cOsd::LineHeight() - 2;
+     offset += cOsd::LineHeight() - DELTA;
      if (snr > 0) {
         snr = BARWIDTH(snr);
         m_Osd->Fill(0, OSDSTATUSWIN_Y(offset+3), min(BARWIDTH(femonConfig.redlimit), snr), OSDSTATUSWIN_Y(offset+cOsd::LineHeight()-3), clrRed, m_StatusWindow);
@@ -114,7 +115,7 @@ void cFemonOsd::DrawStatusWindow(void)
            m_Osd->Fill(BARWIDTH(femonConfig.greenlimit),  OSDSTATUSWIN_Y(offset+3), snr, OSDSTATUSWIN_Y(offset+cOsd::LineHeight()-3), clrGreen, m_StatusWindow);
            }
         }
-     offset += cOsd::LineHeight() - 2;
+     offset += cOsd::LineHeight() - DELTA;
      m_Osd->Text(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), "STR:", clrWhite, clrBackground, m_StatusWindow);
      snprintf(buf, sizeof(buf), "%04x", m_Signal);
      m_Osd->Text(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_StatusWindow);
@@ -128,7 +129,7 @@ void cFemonOsd::DrawStatusWindow(void)
      if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s", m_Receiver->VideoBitrate(), tr("Mbit/s"));
      else            snprintf(buf, sizeof(buf), "--- %s", tr("Mbit/s"));
      m_Osd->Text(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_StatusWindow);
-     offset += cOsd::LineHeight() - 2;
+     offset += cOsd::LineHeight() - DELTA;
      m_Osd->Text(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), "SNR:", clrWhite, clrBackground, m_StatusWindow);
      snprintf(buf, sizeof(buf), "%04x", m_SNR);
      m_Osd->Text(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_StatusWindow);
@@ -137,12 +138,12 @@ void cFemonOsd::DrawStatusWindow(void)
      m_Osd->Text(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), "UNC:", clrWhite, clrBackground, m_StatusWindow);
      snprintf(buf, sizeof(buf), "%08x", m_UNC);
      m_Osd->Text(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_StatusWindow);
-     snprintf(buf, sizeof(buf), "%s:", tr("Audio"));
+     snprintf(buf, sizeof(buf), "%s:", (m_Receiver && m_Receiver->AC3Valid()) ? tr("AC-3") : tr("Audio"));
      m_Osd->Text(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_StatusWindow);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", m_Receiver->AudioBitrate(), tr("kbit/s"));
+     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", m_Receiver->AC3Valid() ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate(), tr("kbit/s"));
      else            snprintf(buf, sizeof(buf), "--- %s", tr("kbit/s"));
      m_Osd->Text(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_StatusWindow);
-     offset += cOsd::LineHeight() - 2;
+     offset += cOsd::LineHeight() - DELTA;
      m_Osd->Text(OSDSTATUSWIN_XC(1,tr("LOCK")),    OSDSTATUSWIN_Y(offset), tr("LOCK"),   (m_FrontendStatus & FE_HAS_LOCK)   ? clrYellow : clrBlack, clrBackground, m_StatusWindow);
      m_Osd->Text(OSDSTATUSWIN_XC(2,tr("SIGNAL")),  OSDSTATUSWIN_Y(offset), tr("SIGNAL"), (m_FrontendStatus & FE_HAS_SIGNAL) ? clrYellow : clrBlack, clrBackground, m_StatusWindow);
      m_Osd->Text(OSDSTATUSWIN_XC(3,tr("CARRIER")), OSDSTATUSWIN_Y(offset), tr("CARRIER"),(m_FrontendStatus & FE_HAS_CARRIER)? clrYellow : clrBlack, clrBackground, m_StatusWindow);
@@ -181,7 +182,7 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Ppid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Ppid());
         m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Apid1"), clrWhite, clrBackground, m_InfoWindow);
         value = channel->Apid2();
         if (value) snprintf(buf, sizeof(buf), "%d, %d", channel->Apid1(), value);
@@ -192,14 +193,14 @@ void cFemonOsd::DrawInfoWindow(void)
         if (value) snprintf(buf, sizeof(buf), "%d, %d", channel->Dpid1(), value);
         else       snprintf(buf, sizeof(buf), "%d", channel->Dpid1());
         m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Ca());
         m_Osd->Text(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Tpid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Tpid());
         m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Sid());
         m_Osd->Text(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
@@ -207,7 +208,7 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Nid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Nid());
         m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Tid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Tid());
         m_Osd->Text(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
@@ -215,12 +216,12 @@ void cFemonOsd::DrawInfoWindow(void)
         snprintf(buf, sizeof(buf), "%d", channel->Rid());
         m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
 #endif
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         switch (m_FrontendInfo.type) {
           case FE_QPSK:
                snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Satellite Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frequency"), clrWhite, clrBackground, m_InfoWindow);
                value = channel->Frequency();
                while (value > 20000) value /= 1000;
@@ -229,14 +230,14 @@ void cFemonOsd::DrawInfoWindow(void)
                m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Source"), clrWhite, clrBackground, m_InfoWindow);
                snprintf(buf, sizeof(buf), "%s", cSource::ToString(channel->Source()));
                m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Srate"), clrWhite, clrBackground, m_InfoWindow);
                snprintf(buf, sizeof(buf), "%d", channel->Srate());
                m_Osd->Text(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
                m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Polarization"), clrWhite, clrBackground, m_InfoWindow);
                snprintf(buf, sizeof(buf), "%c", toupper(channel->Polarization()));
                m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Inversion"), clrWhite, clrBackground, m_InfoWindow);
                value = channel->Inversion();
                if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), tr("Off"));
@@ -261,7 +262,7 @@ void cFemonOsd::DrawInfoWindow(void)
           case FE_QAM:
                snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Cable Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frequency"), clrWhite, clrBackground, m_InfoWindow);
                value = channel->Frequency();
                while (value > 20000) value /= 1000;
@@ -270,7 +271,7 @@ void cFemonOsd::DrawInfoWindow(void)
                m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Source"), clrWhite, clrBackground, m_InfoWindow);
                snprintf(buf, sizeof(buf), "%s", cSource::ToString(channel->Source()));
                m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Srate"), clrWhite, clrBackground, m_InfoWindow);
                snprintf(buf, sizeof(buf), "%d", channel->Srate());
                m_Osd->Text(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
@@ -284,7 +285,7 @@ void cFemonOsd::DrawInfoWindow(void)
                else if (value == QAM_256)   snprintf(buf, sizeof(buf), "QAM 256");
                else            /*QAM_AUTO*/ snprintf(buf, sizeof(buf), "QAM %s", tr("Auto"));
                m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Inversion"), clrWhite, clrBackground, m_InfoWindow);
                value = channel->Inversion();
                if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), tr("Off"));
@@ -309,7 +310,7 @@ void cFemonOsd::DrawInfoWindow(void)
           default:
                snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Terrestial Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frequency"), clrWhite, clrBackground, m_InfoWindow);
                value = channel->Frequency();
                while (value > 20000) value /= 1000;
@@ -321,7 +322,7 @@ void cFemonOsd::DrawInfoWindow(void)
                else if (value == TRANSMISSION_MODE_8K)    snprintf(buf, sizeof(buf), "8K");
                else            /*TRANSMISSION_MODE_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
                m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bandwidth"), clrWhite, clrBackground, m_InfoWindow);
                value = channel->Bandwidth();
                if      (value == BANDWIDTH_8_MHZ) snprintf(buf, sizeof(buf), "8 %s", tr("MHz"));
@@ -339,7 +340,7 @@ void cFemonOsd::DrawInfoWindow(void)
                else if (value == QAM_256)   snprintf(buf, sizeof(buf), "QAM 256");
                else            /*QAM_AUTO*/ snprintf(buf, sizeof(buf), "QAM %s", tr("Auto"));
                m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Inversion"), clrWhite, clrBackground, m_InfoWindow);
                value = channel->Inversion();
                if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), tr("Off"));
@@ -371,7 +372,7 @@ void cFemonOsd::DrawInfoWindow(void)
                else            /*FEC_AUTO*/ snprintf(buf2, sizeof(buf2), " - %s", tr("Auto"));
                strncat(buf, buf2, sizeof(buf));
                m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-               offset += cOsd::LineHeight() - 2;
+               offset += cOsd::LineHeight() - DELTA;
                m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Hierarchy"), clrWhite, clrBackground, m_InfoWindow);
                value = channel->Hierarchy();
                if      (value == HIERARCHY_NONE)  snprintf(buf, sizeof(buf), tr("None"));
@@ -392,19 +393,19 @@ void cFemonOsd::DrawInfoWindow(void)
           }
         }
      else if (m_DisplayMode == modeStream) {
-        m_Osd->Fill(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrBackground);
-        m_Osd->Fill(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+cOsd::LineHeight()-1), clrWhite);
+        m_Osd->Fill(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrBackground, m_InfoWindow);
+        m_Osd->Fill(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+cOsd::LineHeight()-1), clrWhite, m_InfoWindow);
         m_Osd->Text( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Stream Information"), clrBackground, clrWhite, m_InfoWindow);
         offset += cOsd::LineHeight();
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Video Stream"), clrYellow, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "#%d", channel->Vpid());
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s (%.2f %s)", m_Receiver->VideoStreamBitrate(), tr("Mbit/s"), m_Receiver->VideoBitrate(), tr("Mbit/s"));
         else            snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Aspect Ratio"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) {
            value = m_Receiver->VideoAspectRatio();
@@ -416,12 +417,12 @@ void cFemonOsd::DrawInfoWindow(void)
            }
         else                            snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frame Rate"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s", m_Receiver->VideoFrameRate(), tr("Hz"));
         else            snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Video Format"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) {
            value = m_Receiver->VideoFormat();
@@ -431,16 +432,16 @@ void cFemonOsd::DrawInfoWindow(void)
            }
         else                          snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Resolution"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) snprintf(buf, sizeof(buf), "%d x %d", m_Receiver->VideoHorizontalSize(), m_Receiver->VideoVerticalSize());
         else            snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Stream"), clrYellow, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "#%d", channel->Apid1());
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) {
            dvalue = m_Receiver->AudioStreamBitrate();
@@ -450,20 +451,113 @@ void cFemonOsd::DrawInfoWindow(void)
            }
         else                                       snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("MPEG Layer"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) snprintf(buf, sizeof(buf), "%d", m_Receiver->AudioMPEGLayer());
         else            snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        offset += cOsd::LineHeight() - 2;
+        offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sampling Frequency"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) {
-           value =  m_Receiver->AudioSamplingFreq();
+           value = m_Receiver->AudioSamplingFreq();
            if (value == FR_RESERVED) snprintf(buf, sizeof(buf), "%s", tr("reserved"));
            else                      snprintf(buf, sizeof(buf), "%.1f %s", (value / 1000.0), tr("kHz"));
            }
         else                         snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+        offset += cOsd::LineHeight() - DELTA;
+        }
+     else if (m_DisplayMode == modeAC3) {
+        m_Osd->Fill(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrBackground, m_InfoWindow);
+        m_Osd->Fill(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+cOsd::LineHeight()-1), clrWhite, m_InfoWindow);
+        snprintf(buf, sizeof(buf), "%s - %s #%d", tr("Stream Information"), tr("AC-3 Stream"), channel->Dpid1());
+        m_Osd->Text( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, clrBackground, clrWhite, m_InfoWindow);
+        offset += cOsd::LineHeight();
+        if (m_Receiver && m_Receiver->AC3Valid()) {
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_InfoWindow);
+           snprintf(buf, sizeof(buf), "%.0f %s (%0.f %s)", m_Receiver->AC3StreamBitrate(), tr("kbit/s"), m_Receiver->AC3Bitrate(), tr("kbit/s"));
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sampling Frequency"), clrWhite, clrBackground, m_InfoWindow);
+           snprintf(buf, sizeof(buf), "%.1f %s", m_Receiver->AC3SamplingFreq() / 1000., tr("kHz"));
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frame Size"), clrWhite, clrBackground, m_InfoWindow);
+           snprintf(buf, sizeof(buf), "%d", m_Receiver->AC3FrameSize());
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bit Stream Mode"), clrWhite, clrBackground, m_InfoWindow);
+           switch (m_Receiver->AC3BitStreamMode()) {
+             case 0: snprintf(buf, sizeof(buf), tr("Complete Main (CM)"));     break;
+             case 1: snprintf(buf, sizeof(buf), tr("Music and Effects (ME)")); break;
+             case 2: snprintf(buf, sizeof(buf), tr("Visually Impaired (VI)")); break;
+             case 3: snprintf(buf, sizeof(buf), tr("Hearing Impaired (HI)"));  break;
+             case 4: snprintf(buf, sizeof(buf), tr("Dialogue (D)"));           break;
+             case 5: snprintf(buf, sizeof(buf), tr("Commentary (C)"));         break;
+             case 6: snprintf(buf, sizeof(buf), tr("Emergency (E)"));          break;
+             case 7: (m_Receiver->AC3AudioCodingMode() == 1) ? snprintf(buf, sizeof(buf), tr("Voice Over (VO)")) : snprintf(buf, sizeof(buf), tr("Karaoke")); break;
+             default: snprintf(buf, sizeof(buf), "---");
+             }
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Coding Mode"), clrWhite, clrBackground, m_InfoWindow);
+           if (m_Receiver->AC3BitStreamMode() != 7) {
+              switch (m_Receiver->AC3AudioCodingMode()) {
+                case 0:  snprintf(buf, sizeof(buf), "1+1 - %s, %s",             tr("Ch1"), tr("Ch2"));                           break;
+                case 1:  snprintf(buf, sizeof(buf), "1/0 - %s",                 tr("C"));                                        break;
+                case 2:  snprintf(buf, sizeof(buf), "2/0 - %s, %s",             tr("L"), tr("R"));                               break;
+                case 3:  snprintf(buf, sizeof(buf), "3/0 - %s, %s, %s",         tr("L"), tr("C"), tr("R"));                      break;
+                case 4:  snprintf(buf, sizeof(buf), "2/1 - %s, %s, %s",         tr("L"), tr("R"), tr("S"));                      break;
+                case 5:  snprintf(buf, sizeof(buf), "3/1 - %s, %s, %s, %s",     tr("L"), tr("C"), tr("R"),  tr("S"));            break;
+                case 6:  snprintf(buf, sizeof(buf), "2/2 - %s, %s, %s, %s",     tr("L"), tr("R"), tr("SL"), tr("SR"));           break;
+                case 7:  snprintf(buf, sizeof(buf), "3/2 - %s, %s, %s, %s, %s", tr("L"), tr("C"), tr("R"),  tr("SL"), tr("SR")); break;
+                default: snprintf(buf, sizeof(buf), "---");
+                }
+             }
+	   else snprintf(buf, sizeof(buf), "---");
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Center Mix Level"), clrWhite, clrBackground, m_InfoWindow);
+           switch (m_Receiver->AC3CenterMixLevel()) {
+             case CML_MINUS_3dB:   snprintf(buf, sizeof(buf), "-3.0 %s", tr("dB"));  break;
+             case CML_MINUS_4_5dB: snprintf(buf, sizeof(buf), "-4.5 %s", tr("dB"));  break;
+             case CML_MINUS_6dB:   snprintf(buf, sizeof(buf), "-6.0 %s", tr("dB"));  break;
+             case CML_RESERVED:    snprintf(buf, sizeof(buf), "%s", tr("reserved")); break;
+             default:              snprintf(buf, sizeof(buf), "---");
+             }
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Surround Mix Level"), clrWhite, clrBackground, m_InfoWindow);
+           switch (m_Receiver->AC3SurroundMixLevel()) {
+             case SML_MINUS_3dB: snprintf(buf, sizeof(buf), "-3 %s", tr("dB"));    break;
+             case SML_MINUS_6dB: snprintf(buf, sizeof(buf), "-6 %s", tr("dB"));    break;
+             case SML_0_dB:      snprintf(buf, sizeof(buf), "0 %s", tr("dB"));     break;
+             case SML_RESERVED:  snprintf(buf, sizeof(buf), "%s", tr("reserved")); break;
+             default:            snprintf(buf, sizeof(buf), "---");
+             }
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Dolby Surround Mode"), clrWhite, clrBackground, m_InfoWindow);
+           switch (m_Receiver->AC3DolbySurroundMode()) {
+             case DSM_NOT_INDICATED:     snprintf(buf, sizeof(buf), "%s", tr("not indicated")); break;
+             case DSM_NOT_DOLBYSURROUND: snprintf(buf, sizeof(buf), "%s", tr("Off"));           break;
+             case DSM_DOLBYSURROUND:     snprintf(buf, sizeof(buf), "%s", tr("On"));            break;
+             case DSM_RESERVED:          snprintf(buf, sizeof(buf), "%s", tr("reserved"));      break;
+             default:                    snprintf(buf, sizeof(buf), "---");
+             }
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Low Frequency Effects"), clrWhite, clrBackground, m_InfoWindow);
+           snprintf(buf, sizeof(buf), "%s", m_Receiver->AC3LfeOn() ? tr("On") : tr("Off"));
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Dialogue Normalization"), clrWhite, clrBackground, m_InfoWindow);
+           value = m_Receiver->AC3DialogLevel();
+           if (value > 0) snprintf(buf, sizeof(buf), "-%d %s", value, tr("dB"));
+           else           snprintf(buf, sizeof(buf), "---");
+           m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
+           offset += cOsd::LineHeight() - DELTA;
+           }
         }
      else /* modeBasic */ {
         m_Osd->Fill(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, m_InfoWindow);
@@ -536,8 +630,8 @@ void cFemonOsd::Show(void)
      if (m_Receiver)
         delete m_Receiver;
      if (femonConfig.analyzestream) {
-        int channelNumber = cDevice::CurrentChannel();
-        m_Receiver = new cFemonReceiver(Channels.GetByNumber(channelNumber)->Ca(), Channels.GetByNumber(channelNumber)->Vpid(), Channels.GetByNumber(channelNumber)->Apid1());
+        cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+        m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid1(), channel->Dpid1());
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      Start();
@@ -568,8 +662,8 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   if (m_Receiver)
      delete m_Receiver;
   if (femonConfig.analyzestream) {
-     channelNumber = cDevice::CurrentChannel();
-     m_Receiver = new cFemonReceiver(Channels.GetByNumber(channelNumber)->Ca(), Channels.GetByNumber(channelNumber)->Vpid(), Channels.GetByNumber(channelNumber)->Apid1());
+     cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+     m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), channel->Apid1(), channel->Dpid1());
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
 }
@@ -640,7 +734,9 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                }
             break;
        case kOk:
-            if (++m_DisplayMode >= modeMaxNumber) m_DisplayMode = 0; // toggle between display modes
+            // toggle between display modes
+            if (++m_DisplayMode == modeAC3 && !Channels.GetByNumber(cDevice::CurrentChannel())->Dpid1()) m_DisplayMode++;
+            if (m_DisplayMode >= modeMaxNumber) m_DisplayMode = 0;
             DrawInfoWindow();
             break;
        default:
