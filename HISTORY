@@ -16,3 +16,9 @@ VDR Plugin 'femon' Revision History
 2004-02-27: Version 0.0.2b
 
 - Some minor cosmetic changes.
+
+2004-02-28: Version 0.0.2c
+
+- Translation only update:
+  Fixed 'Deutsch' (Thanks to Olaf Henkel @ VDRPortal).
+  Added 'Italiano' (Thanks to Sean Carlos).

@@ -3,7 +3,7 @@
 
 #include <vdr/plugin.h>
 
-static const char *VERSION        = "0.0.2b";
+static const char *VERSION        = "0.0.2c";
 static const char *DESCRIPTION    = "DVB Signal Quality Monitor (OSD)";
 static const char *MAINMENUENTRY  = "Signal Quality";
 

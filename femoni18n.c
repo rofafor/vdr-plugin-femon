@@ -12,7 +12,7 @@ const tI18nPhrase Phrases[] = {
   { "DVB Signal Quality Monitor (OSD)", // English
     "DVB Signalqualitäts-Anzeige (OSD)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Visualizzazione della qualita' del segnale DVB (OSD)", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -30,9 +30,9 @@ const tI18nPhrase Phrases[] = {
 #endif
   },
   { "Signal Quality", // English
-    "SIgnalqualität", // Deutsch
+    "Signalqualität", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Qualita' del segnale", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -52,7 +52,7 @@ const tI18nPhrase Phrases[] = {
   { "Position", // English
     "Position", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Posizione", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -72,7 +72,7 @@ const tI18nPhrase Phrases[] = {
   { "Hide Mainmenu Entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Nascondere Voce Menu", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -92,7 +92,7 @@ const tI18nPhrase Phrases[] = {
   { "Update Interval [0.1s]", // English
     "Aktualisierung alle [0.1s]", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Intervallo di aggiornamento [0.1s]", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -112,7 +112,7 @@ const tI18nPhrase Phrases[] = {
   { "Red Limit [%]", // English
     "Grenze Rot [%]", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Limite Rosso [%]", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -132,7 +132,7 @@ const tI18nPhrase Phrases[] = {
   { "Green Limit [%]", // English
     "Grenze Grün [%]", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Limite Verde [%]", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
