@@ -35,3 +35,8 @@ VDR Plugin 'femon' Revision History
 - Fixed frequency, guard and bandwidth units in transponder information.
 - Added Apid2, Dpid1, Dpid2 information.
 - Added option to write signal information into system log.
+
+2004-03-16: Version 0.0.3b
+
+- Fixed channel toggling with '0' key.
+- Bitrate calculation thread is now canceled immediately to speed up channel switching.

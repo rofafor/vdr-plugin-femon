@@ -32,7 +32,7 @@ cFemonReceiver::~cFemonReceiver(void)
   //printf("cFemonReceiver::~cFemonReceiver()\n");
   if (m_Active) {
      m_Active = false;
-     Cancel(3);
+     Cancel(0);
      }
 }
 
@@ -45,7 +45,8 @@ void cFemonReceiver::Activate(bool On)
 void cFemonReceiver::Receive(uchar *Data, int Length)
 {
   //printf("cFemonReceiver::Receive()\n");
-  if (Length == TS_SIZE) {
+  // TS packet length: 188
+  if (Length == 188) {
      int pid = ((Data[1] & 0x1f) << 8) | (Data[2]);
      if (pid == m_VideoPid) {
         m_VideoPacketCount++;
@@ -64,10 +65,10 @@ void cFemonReceiver::Action(void)
 #endif
   m_Active = true;
   while (m_Active) {
-        // should we strip the 4 byte header off from TS packet ?
-        m_VideoBitrate = (8.0 * TS_SIZE * m_VideoPacketCount) / (femonConfig.calcinterval * 102.4 * 1024.0);
+        // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
+        m_VideoBitrate = (8.0 * 184.0 * m_VideoPacketCount) / (femonConfig.calcinterval * 100000.0);
         m_VideoPacketCount = 0;
-        m_AudioBitrate = (8.0 * TS_SIZE * m_AudioPacketCount) / (femonConfig.calcinterval * 102.4);
+        m_AudioBitrate = (8.0 * 184.0 * m_AudioPacketCount) / (femonConfig.calcinterval * 100.0);
         m_AudioPacketCount = 0;
         usleep(100000L * femonConfig.calcinterval);
     }

@@ -28,6 +28,7 @@ private:
   int m_Frontend;
   struct dvb_frontend_info m_FrontendInfo;
   int m_Number;
+  int m_OldNumber;
   int m_InputTime;
   uint16_t m_SNR;
   uint16_t m_Signal;

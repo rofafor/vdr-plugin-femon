@@ -58,6 +58,7 @@ cFemonOsd::cFemonOsd(void)
   m_Frontend = -1;
   m_Active = false;
   m_Number = 0;
+  m_OldNumber = 0;
   m_InputTime = 0;
   m_Signal = 0;
   m_SNR = 0;
@@ -72,7 +73,7 @@ cFemonOsd::~cFemonOsd(void)
   //printf("cFemonOsd::~cFemonOsd()\n");
   if (m_Active) {
      m_Active = false;
-     Cancel(5);
+     Cancel(3);
      }
   if (m_Receiver)
      delete m_Receiver;
@@ -496,9 +497,11 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
   if (state == osUnknown) {
      switch (Key & ~k_Repeat) {
        case k0:
-            if (m_Number == 0) {
-               // keep the "Toggle channels" function working - however it isn't working now :)
-               cRemote::Put(Key);
+            if ((m_Number == 0) && (m_OldNumber != 0)) {
+               m_Number = m_OldNumber;
+               m_OldNumber = cDevice::CurrentChannel();
+               Channels.SwitchTo(m_Number);
+               m_Number = 0;
                return osContinue;
                }
        case k1 ... k9:
@@ -522,6 +525,7 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                         }
                   if (n > 0) {
                      // This channel is the only one that fits the input, so let's take it right away:
+                     m_OldNumber = cDevice::CurrentChannel();
                      Channels.SwitchTo(m_Number);
                      m_Number = 0;
                      }
@@ -530,13 +534,18 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
             break;
        case kBack:
             return osEnd;
+       case kUp|k_Repeat:
        case kUp:
+       case kDown|k_Repeat:
        case kDown:
+            m_OldNumber = cDevice::CurrentChannel();
             cDevice::SwitchChannel(NORMALKEY(Key) == kUp ? 1 : -1);
+            m_Number = 0;
             break;
        case kNone:
             if (m_Number && (time_ms() - m_InputTime > CHANNELINPUT_TIMEOUT)) {
                if (Channels.GetByNumber(m_Number)) {
+                  m_OldNumber = cDevice::CurrentChannel();
                   Channels.SwitchTo(m_Number);
                   m_Number = 0;
                   }
