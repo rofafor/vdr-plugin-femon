@@ -17,7 +17,7 @@ const tI18nPhrase Phrases[] = {
     "", // Português
     "", // Français
     "", // Norsk
-    "DVB signaalimittari (OSD)", // suomi
+    "Signaalimittari (OSD)", // suomi
     "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ (Greek)
@@ -122,7 +122,7 @@ const tI18nPhrase Phrases[] = {
     "", // Português
     "", // Français 
     "", // Norsk
-    "Oletus näyttömoodi", // suomi
+    "Oletusnäyttötila", // suomi
     "", // Polski   
     "", // Español  
     "", // ÅëëçíéêÜ (Greek)
@@ -1088,7 +1088,7 @@ const tI18nPhrase Phrases[] = {
     "Apid", // Português
     "Apid", // Français
     "Apid", // Norsk
-    "Ääni PID", // suomi
+    "Ääni-PID", // suomi
     "Apid", // Polski
     "Apid", // Español
     "Apid", // ÅëëçíéêÜ (Greek)
@@ -1109,7 +1109,7 @@ const tI18nPhrase Phrases[] = {
     "Dpid", // Português
     "Dpid", // Français
     "Dpid", // Norsk
-    "Dolby PID", // suomi
+    "Dolby-PID", // suomi
     "Dpid", // Polski
     "Dpid", // Español
     "Dpid", // ÅëëçíéêÜ (Greek)
@@ -1130,7 +1130,7 @@ const tI18nPhrase Phrases[] = {
     "Nid", // Português
     "Nid", // Français
     "Nid", // Norsk
-    "Verkko ID", // suomi
+    "Verkko-ID", // suomi
     "Nid", // Polski
     "Nid", // Español
     "Nid", // ÅëëçíéêÜ (Greek)
@@ -1151,7 +1151,7 @@ const tI18nPhrase Phrases[] = {
     "Tid", // Português
     "Tid", // Français
     "Tid", // Norsk
-    "Lähete ID", // suomi
+    "Lähete-ID", // suomi
     "Tid", // Polski
     "Tid", // Español
     "Tid", // ÅëëçíéêÜ (Greek)
@@ -1172,7 +1172,7 @@ const tI18nPhrase Phrases[] = {
     "Rid", // Português
     "Rid", // Français
     "Rid", // Norsk
-    "Radio ID", // suomi
+    "Radio-ID", // suomi
     "Rid", // Polski
     "Rid", // Español
     "Rid", // ÅëëçíéêÜ (Greek)
@@ -1256,7 +1256,7 @@ const tI18nPhrase Phrases[] = {
     "", // Português
     "", // Français
     "", // Norsk
-    "AC-3 ääniraita", // suomi
+    "AC-3-ääniraita", // suomi
     "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ (Greek)
@@ -1382,7 +1382,7 @@ const tI18nPhrase Phrases[] = {
     "", // Português
     "", // Français
     "", // Norsk
-    "Dolby Surround -moodi", // suomi
+    "Dolby Surround -tehoste", // suomi
     "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ (Greek)

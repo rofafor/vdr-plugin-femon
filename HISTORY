@@ -147,3 +147,7 @@ VDR Plugin 'femon' Revision History
 - Default make target is now all.
 - Fixed the access rights of symbols subdirectory (Thanks to Harri Kukkonen).
 - Added a new theme: Moronimo (Thanks to Morone).
+
+2005-04-02: Version 0.8.8
+
+- Cleaned up finnish translations (Thanks to Ville Skyttä).
