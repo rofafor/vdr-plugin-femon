@@ -16,6 +16,7 @@
 #include <vdr/thread.h>
 #include <vdr/status.h>
 #include <vdr/channels.h>
+#include <vdr/transfer.h>
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
@@ -35,7 +36,8 @@ private:
   int m_DisplayMode;
   const cFont *m_Font;
   cMutex* m_Mutex;
-  static cBitmap bmDD, bmDD20, bmDD51, bmPAL, bmNTSC, bmAspectRatio_1_1, bmAspectRatio_16_9, bmAspectRatio_2_21_1, bmAspectRatio_4_3;
+  static cBitmap bmDevice0, bmDevice1, bmDevice2, bmDevice3, bmApid1, bmApid2, bmDD, bmDD20, bmDD51;
+  static cBitmap bmPAL, bmNTSC, bmAspectRatio_1_1, bmAspectRatio_16_9, bmAspectRatio_2_21_1, bmAspectRatio_4_3;
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);
 

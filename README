@@ -18,7 +18,6 @@ DVB Frontend Status Monitor is a plugin that displays some signal information
 parameters of the current tuned channel on OSD. You can zap through all your
 channels and the plugin should be monitoring always the right frontend. The
 transponder and stream information are also available in advanced display modes.
-User can switch between different display modes by pressing 'OK' key.
 
 The plugin is based on a neat console frontend status monitor application
 called 'femon' by Johannes Stezenbach (see DVB-apps/szap/femon.c for further
@@ -31,7 +30,7 @@ Metzler Brothers.
 Terminology:
 
 --------------------------------------------------------------
-|## Channel Name ############################# DD 16:9 PAL ##|
+|## Channel Name ######################### [DD][AR][VF][A][D]|
 |[=====Signal Strength in %  =============|=================]|
 |[=====Signal-to-Noise Ratio in % ========|=================]|
 | STR: #0000 (0%)       BER: #00000000       Video: 0 Mbit/s |
@@ -44,7 +43,7 @@ SNR     - Signal-to-noise ratio
 BER     - Bit error rate
 UNC     - Uncorrected blocks
 Video   - Calculated video bitrate in Mbit/s
-Audio   - Calculated audio / AC-3 bitrate in kbit/s (only first PID)
+Audio   - Calculated audio / AC-3 bitrate in kbit/s
 
 LOCK    - Everything's working...
 SIGNAL  - Found something above the noise level
@@ -52,15 +51,31 @@ CARRIER - Found a DVB signal
 VITERBI - FEC (forward error correction) is stable
 SYNC    - Found sync bytes
 
+DD      - AC-3 stream (optional)
+AR      - Aspect Ratio: 1:1/4:3/16:9/2.21:1 (optional)
+VF      - Video format: PAL/NTSC (optional)
+A       - Audio track: 1..2 (optional)
+D       - Device number: 0..3 (optional)
+
+Controls:
+
+ChanUp/ChanDn - Switch channel up/down
+Up/Down       - Switch channel up/down
+0-9           - Select channel
+Ok            - Switch between display modes: basic, transponder, stream, AC-3
+Right/Left    - Switch to next/previous device that provides the current channel
+Green         - Select language (APID)
+Back          - Exit plugin
+
 Installation:
 
 cd /put/your/path/here/VDR/PLUGINS/src
-tar -xzf /put/your/path/here/vdr-femon-X.Y.Z.tar.gz
+tar -xzf /put/your/path/here/vdr-femon-X.Y.Z.tgz
 ln -s femon-X.Y.Z femon
 cd /put/your/path/here/VDR
 make
 make plugins
-./vdr -Pfemon
+./vdr -P femon
 
 Notes:
 
