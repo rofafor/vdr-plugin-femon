@@ -1,5 +1,5 @@
 /*
- * A Frontend Monitor plugin for the Video Disk Recorder
+ * Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
@@ -9,10 +9,10 @@
 #include "femoni18n.h"
 
 const tI18nPhrase Phrases[] = {
-  { "DVB Signal Quality Monitor (OSD)", // English
-    "DVB Signalqualitäts-Anzeige (OSD)", // Deutsch
+  { "DVB Signal Information Monitor (OSD)", // English
+    "DVB Signal Informationsanzeige (OSD)", // Deutsch
     "", // Slovenski
-    "Visualizzazione della qualita' del segnale DVB (OSD)", // Italiano
+    "", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -29,10 +29,10 @@ const tI18nPhrase Phrases[] = {
     ""  // ÀãááÚØÙ
 #endif
   },
-  { "Signal Quality", // English
-    "Signalqualität", // Deutsch
+  { "Signal Information", // English
+    "Signalinformationen", // Deutsch
     "", // Slovenski
-    "Qualita' del segnale", // Italiano
+    "", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -69,6 +69,66 @@ const tI18nPhrase Phrases[] = {
     ""  // ÀãááÚØÙ
 #endif
   },
+  { "Default Display Mode", // English
+    "Standard Anzeigemodus", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français 
+    "", // Norsk
+    "Oletus näyttömoodi", // suomi
+    "", // Polski   
+    "", // Español  
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Català  
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ  
+#endif
+  },
+  { "simple", // English
+    "einfach", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français 
+    "", // Norsk
+    "suppea", // suomi
+    "", // Polski   
+    "", // Español  
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Català  
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ  
+#endif
+  },
+  { "advanced", // English
+    "fortgeschritten", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français 
+    "", // Norsk
+    "laaja", // suomi
+    "", // Polski   
+    "", // Español  
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Català  
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ  
+#endif
+  },
   { "Hide Mainmenu Entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
     "", // Slovenski
@@ -89,15 +149,55 @@ const tI18nPhrase Phrases[] = {
     ""  // ÀãááÚØÙ
 #endif
   },
-  { "Update Interval [0.1s]", // English
-    "Aktualisierung alle [0.1s]", // Deutsch
+  { "OSD Update Interval [0.1s]", // English
+    "OSD Updateintervall [0.1s]", // Deutsch
     "", // Slovenski
     "Intervallo di aggiornamento [0.1s]", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
     "", // Norsk
-    "Päivitystaajuus [0.1s]", // suomi
+    "Näytön päivitysväli [0.1s]", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ
+#endif
+  },
+  { "Bitrate Calculation", // English
+    "Bitratenberechnung", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Bittinopeuden laskenta", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ
+#endif
+  },
+  { "Calculation Interval [0.1s]", // English
+    "Berechnungsintervall [0.1s]", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Laskennan päivitysväli [0.1s]", // suomi
     "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ
@@ -138,6 +238,86 @@ const tI18nPhrase Phrases[] = {
     "", // Français
     "", // Norsk
     "Vihreän taso [%]", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ
+#endif
+  },
+  { "Transponder Information", // English
+    "Transponderinformation", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk   
+    "Transponderin tiedot", // suomi
+    "", // Polski   
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ
+#endif
+  },
+  { "Satellite Card", // English
+    "Satellitenkarte", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Satelliittikortti", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ
+#endif
+  },
+  { "Cable Card", // English
+    "Kabelkarte", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kaapelikortti", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10300
+    ""  // ÀãááÚØÙ
+#endif
+  },
+  { "Terrestial Card", // English
+    "Terrestrische Karte", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Terrestiaalikortti", // suomi
     "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ

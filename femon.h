@@ -1,11 +1,19 @@
+/*
+ * Frontend Status Monitor plugin for the Video Disk Recorder
+ *
+ * See the README file for copyright information and how to reach the author.
+ *
+ * $Id$
+ */
+
 #ifndef __FEMON_H
 #define __FEMON_H
 
 #include <vdr/plugin.h>
 
-static const char *VERSION        = "0.0.2c";
-static const char *DESCRIPTION    = "DVB Signal Quality Monitor (OSD)";
-static const char *MAINMENUENTRY  = "Signal Quality";
+static const char *VERSION        = "0.0.3";
+static const char *DESCRIPTION    = "DVB Signal Information Monitor (OSD)";
+static const char *MAINMENUENTRY  = "Signal Information";
 
 class cPluginFemon : public cPlugin {
 private:
@@ -27,11 +35,14 @@ public:
   };
 
 class cMenuFemonSetup : public cMenuSetupPage {
+  private:
+    virtual void Setup(void);
+  protected:
+    virtual eOSState ProcessKey(eKeys Key);
+    virtual void Store(void);
   public:
     cMenuFemonSetup(void);
-  protected:
-    virtual void Store(void);
-};
+  };
 
 #endif //__FEMON_H
 

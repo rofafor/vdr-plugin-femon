@@ -11,34 +11,33 @@ See the file COPYING for license information.
 Requirements:
 
 Ph.D. in Astro Physics and preferably a six-pack waiting in a fridge.
+Never trust a Klingon.
 
 Description:
 
-DVB Frontend Status Monitor is a plugin that displays a few signal quality parameters
-of the tuned channel on your screen. You can zap through all your channels and the
-plugin should be monitoring always the right frontend *fingers crossed*. A short
-message is shown at the bottom line to help the DVB card identification after each
-channel switch and OK press.
+DVB Frontend Status Monitor is a plugin that displays some signal information
+parameters of the current tuned channel on OSD. You can zap through all your
+channels and the plugin should be monitoring always the right frontend. The
+transponder information is also available in advanced display mode. User can
+switch between simple and advanced display modes by pressing 'OK' key.
 
-The plugin is based on a neat console frontend status monitor application called
-'femon' by Johannes Stezenbach <js@convergence.de> (see DVB-apps/szap/femon.c for
-further information). The other parts of plugin code are borrowed from the 
-excellent OSD Picture-In-Picture plugin by Sascha Volkenandt <sascha@akv-soft.de>
-and Andreas Regel <andreas.regel@powarman.de>. Props to Sascha for being brave
-enough to test this piece of junk and ofcourse for german translations. The bitrate
-calculation algorithm is originally copied from dvbstream application by Dave Chapman
-<dave@dchapman.com>.
+The plugin is based on a neat console frontend status monitor application called 
+'femon' by Johannes Stezenbach <js@convergence.de> (see DVB-apps/szap/femon.c
+for further information). The other parts of plugin code are borrowed from the 
+excellent 'OSD Picture-In-Picture' plugin by Sascha Volkenandt <sascha@akv-soft.de>
+and Andreas Regel <andreas.regel@powarman.de>. The bitrate calculation algorithm
+originates from the 'dvbstream' application by Dave Chapman <dave@dchapman.com>.
 
 Shortcomings / Todo list:
 
 - The current version is a kind of Proof In Concept to replace the old 'tech
-  patch', so the internals will be eventually rewritten... if I'll find some
-  spare time.
-- The plugin supports only those DVB cards with _one_ frontend (do any cards with
-  multiple frontends even exist?), because I haven't yet figured howto do it without
-  patching the VDR core.
+  patch', and it's now eating many unnecessary cpu clock cycles - this will be
+  fixed later...
+- The plugin supports only those DVB cards with _one_ frontend (do any cards
+  with multiple frontends even exist?), because I haven't yet figured howto do
+  it without patching the VDR core.
 - Sometimes (read always) ttxtsubs plugin messes up the OSD - user should disable
-  ttxtsubs, but closing and reopening the femon plugin might help temporarily as well.
-  Btw., this same thing happens with OSDTeletext plugin too :)
-- The plugin GUI is designed for small fonts, so stable vdr-1.2.6 users should consider
-  the ElchiAIO4a+ patch to maximize the *wow* effect :)
+  ttxtsubs, but closing and reopening the femon plugin might help temporarily as
+  well. Btw., this same thing happens with OSDTeletext plugin too :)
+- The plugin GUI is designed for _small fonts_, so stable vdr-1.2.6 users should
+  consider a small font patch (e.g. ElchiAIO4a) to maximize the visual effect :)

@@ -1,3 +1,11 @@
+/*
+ * Frontend Status Monitor plugin for the Video Disk Recorder
+ *
+ * See the README file for copyright information and how to reach the author.
+ *
+ * $Id$
+ */
+
 #ifndef __FEMONOSD_H
 #define __FEMONOSD_H
 
@@ -9,23 +17,27 @@
 #include <vdr/status.h>
 #include <vdr/channels.h>
 #include <vdr/font.h>
-#include <vdr/device.h> // only for TS_SIZE
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
   bool m_Active;
   cOsdBase *m_Osd;
-  tWindowHandle m_Window;
+  tWindowHandle m_InfoWindow;
+  tWindowHandle m_StatusWindow;
   cFemonReceiver *m_Receiver;
   int m_Frontend;
   struct dvb_frontend_info m_FrontendInfo;
   int m_Number;
   int m_InputTime;
-  int m_InfoTime;
-  int m_Width;
-  int m_Height;
-  int m_Xpos;
-  int m_Ypos;
+  uint16_t m_SNR;
+  uint16_t m_Signal;
+  uint32_t m_BER;
+  uint32_t m_UNC;
+  fe_status_t m_FrontendStatus;
+  int m_DisplayMode;
+  cMutex* m_Mutex;
+  void DrawStatusWindow(void);
+  void DrawInfoWindow(void);
 
 protected:
   virtual void Action(void);

@@ -7,7 +7,7 @@ VDR Plugin 'femon' Revision History
 
 2004-02-23: Version 0.0.1b
 
-- Fixed cThread to work under vdr-1.2.6.
+- Fixed cThread initialization to work under vdr-1.2.6.
 
 2004-02-26: Version 0.0.2
 
@@ -22,3 +22,10 @@ VDR Plugin 'femon' Revision History
 - Translation only update:
   Fixed 'Deutsch' (Thanks to Olaf Henkel @ VDRPortal).
   Added 'Italiano' (Thanks to Sean Carlos).
+
+2004-03-03: Version 0.0.3
+
+- Redesigned the user interface.
+- Transponder information is now available in advanced display mode:
+  Press 'OK' key to switch between the simple and the advanced display mode.
+- Moved bitrate calculation to it's own thread for improved accurancy.
