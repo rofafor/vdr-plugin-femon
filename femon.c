@@ -12,6 +12,10 @@
 #include "femonosd.h"
 #include "femon.h"
 
+#if (VDRVERSNUM < 10307)
+#error "You don't exist! Go away!"
+#endif
+
 cPluginFemon::cPluginFemon(void)
 {
   // Initialize any member variables here.

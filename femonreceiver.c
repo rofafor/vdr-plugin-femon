@@ -11,11 +11,7 @@
 #include "femonreceiver.h"
 
 cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid)
-#if VDRVERSNUM >= 10300
 :cReceiver(Ca, -1, 2, Vpid, Apid), cThread("femon receiver")
-#else
-:cReceiver(Ca, -1, 2, Vpid, Apid)
-#endif
 {
   //printf("cFemonReceiver::cFemonReceiver()\n");
   m_Active = false;
@@ -60,9 +56,6 @@ void cFemonReceiver::Receive(uchar *Data, int Length)
 void cFemonReceiver::Action(void)
 {
   //printf("cFemonReceiver::Action()\n");
-#if (VDRVERSNUM < 10300)
-  isyslog("femon receiver: thread started (pid = %d)", getpid());
-#endif
   m_Active = true;
   while (m_Active) {
         // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
@@ -72,7 +65,4 @@ void cFemonReceiver::Action(void)
         m_AudioPacketCount = 0;
         usleep(100000L * femonConfig.calcinterval);
     }
-#if (VDRVERSNUM < 10300)
-  isyslog("femon receiver: thread stopped (pid = %d)", getpid());
-#endif
 }

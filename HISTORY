@@ -45,3 +45,7 @@ VDR Plugin 'femon' Revision History
 
 - Fixed minor bitrate calculation errors
 - Added russian translation (Thanks to Vyacheslav Dikonov)
+
+2004-05-18: Version 0.1.0
+
+- Updated for vdr-1.3.7 and removed compability with older versions.

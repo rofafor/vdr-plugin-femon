@@ -16,14 +16,11 @@
 #include <vdr/thread.h>
 #include <vdr/status.h>
 #include <vdr/channels.h>
-#include <vdr/font.h>
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
   bool m_Active;
-  cOsdBase *m_Osd;
-  tWindowHandle m_InfoWindow;
-  tWindowHandle m_StatusWindow;
+  cOsd *m_Osd;
   cFemonReceiver *m_Receiver;
   int m_Frontend;
   struct dvb_frontend_info m_FrontendInfo;
@@ -36,6 +33,7 @@ private:
   uint32_t m_UNC;
   fe_status_t m_FrontendStatus;
   int m_DisplayMode;
+  const cFont *m_Font;
   cMutex* m_Mutex;
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);

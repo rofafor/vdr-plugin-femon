@@ -25,9 +25,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Монитор качества сигнала"  // Русский (Russian)
-#endif
+    "Монитор качества сигнала", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Signal Information", // English
     "Signalinformationen", // Deutsch
@@ -45,9 +44,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Сигнал"  // Русский (Russian)
-#endif
+    "Сигнал", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Position", // English
     "Position", // Deutsch
@@ -65,9 +63,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Размещение окна"  // Русский (Russian)
-#endif
+    "Размещение окна", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Default Display Mode", // English
     "Standard Anzeigemodus", // Deutsch
@@ -85,9 +82,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar  
     "", // Catalр  
-#if VDRVERSNUM >= 10300
-    "Режим по умолчанию"  // Русский (Russian)
-#endif
+    "Режим по умолчанию", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "simple", // English
     "einfach", // Deutsch
@@ -105,9 +101,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar  
     "", // Catalр  
-#if VDRVERSNUM >= 10300
-    "простой"  // Русский (Russian)
-#endif
+    "простой", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "advanced", // English
     "fortgeschritten", // Deutsch
@@ -125,9 +120,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar  
     "", // Catalр  
-#if VDRVERSNUM >= 10300
-    "расширенный"  // Русский (Russian)
-#endif
+    "расширенный", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Hide Mainmenu Entry", // English
     "Hauptmenќeintrag verstecken", // Deutsch
@@ -145,9 +139,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Скрыть команду в главном меню"  // Русский (Russian)
-#endif
+    "Скрыть команду в главном меню", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "OSD Update Interval [0.1s]", // English
     "OSD Updateintervall [0.1s]", // Deutsch
@@ -165,9 +158,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Частота обновления (0,1 сек)"  // Русский (Russian)
-#endif
+    "Частота обновления (0,1 сек)", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Bitrate Calculation", // English
     "Bitratenberechnung", // Deutsch
@@ -177,7 +169,7 @@ const tI18nPhrase Phrases[] = {
     "", // Portuguъs
     "", // Franчais
     "", // Norsk
-    "Siirtonopeuden laskenta", // suomi
+    "Bittinopeuden laskenta", // suomi
     "", // Polski
     "", // Espaёol
     "", // Хыычэщъм (Greek)
@@ -185,9 +177,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Расчёт скорости потока данных"  // Русский (Russian)
-#endif
+    "Расчёт скорости потока данных", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Calculation Interval [0.1s]", // English
     "Berechnungsintervall [0.1s]", // Deutsch
@@ -205,9 +196,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Частота пересчёта (0,1 сек)"  // Русский (Russian)
-#endif
+    "Частота пересчёта (0,1 сек)", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Red Limit [%]", // English
     "Grenze Rot [%]", // Deutsch
@@ -225,9 +215,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Красная зона слабого сигнала до (%)"  // Русский (Russian)
-#endif
+    "Красная зона слабого сигнала до (%)", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Green Limit [%]", // English
     "Grenze Grќn [%]", // Deutsch
@@ -245,9 +234,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Зелёная зона сильного сигнала от (%)"  // Русский (Russian)
-#endif
+    "Зелёная зона сильного сигнала от (%)", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Transponder Information", // English
     "Transponderinformation", // Deutsch
@@ -265,9 +253,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Сведения о канале"  // Русский (Russian)
-#endif
+    "Сведения о канале", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Satellite Card", // English
     "Satellitenkarte", // Deutsch
@@ -285,9 +272,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Плата спутникового приёма"  // Русский (Russian)
-#endif
+    "Плата спутникового приёма", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Cable Card", // English
     "Kabelkarte", // Deutsch
@@ -305,9 +291,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Плата кабельного приёма"  // Русский (Russian)
-#endif
+    "Плата кабельного приёма", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Terrestial Card", // English
     "Terrestrische Karte", // Deutsch
@@ -325,9 +310,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Плата эфирного приёма"  // Русский (Russian)
-#endif
+    "Плата эфирного приёма", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "Use Syslog Output", // English
     "Benutze syslog Ausgabe", // Deutsch
@@ -345,9 +329,8 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar
     "", // Catalр
-#if VDRVERSNUM >= 10300
-    "Использовать службу syslog"  // Русский (Russian)
-#endif
+    "Использовать службу syslog", // Русский (Russian)
+    "", // Hrvatski (Croatian)
   },
   { "LOCK", // English
     "LOCK", // Deutsch
@@ -365,9 +348,8 @@ const tI18nPhrase Phrases[] = {
     "LOCK", // Romaneste
     "LOCK", // Magyar
     "LOCK", // Catalр
-#if VDRVERSNUM >= 10300
-    "ЗАХВАТ"  // Русский (Russian)
-#endif
+    "ЗАХВАТ", // Русский (Russian)
+    "LOCK", // Hrvatski (Croatian)
   },
   { "SIGNAL", // English
     "SIGNAL", // Deutsch
@@ -385,9 +367,8 @@ const tI18nPhrase Phrases[] = {
     "SIGNAL", // Romaneste
     "SIGNAL", // Magyar
     "SIGNAL", // Catalр
-#if VDRVERSNUM >= 10300
-    "СИГНАЛ"  // Русский (Russian)
-#endif
+    "СИГНАЛ", // Русский (Russian)
+    "SIGNAL", // Hrvatski (Croatian)
   },
   { "CARRIER", // English
     "CARRIER", // Deutsch
@@ -405,9 +386,8 @@ const tI18nPhrase Phrases[] = {
     "CARRIER", // Romaneste
     "CARRIER", // Magyar
     "CARRIER", // Catalр
-#if VDRVERSNUM >= 10300
-    "НЕСУЩАЯ"  // Русский (Russian)
-#endif
+    "НЕСУЩАЯ", // Русский (Russian)
+    "CARRIER", // Hrvatski (Croatian)
   },
   { "VITERBI", // English
     "VITERBI", // Deutsch
@@ -425,9 +405,8 @@ const tI18nPhrase Phrases[] = {
     "VITERBI", // Romaneste
     "VITERBI", // Magyar
     "VITERBI", // Catalр
-#if VDRVERSNUM >= 10300
-    "ВИТЕРБИ"  // Русский (Russian)
-#endif
+    "ВИТЕРБИ", // Русский (Russian)
+    "VITERBI", // Hrvatski (Croatian)
   },
   { "SYNC", // English
     "SYNC", // Deutsch
@@ -445,9 +424,8 @@ const tI18nPhrase Phrases[] = {
     "SYNC", // Romaneste
     "SYNC", // Magyar
     "SYNC", // Catalр
-#if VDRVERSNUM >= 10300
-    "СИНХР"  // Русский (Russian)
-#endif
+    "СИНХР", // Русский (Russian)
+    "SYNC", // Hrvatski (Croatian)
   },
   { "Audio", // English
     "Audio", // Deutsch
@@ -465,9 +443,8 @@ const tI18nPhrase Phrases[] = {
     "Audio", // Romaneste
     "Audio", // Magyar
     "Audio", // Catalр
-#if VDRVERSNUM >= 10300
-    "Аудио"  // Русский (Russian)
-#endif
+    "Аудио", // Русский (Russian)
+    "Audio", // Hrvatski (Croatian)
   },
   { "Video", // English
     "Video", // Deutsch
@@ -485,9 +462,8 @@ const tI18nPhrase Phrases[] = {
     "Video", // Romaneste
     "Video", // Magyar
     "Video", // Catalр
-#if VDRVERSNUM >= 10300
-    "Видео"  // Русский (Russian)
-#endif
+    "Видео", // Русский (Russian)
+    "Video", // Hrvatski (Croatian)
   },
   { "Auto", // English
     "Auto", // Deutsch
@@ -505,9 +481,8 @@ const tI18nPhrase Phrases[] = {
     "Auto", // Romaneste
     "Auto", // Magyar
     "Auto", // Catalр
-#if VDRVERSNUM >= 10300
-    "авто"  // Русский (Russian)
-#endif
+    "авто", // Русский (Russian)
+    "Auto", // Hrvatski (Croatian)
   },
   { "None", // English
     "None", // Deutsch
@@ -525,9 +500,8 @@ const tI18nPhrase Phrases[] = {
     "None", // Romaneste
     "None", // Magyar
     "None", // Catalр
-#if VDRVERSNUM >= 10300
-    "нет"  // Русский (Russian)
-#endif
+    "нет", // Русский (Russian)
+    "None", // Hrvatski (Croatian)
   },
   { "Off", // English
     "Off", // Deutsch
@@ -545,9 +519,8 @@ const tI18nPhrase Phrases[] = {
     "Off", // Romaneste
     "Off", // Magyar
     "Off", // Catalр
-#if VDRVERSNUM >= 10300
-    "выкл"  // Русский (Russian)
-#endif
+    "выкл", // Русский (Russian)
+    "Off", // Hrvatski (Croatian)
   },
   { "On", // English
     "On", // Deutsch
@@ -565,9 +538,8 @@ const tI18nPhrase Phrases[] = {
     "On", // Romaneste
     "On", // Magyar
     "On", // Catalр
-#if VDRVERSNUM >= 10300
-    "вкл"  // Русский (Russian)
-#endif
+    "вкл", // Русский (Russian)
+    "On", // Hrvatski (Croatian)
   },
   { "MHz", // English
     "MHz", // Deutsch
@@ -585,9 +557,8 @@ const tI18nPhrase Phrases[] = {
     "MHz", // Romaneste
     "MHz", // Magyar
     "MHz", // Catalр
-#if VDRVERSNUM >= 10300
-    "МГц"  // Русский (Russian)
-#endif
+    "МГц", // Русский (Russian)
+    "MHz", // Hrvatski (Croatian)
   },
   { "Mbit/s", // English
     "Mbit/s", // Deutsch
@@ -605,9 +576,8 @@ const tI18nPhrase Phrases[] = {
     "Mbit/s", // Romaneste
     "Mbit/s", // Magyar
     "Mbit/s", // Catalр
-#if VDRVERSNUM >= 10300
-    "Мбит/с"  // Русский (Russian)
-#endif
+    "Мбит/с", // Русский (Russian)
+    "Mbit/s", // Hrvatski (Croatian)
   },
   { "kbit/s", // English
     "kbit/s", // Deutsch
@@ -625,9 +595,8 @@ const tI18nPhrase Phrases[] = {
     "kbit/s", // Romaneste
     "kbit/s", // Magyar
     "kbit/s", // Catalр
-#if VDRVERSNUM >= 10300
-    "кбит/с"  // Русский (Russian)
-#endif
+    "кбит/с", // Русский (Russian)
+    "kbit/s", // Hrvatski (Croatian)
   },
   { NULL }
 };
