@@ -204,14 +204,14 @@ void cFemonOsd::DrawInfoWindow(void)
         snprintf(buf, sizeof(buf), "%d", channel->Sid());
         m_Osd->Text(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
 #if (VDRVERSNUM >= 10300)
-        m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), "Nid", clrWhite, clrBackground, m_InfoWindow);
+        m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Nid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Nid());
         m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         offset += cOsd::LineHeight() - 2;
-        m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), "Tid" /*tr("Tid")*/, clrWhite, clrBackground, m_InfoWindow);
+        m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Tid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Tid());
         m_Osd->Text(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
-        m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), "Rid" /*tr("Rid")*/, clrWhite, clrBackground, m_InfoWindow);
+        m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Rid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Rid());
         m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
 #endif
@@ -407,14 +407,14 @@ void cFemonOsd::DrawInfoWindow(void)
         offset += cOsd::LineHeight() - 2;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Aspect Ratio"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) {
-           value =  m_Receiver->VideoAspectRatio();
-           if      (value == 100) snprintf(buf, sizeof(buf), "1:1");
-           else if (value == 133) snprintf(buf, sizeof(buf), "4:3");
-           else if (value == 177) snprintf(buf, sizeof(buf), "16:9");
-           else if (value == 233) snprintf(buf, sizeof(buf), "2.21:1");
-           else                   snprintf(buf, sizeof(buf), "%s", tr("reserved"));
+           value = m_Receiver->VideoAspectRatio();
+           if      (value == AR_1_1)    snprintf(buf, sizeof(buf), "1:1");
+           else if (value == AR_4_3)    snprintf(buf, sizeof(buf), "4:3");
+           else if (value == AR_16_9)   snprintf(buf, sizeof(buf), "16:9");
+           else if (value == AR_2_21_1) snprintf(buf, sizeof(buf), "2.21:1");
+           else                         snprintf(buf, sizeof(buf), "%s", tr("reserved"));
            }
-        else                      snprintf(buf, sizeof(buf), "---");
+        else                            snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         offset += cOsd::LineHeight() - 2;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frame Rate"), clrWhite, clrBackground, m_InfoWindow);
@@ -424,12 +424,12 @@ void cFemonOsd::DrawInfoWindow(void)
         offset += cOsd::LineHeight() - 2;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Video Format"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) {
-           value =  m_Receiver->VideoFormat();
-           if      (value == 1) snprintf(buf, sizeof(buf), "%s", tr("PAL"));
-           else if (value == 2) snprintf(buf, sizeof(buf), "%s", tr("NTSC"));
-           else                 snprintf(buf, sizeof(buf), "%s", tr("unknown"));
+           value = m_Receiver->VideoFormat();
+           if      (value == VF_PAL)  snprintf(buf, sizeof(buf), "%s", tr("PAL"));
+           else if (value == VF_NTSC) snprintf(buf, sizeof(buf), "%s", tr("NTSC"));
+           else                       snprintf(buf, sizeof(buf), "%s", tr("unknown"));
            }
-        else                    snprintf(buf, sizeof(buf), "---");
+        else                          snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         offset += cOsd::LineHeight() - 2;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Resolution"), clrWhite, clrBackground, m_InfoWindow);
@@ -442,13 +442,13 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         offset += cOsd::LineHeight() - 2;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_InfoWindow);
-        dvalue = m_Receiver->AudioStreamBitrate();
         if (m_Receiver) {
-            if      (dvalue == -1.0) snprintf(buf, sizeof(buf), "%s (%.0f %s)", tr("reserved"), m_Receiver->AudioBitrate(), tr("kbit/s"));
-            else if (dvalue == -2.0) snprintf(buf, sizeof(buf), "%s (%.0f %s)", tr("free"), m_Receiver->AudioBitrate(), tr("kbit/s"));
-            else                     snprintf(buf, sizeof(buf), "%.0f %s (%.0f %s)", dvalue, tr("kbit/s"), m_Receiver->AudioBitrate(), tr("kbit/s"));
-            }
-        else                         snprintf(buf, sizeof(buf), "---");
+           dvalue = m_Receiver->AudioStreamBitrate();
+           if      (dvalue == (double)FR_RESERVED) snprintf(buf, sizeof(buf), "%s (%.0f %s)", tr("reserved"), m_Receiver->AudioBitrate(), tr("kbit/s"));
+           else if (dvalue == (double)FR_FREE)     snprintf(buf, sizeof(buf), "%s (%.0f %s)", tr("free"), m_Receiver->AudioBitrate(), tr("kbit/s"));
+           else                                    snprintf(buf, sizeof(buf), "%.0f %s (%.0f %s)", dvalue, tr("kbit/s"), m_Receiver->AudioBitrate(), tr("kbit/s"));
+           }
+        else                                       snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         offset += cOsd::LineHeight() - 2;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("MPEG Layer"), clrWhite, clrBackground, m_InfoWindow);
@@ -459,10 +459,10 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sampling Frequency"), clrWhite, clrBackground, m_InfoWindow);
         if (m_Receiver) {
            value =  m_Receiver->AudioSamplingFreq();
-           if      (value == -1) snprintf(buf, sizeof(buf), "%s", tr("reserved"));
-           else                  snprintf(buf, sizeof(buf), "%.1f %s", (value / 1000.0), tr("kHz"));
+           if (value == FR_RESERVED) snprintf(buf, sizeof(buf), "%s", tr("reserved"));
+           else                      snprintf(buf, sizeof(buf), "%.1f %s", (value / 1000.0), tr("kHz"));
            }
-        else                     snprintf(buf, sizeof(buf), "---");
+        else                         snprintf(buf, sizeof(buf), "---");
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         }
      else /* modeBasic */ {
@@ -516,8 +516,8 @@ void cFemonOsd::Show(void)
      }
   if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
      isyslog("cFemonOsd::Show() cannot read frontend info.");
-     m_Frontend = -1;
      close(m_Frontend);
+     m_Frontend = -1;
      return;
      }
   m_Osd = cOsd::OpenRaw((SCREENWIDTH - OSDWIDTH) / 2, (SCREENHEIGHT - OSDHEIGHT) / 2);
@@ -548,6 +548,8 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 {
   //printf("cFemonOsd::ChannelSwitch()\n");
   char *dev = NULL;
+  if (!device->IsPrimaryDevice() || !channelNumber || cDevice::PrimaryDevice()->CurrentChannel() != channelNumber)
+     return;
   close(m_Frontend);
   asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
@@ -559,8 +561,8 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
      }
   if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
      isyslog("cFemonOsd::ChannelSwitch() cannot read frontend info.");
-     m_Frontend = -1;
      close(m_Frontend);
+     m_Frontend = -1;
      return;
      }
   if (m_Receiver)

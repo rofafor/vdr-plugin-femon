@@ -12,6 +12,23 @@
 #include <vdr/thread.h>
 #include <vdr/receiver.h>
 
+enum eVideoFormat {
+  VF_UNKNOWN = 0,
+  VF_PAL     = 1,
+  VF_NTSC    = 2,
+  };
+
+enum eAspectRatio {
+  AR_RESERVED = 0,
+  AR_1_1      = 100,
+  AR_4_3      = 133,
+  AR_16_9     = 177,
+  AR_2_21_1   = 233,
+  };
+
+#define FR_RESERVED -1
+#define FR_FREE     -2
+
 class cFemonReceiver : public cReceiver, public cThread {
 private:
   bool m_Active;
@@ -44,13 +61,13 @@ public:
 
   int VideoHorizontalSize(void)   { return m_VideoHorizontalSize; }; // pixels
   int VideoVerticalSize(void)     { return m_VideoVerticalSize; };   // pixels
-  int VideoAspectRatio(void)      { return m_VideoAspectRatio; };    // 4:3 == 133, ...
-  int VideoFormat(void)           { return m_VideoFormat; };         // 0 == unknown, 1 == PAL, 2 == NTSC
+  int VideoAspectRatio(void)      { return m_VideoAspectRatio; };    // eAspectRatio
+  int VideoFormat(void)           { return m_VideoFormat; };         // eVideoFormat
   double VideoFrameRate(void)     { return m_VideoFrameRate; };      // Hz
   double VideoStreamBitrate(void) { return m_VideoStreamBitrate; };  // Mbit/s
   double VideoBitrate(void)       { return m_VideoBitrate; };        // Mbit/s
 
-  int AudioMPEGLayer(void)        { return m_AudioMPEGLayer; };      // number
+  int AudioMPEGLayer(void)        { return m_AudioMPEGLayer; };      // layer number
   int AudioSamplingFreq(void)     { return m_AudioSamplingFreq; };   // Hz
   double AudioStreamBitrate(void) { return m_AudioStreamBitrate; };  // kbit/s
   double AudioBitrate(void)       { return m_AudioBitrate; };        // kbit/s

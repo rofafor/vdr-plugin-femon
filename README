@@ -12,7 +12,7 @@ Requirements:
 
 Ph.D. in Astro Physics and preferably a six-pack waiting in a fridge.
 Never trust a Klingon. "Qu'vaD lI' De'vam". Beam me up, Scotty!
-You're number six! I'm number two.
+You're number six! I'm number two. YARRR!
 
 Description:
 
@@ -22,11 +22,11 @@ channels and the plugin should be monitoring always the right frontend. The
 transponder and stream information are also available in advanced display modes.
 User can switch between different display modes by pressing 'OK' key.
 
-The plugin is based on a neat console frontend status monitor application called 
-'femon' by Johannes Stezenbach <js@convergence.de> (see DVB-apps/szap/femon.c
-for further information). The other parts of plugin code are borrowed from the 
-excellent 'OSD Picture-In-Picture' plugin by Sascha Volkenandt and Andreas Regel.
-The bitrate calculation algorithm originates from the 'dvbstream' application by
+The plugin is based on a neat console frontend status monitor application
+called 'femon' by Johannes Stezenbach (see DVB-apps/szap/femon.c for further
+information). The other parts of plugin code are borrowed from the excellent
+'OSD Picture-In-Picture' plugin by Sascha Volkenandt and Andreas Regel. The
+bitrate calculation algorithm originates from the 'dvbstream' application by
 Dave Chapman and the stream information routines from the 'libdvb' library by
 Metzler Brothers.
 
@@ -39,4 +39,3 @@ Shortcomings / Todo list / Important Notes:
   ttxtsubs, but closing and reopening the femon plugin might help temporarily as
   well. Btw., this same thing happens with OSDTeletext plugin too :)
 - Disable the stream analyze to speed up heavy zapping sessions.
-- If you're using VDR version 1.3.6 or older, you'll have to stick with femon-0.0.4!
