@@ -71,6 +71,7 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
   else if (!strcasecmp(Name, "SyslogOutput"))   femonConfig.syslogoutput   = atoi(Value);
   else if (!strcasecmp(Name, "DisplayMode"))    femonConfig.displaymode    = atoi(Value);
   else if (!strcasecmp(Name, "Position"))       femonConfig.position       = atoi(Value);
+  else if (!strcasecmp(Name, "ShowCASystem"))   femonConfig.showcasystem   = atoi(Value);
   else if (!strcasecmp(Name, "RedLimit"))       femonConfig.redlimit       = atoi(Value);
   else if (!strcasecmp(Name, "GreenLimit"))     femonConfig.greenlimit     = atoi(Value);
   else if (!strcasecmp(Name, "UpdateInterval")) femonConfig.updateinterval = atoi(Value);
@@ -101,6 +102,7 @@ void cMenuFemonSetup::Setup(void)
   Add(new cMenuEditBoolItem(  tr("Use Syslog Output"),           &femonConfig.syslogoutput,   tr("no"),      tr("yes")));
   Add(new cMenuEditStraItem(  tr("Default Display Mode"),        &femonConfig.displaymode,    modeMaxNumber, dispmodes));
   Add(new cMenuEditBoolItem(  tr("Position"),                    &femonConfig.position,       tr("bottom"),  tr("top")));
+  Add(new cMenuEditBoolItem(  tr("Show CA System"),              &femonConfig.showcasystem,   tr("no"),      tr("yes")));
   Add(new cMenuEditIntItem(   tr("Red Limit [%]"),               &femonConfig.redlimit,       1,             50));
   Add(new cMenuEditIntItem(   tr("Green Limit [%]"),             &femonConfig.greenlimit,     51,            100));
   Add(new cMenuEditIntItem(   tr("OSD Update Interval [0.1s]"),  &femonConfig.updateinterval, 1,             100));
@@ -116,8 +118,9 @@ void cMenuFemonSetup::Store(void)
 {
   SetupStore("HideMenu",       femonConfig.hidemenu);
   SetupStore("SyslogOutput",   femonConfig.syslogoutput);
-  SetupStore("Position",       femonConfig.position);
   SetupStore("DisplayMode",    femonConfig.displaymode);
+  SetupStore("Position",       femonConfig.position);
+  SetupStore("ShowCASystem",   femonConfig.showcasystem);
   SetupStore("RedLimit",       femonConfig.redlimit);
   SetupStore("GreenLimit",     femonConfig.greenlimit);
   SetupStore("UpdateInterval", femonConfig.updateinterval);

@@ -1,5 +1,6 @@
+===================================
 VDR Plugin 'femon' Revision History
------------------------------------
+===================================
 
 2004-02-15: Version 0.0.1
 
@@ -58,7 +59,13 @@ VDR Plugin 'femon' Revision History
 
 - Backported the "AC3 Stream Information" feature from version 0.1.3.
 
--------------------------
+2004-09-11: Version 0.0.7
+
+-  Backported changes and fixes from version 0.1.6.
+
+===================================
+VDR Plugin 'femon' Revision History
+===================================
 
 2004-05-18: Version 0.1.0
 
@@ -94,3 +101,8 @@ VDR Plugin 'femon' Revision History
 - Added preliminary NTSC support (make NTSC_SYSTEM=1 plugins).
 - Fixed "Setup/OSD/Use Small Fonts" bug (Thanks to Winni for reporting this one).
 - Added patches directory: CA system names by Lauri Tischler.
+
+2004-09-11: Version 0.1.6
+
+- Yet Another Minor Release.
+- Integrated the CA system names patch: "Setup / Show CA System".

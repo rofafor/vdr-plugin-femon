@@ -30,6 +30,7 @@ public:
   int analyzestream;
   int calcinterval;
   int syslogoutput;
+  int showcasystem;
 };
 
 extern cFemonConfig femonConfig;

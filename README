@@ -87,8 +87,8 @@ Notes:
   well. Btw., this same thing happens with OSDTeletext plugin too :)
 - Disable the stream analyze to speed up heavy zapping sessions.
 - The signal strength and signal-to-noise ratio values are comparable only
-  between the same brand/model frontends. Due to a lack of proper frontend
-  specifications those values cannot be calculated into any real unit.
+  between the same brand/model frontends. Due to the lack of proper frontend
+  specifications those values cannot be calculated into any real units.
 - Shrinked OSD is available for NTSC users: make NTSC_SYSTEM=1
 - The device switching feature is still non-functional.
 

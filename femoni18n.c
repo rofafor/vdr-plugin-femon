@@ -1548,5 +1548,252 @@ const tI18nPhrase Phrases[] = {
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
   },
+  { "Show CA System", // English
+    "CA System anzeigen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Näytä salausjärjestelmä", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Fixed", // English
+    "Fest", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "kiinteä", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Free to Air", // English
+    "Free to Air", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "salaamaton", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "SECA/Mediaguard", // English
+    "SECA/Mediaguard", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "SECA/Mediaguard", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Viaccess", // English
+    "Viaccess", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Viaccess", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Irdeto", // English
+    "Irdeto", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Irdeto", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "NDS/Videoguard", // English
+    "NDS/Videoguard", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "NDS/Videoguard", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Conax", // English
+    "Conax", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Conax", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "CryptoWorks", // English
+    "CryptoWorks", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "CryptoWorks", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "PowerVu", // English
+    "PowerVu", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "PowerVu", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "BetaCrypt", // English
+    "BetaCrypt", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "BetaCrypt", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "NagraVision", // English
+    "NagraVision", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "NagraVision", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "SkyCrypt", // English
+    "SkyCrypt", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk   
+    "SkyCrypt", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
   { NULL }
 };

@@ -41,9 +41,9 @@
 #define OSDSTATUSHEIGHT          (m_Font->Height() * 6)  // in pixels (6 rows)
 
 #define OSDINFOWIN_Y(offset)     (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
-#define OSDINFOWIN_X(col)        ((col == 4) ? 470 : (col == 3) ? 300 : (col==2) ? 180 : 15)
+#define OSDINFOWIN_X(col)        ((col == 4) ? 455 : (col == 3) ? 305 : (col == 2) ? 155 : 15)
 #define OSDSTATUSWIN_Y(offset)   (femonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
-#define OSDSTATUSWIN_X(col)      ((col == 7) ? 475 : (col == 6) ? 410 : (col == 5) ? 275 : (col == 4) ? 220 : (col == 3) ? 125 : (col==2) ? 70 : 15)
+#define OSDSTATUSWIN_X(col)      ((col == 7) ? 475 : (col == 6) ? 410 : (col == 5) ? 275 : (col == 4) ? 220 : (col == 3) ? 125 : (col == 2) ? 70 : 15)
 #define OSDSTATUSWIN_XC(col,txt) (((col - 1) * OSDWIDTH / 5) + ((OSDWIDTH / 5 - m_Font->Width(txt)) / 2))
 #define BARWIDTH(x)              (OSDWIDTH * x / 100)
 #define SPACING                  5
@@ -320,7 +320,75 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         offset += m_Font->Height();
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), clrWhite, clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%X", channel->Ca());
+        value = channel->Ca();
+        if (femonConfig.showcasystem) {
+           /* http://www.dvb.org/index.php?id=174 */
+           switch (value) {
+             case 0x0000:
+                  /* Reserved */
+                  snprintf(buf, sizeof(buf), "%s", tr("Free to Air"));
+                  break;
+             case 0x0001 ... 0x00FF:
+                  /* Standardized systems */
+                  snprintf(buf, sizeof(buf), "%s", tr("Fixed"));
+                  break;
+             case 0x0100 ... 0x01FF:
+                  /* Canal Plus */
+                  snprintf(buf, sizeof(buf), "%s", tr("SECA/Mediaguard"));
+                  break;
+             case 0x0500 ... 0x05FF:
+                  /* France Telecom */
+                  snprintf(buf, sizeof(buf), "%s", tr("Viaccess"));
+                  break;
+             case 0x0600 ... 0x06FF:
+                  /* Irdeto */
+                  snprintf(buf, sizeof(buf), "%s", tr("Irdeto"));
+                  break;
+             case 0x0900 ... 0x09FF:
+                  /* News Datacom */
+                  snprintf(buf, sizeof(buf), "%s", tr("NDS/Videoguard"));
+                  break;
+             case 0x0B00 ... 0x0BFF:
+                  /* Norwegian Telekom */
+                  snprintf(buf, sizeof(buf), "%s", tr("Conax"));
+                  break;
+             case 0x0D00 ... 0x0DFF:
+                  /* Philips */
+                  snprintf(buf, sizeof(buf), "%s", tr("CryptoWorks"));
+                  break;
+             case 0x0E00 ... 0x0EFF:
+                  /* Scientific Atlanta */
+                  snprintf(buf, sizeof(buf), "%s", tr("PowerVu"));
+                  break;
+             case 0x1200 ... 0x12FF:
+                  /* BellVu Express */
+                  snprintf(buf, sizeof(buf), "%s", tr("NagraVision"));
+                  break;
+             case 0x1700 ... 0x17FF:
+                  /* BetaTechnik */
+                  snprintf(buf, sizeof(buf), "%s", tr("BetaCrypt"));
+                  break;
+             case 0x1800 ... 0x18FF:
+                  /* Kudelski SA */
+                  snprintf(buf, sizeof(buf), "%s", tr("NagraVision"));
+                  break;
+             case 0x4A60 ... 0x4A6F:
+                  /* @Sky */
+                  snprintf(buf, sizeof(buf), "%s", tr("SkyCrypt"));
+                  break;
+             default:
+                  snprintf(buf, sizeof(buf), "%X", value);
+                  break;
+             }
+           }
+        else {
+           snprintf(buf, sizeof(buf), "%X", value);
+           value = 1;
+           while (channel->Ca(value) && (value < MAXCAIDS)) {
+             snprintf(buf2, sizeof(buf2), ", %X", channel->Ca(value++));
+             strncat(buf, buf2, sizeof(buf));
+             }
+           }
         m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Tpid"), clrWhite, clrBackground, m_Font);
         snprintf(buf, sizeof(buf), "%d", channel->Tpid());
