@@ -50,6 +50,10 @@ VDR Plugin 'femon' Revision History
 
 - Backported "stream information" feature (from version 0.1.1).
 
+2004-06-06: Version 0.0.5
+
+- Backported changes and fixes from version 0.1.2.
+
 -------------------------
 
 2004-05-18: Version 0.1.0
@@ -63,3 +67,9 @@ VDR Plugin 'femon' Revision History
   .-> basic -> transponder -> stream -.
   `-----------------------------------´
 - Added missing german translations (Thanks to Peter Marquardt).
+
+2004-06-06: Version 0.1.2
+
+- Fixed the channel switch bug (reported by Stefan Lucke).
+- Nid/Tid/Rid are now included in translations.
+- Added video format and aspect ratio symbols into status window.

@@ -26,8 +26,8 @@ cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid)
   m_VideoPacketCount = 0;
   m_VideoHorizontalSize = 0;
   m_VideoVerticalSize = 0;
-  m_VideoAspectRatio = 0;
-  m_VideoFormat = 0;
+  m_VideoAspectRatio = AR_RESERVED;
+  m_VideoFormat = VF_UNKNOWN;
   m_VideoFrameRate = 0.0;
   m_VideoStreamBitrate = 0.0;
   m_VideoBitrate = 0.0;
@@ -73,19 +73,19 @@ void cFemonReceiver::GetVideoInfo(uint8_t *mbuf, int count)
   int sw = (int)((headr[3] & 0xF0) >> 4);
   switch( sw ){
     case 1:
-      m_VideoAspectRatio = 100;
+      m_VideoAspectRatio = AR_1_1;
       break;
     case 2:
-      m_VideoAspectRatio = 133;
+      m_VideoAspectRatio = AR_4_3;
       break;
     case 3:
-      m_VideoAspectRatio = 177;
+      m_VideoAspectRatio = AR_16_9;
       break;
     case 4:
-      m_VideoAspectRatio = 221;
+      m_VideoAspectRatio = AR_2_21_1;
       break;
     case 5 ... 15:
-      m_VideoAspectRatio = 0;
+      m_VideoAspectRatio = AR_RESERVED;
       break;
     default:
       return;
@@ -94,31 +94,31 @@ void cFemonReceiver::GetVideoInfo(uint8_t *mbuf, int count)
   switch ( sw ) {
     case 1:
       m_VideoFrameRate = 24000/1001.0;
-      m_VideoFormat = 0;
+      m_VideoFormat = VF_UNKNOWN;
       break;
     case 2:
       m_VideoFrameRate = 24.0;
-      m_VideoFormat = 0;
+      m_VideoFormat = VF_UNKNOWN;
       break;
     case 3:
       m_VideoFrameRate = 25.0;
-      m_VideoFormat = 1;
+      m_VideoFormat = VF_PAL;
       break;
     case 4:
       m_VideoFrameRate = 30000/1001.0;
-      m_VideoFormat = 2;
+      m_VideoFormat = VF_NTSC;
       break;
     case 5:
       m_VideoFrameRate = 30.0;
-      m_VideoFormat = 2;
+      m_VideoFormat = VF_NTSC;
       break;
     case 6:
       m_VideoFrameRate = 50.0;
-      m_VideoFormat = 1;
+      m_VideoFormat = VF_PAL;
       break;
     case 7:
       m_VideoFrameRate = 60.0;
-      m_VideoFormat = 2;
+      m_VideoFormat = VF_NTSC;
       break;
     }
   m_VideoStreamBitrate = 400 * (((headr[4] << 10) & 0x0003FC00UL) | ((headr[5] << 2) & 0x000003FCUL) | (((headr[6] & 0xC0) >> 6) & 0x00000003UL)) / 1000000.0;
@@ -154,14 +154,14 @@ void cFemonReceiver::GetAudioInfo(uint8_t *mbuf, int count)
   m_AudioMPEGLayer = 4 - ((headr[1] & 0x06) >> 1);
   tmp = bitrates[(3 - ((headr[1] & 0x06) >> 1))][(headr[2] >> 4)] * 1000;
   if (tmp == 0)
-     m_AudioStreamBitrate = -2.0; // free
+     m_AudioStreamBitrate = (double)FR_FREE;
   else if (tmp == 0xf)
-     m_AudioStreamBitrate = -1.0; // reserved
+     m_AudioStreamBitrate = (double)FR_RESERVED;
   else
      m_AudioStreamBitrate = tmp / 1000.0;
   tmp = samplerates[((headr[2] & 0x0c) >> 2)] * 100;
   if (tmp == 3)
-     m_AudioSamplingFreq = -1; // reserved
+     m_AudioSamplingFreq = FR_RESERVED;
   else
      m_AudioSamplingFreq = tmp;
 }

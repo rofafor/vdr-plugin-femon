@@ -492,7 +492,7 @@ const tI18nPhrase Phrases[] = {
     "Auto", // Português
     "Auto", // Français
     "Auto", // Norsk
-    "Auto", // suomi
+    "auto", // suomi
     "Auto", // Polski
     "Auto", // Español
     "Auto", // ÅëëçíéêÜ (Greek)
@@ -511,7 +511,7 @@ const tI18nPhrase Phrases[] = {
     "None", // Português
     "None", // Français
     "None", // Norsk
-    "None", // suomi
+    "ei", // suomi
     "None", // Polski
     "None", // Español
     "None", // ÅëëçíéêÜ (Greek)
@@ -530,7 +530,7 @@ const tI18nPhrase Phrases[] = {
     "Off", // Português
     "Off", // Français
     "Off", // Norsk
-    "Off", // suomi
+    "poissa", // suomi
     "Off", // Polski
     "Off", // Español
     "Off", // ÅëëçíéêÜ (Greek)
@@ -549,7 +549,7 @@ const tI18nPhrase Phrases[] = {
     "On", // Português
     "On", // Français
     "On", // Norsk
-    "On", // suomi
+    "päällä", // suomi
     "On", // Polski
     "On", // Español
     "On", // ÅëëçíéêÜ (Greek)
@@ -728,7 +728,7 @@ const tI18nPhrase Phrases[] = {
     "Hz", // Romaneste
     "Hz", // Magyar
     "Hz", // Català
-    "Hz", // ÀãááÚØÙ (Russian)
+    "³æ", // ÀãááÚØÙ (Russian)
     "Hz", // Hrvatski (Croatian)
   },
   { "Aspect Ratio", // English
@@ -937,7 +937,7 @@ const tI18nPhrase Phrases[] = {
     "kHz", // Romaneste
     "kHz", // Magyar
     "kHz", // Català
-    "kHz", // ÀãááÚØÙ (Russian)
+    "Ú³æ", // ÀãááÚØÙ (Russian)
     "kHz", // Hrvatski (Croatian)
   },
   { "MPEG Layer", // English
@@ -958,6 +958,63 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
+  },
+  { "Nid", // English
+    "Nid", // Deutsch
+    "Nid", // Slovenski
+    "Nid", // Italiano
+    "Nid", // Nederlands
+    "Nid", // Português
+    "Nid", // Français
+    "Nid", // Norsk
+    "Verkko ID", // suomi
+    "Nid", // Polski
+    "Nid", // Español
+    "Nid", // ÅëëçíéêÜ (Greek)
+    "Nid", // Svenska
+    "Nid", // Romaneste
+    "Nid", // Magyar
+    "Nid", // Català
+    "Nid", // ÀãááÚØÙ (Russian)
+    "Nid", // Hrvatski (Croatian)
+  },
+  { "Tid", // English
+    "Tid", // Deutsch
+    "Tid", // Slovenski
+    "Tid", // Italiano
+    "Tid", // Nederlands
+    "Tid", // Português
+    "Tid", // Français
+    "Tid", // Norsk
+    "Lähete ID", // suomi
+    "Tid", // Polski
+    "Tid", // Español
+    "Tid", // ÅëëçíéêÜ (Greek)
+    "Tid", // Svenska
+    "Tid", // Romaneste
+    "Tid", // Magyar
+    "Tid", // Català
+    "Tid", // ÀãááÚØÙ (Russian)
+    "Tid", // Hrvatski (Croatian)
+  },
+  { "Rid", // English
+    "Rid", // Deutsch
+    "Rid", // Slovenski
+    "Rid", // Italiano
+    "Rid", // Nederlands
+    "Rid", // Português
+    "Rid", // Français
+    "Rid", // Norsk
+    "Radio ID", // suomi
+    "Rid", // Polski
+    "Rid", // Español
+    "Rid", // ÅëëçíéêÜ (Greek)
+    "Rid", // Svenska
+    "Rid", // Romaneste
+    "Rid", // Magyar
+    "Rid", // Català
+    "Rid", // ÀãááÚØÙ (Russian)
+    "Rid", // Hrvatski (Croatian)
   },
   { NULL }
 };

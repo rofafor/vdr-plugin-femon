@@ -35,6 +35,7 @@ private:
   int m_DisplayMode;
   const cFont *m_Font;
   cMutex* m_Mutex;
+  static cBitmap bmPAL, bmNTSC, bmAspectRatio_1_1, bmAspectRatio_16_9, bmAspectRatio_2_21_1, bmAspectRatio_4_3;
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);
 
