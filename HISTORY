@@ -137,3 +137,7 @@ VDR Plugin 'femon' Revision History
 - Minor modification for DEBUG mode.
 - Added preliminary support for themes and some GUI tweaks.
 - Added horizontal offset setup option.
+
+2005-02-26: Version 0.8.6
+
+- Horizontal offset setup option should be functional now.

@@ -884,7 +884,7 @@ void cFemonOsd::Show(void)
      m_Frontend = -1;
      return;
      }
-  m_Osd = cOsdProvider::NewOsd(((Setup.OSDWidth - OSDWIDTH) / 2) + Setup.OSDLeft, ((Setup.OSDHeight - OSDHEIGHT) / 2) + Setup.OSDTop);
+  m_Osd = cOsdProvider::NewOsd(((Setup.OSDWidth - OSDWIDTH) / 2) + Setup.OSDLeft + femonConfig.osdoffset, ((Setup.OSDHeight - OSDHEIGHT) / 2) + Setup.OSDTop);
   if (m_Osd) {
      tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, 4 } };
      if (m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
@@ -1057,9 +1057,8 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                       }
                    if (cDevice::GetDevice(device)->ProvidesChannel(channel)) {
                       Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, Key, device);
-                      //if (cDevice::ActualDevice() == cTransferControl::ReceiverDevice())
-                      //   cControl::Shutdown();
-                      //cDevice::GetDevice(channel)->SwitchChannel(channel, true);
+                      // 1) tune the channel on the new device
+                      // 2) make the new device to actual device
                       break;
                       }
                    }

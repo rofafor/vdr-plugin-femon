@@ -62,7 +62,7 @@ cFemonReceiver::~cFemonReceiver(void)
   Detach();
   if (m_Active) {
      m_Active = false;
-     Cancel(0);
+     Cancel();
      }
 }
 
@@ -259,7 +259,7 @@ void cFemonReceiver::Activate(bool On)
      }
   else if (m_Active) {
      m_Active = false;
-     Cancel(0);
+     Cancel();
      }
 }
 
