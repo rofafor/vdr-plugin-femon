@@ -4,7 +4,7 @@
 #include <vdr/plugin.h>
 #include "femoncfg.h"
 
-static const char *VERSION        = "0.0.1b";
+static const char *VERSION        = "0.0.2";
 static const char *DESCRIPTION    = "DVB Signal Quality Monitor (OSD)";
 static const char *MAINMENUENTRY  = "Signal Quality";
 

@@ -76,7 +76,7 @@ cMenuFemonSetup::cMenuFemonSetup(void)
 {
   Add(new cMenuEditBoolItem(tr("Hide Mainmenu Entry"),    &femonConfig.hidemenu,   tr("no"), tr("yes")));
   Add(new cMenuEditBoolItem(tr("Position"),               &femonConfig.position,   tr("bottom"), tr("top")));
-  Add(new cMenuEditIntItem( tr("Update Interval [0.1s]"), &femonConfig.interval,   1, 20));
+  Add(new cMenuEditIntItem( tr("Update Interval [0.1s]"), &femonConfig.interval,   5, 50));
   Add(new cMenuEditIntItem( tr("Red Limit [%]"),          &femonConfig.redlimit,   1, 50));
   Add(new cMenuEditIntItem( tr("Green Limit [%]"),        &femonConfig.greenlimit, 51, 100));
 }

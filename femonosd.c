@@ -6,10 +6,10 @@
  * $Id$
  */
 
-#include "femonosd.h"
 #include "femoncfg.h"
+#include "femonosd.h"
 
-#define FEMON_DEVICE "/dev/dvb/adapter%d/frontend%d"
+#define FE_DEVICE  "/dev/dvb/adapter%d/frontend%d"
 #define CHANNELINPUT_TIMEOUT 1000
 #define CHANNELINFO_TIMEOUT  5000
 #define OSDHEIGHT 5
@@ -24,6 +24,7 @@ cFemonOsd::cFemonOsd(void)
   //printf("cFemonOsd::cFemonOsd()\n");
   m_Osd = NULL;
   m_Window = -1;
+  m_Receiver = NULL;
   m_Frontend = -1;
   m_Active = false;
   m_Number = 0;
@@ -42,6 +43,8 @@ cFemonOsd::~cFemonOsd(void)
      m_Active = false;
      Cancel(3);
      }
+  if (m_Receiver)
+     delete m_Receiver;
   if (m_Osd)
      delete m_Osd;
 }
@@ -54,6 +57,8 @@ void cFemonOsd::Action(void)
   uint32_t ber, unc;
   fe_status_t fe_status;
   char buf[128];
+  double VRate = 0.0;
+  double ARate = 0.0;
 
   m_Active = true;
   while (m_Active) {
@@ -68,9 +73,24 @@ void cFemonOsd::Action(void)
 #if (VDRVERSNUM >= 10300) || defined(ELCHIAIOVERSION)
           eDvbFont OldFont = m_Osd->SetFont(fontSml);
 #endif
-          sprintf(buf, "%d - %s", cDevice::CurrentChannel(), Channels.GetByNumber(cDevice::CurrentChannel())->Name());
+          sprintf(buf, "%d %s", cDevice::CurrentChannel(), Channels.GetByNumber(cDevice::CurrentChannel())->Name());
           m_Osd->Fill(0, 0, m_Width, cOsd::LineHeight() - 1, clrWhite, m_Window);
           m_Osd->Text(cOsd::CellWidth(), 0, buf, clrBlack, clrWhite, m_Window);
+          if (m_Receiver) {
+             // do some averaging to smooth the value
+             VRate = (VRate + (m_Receiver->VideoPacketCount() * 184.0 * 8.0) / (femonConfig.interval * 102.4 * 1024.0)) / 2.0;
+             ARate = (ARate + (m_Receiver->AudioPacketCount() * 184.0 * 8.0) / (femonConfig.interval * 102.4 * 1024.0)) / 2.0;
+             sprintf(buf, "V: %.1f Mbit/s\n", VRate);
+#if (VDRVERSNUM >= 10300) || defined(ELCHIAIOVERSION)
+             m_Osd->Text((m_Width - 20 * cOsd::CellWidth()), 0, buf, clrBlack, clrWhite, m_Window);
+             sprintf(buf, "A: %.1f Mbit/s\n", ARate);
+             m_Osd->Text((m_Width - 10 * cOsd::CellWidth()), 0, buf, clrBlack, clrWhite, m_Window);
+#else
+             m_Osd->Text((m_Width - 22 * cOsd::CellWidth()), 0, buf, clrBlack, clrWhite, m_Window);
+             sprintf(buf, "A: %.1f Mbit/s\n", ARate);
+             m_Osd->Text((m_Width - 11 * cOsd::CellWidth()), 0, buf, clrBlack, clrWhite, m_Window);
+#endif
+             }
           sprintf(buf, "STR: %04x", signal);
           m_Osd->Text(cOsd::CellWidth(), 3 * cOsd::LineHeight(), buf, clrWhite, clrBackground, m_Window);
           sprintf(buf, "SNR: %04x", snr);
@@ -129,10 +149,10 @@ void cFemonOsd::Action(void)
 void cFemonOsd::Show(void)
 {
   //printf("cFemonOsd::Show()\n");
-  char *fedev = NULL;
-  asprintf(&fedev, FEMON_DEVICE, cDevice::ActualDevice()->CardIndex(), 0); // only the first frontend supported
-  m_Frontend = open(fedev, O_RDONLY | O_NONBLOCK);
-  free(fedev);
+  char *dev = NULL;
+  asprintf(&dev, FE_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
+  m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
+  free(dev);
   if (m_Frontend < 0) {
      isyslog("cFemonOsd::Show() cannot open frontend device.");
      m_Frontend = -1;
@@ -142,6 +162,7 @@ void cFemonOsd::Show(void)
      isyslog("cFemonOsd::Show() cannot read frontend info.");
      m_Frontend = -1;
      close(m_Frontend);
+     return;
      }
   m_InfoTime = time_ms();
   m_Osd = cOsd::OpenRaw(m_Xpos, m_Ypos);
@@ -157,6 +178,10 @@ void cFemonOsd::Show(void)
      m_Osd->AddColor(clrTransparent, m_Window);
      m_Osd->Clear(m_Window);
      m_Osd->Flush();
+     if (m_Receiver)
+        delete m_Receiver;
+     m_Receiver = new cFemonReceiver(Channels.GetByNumber(cDevice::CurrentChannel())->Ca(), Channels.GetByNumber(cDevice::CurrentChannel())->Vpid(), Channels.GetByNumber(cDevice::CurrentChannel())->Apid1());
+     cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      Start();
      }
 }
@@ -164,12 +189,11 @@ void cFemonOsd::Show(void)
 void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 {
   //printf("cFemonOsd::ChannelSwitch()\n");
-  char *fedev = NULL;
-
+  char *dev = NULL;
   close(m_Frontend);
-  asprintf(&fedev, FEMON_DEVICE, cDevice::ActualDevice()->CardIndex(), 0); // only the first frontend$
-  m_Frontend = open(fedev, O_RDONLY | O_NONBLOCK);
-  free(fedev);
+  asprintf(&dev, FE_DEVICE, cDevice::ActualDevice()->CardIndex(), 0); // only the first frontend$
+  m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
+  free(dev);
   if (m_Frontend < 0) {
      isyslog("cFemonOsd::ChannelSwitch() cannot open frontend device.");
      m_Frontend = -1;
@@ -180,6 +204,10 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
      m_Frontend = -1;
      close(m_Frontend);
      }
+  if (m_Receiver)
+     delete m_Receiver;
+  m_Receiver = new cFemonReceiver(Channels.GetByNumber(cDevice::CurrentChannel())->Ca(), Channels.GetByNumber(cDevice::CurrentChannel())->Vpid(), Channels.GetByNumber(cDevice::CurrentChannel())->Apid1());
+  cDevice::ActualDevice()->AttachReceiver(m_Receiver);
   m_InfoTime = time_ms();
 }
 

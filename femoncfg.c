@@ -14,7 +14,7 @@ cFemonConfig::cFemonConfig(void)
 {
   hidemenu   = 0;
   position   = 1;
-  interval   = 5;
+  interval   = 10;
   redlimit   = 33;
   greenlimit = 66;
 }

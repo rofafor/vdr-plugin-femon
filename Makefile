@@ -46,7 +46,7 @@ DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
 ### The object files (add further files here):
 
-OBJS = femon.o femonosd.o femoncfg.o femoni18n.o
+OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femoni18n.o
 
 ### Implicit rules:
 

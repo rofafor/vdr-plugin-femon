@@ -25,7 +25,9 @@ The plugin is based on a neat console frontend status monitor application called
 further information). The other parts of plugin code are borrowed from the 
 excellent OSD Picture-In-Picture plugin by Sascha Volkenandt <sascha@akv-soft.de>
 and Andreas Regel <andreas.regel@powarman.de>. Props to Sascha for being brave
-enough to test this piece of junk and ofcourse for german translations.
+enough to test this piece of junk and ofcourse for german translations. The bitrate
+calculation algorithm is copied from dvbstream application by Dave Chapman
+<dave@dchapman.com>.
 
 Shortcomings / Todo list:
 
@@ -38,4 +40,3 @@ Shortcomings / Todo list:
 - Sometimes (read always) ttxtsubs plugin messes up the OSD - user should disable
   ttxtsubs, but closing and reopening the femon plugin might help as well. BTW. the
   same things happens with OSDTeletext plugin too :)
-- Where's the bitrate!?

@@ -9,12 +9,14 @@
 #include <vdr/status.h>
 #include <vdr/channels.h>
 #include <vdr/font.h>
+#include "femonreceiver.h"
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
   bool m_Active;
   cOsdBase *m_Osd;
   tWindowHandle m_Window;
+  cFemonReceiver *m_Receiver;
   int m_Frontend;
   struct dvb_frontend_info m_FrontendInfo;
   int m_Number;
