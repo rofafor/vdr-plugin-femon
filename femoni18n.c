@@ -94,7 +94,7 @@ const tI18nPhrase Phrases[] = {
     "", // Dansk
   },
   { "Horizontal offset", // English
-    "", // Deutsch
+    "Horizontaler Offset", // Deutsch
     "", // Slovenski
     "", // Italiano
     "", // Nederlands
@@ -111,7 +111,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "", // Eesti
+    "Horisontaalne nihe", // Eesti
     "", // Dansk
   },
   { "Default display mode", // English
@@ -174,8 +174,8 @@ const tI18nPhrase Phrases[] = {
     "", // Català  
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "", // Eesti
-    "transponder", // Dansk
+    "transponder", // Eesti
+    "", // Dansk
   },
   { "stream", // English
     "Stream", // Deutsch
@@ -195,7 +195,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català  
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "striim", // Eesti
+    "voog", // Eesti
     "", // Dansk
   },
   { "Theme", // English
@@ -363,7 +363,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "ÀĞáçñâ áÚŞàŞáâØ ßŞâŞÚĞ ÔĞİİëå", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "Striimi analüüs", // Eesti
+    "Voo analüüs", // Eesti
     "", // Dansk
   },
   { "Calculation interval [0.1s]", // English
@@ -741,7 +741,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "Striimi info", // Eesti
+    "Voo info", // Eesti
     "", // Dansk
   },
   { "MPEG Layer", // English
@@ -783,7 +783,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "Videostriim", // Eesti
+    "Videovoog", // Eesti
     "", // Dansk
   },
   { "Bitrate", // English
@@ -1035,7 +1035,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "Audiostriim", // Eesti
+    "Audiovoog", // Eesti
     "", // Dansk
   },
   { "Sampling Frequency", // English
@@ -1207,7 +1207,7 @@ const tI18nPhrase Phrases[] = {
     "dB", // Dansk
   },
   { "not indicated", // English
-    "", // Deutsch
+    "nicht angegeben", // Deutsch
     "", // Slovenski
     "", // Italiano
     "", // Nederlands
@@ -1266,7 +1266,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "AC-3 striim", // Eesti
+    "AC-3 voog", // Eesti
     "", // Dansk
   },
   { "Frame Size", // English
@@ -1308,7 +1308,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "Bitistriimi tüüp", // Eesti
+    "Bitivoo tüüp", // Eesti
     "", // Dansk
   },
   { "Audio Coding Mode", // English
@@ -1455,7 +1455,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "CM", // Eesti
+    "Täiskomplekt (CM)", // Eesti
     "", // Dansk
   },
   { "Music and Effects (ME)", // English
@@ -1686,7 +1686,7 @@ const tI18nPhrase Phrases[] = {
     "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
-    "K", // Eesti
+    "C", // Eesti
     "", // Dansk
   },
   { "L", // English "Left"

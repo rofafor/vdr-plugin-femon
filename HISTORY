@@ -151,3 +151,8 @@ VDR Plugin 'femon' Revision History
 2005-04-02: Version 0.8.8
 
 - Cleaned up finnish translations (Thanks to Ville Skyttä).
+
+2005-04-04: Version 0.8.9
+
+- Updated Estonian translations (Thanks to Arthur Konovalov).
+- Added the missing german translations (Thanks to #vdr-portal).
