@@ -15,7 +15,11 @@
 #define OSDHEIGHT 5
 
 cFemonOsd::cFemonOsd(void)
+#if VDRVERSNUM >= 10300
 :cOsdObject(true), cThread("femon plugin")
+#else
+:cOsdObject(true), cThread()
+#endif
 {
   //printf("cFemonOsd::cFemonOsd()\n");
   m_Osd = NULL;
