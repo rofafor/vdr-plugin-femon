@@ -1,0 +1,41 @@
+This is a DVB Frontend Status Monitor plugin for the Video Disk Recorder (VDR).
+
+Written by:                  R o l f . A h r e n b e r g @ s c i . f i
+
+Project's homepage:          http://www.saunalahti.fi/~rahrenbe/vdr/femon/
+
+Latest version available at: http://www.saunalahti.fi/~rahrenbe/vdr/femon/
+
+See the file COPYING for license information.
+
+Requirements:
+
+Ph.D. in Astro Physics and preferably a six-pack waiting in a fridge.
+
+Description:
+
+DVB Frontend Status Monitor is a plugin that displays a few signal quality parameters
+of the tuned channel on your screen. You can zap through all your channels and the
+plugin should be monitoring always the right frontend *fingers crossed*. A short
+message is shown at the bottom line to help the DVB card identification after each
+channel switch and OK press.
+
+The plugin is based on a neat console frontend status monitor application called
+'femon' by Johannes Stezenbach <js@convergence.de> (see DVB-apps/szap/femon.c for
+further information). The other parts of plugin code are borrowed from the 
+excellent OSD Picture-In-Picture plugin by Sascha Volkenandt <sascha@akv-soft.de>
+and Andreas Regel <andreas.regel@powarman.de>. Props to Sascha for being brave
+enough to test this piece of junk and ofcourse for german translations.
+
+Shortcomings / Todo list:
+
+- The current version is a kind of Proof In Concept to replace the old 'tech
+  patch', so the internals will be eventually rewritten... if I'll find some
+  spare time.
+- The plugin supports only those DVB cards with _one_ frontend (do any cards with
+  multiple frontends even exist?), because I haven't yet figured howto do it without
+  patching the VDR core.
+- Sometimes (read always) ttxtsubs plugin messes up the OSD - user should disable
+  ttxtsubs, but closing and reopening the femon plugin might help as well. BTW. the
+  same things happens with OSDTeletext plugin too :)
+- Where's the bitrate!?
