@@ -121,6 +121,7 @@ void cFemonOsd::DrawStatusWindow(void)
   int x = OSDWIDTH;
   int y = 0;
   int value = 0;
+  eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   if (m_Osd) {
@@ -158,8 +159,8 @@ void cFemonOsd::DrawStatusWindow(void)
         y = (m_Font->Height() - bmDevice.Height()) / 2;
         if (y < 0) y = 0;
         m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDevice, clrBlack, clrWhite);
-        if (IS_AUDIO_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) {
-           value = int(cDevice::PrimaryDevice()->GetCurrentAudioTrack() - ttAudioFirst);
+        if (IS_AUDIO_TRACK(track)) {
+           value = int(track - ttAudioFirst);
            if (value == 1) {
               x -= bmOne.Width() + SPACING;
               y = (m_Font->Height() - bmOne.Height()) / 2;
@@ -216,7 +217,7 @@ void cFemonOsd::DrawStatusWindow(void)
               m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmStereo, clrBlack, clrWhite);
               }
            }
-        else if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) {
+        else if (m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
            if (m_Receiver->AC3_5_1()) {
               x -= bmDD51.Width() + SPACING;
               y = (m_Font->Height() - bmDD51.Height()) / 2;
@@ -320,9 +321,9 @@ void cFemonOsd::DrawStatusWindow(void)
      m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), "UNC:", clrWhite, clrBackground, m_Font);
      snprintf(buf, sizeof(buf), "%08x", m_UNC);
      m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) ? tr("AC-3") : tr("Audio"));
+     snprintf(buf, sizeof(buf), "%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio"));
      m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", (m_Receiver->AC3Valid() && IS_DOLBY_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate(), tr("kbit/s"));
+     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", (m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate(), tr("kbit/s"));
      else            snprintf(buf, sizeof(buf), "--- %s", tr("kbit/s"));
      m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
      offset += m_Font->Height();
@@ -345,6 +346,7 @@ void cFemonOsd::DrawInfoWindow(void)
   int value = 0;
   double dvalue = 0.0;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
 
   if (m_Osd) {
      if (m_DisplayMode == modeTransponder) {
@@ -687,8 +689,7 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         offset += m_Font->Height();
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Stream"), clrYellow, clrBackground, m_Font);
-        value = int(cDevice::PrimaryDevice()->GetCurrentAudioTrack());
-        snprintf(buf, sizeof(buf), "#%d", IS_AUDIO_TRACK(value) ? channel->Apid(value - ttAudioFirst) : channel->Apid(0));
+        snprintf(buf, sizeof(buf), "#%d %s", IS_AUDIO_TRACK(track) ? channel->Apid(int(track - ttAudioFirst)) : channel->Apid(0), IS_AUDIO_TRACK(track) ? channel->Alang(int(track - ttAudioFirst)) : channel->Alang(0));
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
         offset += m_Font->Height();
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_Font);
@@ -719,11 +720,10 @@ void cFemonOsd::DrawInfoWindow(void)
      else if (m_DisplayMode == modeAC3) {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+m_Font->Height()-1), clrWhite);
-        value = int(cDevice::PrimaryDevice()->GetCurrentAudioTrack());
-        snprintf(buf, sizeof(buf), "%s - %s #%d", tr("Stream Information"), tr("AC-3 Stream"), IS_DOLBY_TRACK(value) ? channel->Dpid(value - ttDolbyFirst) : 0);
+        snprintf(buf, sizeof(buf), "%s - %s #%d %s", tr("Stream Information"), tr("AC-3 Stream"), IS_DOLBY_TRACK(track) ? channel->Dpid(int(track - ttDolbyFirst)) : channel->Dpid(0), IS_DOLBY_TRACK(track) ? channel->Dlang(int(track - ttDolbyFirst)) : channel->Dlang(0));
         m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, clrBackground, clrWhite, m_Font);
         offset += m_Font->Height();
-        if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(cDevice::PrimaryDevice()->GetCurrentAudioTrack())) {
+        if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_Font);
            snprintf(buf, sizeof(buf), "%.0f %s (%0.f %s)", m_Receiver->AC3StreamBitrate(), tr("kbit/s"), m_Receiver->AC3Bitrate(), tr("kbit/s"));
            m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
@@ -842,9 +842,9 @@ void cFemonOsd::Action(void)
 void cFemonOsd::Show(void)
 {
   debug(printf("cFemonOsd::Show()\n"));
-  eTrackType track = ttNone;
   int apid = 0, dpid = 0;
   char *dev = NULL;
+  eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
   free(dev);
@@ -876,7 +876,6 @@ void cFemonOsd::Show(void)
      if (m_Receiver)
         delete m_Receiver;
      if (femonConfig.analyzestream) {
-        track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
         if (IS_AUDIO_TRACK(track)) apid = int(track - ttAudioFirst);
         else if (IS_DOLBY_TRACK(track)) dpid = int(track - ttDolbyFirst);
         cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
@@ -890,9 +889,9 @@ void cFemonOsd::Show(void)
 void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 {
   debug(printf("cFemonOsd::ChannelSwitch()\n"));
-  eTrackType track = ttNone;
   int apid = 0, dpid = 0;
   char *dev = NULL;
+  eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   if (!device->IsPrimaryDevice() || !channelNumber || cDevice::PrimaryDevice()->CurrentChannel() != channelNumber)
      return;
   close(m_Frontend);
@@ -913,7 +912,6 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   if (m_Receiver)
      delete m_Receiver;
   if (femonConfig.analyzestream) {
-     track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
      if (IS_AUDIO_TRACK(track)) apid = int(track - ttAudioFirst);
      else if (IS_DOLBY_TRACK(track)) dpid = int(track - ttDolbyFirst);
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
@@ -925,12 +923,11 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
 {
   debug(printf("cFemonOsd::SetAudioTrack()\n"));
-  eTrackType track = ttNone;
   int apid = 0, dpid = 0;
+  eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   if (m_Receiver)
      delete m_Receiver;
   if (femonConfig.analyzestream) {
-     track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
      if (IS_AUDIO_TRACK(track)) apid = int(track - ttAudioFirst);
      else if (IS_DOLBY_TRACK(track)) dpid = int(track - ttDolbyFirst);
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());

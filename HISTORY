@@ -118,3 +118,7 @@ VDR Plugin 'femon' Revision History
 - Added DEBUG mode (make DEBUG=1 plugins).
 - OSD height is now user configurable.
 - Added audio channel selection into Yellow key.
+
+2005-01-23: Version 0.7.9
+
+- Some minor cosmetic fixes.
