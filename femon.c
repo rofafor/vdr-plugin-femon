@@ -102,6 +102,7 @@ cMenuFemonSetup::cMenuFemonSetup(void)
   themes[eFemonThemeClassic]       = tr("Classic");
   themes[eFemonThemeElchi]         = tr("Elchi");
   themes[eFemonThemeDeepBlue]      = tr("DeepBlue");
+  themes[eFemonThemeMoronimo]      = tr("Moronimo");
 
   Setup();
 }

@@ -50,6 +50,7 @@ enum eFemonThemes
   eFemonThemeClassic,
   eFemonThemeElchi,
   eFemonThemeDeepBlue,
+  eFemonThemeMoronimo,
   eFemonThemeMaxNumber
 };
 

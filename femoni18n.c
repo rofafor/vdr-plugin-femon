@@ -242,45 +242,66 @@ const tI18nPhrase Phrases[] = {
   },
   { "Elchi", // English
     "Elchi", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français 
-    "", // Norsk
+    "Elchi", // Slovenski
+    "Elchi", // Italiano
+    "Elchi", // Nederlands
+    "Elchi", // Português
+    "Elchi", // Français 
+    "Elchi", // Norsk
     "Elchi", // suomi
-    "", // Polski   
-    "", // Español  
-    "", // ÅëëçíéêÜ (Greek)
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar  
-    "", // Català  
-    "", // ÀãááÚØÙ (Russian)
-    "", // Hrvatski (Croatian)
+    "Elchi", // Polski   
+    "Elchi", // Español  
+    "Elchi", // ÅëëçíéêÜ (Greek)
+    "Elchi", // Svenska
+    "Elchi", // Romaneste
+    "Elchi", // Magyar  
+    "Elchi", // Català  
+    "Elchi", // ÀãááÚØÙ (Russian)
+    "Elchi", // Hrvatski (Croatian)
     "Elchi", // Eesti
-    "", // Dansk
+    "Elchi", // Dansk
   },
   { "DeepBlue", // English
     "DeepBlue", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français 
-    "", // Norsk
+    "DeepBlue", // Slovenski
+    "DeepBlue", // Italiano
+    "DeepBlue", // Nederlands
+    "DeepBlue", // Português
+    "DeepBlue", // Français 
+    "DeepBlue", // Norsk
     "DeepBlue", // suomi
-    "", // Polski   
-    "", // Español  
-    "", // ÅëëçíéêÜ (Greek)
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar  
-    "", // Català  
-    "", // ÀãááÚØÙ (Russian)
-    "", // Hrvatski (Croatian)
+    "DeepBlue", // Polski   
+    "DeepBlue", // Español  
+    "DeepBlue", // ÅëëçíéêÜ (Greek)
+    "DeepBlue", // Svenska
+    "DeepBlue", // Romaneste
+    "DeepBlue", // Magyar  
+    "DeepBlue", // Català  
+    "DeepBlue", // ÀãááÚØÙ (Russian)
+    "DeepBlue", // Hrvatski (Croatian)
     "DeepBlue", // Eesti
-    "", // Dansk
+    "DeepBlue", // Dansk
+  },
+  { "Moronimo", // English
+    "Moronimo", // Deutsch
+    "Moronimo", // Slovenski
+    "Moronimo", // Italiano
+    "Moronimo", // Nederlands
+    "Moronimo", // Português
+    "Moronimo", // Français 
+    "Moronimo", // Norsk
+    "Moronimo", // suomi
+    "Moronimo", // Polski   
+    "Moronimo", // Español  
+    "Moronimo", // ÅëëçíéêÜ (Greek)
+    "Moronimo", // Svenska
+    "Moronimo", // Romaneste
+    "Moronimo", // Magyar  
+    "Moronimo", // Català  
+    "Moronimo", // ÀãááÚØÙ (Russian)
+    "Moronimo", // Hrvatski (Croatian)
+    "Moronimo", // Eesti
+    "Moronimo", // Dansk
   },
   { "Hide main menu entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch

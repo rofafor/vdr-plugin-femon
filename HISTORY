@@ -141,3 +141,9 @@ VDR Plugin 'femon' Revision History
 2005-02-26: Version 0.8.6
 
 - Horizontal offset setup option should be functional now.
+
+2005-04-01: Version 0.8.7
+
+- Default make target is now all.
+- Fixed the access rights of symbols subdirectory (Thanks to Harri Kukkonen).
+- Added a new theme: Moronimo (Thanks to Morone).

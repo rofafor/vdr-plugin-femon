@@ -21,11 +21,9 @@ transponder and stream information are also available in advanced display modes.
 
 The plugin is based on a neat console frontend status monitor application
 called 'femon' by Johannes Stezenbach (see DVB-apps/szap/femon.c for further
-information). The other parts of plugin code are borrowed from the excellent
-'OSD Picture-In-Picture' plugin by Sascha Volkenandt and Andreas Regel. The
-bitrate calculation algorithm originates from the 'dvbstream' application by
-Dave Chapman and the stream information routines from the 'libdvb' library by
-Metzler Brothers.
+information). The bitrate calculation trick originates from the 'dvbstream'
+application by Dave Chapman and the stream information routines are taken from
+the 'libdvb' library by Metzler Brothers.
 
 Terminology:
 

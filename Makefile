@@ -52,6 +52,9 @@ ifdef DEBUG
 DEFINES += -DDEBUG
 endif
 
+.PHONY: all all-redirect
+all-redirect: all
+
 ### The object files (add further files here):
 
 OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femoni18n.o
