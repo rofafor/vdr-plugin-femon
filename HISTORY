@@ -40,3 +40,8 @@ VDR Plugin 'femon' Revision History
 
 - Fixed channel toggling with '0' key.
 - Bitrate calculation thread is now canceled immediately to speed up channel switching.
+
+2004-04-04: Version 0.0.3c
+
+- Fixed minor bitrate calculation errors
+- Added russian translation (Thanks to Vyacheslav Dikonov)
