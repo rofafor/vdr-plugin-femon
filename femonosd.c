@@ -19,18 +19,23 @@
 #define FRONTEND_DEVICE          "/dev/dvb/adapter%d/frontend%d"
 #define CHANNELINPUT_TIMEOUT     1000
 
-#define SCREENWIDTH              720 // in pixels
+#ifdef NTSC_SYSTEM
+#define SCREENHEIGHT             480 // in pixels
+#define OSDHEIGHT                420 // in pixels
+#else
 #define SCREENHEIGHT             576 // in pixels
-#define OSDWIDTH                 600 // in pixels
 #define OSDHEIGHT                480 // in pixels
+#endif
+#define SCREENWIDTH              720 // in pixels
+#define OSDWIDTH                 600 // in pixels
 #define OSDINFOHEIGHT            ((cOsd::LineHeight() - 2) * 11) // in pixels (11 rows)
 #define OSDSTATUSHEIGHT          ((cOsd::LineHeight() - 2) * 6)  // in pixels (6 rows)
 
 #define OSDINFOWIN_Y(offset)     (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
-#define OSDINFOWIN_X(col)        ((col == 4) ? 470 : (col == 3) ? 300 : (col==2) ? 180 : 15)
+#define OSDINFOWIN_X(col)        ((col == 4) ? 455 : (col == 3) ? 305 : (col == 2) ? 155 : 15)
 #define OSDSTATUSWIN_Y(offset)   (femonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
-#define OSDSTATUSWIN_X(col)      ((col == 7) ? 475 : (col == 6) ? 410 : (col == 5) ? 275 : (col == 4) ? 220 : (col == 3) ? 125 : (col==2) ? 70 : 15)
-#define OSDSTATUSWIN_XC(col,txt) (((col - 1) * SCREENWIDTH / 6) + ((SCREENWIDTH / 6 - cOsd::WidthInCells(txt) * cOsd::CellWidth()) / 2))
+#define OSDSTATUSWIN_X(col)      ((col == 7) ? 475 : (col == 6) ? 410 : (col == 5) ? 275 : (col == 4) ? 220 : (col == 3) ? 125 : (col == 2) ? 70 : 15)
+#define OSDSTATUSWIN_XC(col,txt) (((col - 1) * OSDWIDTH / 5) + ((OSDWIDTH / 5 - cOsd::WidthInCells(txt) * cOsd::CellWidth()) / 2))
 #define BARWIDTH(x)              (OSDWIDTH * x / 100)
 #define DELTA                    2
 
@@ -195,7 +200,70 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->Text(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), clrWhite, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "%d", channel->Ca());
+        value = channel->Ca();
+        if (femonConfig.showcasystem) {
+           /* http://www.dvb.org/index.php?id=174 */
+           switch (value) {
+             case 0x0000:
+                  /* Reserved */
+                  snprintf(buf, sizeof(buf), "%s", tr("Free to Air"));
+                  break;
+             case 0x0001 ... 0x00FF:
+                  /* Standardized systems */
+                  snprintf(buf, sizeof(buf), "%s", tr("Fixed"));
+                  break;
+             case 0x0100 ... 0x01FF:
+                  /* Canal Plus */
+                  snprintf(buf, sizeof(buf), "%s", tr("SECA/Mediaguard"));
+                  break;
+             case 0x0500 ... 0x05FF:
+                  /* France Telecom */
+                  snprintf(buf, sizeof(buf), "%s", tr("Viaccess"));
+                  break;
+             case 0x0600 ... 0x06FF:
+                  /* Irdeto */
+                  snprintf(buf, sizeof(buf), "%s", tr("Irdeto"));
+                  break;
+             case 0x0900 ... 0x09FF:
+                  /* News Datacom */
+                  snprintf(buf, sizeof(buf), "%s", tr("NDS/Videoguard"));
+                  break;
+             case 0x0B00 ... 0x0BFF:
+                  /* Norwegian Telekom */
+                  snprintf(buf, sizeof(buf), "%s", tr("Conax"));
+                  break;
+             case 0x0D00 ... 0x0DFF:
+                  /* Philips */
+                  snprintf(buf, sizeof(buf), "%s", tr("CryptoWorks"));
+                  break;
+             case 0x0E00 ... 0x0EFF:
+                  /* Scientific Atlanta */
+                  snprintf(buf, sizeof(buf), "%s", tr("PowerVu"));
+                  break;
+             case 0x1200 ... 0x12FF:
+                  /* BellVu Express */
+                  snprintf(buf, sizeof(buf), "%s", tr("NagraVision"));
+                  break;
+             case 0x1700 ... 0x17FF:
+                  /* BetaTechnik */
+                  snprintf(buf, sizeof(buf), "%s", tr("BetaCrypt"));
+                  break;
+             case 0x1800 ... 0x18FF:
+                  /* Kudelski SA */
+                  snprintf(buf, sizeof(buf), "%s", tr("NagraVision"));
+                  break;
+             case 0x4A60 ... 0x4A6F:
+                  /* @Sky */
+                  snprintf(buf, sizeof(buf), "%s", tr("SkyCrypt"));
+                  break;
+             default:
+                  snprintf(buf, sizeof(buf), "%X", value);
+                  break;
+             }
+           }
+        else {
+           snprintf(buf, sizeof(buf), "%X", value);
+           }
         m_Osd->Text(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Tpid"), clrWhite, clrBackground, m_InfoWindow);
         snprintf(buf, sizeof(buf), "%d", channel->Tpid());
@@ -439,7 +507,9 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Stream"), clrYellow, clrBackground, m_InfoWindow);
-        snprintf(buf, sizeof(buf), "#%d", channel->Apid1());
+        value = -1;
+        cDevice::PrimaryDevice()->GetAudioTracks(&value);
+        snprintf(buf, sizeof(buf), "#%d", (value > 0 ? channel->Apid2() : channel->Apid1()));
         m_Osd->Text(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_InfoWindow);
         offset += cOsd::LineHeight() - DELTA;
         m_Osd->Text(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_InfoWindow);
@@ -671,9 +741,8 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 eOSState cFemonOsd::ProcessKey(eKeys Key)
 { 
   eOSState state = cOsdObject::ProcessKey(Key);
-
   if (state == osUnknown) {
-     switch (Key & ~k_Repeat) {
+     switch (Key) {
        case k0:
             if ((m_Number == 0) && (m_OldNumber != 0)) {
                m_Number = m_OldNumber;
@@ -712,6 +781,49 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
             break;
        case kBack:
             return osEnd;
+       case kGreen:
+            {
+            int CurrentAudioTrack = -1;
+            const char **AudioTracks = cDevice::PrimaryDevice()->GetAudioTracks(&CurrentAudioTrack);
+            if (AudioTracks) {
+               const char **at = &AudioTracks[CurrentAudioTrack];
+               if (!*++at)
+                  at = AudioTracks;
+               cDevice::PrimaryDevice()->SetAudioTrack(at - AudioTracks);
+               if (femonConfig.analyzestream) {
+                  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+                  if (m_Receiver)
+                     delete m_Receiver;
+                  m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), (at - AudioTracks) ? channel->Apid2() : channel->Apid1(), channel->Dpid1());
+                  cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+                  }
+               }
+            }
+            break;
+       case kRight:
+       case kLeft:
+            {
+            int device = cDevice::ActualDevice()->DeviceNumber();
+            if (device >= 0) {
+               cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+               for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
+                   if (NORMALKEY(Key) == kRight) {
+                      if (++device >= cDevice::NumDevices()) device = 0;
+                      }
+                   else {
+                      if (--device < 0) device = cDevice::NumDevices() - 1;
+                      }
+                   if (cDevice::GetDevice(device)->ProvidesChannel(channel)) {
+                      //cStatus::MsgChannelSwitch(cDevice::GetDevice(device), 0);
+                      //implement some tuning mechanism here
+                      //cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apid1(), channel->Apid2(), channel->Dpid1(), channel->Dpid2($
+                      //cStatus::MsgChannelSwitch(cDevice::GetDevice(device), channel->Number());
+                      break;
+                      }
+                   }
+               }
+            }
+            break;
        case kUp|k_Repeat:
        case kUp:
        case kDown|k_Repeat:

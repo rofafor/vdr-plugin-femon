@@ -21,4 +21,5 @@ cFemonConfig::cFemonConfig(void)
   analyzestream  = 1;
   calcinterval   = 20;
   syslogoutput   = 0;
+  showcasystem   = 0;
 }
