@@ -43,9 +43,23 @@ VDR Plugin 'femon' Revision History
 
 2004-04-04: Version 0.0.3c
 
-- Fixed minor bitrate calculation errors
-- Added russian translation (Thanks to Vyacheslav Dikonov)
+- Fixed minor bitrate calculation errors.
+- Added russian translation (Thanks to Vyacheslav Dikonov).
+
+2004-05-31: Version 0.0.4
+
+- Backported "stream information" feature (from version 0.1.1).
+
+-------------------------
 
 2004-05-18: Version 0.1.0
 
 - Updated for vdr-1.3.7 and removed compability with older versions.
+
+2004-05-30: Version 0.1.1
+
+- Added "Stream Information" display mode.
+  Toggle between different modes with 'OK' key:
+  .-> basic -> transponder -> stream -.
+  `-----------------------------------´
+- Added missing german translations (Thanks to Peter Marquardt).

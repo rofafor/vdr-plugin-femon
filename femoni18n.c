@@ -85,15 +85,15 @@ const tI18nPhrase Phrases[] = {
     "ÀÕÖØÜ ßŞ ãÜŞÛçĞİØî", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
   },
-  { "simple", // English
-    "einfach", // Deutsch
+  { "basic", // English
+    "Standard", // Deutsch
     "", // Slovenski
-    "semplice", // Italiano
+    "", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français 
     "", // Norsk
-    "suppea", // suomi
+    "perus", // suomi
     "", // Polski   
     "", // Español  
     "", // ÅëëçíéêÜ (Greek)
@@ -101,18 +101,18 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar  
     "", // Català  
-    "ßàŞáâŞÙ", // ÀãááÚØÙ (Russian)
+    "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
   },
-  { "advanced", // English
-    "fortgeschritten", // Deutsch
+  { "transponder", // English
+    "Transponder", // Deutsch
     "", // Slovenski
-    "avanzato", // Italiano
+    "", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français 
     "", // Norsk
-    "laaja", // suomi
+    "transponderi", // suomi
     "", // Polski   
     "", // Español  
     "", // ÅëëçíéêÜ (Greek)
@@ -120,7 +120,26 @@ const tI18nPhrase Phrases[] = {
     "", // Romaneste
     "", // Magyar  
     "", // Català  
-    "àĞáèØàÕİİëÙ", // ÀãááÚØÙ (Russian)
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "stream", // English
+    "Stream", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français 
+    "", // Norsk
+    "lähete", // suomi
+    "", // Polski   
+    "", // Español  
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar  
+    "", // Català  
+    "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
   },
   { "Hide Mainmenu Entry", // English
@@ -161,15 +180,15 @@ const tI18nPhrase Phrases[] = {
     "ÇĞáâŞâĞ ŞÑİŞÒÛÕİØï (0,1 áÕÚ)", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
   },
-  { "Bitrate Calculation", // English
-    "Bitratenberechnung", // Deutsch
+  { "Analyze Stream", // English
+    "Stream analysieren", // Deutsch
     "", // Slovenski
-    "Calcolo Bitrate", // Italiano
+    "", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
     "", // Norsk
-    "Bittinopeuden laskenta", // suomi
+    "Lähetteen analysointi", // suomi
     "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ (Greek)
@@ -435,7 +454,7 @@ const tI18nPhrase Phrases[] = {
     "Audio", // Português
     "Audio", // Français
     "Audio", // Norsk
-    "Audio", // suomi
+    "Ääni", // suomi
     "Audio", // Polski
     "Audio", // Español
     "Audio", // ÅëëçíéêÜ (Greek)
@@ -454,7 +473,7 @@ const tI18nPhrase Phrases[] = {
     "Video", // Português
     "Video", // Français
     "Video", // Norsk
-    "Video", // suomi
+    "Kuva", // suomi
     "Video", // Polski
     "Video", // Español
     "Video", // ÅëëçíéêÜ (Greek)
@@ -597,6 +616,348 @@ const tI18nPhrase Phrases[] = {
     "kbit/s", // Català
     "ÚÑØâ/á", // ÀãááÚØÙ (Russian)
     "kbit/s", // Hrvatski (Croatian)
+  },
+  { "Stream Information", // English
+    "Streaminformation", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Lähetteen tiedot", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "MPEG Layer", // English
+    "MPEG Layer", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "MPEG-taso", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Video Stream", // English
+    "Video Stream", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kuvaraita", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Bitrate", // English
+    "Bitrate", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Bittinopeus", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar 
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Frame Rate", // English
+    "Bildrate", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Ruudunpäivitysnopeus", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Hz", // English
+    "Hz", // Deutsch
+    "Hz", // Slovenski
+    "Hz", // Italiano
+    "Hz", // Nederlands
+    "Hz", // Português
+    "Hz", // Français
+    "Hz", // Norsk
+    "Hz", // suomi
+    "Hz", // Polski
+    "Hz", // Español
+    "Hz", // ÅëëçíéêÜ (Greek)
+    "Hz", // Svenska
+    "Hz", // Romaneste
+    "Hz", // Magyar
+    "Hz", // Català
+    "Hz", // ÀãááÚØÙ (Russian)
+    "Hz", // Hrvatski (Croatian)
+  },
+  { "Aspect Ratio", // English
+    "Seitenverhältnis", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kuvasuhde", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "reserved", // English
+    "belegt", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "varattu", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "free", // English
+    "frei", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "vapaa", // suomi
+    "", // Polski   
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Video Format", // English
+    "Bildformat", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Kuvaformaatti", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "PAL", // English
+    "PAL", // Deutsch
+    "PAL", // Slovenski
+    "PAL", // Italiano
+    "PAL", // Nederlands
+    "PAL", // Português
+    "PAL", // Français
+    "PAL", // Norsk
+    "PAL", // suomi
+    "PAL", // Polski
+    "PAL", // Español
+    "PAL", // ÅëëçíéêÜ (Greek)
+    "PAL", // Svenska
+    "PAL", // Romaneste
+    "PAL", // Magyar
+    "PAL", // Català
+    "PAL", // ÀãááÚØÙ (Russian)
+    "PAL", // Hrvatski (Croatian)
+  },
+  { "NTSC", // English
+    "NTSC", // Deutsch
+    "NTSC", // Slovenski
+    "NTSC", // Italiano
+    "NTSC", // Nederlands
+    "NTSC", // Português
+    "NTSC", // Français
+    "NTSC", // Norsk
+    "NTSC", // suomi
+    "NTSC", // Polski
+    "NTSC", // Español
+    "NTSC", // ÅëëçíéêÜ (Greek)
+    "NTSC", // Svenska
+    "NTSC", // Romaneste
+    "NTSC", // Magyar
+    "NTSC", // Català
+    "NTSC", // ÀãááÚØÙ (Russian)
+    "NTSC", // Hrvatski (Croatian)
+  },
+  { "unknown", // English
+    "unbekannt", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "tuntematon", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Resolution", // English
+    "Auflösung", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Resoluutio", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Audio Stream", // English
+    "Audio Stream", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Ääniraita", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "Sampling Frequency", // English
+    "Abtastrate", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Näytteenottotaajuus", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+  },
+  { "kHz", // English
+    "kHz", // Deutsch
+    "kHz", // Slovenski
+    "kHz", // Italiano
+    "kHz", // Nederlands
+    "kHz", // Português
+    "kHz", // Français
+    "kHz", // Norsk
+    "kHz", // suomi
+    "kHz", // Polski   
+    "kHz", // Español
+    "kHz", // ÅëëçíéêÜ (Greek)
+    "kHz", // Svenska
+    "kHz", // Romaneste
+    "kHz", // Magyar
+    "kHz", // Català
+    "kHz", // ÀãááÚØÙ (Russian)
+    "kHz", // Hrvatski (Croatian)
+  },
+  { "MPEG Layer", // English
+    "MPEG Layer", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "MPEG-kerros", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
   },
   { NULL }
 };

@@ -12,24 +12,24 @@
 #include "femonreceiver.h"
 #include "femonosd.h"
 
-#define FRONTEND_DEVICE        "/dev/dvb/adapter%d/frontend%d"
-#define CHANNELINPUT_TIMEOUT   1000
+#define FRONTEND_DEVICE          "/dev/dvb/adapter%d/frontend%d"
+#define CHANNELINPUT_TIMEOUT     1000
 
-#define SCREENWIDTH            720 // in pixels
-#define SCREENHEIGHT           576 // in pixels
-#define OSDWIDTH               600 // in pixels
-#define OSDHEIGHT              480 // in pixels
-#define OSDINFOHEIGHT          (m_Font->Height() * 11) // in pixels (11 rows)
-#define OSDSTATUSHEIGHT        (m_Font->Height() * 6)  // in pixels (6 rows)
+#define SCREENWIDTH              720 // in pixels
+#define SCREENHEIGHT             576 // in pixels
+#define OSDWIDTH                 600 // in pixels
+#define OSDHEIGHT                480 // in pixels
+#define OSDINFOHEIGHT            (m_Font->Height() * 11) // in pixels (11 rows)
+#define OSDSTATUSHEIGHT          (m_Font->Height() * 6)  // in pixels (6 rows)
 
-#define OSDINFOWIN_Y(offset)   (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
-#define OSDINFOWIN_X(col)      ((col == 4) ? 470 : (col == 3) ? 300 : (col==2) ? 180 : 15)
-#define OSDSTATUSWIN_Y(offset) (femonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
-#define OSDSTATUSWIN_X(col)    ((col == 4) ? 410 : (col == 3) ? 220 : (col==2) ? 125 : 15)
-#define OSDSTATUSWIN_X2(col)   ((col == 5) ? 520 : (col == 4) ? 390 : (col==3) ? 250 : (col==2) ? 115 : 15)
-#define BARWIDTH(x)            (OSDWIDTH * x / 100)
+#define OSDINFOWIN_Y(offset)     (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
+#define OSDINFOWIN_X(col)        ((col == 4) ? 470 : (col == 3) ? 300 : (col==2) ? 180 : 15)
+#define OSDSTATUSWIN_Y(offset)   (femonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
+#define OSDSTATUSWIN_X(col)      ((col == 7) ? 475 : (col == 6) ? 410 : (col == 5) ? 275 : (col == 4) ? 220 : (col == 3) ? 125 : (col==2) ? 70 : 15)
+#define OSDSTATUSWIN_XC(col,txt) (((col - 1) * SCREENWIDTH / 6) + ((SCREENWIDTH / 6 - m_Font->Width(txt)) / 2))
+#define BARWIDTH(x)              (OSDWIDTH * x / 100)
 
-#define clrBackground          clrGray50 // this should be tied somehow into current theme
+#define clrBackground            clrGray50 // this should be tied somehow into current theme
 
 cFemonOsd::cFemonOsd(void)
 :cOsdObject(true), cThread("femon osd")
@@ -102,31 +102,39 @@ void cFemonOsd::DrawStatusWindow(void)
            }
         }
      offset += m_Font->Height();
-     snprintf(buf, sizeof(buf), "STR: %04x", m_Signal);
-     m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), "STR:", clrWhite, clrBackground, m_Font);
+     snprintf(buf, sizeof(buf), "%04x", m_Signal);
+     m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
      snprintf(buf, sizeof(buf), "(%2d%%)", m_Signal / 655);
-     m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), buf, clrWhite /*signal < femonConfig.redlimit ? clrRed : signal < femonConfig.greenlimit ? clrYellow : clrGreen*/, clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "BER: %08x", m_BER);
      m_Osd->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "%s: %.2f %s", tr("Video"), m_Receiver->VideoBitrate(), tr("Mbit/s"));
-     else            snprintf(buf, sizeof(buf), "%s: --- %s", tr("Video"), tr("Mbit/s"));
-     m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), "BER:", clrWhite, clrBackground, m_Font);
+     snprintf(buf, sizeof(buf), "%08x", m_BER);
+     m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
+     snprintf(buf, sizeof(buf), "%s:", tr("Video"));
+     m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
+     if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s", m_Receiver->VideoBitrate(), tr("Mbit/s"));
+     else            snprintf(buf, sizeof(buf), "--- %s", tr("Mbit/s"));
+     m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
      offset += m_Font->Height();
-     snprintf(buf, sizeof(buf), "SNR: %04x", m_SNR);
-     m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), "SNR:", clrWhite, clrBackground, m_Font);
+     snprintf(buf, sizeof(buf), "%04x", m_SNR);
+     m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
      snprintf(buf, sizeof(buf), "(%2d%%)", m_SNR / 655);
-     m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), buf, clrWhite /*snr < femonConfig.redlimit ? clrRed : snr < femonConfig.greenlimit ? clrYellow : clrGreen*/, clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "UNC: %08x", m_UNC);
      m_Osd->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "%s: %.0f %s", tr("Audio"), m_Receiver->AudioBitrate(), tr("kbit/s"));
-     else            snprintf(buf, sizeof(buf), "%s: --- %s", tr("Audio"), tr("kbit/s"));
-     m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), "UNC:", clrWhite, clrBackground, m_Font);
+     snprintf(buf, sizeof(buf), "%08x", m_UNC);
+     m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
+     snprintf(buf, sizeof(buf), "%s:", tr("Audio"));
+     m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
+     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", m_Receiver->AudioBitrate(), tr("kbit/s"));
+     else            snprintf(buf, sizeof(buf), "--- %s", tr("kbit/s"));
+     m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, clrWhite, clrBackground, m_Font);
      offset += m_Font->Height();
-     m_Osd->DrawText(OSDSTATUSWIN_X2(1), OSDSTATUSWIN_Y(offset), tr("LOCK"),   (m_FrontendStatus & FE_HAS_LOCK)   ? clrYellow : clrBlack, clrBackground, m_Font);
-     m_Osd->DrawText(OSDSTATUSWIN_X2(2), OSDSTATUSWIN_Y(offset), tr("SIGNAL"), (m_FrontendStatus & FE_HAS_SIGNAL) ? clrYellow : clrBlack, clrBackground, m_Font);
-     m_Osd->DrawText(OSDSTATUSWIN_X2(3), OSDSTATUSWIN_Y(offset), tr("CARRIER"),(m_FrontendStatus & FE_HAS_CARRIER)? clrYellow : clrBlack, clrBackground, m_Font);
-     m_Osd->DrawText(OSDSTATUSWIN_X2(4), OSDSTATUSWIN_Y(offset), tr("VITERBI"),(m_FrontendStatus & FE_HAS_VITERBI)? clrYellow : clrBlack, clrBackground, m_Font);
-     m_Osd->DrawText(OSDSTATUSWIN_X2(5), OSDSTATUSWIN_Y(offset), tr("SYNC"),   (m_FrontendStatus & FE_HAS_SYNC)   ? clrYellow : clrBlack, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_XC(1,tr("LOCK")),    OSDSTATUSWIN_Y(offset), tr("LOCK"),   (m_FrontendStatus & FE_HAS_LOCK)   ? clrYellow : clrBlack, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_XC(2,tr("SIGNAL")),  OSDSTATUSWIN_Y(offset), tr("SIGNAL"), (m_FrontendStatus & FE_HAS_SIGNAL) ? clrYellow : clrBlack, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_XC(3,tr("CARRIER")), OSDSTATUSWIN_Y(offset), tr("CARRIER"),(m_FrontendStatus & FE_HAS_CARRIER)? clrYellow : clrBlack, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_XC(4,tr("VITERBI")), OSDSTATUSWIN_Y(offset), tr("VITERBI"),(m_FrontendStatus & FE_HAS_VITERBI)? clrYellow : clrBlack, clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_XC(5,tr("SYNC")),    OSDSTATUSWIN_Y(offset), tr("SYNC"),   (m_FrontendStatus & FE_HAS_SYNC)   ? clrYellow : clrBlack, clrBackground, m_Font);
      m_Osd->Flush();
      }
 }
@@ -139,10 +147,11 @@ void cFemonOsd::DrawInfoWindow(void)
   char buf2[20];
   int offset = 0;
   int value = 0;
+  double dvalue = 0.0;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   if (m_Osd) {
-     if (m_DisplayMode) {
+     if (m_DisplayMode == modeTransponder) {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+m_Font->Height()-1), clrWhite);
         m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Transponder Information"), clrBackground, clrWhite, m_Font);
@@ -361,7 +370,81 @@ void cFemonOsd::DrawInfoWindow(void)
                break;
           }
         }
-     else {
+     else if (m_DisplayMode == modeStream) {
+        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrBackground);
+        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+m_Font->Height()-1), clrWhite);
+        m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Stream Information"), clrBackground, clrWhite, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Video Stream"), clrYellow, clrBackground, m_Font);
+        snprintf(buf, sizeof(buf), "#%d", channel->Vpid());
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_Font);
+        if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s (%.2f %s)", m_Receiver->VideoStreamBitrate(), tr("Mbit/s"), m_Receiver->VideoBitrate(), tr("Mbit/s"));
+        else            snprintf(buf, sizeof(buf), "---");
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Aspect Ratio"), clrWhite, clrBackground, m_Font);
+        if (m_Receiver) {
+           value =  m_Receiver->VideoAspectRatio();
+           if      (value == 100) snprintf(buf, sizeof(buf), "1:1");
+           else if (value == 133) snprintf(buf, sizeof(buf), "4:3");
+           else if (value == 177) snprintf(buf, sizeof(buf), "16:9");
+           else if (value == 233) snprintf(buf, sizeof(buf), "2.21:1");
+           else                   snprintf(buf, sizeof(buf), "%s", tr("reserved"));
+           }
+        else                      snprintf(buf, sizeof(buf), "---");
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frame Rate"), clrWhite, clrBackground, m_Font);
+        if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s", m_Receiver->VideoFrameRate(), tr("Hz"));
+        else            snprintf(buf, sizeof(buf), "---");
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Video Format"), clrWhite, clrBackground, m_Font);
+        if (m_Receiver) {
+           value =  m_Receiver->VideoFormat();
+           if      (value == 1) snprintf(buf, sizeof(buf), "%s", tr("PAL"));
+           else if (value == 2) snprintf(buf, sizeof(buf), "%s", tr("NTSC"));
+           else                 snprintf(buf, sizeof(buf), "%s", tr("unknown"));
+           }
+        else                    snprintf(buf, sizeof(buf), "---");
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Resolution"), clrWhite, clrBackground, m_Font);
+        if (m_Receiver) snprintf(buf, sizeof(buf), "%d x %d", m_Receiver->VideoHorizontalSize(), m_Receiver->VideoVerticalSize());
+        else            snprintf(buf, sizeof(buf), "---");
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Stream"), clrYellow, clrBackground, m_Font);
+        snprintf(buf, sizeof(buf), "#%d", channel->Apid1());
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), clrWhite, clrBackground, m_Font);
+        dvalue = m_Receiver->AudioStreamBitrate();
+        if (m_Receiver) {
+            if      (dvalue == -1.0) snprintf(buf, sizeof(buf), "%s (%.0f %s)", tr("reserved"), m_Receiver->AudioBitrate(), tr("kbit/s"));
+            else if (dvalue == -2.0) snprintf(buf, sizeof(buf), "%s (%.0f %s)", tr("free"), m_Receiver->AudioBitrate(), tr("kbit/s"));
+            else                     snprintf(buf, sizeof(buf), "%.0f %s (%.0f %s)", dvalue, tr("kbit/s"), m_Receiver->AudioBitrate(), tr("kbit/s"));
+            }
+        else                         snprintf(buf, sizeof(buf), "---");
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("MPEG Layer"), clrWhite, clrBackground, m_Font);
+        if (m_Receiver) snprintf(buf, sizeof(buf), "%d", m_Receiver->AudioMPEGLayer());
+        else            snprintf(buf, sizeof(buf), "---");
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        offset += m_Font->Height();
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sampling Frequency"), clrWhite, clrBackground, m_Font);
+        if (m_Receiver) {
+           value =  m_Receiver->AudioSamplingFreq();
+           if      (value == -1) snprintf(buf, sizeof(buf), "%s", tr("reserved"));
+           else                  snprintf(buf, sizeof(buf), "%.1f %s", (value / 1000.0), tr("kHz"));
+           }
+        else                     snprintf(buf, sizeof(buf), "---");
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, clrYellow, clrBackground, m_Font);
+        }
+     else /* modeBasic */ {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent);
         }
      m_Osd->Flush();
@@ -423,7 +506,7 @@ void cFemonOsd::Show(void)
      m_Osd->Flush();
      if (m_Receiver)
         delete m_Receiver;
-     if (femonConfig.showbitrate) {
+     if (femonConfig.analyzestream) {
         int channelNumber = cDevice::CurrentChannel();
         m_Receiver = new cFemonReceiver(Channels.GetByNumber(channelNumber)->Ca(), Channels.GetByNumber(channelNumber)->Vpid(), Channels.GetByNumber(channelNumber)->Apid1());
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
@@ -453,7 +536,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
      }
   if (m_Receiver)
      delete m_Receiver;
-  if (femonConfig.showbitrate) {
+  if (femonConfig.analyzestream) {
      channelNumber = cDevice::CurrentChannel();
      m_Receiver = new cFemonReceiver(Channels.GetByNumber(channelNumber)->Ca(), Channels.GetByNumber(channelNumber)->Vpid(), Channels.GetByNumber(channelNumber)->Apid1());
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
@@ -526,7 +609,7 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                }
             break;
        case kOk:
-            m_DisplayMode ^= 1; // toggle between advanced and simple display mode
+            if (++m_DisplayMode >= modeMaxNumber) m_DisplayMode = 0; // toggle between display modes
             DrawInfoWindow();
             break;
        default:
