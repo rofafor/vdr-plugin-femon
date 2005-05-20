@@ -9,7 +9,7 @@
 #ifndef __FEMONCFG_H
 #define __FEMONCFG_H
 
-#ifdef DEBUG
+#ifdef FEMON_DEBUG
 #define Dprintf(x...) printf(x);
 #else
 #define Dprintf(x...) ;

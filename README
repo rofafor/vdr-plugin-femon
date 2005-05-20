@@ -63,7 +63,7 @@ Ok            - Switch between display modes: basic, transponder, stream, AC-3
 Green         - Select next audio track
 Yellow        - Select audio channel: stereo, mono left, mono right
 Back          - Exit plugin
-(Left/Right   - Switch to next/previous device that provides the current channel)
+Left/Right   - Switch to next/previous device that provides the current channel
 
 Installation:
 
@@ -87,7 +87,7 @@ Notes:
 - If the OSD isn't visible, you've configured the OSD height too big or too
   small. Please, try to adjust the variable on the setup page before writing
   any bug reports.
-- There's a shrinked default OSD height for NTSC users: make NTSC_SYSTEM=1
+- There's a shrinked default OSD height for NTSC users: make FEMON_NTSC=1
 - The device switching feature is still non-functional.
 
 "Femon - A real womon who lives according to her natural feminine inclinations."

@@ -1049,7 +1049,7 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
             if (device >= 0) {
                cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
                for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
-                   if (NORMALKEY(Key) == kBlue) {
+                   if (NORMALKEY(Key) == kRight) {
                       if (++device >= cDevice::NumDevices()) device = 0;
                       }
                    else {
@@ -1057,8 +1057,11 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                       }
                    if (cDevice::GetDevice(device)->ProvidesChannel(channel)) {
                       Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, Key, device);
-                      // 1) tune the channel on the new device
-                      // 2) make the new device to actual device
+                      cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
+                      cControl::Shutdown();
+                      cDevice::GetDevice(device)->SwitchChannel(channel, true);
+                      cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
+                      cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
                       break;
                       }
                    }

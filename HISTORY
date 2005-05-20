@@ -156,3 +156,8 @@ VDR Plugin 'femon' Revision History
 
 - Updated Estonian translations (Thanks to Arthur Konovalov).
 - Added the missing german translations (Thanks to #vdr-portal).
+
+2005-05-20: Version 0.9.0
+
+- Renamed compiling switches ('DEBUG' to 'FEMON_DEBUG' and 'NTSC_SYSTEM' to 'FEMON_NTSC').
+- Enabled preliminary support for the device switching.

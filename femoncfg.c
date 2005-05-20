@@ -23,7 +23,7 @@ cFemonConfig::cFemonConfig(void)
   calcinterval   = 20;
   syslogoutput   = 0;
   showcasystem   = 0;
-#ifdef NTSC_SYSTEM
+#ifdef FEMON_NTSC
   osdheight      = 420;
 #else
   osdheight      = 480;
