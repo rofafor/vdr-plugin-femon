@@ -161,3 +161,9 @@ VDR Plugin 'femon' Revision History
 
 - Renamed compiling switches ('DEBUG' to 'FEMON_DEBUG' and 'NTSC_SYSTEM' to 'FEMON_NTSC').
 - Enabled preliminary support for the device switching.
+
+2005-07-23: Version 0.9.1
+
+- Fixed AC3-info flickering (Thanks to Pasi Juppo for reporting this one).
+- Added "Analog" type CA system.
+- Plugin is now stripped by default.

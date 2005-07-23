@@ -16,7 +16,11 @@ VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).h | awk '{ pri
 ### The C++ compiler and options:
 
 CXX      ?= g++
-CXXFLAGS ?= -g -O2 -Wall -Woverloaded-virtual -fPIC
+ifdef FEMON_DEBUG
+CXXFLAGS ?= -g -Wall -Woverloaded-virtual -fPIC
+else
+CXXFLAGS ?= -O2 -Wall -Woverloaded-virtual -fPIC
+endif
 
 ### The directory environment:
 
@@ -80,6 +84,9 @@ all: libvdr-$(PLUGIN).so
 libvdr-$(PLUGIN).so: $(OBJS)
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) -o $@
 	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
+ifndef FEMON_DEBUG
+	strip $(LIBDIR)/$@.$(VDRVERSION)
+endif
 
 dist: clean
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)

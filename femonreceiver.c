@@ -72,7 +72,7 @@ void cFemonReceiver::GetVideoInfo(uint8_t *mbuf, int count)
   uint8_t *headr;
   int found = 0;
   int c = 0;
-  m_VideoValid = false;
+  //m_VideoValid = false;
   while ((found < 4) && ((c + 4) < count)) {
     uint8_t *b;
     b = mbuf + c;
@@ -165,7 +165,7 @@ void cFemonReceiver::GetAudioInfo(uint8_t *mbuf, int count)
   int found = 0;
   int c = 0;
   int tmp = 0;
-  m_AudioValid = false;
+  //m_AudioValid = false;
   while (!found && (c < count)) {
     uint8_t *b = mbuf + c;
     if ((b[0] == 0xff) && ((b[1] & 0xf8) == 0xf8))
@@ -214,7 +214,7 @@ void cFemonReceiver::GetAC3Info(uint8_t *mbuf, int count)
   int found = 0;
   int c = 0;
   uint8_t frame;
-  m_AC3Valid = false;
+  //m_AC3Valid = false;
   while (!found && (c < count)) {
     uint8_t *b = mbuf + c;
     if ((b[0] == 0x0b) && (b[1] == 0x77))

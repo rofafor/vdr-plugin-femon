@@ -63,7 +63,7 @@ Ok            - Switch between display modes: basic, transponder, stream, AC-3
 Green         - Select next audio track
 Yellow        - Select audio channel: stereo, mono left, mono right
 Back          - Exit plugin
-Left/Right   - Switch to next/previous device that provides the current channel
+Left/Right    - Switch to next/previous device that provides the current channel
 
 Installation:
 
@@ -80,14 +80,16 @@ Notes:
 - The plugin supports only those DVB cards with _one_ frontend (do any cards
   with multiple frontends even exist?), because I haven't yet figured howto do
   it without patching the VDR core.
+
 - Disable the stream analyze to speed up heavy zapping sessions.
+
 - The signal strength and signal-to-noise ratio values are comparable only
   between the same brand/model frontends. Due to the lack of proper frontend
   specifications those values cannot be calculated into any real units.
+
 - If the OSD isn't visible, you've configured the OSD height too big or too
   small. Please, try to adjust the variable on the setup page before writing
-  any bug reports.
-- There's a shrinked default OSD height for NTSC users: make FEMON_NTSC=1
-- The device switching feature is still non-functional.
+  any bug reports. NTSC users should use a shrinked default OSD height by
+  compiling the plugin with: make FEMON_NTSC=1
 
 "Femon - A real womon who lives according to her natural feminine inclinations."

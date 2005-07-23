@@ -1836,6 +1836,27 @@ const tI18nPhrase Phrases[] = {
     "Fikseeritud", // Eesti
     "", // Dansk
   },
+  { "Analog", // English
+    "", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "analoginen", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
+  },
   { "Free to Air", // English
     "Free to Air", // Deutsch
     "", // Slovenski

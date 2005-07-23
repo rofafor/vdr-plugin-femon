@@ -405,7 +405,10 @@ void cFemonOsd::DrawInfoWindow(void)
                   break;
              case 0x0001 ... 0x00FF:
                   /* Standardized systems */
-                  snprintf(buf, sizeof(buf), "%s", tr("Fixed"));
+                  if ((value == 0x00A0) || (value == 0x00A1))
+                     snprintf(buf, sizeof(buf), "%s", tr("Analog"));
+                  else
+                     snprintf(buf, sizeof(buf), "%s", tr("Fixed"));
                   break;
              case 0x0100 ... 0x01FF:
                   /* Canal Plus */
@@ -1057,9 +1060,11 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                       }
                    if (cDevice::GetDevice(device)->ProvidesChannel(channel)) {
                       Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, Key, device);
+                      // here should be added some checks, if the device is really available (i.e. not recording)
                       cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
                       cControl::Shutdown();
                       cDevice::GetDevice(device)->SwitchChannel(channel, true);
+                      // does this work with primary devices ?
                       cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
                       cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
                       break;
