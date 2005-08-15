@@ -21,7 +21,6 @@
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
-  bool m_Active;
   cOsd *m_Osd;
   cFemonReceiver *m_Receiver;
   int m_Frontend;

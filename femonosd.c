@@ -87,7 +87,6 @@ cFemonOsd::cFemonOsd(void)
   m_Osd = NULL;
   m_Receiver = NULL;
   m_Frontend = -1;
-  m_Active = false;
   m_Number = 0;
   m_OldNumber = 0;
   m_Signal = 0;
@@ -110,8 +109,7 @@ cFemonOsd::cFemonOsd(void)
 cFemonOsd::~cFemonOsd(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  if (m_Active) {
-     m_Active = false;
+  if (Running()) {
      Cancel(3);
      }
   if (m_Receiver)
@@ -847,8 +845,7 @@ void cFemonOsd::Action(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   cTimeMs t;
-  m_Active = true;
-  while (m_Active) {
+  while (Running()) {
     t.Set(0);
     if (m_Frontend != -1) {
        CHECK(ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus));

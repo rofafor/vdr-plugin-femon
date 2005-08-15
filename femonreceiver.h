@@ -53,7 +53,6 @@ enum eDolbySurroundMode {
 
 class cFemonReceiver : public cReceiver, public cThread {
 private:
-  bool   m_Active;
   int    m_VideoPid;
   int    m_AudioPid;
   int    m_AC3Pid;

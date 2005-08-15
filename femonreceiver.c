@@ -21,7 +21,6 @@ cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid[], int Dpid[])
 :cReceiver(Ca, -1, Vpid, Apid, Dpid, NULL), cThread("femon receiver")
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  m_Active = false;
   m_VideoPid = Vpid;
   m_AudioPid = Apid[0];
   m_AC3Pid = Dpid[0];
@@ -60,10 +59,8 @@ cFemonReceiver::~cFemonReceiver(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   Detach();
-  if (m_Active) {
-     m_Active = false;
+  if (Running())
      Cancel();
-     }
 }
 
 /* The following function originates from libdvbmpeg: */
@@ -253,14 +250,10 @@ void cFemonReceiver::GetAC3Info(uint8_t *mbuf, int count)
 void cFemonReceiver::Activate(bool On)
 {
   Dprintf("%s(%d)\n", __PRETTY_FUNCTION__, On);
-  if (On) {
-     if (!m_Active)
-        Start();
-     }
-  else if (m_Active) {
-     m_Active = false;
+  if (On)
+     Start();
+  else
      Cancel();
-     }
 }
 
 void cFemonReceiver::Receive(uchar *Data, int Length)
@@ -309,8 +302,7 @@ void cFemonReceiver::Action(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   cTimeMs t;
-  m_Active = true;
-  while (m_Active) {
+  while (Running()) {
         t.Set(0);
         // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
         m_VideoBitrate = (8.0 * 184.0 * m_VideoPacketCount) / (femonConfig.calcinterval * 100000.0);
