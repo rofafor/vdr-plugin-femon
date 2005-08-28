@@ -11,7 +11,7 @@
 
 #include <vdr/plugin.h>
 
-static const char *VERSION        = "0.9.2";
+static const char *VERSION        = "0.9.3";
 static const char *DESCRIPTION    = "DVB Signal Information Monitor (OSD)";
 static const char *MAINMENUENTRY  = "Signal Information";
 
@@ -33,6 +33,9 @@ public:
   virtual cOsdObject *MainMenuAction(void);
   virtual cMenuSetupPage *SetupMenu(void);
   virtual bool SetupParse(const char *Name, const char *Value);
+  virtual bool Service(const char *Id, void *Data);
+  virtual const char **SVDRPHelpPages(void);
+  virtual cString SVDRPCommand(const char *Command, const char *Option, int &ReplyCode);
   };
 
 class cMenuFemonSetup : public cMenuSetupPage {

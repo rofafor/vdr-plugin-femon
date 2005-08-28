@@ -10,9 +10,11 @@
 #include "femoni18n.h"
 #include "femonreceiver.h"
 #include "femonosd.h"
+#include "femonservice.h"
+#include "femontools.h"
 #include "femon.h"
 
-#if VDRVERSNUM && VDRVERSNUM < 10329
+#if VDRVERSNUM && VDRVERSNUM < 10331
 #error "You don't exist! Go away!"
 #endif
 
@@ -90,6 +92,78 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
   if (femonConfig.displaymode < 0 || femonConfig.displaymode >= eFemonModeMaxNumber) femonConfig.displaymode = 0;
 
   return true;
+}
+
+bool cPluginFemon::Service(const char *Id, void *Data)
+{
+  if ((strcmp(Id,"FemonService-v1.0") == 0) && Data) {
+     FemonService_v1_0 *data = (FemonService_v1_0*)Data;
+     int ndx = cDevice::ActualDevice()->CardIndex();
+     data->fe_name = getFrontendName(ndx);
+     data->fe_status = getFrontendStatus(ndx);
+     data->fe_snr = getSNR(ndx);
+     data->fe_signal = getSignal(ndx);
+     data->fe_ber = getBER(ndx);
+     data->fe_unc = getUNC(ndx);
+     data->video_bitrate = getVideoBitrate();
+     data->audio_bitrate = getAudioBitrate();
+     return true;
+     }
+
+  return false;
+}
+
+const char **cPluginFemon::SVDRPHelpPages(void)
+{ 
+  static const char *HelpPages[] = {
+    "NAME\n"
+    "    Print the current frontend name.",
+    "STAT\n"
+    "    Print the current frontend status.",
+    "SGNL\n"
+    "    Print the current signal strength.",
+    "SNRA\n"
+    "    Print the current signal-to-noise ratio.",
+    "BERA\n"
+    "    Print the current bit error rate.",
+    "UNCB\n"
+    "    Print the current uncorrcted blocks rate.",
+    "VIBR\n"
+    "    Print the current video bitrate [Mbit/s].",
+    "AUBR\n"
+    "    Print the current audio bitrate [kbit/s].",
+    NULL
+    };
+  return HelpPages;
+}
+
+cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
+{
+  if (strcasecmp(Command, "NAME") == 0) {
+     return getFrontendName(cDevice::ActualDevice()->CardIndex());
+     }
+  else if (strcasecmp(Command, "STAT") == 0) {
+     return getFrontendStatus(cDevice::ActualDevice()->CardIndex());
+     }
+  else if (strcasecmp(Command, "SGNL") == 0) {
+     return cString::sprintf("%04X", getSignal(cDevice::ActualDevice()->CardIndex()));
+     }
+  else if (strcasecmp(Command, "SNRA") == 0) {
+     return cString::sprintf("%04X", getSNR(cDevice::ActualDevice()->CardIndex()));
+     }
+  else if (strcasecmp(Command, "BERA") == 0) {
+     return cString::sprintf("%08X", getBER(cDevice::ActualDevice()->CardIndex()));
+     }
+  else if (strcasecmp(Command, "UNCB") == 0) {
+     return cString::sprintf("%08X", getUNC(cDevice::ActualDevice()->CardIndex()));
+     }
+  else if (strcasecmp(Command, "VIBR") == 0) {
+     return cString::sprintf("%.2f", getVideoBitrate());
+     }
+  else if (strcasecmp(Command, "AUBR") == 0) {
+     return cString::sprintf("%.0f", getAudioBitrate());
+     }
+  return NULL;
 }
 
 cMenuFemonSetup::cMenuFemonSetup(void)

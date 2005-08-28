@@ -1,26 +1,22 @@
 #
 # Makefile for a Video Disk Recorder plugin
 #
-# $Id$
+# $Id: Makefile 1.1 2005/08/21 10:43:12 kls Exp $
 
 # The official name of this plugin.
 # This name will be used in the '-P...' option of VDR to load the plugin.
 # By default the main source file also carries this name.
 #
-PLUGIN = femon
+PLUGIN = femonclient
 
 ### The version number of this plugin (taken from the main source file):
 
-VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).h | awk '{ print $$6 }' | sed -e 's/[";]//g')
+VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
 
 ### The C++ compiler and options:
 
 CXX      ?= g++
-ifdef FEMON_DEBUG
-CXXFLAGS ?= -g -Wall -Woverloaded-virtual -fPIC
-else
 CXXFLAGS ?= -O2 -Wall -Woverloaded-virtual -fPIC
-endif
 
 ### The directory environment:
 
@@ -39,29 +35,18 @@ VDRVERSION = $(shell grep 'define VDRVERSION ' $(VDRDIR)/config.h | awk '{ print
 
 ### The name of the distribution archive:
 
-ARCHIVE = $(PLUGIN)-$(VERSION)
+ARCHIVE = svcintf-$(VERSION)
 PACKAGE = vdr-$(ARCHIVE)
 
 ### Includes and Defines (add further entries here):
 
-INCLUDES += -I$(VDRDIR)/include -I$(DVBDIR)/include
+INCLUDES += -I$(VDRDIR)/include -I$(DVBDIR)/include -I$(VDRDIR)/PLUGINS/src/femon/
 
 DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
-ifdef FEMON_NTSC
-DEFINES += -DFEMON_NTSC
-endif
-
-ifdef FEMON_DEBUG
-DEFINES += -DFEMON_DEBUG
-endif
-
-.PHONY: all all-redirect
-all-redirect: all
-
 ### The object files (add further files here):
 
-OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femoni18n.o femontools.o
+OBJS = $(PLUGIN).o
 
 ### Implicit rules:
 
@@ -81,12 +66,9 @@ $(DEPFILE): Makefile
 
 all: libvdr-$(PLUGIN).so
 
-libvdr-$(PLUGIN).so: $(OBJS)
-	$(CXX) $(CXXFLAGS) -shared $(OBJS) -o $@
+libvdr-$(PLUGIN).so: $(PLUGIN).o
+	$(CXX) $(CXXFLAGS) -shared $(PLUGIN).o -o $@
 	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
-ifndef FEMON_DEBUG
-	strip $(LIBDIR)/$@.$(VDRVERSION)
-endif
 
 dist: clean
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)

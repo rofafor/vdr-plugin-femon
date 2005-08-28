@@ -7,7 +7,7 @@
  */
 
 #include <unistd.h>
-#include <vdr/tools.h>
+#include "femontools.h"
 #include "femoncfg.h"
 #include "femonreceiver.h"
 

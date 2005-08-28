@@ -10,6 +10,7 @@
 #include "femoncfg.h"
 #include "femoni18n.h"
 #include "femonreceiver.h"
+#include "femontools.h"
 #include "femonosd.h"
 
 #include "symbols/device.xpm"
@@ -37,7 +38,6 @@
 #include "symbols/viterbi.xpm"
 #include "symbols/sync.xpm"
 
-#define FRONTEND_DEVICE           "/dev/dvb/adapter%d/frontend%d"
 #define CHANNELINPUT_TIMEOUT      1000
 
 #define OSDHEIGHT                 femonConfig.osdheight   // in pixels
