@@ -14,6 +14,7 @@ cFemonConfig::cFemonConfig(void)
 {
   hidemenu       = 0;
   displaymode    = 0;
+  skin           = 0;
   theme          = 0;
   position       = 1;
   redlimit       = 33;
@@ -77,5 +78,26 @@ const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
     0xFFCE7B00, // clrYellow
     0xFF336600, // clrGreen
   },
+  {
+    // eFemonThemeEnigma
+    0xB8DEE5FA, // clrBackground
+    0xB84158BC, // clrTitleBackground
+    0xFFFFFFFF, // clrTitleText
+    0xFF000000, // clrActiveText
+    0xFF000000, // clrInactiveText
+    0xB8C40000, // clrRed
+    0xB8C4C400, // clrYellow
+    0xB800C400, // clrGreen
+  },
+  {
+    // eFemonThemeEgalsTry
+    0xCA2B1B9E, // clrBackground
+    0xDFBEBAC3, // clrTitleBackground
+    0xFF280249, // clrTitleText
+    0xFFD4D7DB, // clrActiveText
+    0xDFCFCFCF, // clrInactiveText
+    0xFFFF0000, // clrRed
+    0xFFFCC024, // clrYellow
+    0xFF20980B, // clrGreen
+  },
 };
-

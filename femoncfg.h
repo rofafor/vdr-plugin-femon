@@ -24,6 +24,7 @@ public:
   cFemonConfig(void);
   int hidemenu;
   int displaymode;
+  int skin;
   int theme;
   int position;
   int redlimit;
@@ -39,12 +40,21 @@ public:
 
 extern cFemonConfig femonConfig;
 
+enum eFemonSkins
+{
+  eFemonSkinClassic,
+  eFemonSkinElchi,
+  eFemonSkinMaxNumber
+};
+
 enum eFemonThemes
 {
   eFemonThemeClassic,
   eFemonThemeElchi,
   eFemonThemeDeepBlue,
   eFemonThemeMoronimo,
+  eFemonThemeEnigma,
+  eFemonThemeEgalsTry,
   eFemonThemeMaxNumber
 };
 

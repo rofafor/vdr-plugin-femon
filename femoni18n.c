@@ -120,11 +120,11 @@ const tI18nPhrase Phrases[] = {
     "Modo di visualizzazione standard", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français 
+    "", // Français
     "", // Norsk
     "Oletusnäyttötila", // suomi
-    "", // Polski   
-    "", // Español  
+    "", // Polski
+    "", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -141,11 +141,11 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français 
+    "", // Français
     "", // Norsk
     "perus", // suomi
-    "", // Polski   
-    "", // Español  
+    "", // Polski
+    "", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -162,11 +162,11 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français 
+    "", // Français
     "", // Norsk
     "transponderi", // suomi
-    "", // Polski   
-    "", // Español  
+    "", // Polski
+    "", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -183,11 +183,11 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français 
+    "", // Français
     "", // Norsk
     "lähete", // suomi
-    "", // Polski   
-    "", // Español  
+    "", // Polski
+    "", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -198,17 +198,38 @@ const tI18nPhrase Phrases[] = {
     "voog", // Eesti
     "", // Dansk
   },
+  { "Skin", // English
+    "Oberfläche", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Ulkoasu", // suomi
+    "", // Polski
+    "", // Español  
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català 
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "Kest", // Eesti
+    "", // Dansk 
+  },
   { "Theme", // English
     "Thema", // Deutsch
     "", // Slovenski
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français 
+    "", // Français
     "", // Norsk
     "Teema", // suomi
-    "", // Polski   
-    "", // Español  
+    "", // Polski
+    "", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -225,16 +246,16 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français 
+    "", // Français
     "", // Norsk
     "Klassinen", // suomi
-    "", // Polski   
-    "", // Español  
+    "", // Polski
+    "", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
-    "", // Magyar  
-    "", // Català  
+    "", // Magyar
+    "", // Català
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
     "Klassikaline", // Eesti
@@ -246,16 +267,16 @@ const tI18nPhrase Phrases[] = {
     "Elchi", // Italiano
     "Elchi", // Nederlands
     "Elchi", // Português
-    "Elchi", // Français 
+    "Elchi", // Français
     "Elchi", // Norsk
     "Elchi", // suomi
-    "Elchi", // Polski   
-    "Elchi", // Español  
+    "Elchi", // Polski
+    "Elchi", // Español
     "Elchi", // ÅëëçíéêÜ (Greek)
     "Elchi", // Svenska
     "Elchi", // Romaneste
-    "Elchi", // Magyar  
-    "Elchi", // Català  
+    "Elchi", // Magyar
+    "Elchi", // Català
     "Elchi", // ÀãááÚØÙ (Russian)
     "Elchi", // Hrvatski (Croatian)
     "Elchi", // Eesti
@@ -267,16 +288,16 @@ const tI18nPhrase Phrases[] = {
     "DeepBlue", // Italiano
     "DeepBlue", // Nederlands
     "DeepBlue", // Português
-    "DeepBlue", // Français 
+    "DeepBlue", // Français
     "DeepBlue", // Norsk
     "DeepBlue", // suomi
-    "DeepBlue", // Polski   
-    "DeepBlue", // Español  
+    "DeepBlue", // Polski
+    "DeepBlue", // Español
     "DeepBlue", // ÅëëçíéêÜ (Greek)
     "DeepBlue", // Svenska
     "DeepBlue", // Romaneste
-    "DeepBlue", // Magyar  
-    "DeepBlue", // Català  
+    "DeepBlue", // Magyar
+    "DeepBlue", // Català
     "DeepBlue", // ÀãááÚØÙ (Russian)
     "DeepBlue", // Hrvatski (Croatian)
     "DeepBlue", // Eesti
@@ -288,20 +309,62 @@ const tI18nPhrase Phrases[] = {
     "Moronimo", // Italiano
     "Moronimo", // Nederlands
     "Moronimo", // Português
-    "Moronimo", // Français 
+    "Moronimo", // Français
     "Moronimo", // Norsk
     "Moronimo", // suomi
-    "Moronimo", // Polski   
-    "Moronimo", // Español  
+    "Moronimo", // Polski
+    "Moronimo", // Español
     "Moronimo", // ÅëëçíéêÜ (Greek)
     "Moronimo", // Svenska
     "Moronimo", // Romaneste
-    "Moronimo", // Magyar  
-    "Moronimo", // Català  
+    "Moronimo", // Magyar
+    "Moronimo", // Català
     "Moronimo", // ÀãááÚØÙ (Russian)
     "Moronimo", // Hrvatski (Croatian)
     "Moronimo", // Eesti
     "Moronimo", // Dansk
+  },
+  { "Enigma", // English
+    "Enigma", // Deutsch
+    "Enigma", // Slovenski
+    "Enigma", // Italiano
+    "Enigma", // Nederlands
+    "Enigma", // Português
+    "Enigma", // Français
+    "Enigma", // Norsk
+    "Enigma", // suomi
+    "Enigma", // Polski
+    "Enigma", // Español
+    "Enigma", // ÅëëçíéêÜ (Greek)
+    "Enigma", // Svenska
+    "Enigma", // Romaneste
+    "Enigma", // Magyar
+    "Enigma", // Català
+    "Enigma", // ÀãááÚØÙ (Russian)
+    "Enigma", // Hrvatski (Croatian)
+    "Enigma", // Eesti
+    "Enigma", // Dansk
+  },
+  { "EgalsTry", // English
+    "EgalsTry", // Deutsch
+    "EgalsTry", // Slovenski
+    "EgalsTry", // Italiano
+    "EgalsTry", // Nederlands
+    "EgalsTry", // Português
+    "EgalsTry", // Français
+    "EgalsTry", // Norsk
+    "EgalsTry", // suomi
+    "EgalsTry", // Polski
+    "EgalsTry", // Español
+    "EgalsTry", // ÅëëçíéêÜ (Greek)
+    "EgalsTry", // Svenska
+    "EgalsTry", // Romaneste
+    "EgalsTry", // Magyar
+    "EgalsTry", // Català
+    "EgalsTry", // ÀãááÚØÙ (Russian)
+    "EgalsTry", // Hrvatski (Croatian)
+    "EgalsTry", // Eesti
+    "EgalsTry", // Dansk
   },
   { "Hide main menu entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
@@ -438,7 +501,7 @@ const tI18nPhrase Phrases[] = {
     "", // Français
     "", // Norsk   
     "Transponderin tiedot", // suomi
-    "", // Polski   
+    "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
@@ -900,7 +963,7 @@ const tI18nPhrase Phrases[] = {
     "", // Français
     "", // Norsk
     "vapaa", // suomi
-    "", // Polski   
+    "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
@@ -1068,7 +1131,7 @@ const tI18nPhrase Phrases[] = {
     "kHz", // Français
     "kHz", // Norsk
     "kHz", // suomi
-    "kHz", // Polski   
+    "kHz", // Polski
     "kHz", // Español
     "kHz", // ÅëëçíéêÜ (Greek)
     "kHz", // Svenska
@@ -1185,6 +1248,27 @@ const tI18nPhrase Phrases[] = {
     "Rid", // Eesti
     "Rid", // Dansk
   },
+  { "Coderate", // English
+    "Coderate", // Deutsch
+    "Coderate", // Slovenski
+    "Coderate", // Italiano
+    "Coderate", // Nederlands
+    "Coderate", // Português
+    "Coderate", // Français
+    "Coderate", // Norsk
+    "Suojaustaso", // suomi
+    "Coderate", // Polski
+    "Coderate", // Español
+    "Coderate", // ÅëëçíéêÜ (Greek)
+    "Coderate", // Svenska
+    "Coderate", // Romaneste
+    "Coderate", // Magyar
+    "Coderate", // Català
+    "Coderate", // ÀãááÚØÙ (Russian)
+    "Coderate", // Hrvatski (Croatian)
+    "Coderate", // Eesti
+    "Coderate", // Dansk
+  },
   { "dB", // English
     "dB", // Deutsch
     "dB", // Slovenski
@@ -1194,7 +1278,7 @@ const tI18nPhrase Phrases[] = {
     "dB", // Français
     "dB", // Norsk
     "dB", // suomi
-    "dB", // Polski   
+    "dB", // Polski
     "dB", // Español
     "dB", // ÅëëçíéêÜ (Greek)
     "dB", // Svenska

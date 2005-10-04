@@ -14,8 +14,8 @@
 #include "femontools.h"
 #include "femon.h"
 
-#if VDRVERSNUM && VDRVERSNUM < 10331
-#error "You don't exist! Go away!"
+#if defined(VDRVERSNUM) && VDRVERSNUM < 10334
+#error "You don't exist! Go away! Upgrade yourself!"
 #endif
 
 cPluginFemon::cPluginFemon(void)
@@ -80,6 +80,7 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
   else if (!strcasecmp(Name, "Position"))       femonConfig.position       = atoi(Value);
   else if (!strcasecmp(Name, "OSDHeight"))      femonConfig.osdheight      = atoi(Value);
   else if (!strcasecmp(Name, "OSDOffset"))      femonConfig.osdoffset      = atoi(Value);
+  else if (!strcasecmp(Name, "Skin"))           femonConfig.skin           = atoi(Value);
   else if (!strcasecmp(Name, "Theme"))          femonConfig.theme          = atoi(Value);
   else if (!strcasecmp(Name, "ShowCASystem"))   femonConfig.showcasystem   = atoi(Value);
   else if (!strcasecmp(Name, "RedLimit"))       femonConfig.redlimit       = atoi(Value);
@@ -173,10 +174,15 @@ cMenuFemonSetup::cMenuFemonSetup(void)
   dispmodes[eFemonModeStream]      = tr("stream");
   dispmodes[eFemonModeAC3]         = tr("AC-3");
 
+  skins[eFemonSkinClassic]         = tr("Classic");
+  skins[eFemonSkinElchi]           = tr("Elchi");
+
   themes[eFemonThemeClassic]       = tr("Classic");
   themes[eFemonThemeElchi]         = tr("Elchi");
   themes[eFemonThemeDeepBlue]      = tr("DeepBlue");
   themes[eFemonThemeMoronimo]      = tr("Moronimo");
+  themes[eFemonThemeEnigma]        = tr("Enigma");
+  themes[eFemonThemeEgalsTry]      = tr("EgalsTry");
 
   Setup();
 }
@@ -189,6 +195,7 @@ void cMenuFemonSetup::Setup(void)
   Add(new cMenuEditBoolItem(  tr("Hide main menu entry"),        &femonConfig.hidemenu,       tr("no"),            tr("yes")));
   Add(new cMenuEditBoolItem(  tr("Use syslog output"),           &femonConfig.syslogoutput,   tr("no"),            tr("yes")));
   Add(new cMenuEditStraItem(  tr("Default display mode"),        &femonConfig.displaymode,    eFemonModeMaxNumber, dispmodes));
+  Add(new cMenuEditStraItem(  tr("Skin"),                        &femonConfig.skin,           eFemonSkinMaxNumber, skins));
   Add(new cMenuEditStraItem(  tr("Theme"),                       &femonConfig.theme,          eFemonThemeMaxNumber,themes));
   Add(new cMenuEditBoolItem(  tr("Position"),                    &femonConfig.position,       tr("bottom"),        tr("top")));
   Add(new cMenuEditIntItem(   tr("Height"),                      &femonConfig.osdheight,      400,                 500));
@@ -210,6 +217,7 @@ void cMenuFemonSetup::Store(void)
   SetupStore("HideMenu",       femonConfig.hidemenu);
   SetupStore("SyslogOutput",   femonConfig.syslogoutput);
   SetupStore("DisplayMode",    femonConfig.displaymode);
+  SetupStore("Skin",           femonConfig.skin);
   SetupStore("Theme",          femonConfig.theme);
   SetupStore("Position",       femonConfig.position);
   SetupStore("OSDHeight",      femonConfig.osdheight);

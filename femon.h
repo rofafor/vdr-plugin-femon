@@ -11,7 +11,7 @@
 
 #include <vdr/plugin.h>
 
-static const char *VERSION        = "0.9.3";
+static const char *VERSION        = "0.9.4";
 static const char *DESCRIPTION    = "DVB Signal Information Monitor (OSD)";
 static const char *MAINMENUENTRY  = "Signal Information";
 
@@ -41,6 +41,7 @@ public:
 class cMenuFemonSetup : public cMenuSetupPage {
   private:
     const char *dispmodes[eFemonModeMaxNumber];
+    const char *skins[eFemonSkinMaxNumber];
     const char *themes[eFemonThemeMaxNumber];
     virtual void Setup(void);
   protected:

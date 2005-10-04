@@ -47,6 +47,7 @@
 #define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 6)      // in pixels (6 rows)
 #define OSDSPACING                5
 #define OSDCORNERING              10
+#define IS_OSDCORNERING           (femonConfig.skin == eFemonSkinElchi)
 
 #define OSDINFOWIN_Y(offset)      (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
 #define OSDINFOWIN_X(col)         ((col == 4) ? 455 : (col == 3) ? 305 : (col == 2) ? 155 : 15)
@@ -136,8 +137,10 @@ void cFemonOsd::DrawStatusWindow(void)
      snprintf(buf, sizeof(buf), "%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true));
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
      m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
-     m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDCORNERING, OSDSTATUSWIN_Y(OSDCORNERING), clrTransparent, -2);
-     m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDCORNERING), clrTransparent, -1);
+     if (IS_OSDCORNERING) {
+        m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDCORNERING, OSDSTATUSWIN_Y(OSDCORNERING), clrTransparent, -2);
+        m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDCORNERING), clrTransparent, -1);
+        }
      if (m_Receiver) {
         value = cDevice::ActualDevice()->CardIndex();
         if (value == 1) {
@@ -343,8 +346,10 @@ void cFemonOsd::DrawStatusWindow(void)
      m_Osd->DrawBitmap(OSDSTATUSWIN_XSYMBOL(3, x), OSDSTATUSWIN_Y(offset + y), bmCarrier, (m_FrontendStatus & FE_HAS_CARRIER) ? femonTheme[femonConfig.theme].clrActiveText : femonTheme[femonConfig.theme].clrRed, femonTheme[femonConfig.theme].clrBackground);
      m_Osd->DrawBitmap(OSDSTATUSWIN_XSYMBOL(4, x), OSDSTATUSWIN_Y(offset + y), bmViterbi, (m_FrontendStatus & FE_HAS_VITERBI) ? femonTheme[femonConfig.theme].clrActiveText : femonTheme[femonConfig.theme].clrRed, femonTheme[femonConfig.theme].clrBackground);
      m_Osd->DrawBitmap(OSDSTATUSWIN_XSYMBOL(5, x), OSDSTATUSWIN_Y(offset + y), bmSync, (m_FrontendStatus & FE_HAS_SYNC) ? femonTheme[femonConfig.theme].clrActiveText : femonTheme[femonConfig.theme].clrRed, femonTheme[femonConfig.theme].clrBackground);
-     m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT-OSDCORNERING), OSDCORNERING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -3);
-     m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDSTATUSWIN_Y(OSDSTATUSHEIGHT-OSDCORNERING), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -4);
+     if (IS_OSDCORNERING) {
+        m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT-OSDCORNERING), OSDCORNERING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -3);
+        m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDSTATUSWIN_Y(OSDSTATUSHEIGHT-OSDCORNERING), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -4);
+        }
      m_Osd->Flush();
      }
 }
@@ -365,8 +370,10 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), femonTheme[femonConfig.theme].clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
         m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Transponder Information"), femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
-        m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2);
-        m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1);
+        if (IS_OSDCORNERING) {
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2);
+           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1);
+           }
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Vpid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         snprintf(buf, sizeof(buf), "%d", channel->Vpid());
@@ -614,29 +621,29 @@ void cFemonOsd::DrawInfoWindow(void)
                else if (value == INVERSION_ON)    snprintf(buf, sizeof(buf), tr("On"));
                else            /*INVERSION_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
                m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("CoderateH"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Coderate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                value = channel->CoderateH();
-               if      (value == FEC_NONE)  snprintf(buf, sizeof(buf), tr("None"));
-               else if (value == FEC_1_2)   snprintf(buf, sizeof(buf), "1/2");
-               else if (value == FEC_2_3)   snprintf(buf, sizeof(buf), "2/3");
-               else if (value == FEC_3_4)   snprintf(buf, sizeof(buf), "3/4");
-               else if (value == FEC_4_5)   snprintf(buf, sizeof(buf), "4/5");
-               else if (value == FEC_5_6)   snprintf(buf, sizeof(buf), "5/6");
-               else if (value == FEC_6_7)   snprintf(buf, sizeof(buf), "6/7");
-               else if (value == FEC_7_8)   snprintf(buf, sizeof(buf), "7/8");
-               else if (value == FEC_8_9)   snprintf(buf, sizeof(buf), "8/9");
-               else            /*FEC_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
+               if      (value == FEC_NONE)  snprintf(buf, sizeof(buf), "%s (H)", tr("None"));
+               else if (value == FEC_1_2)   snprintf(buf, sizeof(buf), "1/2 (H)");
+               else if (value == FEC_2_3)   snprintf(buf, sizeof(buf), "2/3 (H)");
+               else if (value == FEC_3_4)   snprintf(buf, sizeof(buf), "3/4 (H)");
+               else if (value == FEC_4_5)   snprintf(buf, sizeof(buf), "4/5 (H)");
+               else if (value == FEC_5_6)   snprintf(buf, sizeof(buf), "5/6 (H)");
+               else if (value == FEC_6_7)   snprintf(buf, sizeof(buf), "6/7 (H)");
+               else if (value == FEC_7_8)   snprintf(buf, sizeof(buf), "7/8 (H)");
+               else if (value == FEC_8_9)   snprintf(buf, sizeof(buf), "8/9 (H)");
+               else            /*FEC_AUTO*/ snprintf(buf, sizeof(buf), "%s (H)", tr("Auto"));
                value = channel->CoderateL();
-               if      (value == FEC_NONE)  snprintf(buf2, sizeof(buf2), " - %s", tr("None"));
-               else if (value == FEC_1_2)   snprintf(buf2, sizeof(buf2), " - 1/2");
-               else if (value == FEC_2_3)   snprintf(buf2, sizeof(buf2), " - 2/3");
-               else if (value == FEC_3_4)   snprintf(buf2, sizeof(buf2), " - 3/4");
-               else if (value == FEC_4_5)   snprintf(buf2, sizeof(buf2), " - 4/5");
-               else if (value == FEC_5_6)   snprintf(buf2, sizeof(buf2), " - 5/6");
-               else if (value == FEC_6_7)   snprintf(buf2, sizeof(buf2), " - 6/7");
-               else if (value == FEC_7_8)   snprintf(buf2, sizeof(buf2), " - 7/8");
-               else if (value == FEC_8_9)   snprintf(buf2, sizeof(buf2), " - 8/9");
-               else            /*FEC_AUTO*/ snprintf(buf2, sizeof(buf2), " - %s", tr("Auto"));
+               if      (value == FEC_NONE)  snprintf(buf2, sizeof(buf2), " %s (L)", tr("None"));
+               else if (value == FEC_1_2)   snprintf(buf2, sizeof(buf2), " 1/2 (L)");
+               else if (value == FEC_2_3)   snprintf(buf2, sizeof(buf2), " 2/3 (L)");
+               else if (value == FEC_3_4)   snprintf(buf2, sizeof(buf2), " 3/4 (L)");
+               else if (value == FEC_4_5)   snprintf(buf2, sizeof(buf2), " 4/5 (L)");
+               else if (value == FEC_5_6)   snprintf(buf2, sizeof(buf2), " 5/6 (L)");
+               else if (value == FEC_6_7)   snprintf(buf2, sizeof(buf2), " 6/7 (L)");
+               else if (value == FEC_7_8)   snprintf(buf2, sizeof(buf2), " 7/8 (L)");
+               else if (value == FEC_8_9)   snprintf(buf2, sizeof(buf2), " 8/9 (L)");
+               else            /*FEC_AUTO*/ snprintf(buf2, sizeof(buf2), " %s (L)", tr("Auto"));
                strncat(buf, buf2, sizeof(buf));
                m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                offset += OSDROWHEIGHT;
@@ -658,15 +665,19 @@ void cFemonOsd::DrawInfoWindow(void)
                m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                break;
           }
-        m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3);
-        m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4);
+        if (IS_OSDCORNERING) {
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3);
+           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4);
+           }
         }
      else if (m_DisplayMode == eFemonModeStream) {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), femonTheme[femonConfig.theme].clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
         m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Stream Information"), femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
-        m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2);
-        m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1);
+        if (IS_OSDCORNERING) {
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2);
+           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1);
+           }
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Video Stream"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         snprintf(buf, sizeof(buf), "#%d", channel->Vpid());
@@ -736,16 +747,20 @@ void cFemonOsd::DrawInfoWindow(void)
            }
         else                         snprintf(buf, sizeof(buf), "---");
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3);
-        m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4);
+        if (IS_OSDCORNERING) {
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3);
+           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4);
+           }
         }
      else if (m_DisplayMode == eFemonModeAC3) {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), femonTheme[femonConfig.theme].clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
         snprintf(buf, sizeof(buf), "%s - %s #%d %s", tr("Stream Information"), tr("AC-3 Stream"), IS_DOLBY_TRACK(track) ? channel->Dpid(int(track - ttDolbyFirst)) : channel->Dpid(0), IS_DOLBY_TRACK(track) ? channel->Dlang(int(track - ttDolbyFirst)) : channel->Dlang(0));
         m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
-        m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2);
-        m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1);
+        if (IS_OSDCORNERING) {
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2);
+           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1);
+           }
         offset += OSDROWHEIGHT;
         if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
@@ -831,8 +846,10 @@ void cFemonOsd::DrawInfoWindow(void)
            else           snprintf(buf, sizeof(buf), "---");
            m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            }
-        m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3);
-        m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4);
+        if (IS_OSDCORNERING) {
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3);
+           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4);
+           }
         }
      else /* eFemonModeBasic */ {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent);
