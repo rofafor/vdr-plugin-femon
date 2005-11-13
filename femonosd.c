@@ -81,7 +81,19 @@ cBitmap cFemonOsd::bmCarrier(carrier_xpm);
 cBitmap cFemonOsd::bmViterbi(viterbi_xpm);
 cBitmap cFemonOsd::bmSync(sync_xpm);
 
-cFemonOsd::cFemonOsd(void)
+cFemonOsd *cFemonOsd::pInstance = NULL;
+
+cFemonOsd *cFemonOsd::Instance(bool create)
+{
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  if (pInstance == NULL && create)
+  {
+     pInstance = new cFemonOsd();
+  }
+  return (pInstance);
+}
+
+cFemonOsd::cFemonOsd()
 :cOsdObject(true), cThread("femon osd")
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
@@ -110,13 +122,13 @@ cFemonOsd::cFemonOsd(void)
 cFemonOsd::~cFemonOsd(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  if (Running()) {
+  if (Running())
      Cancel(3);
-     }
   if (m_Receiver)
      delete m_Receiver;
   if (m_Osd)
      delete m_Osd;
+  pInstance = NULL;
 }
 
 void cFemonOsd::DrawStatusWindow(void)
@@ -903,13 +915,13 @@ void cFemonOsd::Show(void)
      }
   m_Osd = cOsdProvider::NewOsd(((Setup.OSDWidth - OSDWIDTH) / 2) + Setup.OSDLeft + femonConfig.osdoffset, ((Setup.OSDHeight - OSDHEIGHT) / 2) + Setup.OSDTop);
   if (m_Osd) {
-     tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, 4 } };
+     tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, femonTheme[femonConfig.theme].bpp } };
      if (m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
         m_Osd->SetAreas(Areas1, sizeof(Areas1) / sizeof(tArea));
         }
      else {
-        tArea Areas2[] = { { 0, OSDSTATUSWIN_Y(0),          (OSDWIDTH-1), OSDSTATUSWIN_Y(OSDSTATUSHEIGHT-1), 4 },
-                           { 0, OSDINFOWIN_Y(0),            (OSDWIDTH-1), OSDINFOWIN_Y(OSDROWHEIGHT-1),      4 },
+        tArea Areas2[] = { { 0, OSDSTATUSWIN_Y(0),          (OSDWIDTH-1), OSDSTATUSWIN_Y(OSDSTATUSHEIGHT-1), femonTheme[femonConfig.theme].bpp },
+                           { 0, OSDINFOWIN_Y(0),            (OSDWIDTH-1), OSDINFOWIN_Y(OSDROWHEIGHT-1),      femonTheme[femonConfig.theme].bpp },
                            { 0, OSDINFOWIN_Y(OSDROWHEIGHT), (OSDWIDTH-1), OSDINFOWIN_Y(OSDINFOHEIGHT-1),     2 } };
         m_Osd->SetAreas(Areas2, sizeof(Areas2) / sizeof(tArea));
         }
@@ -978,6 +990,69 @@ void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
      m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), apid, dpid);
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
+}
+
+bool cFemonOsd::DeviceSwitch(int direction)
+{
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  int device = cDevice::ActualDevice()->DeviceNumber();                            
+  direction = sgn(direction);
+  if (device >= 0) {
+     cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+     for (int i = 0; i < cDevice::NumDevices() - 1; i++) {                         
+        if (direction) {
+           if (++device >= cDevice::NumDevices()) device = 0;                     
+           }
+        else {
+           if (--device < 0) device = cDevice::NumDevices() - 1;
+           }
+        if (cDevice::GetDevice(device)->ProvidesChannel(channel)) {
+           Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
+           // here should be added some checks, if the device is really available (i.e. not recording)
+           cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
+           cControl::Shutdown();
+           cDevice::GetDevice(device)->SwitchChannel(channel, true);
+           // does this work with primary devices ?
+           cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
+           cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
+           return (true);
+           }
+        }
+     }
+   return (false);
+}
+
+double cFemonOsd::GetVideoBitrate(void)
+{
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  double value = 0.0;
+
+  if (m_Receiver)
+     value = m_Receiver->VideoBitrate();
+
+  return (value);
+}
+
+double cFemonOsd::GetAudioBitrate(void)
+{
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  double value = 0.0;
+
+  if (m_Receiver)
+     value = m_Receiver->AudioBitrate();
+
+  return (value);
+}
+
+double cFemonOsd::GetDolbyBitrate(void)
+{
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  double value = 0.0;
+
+  if (m_Receiver)
+     value = m_Receiver->AC3Bitrate();
+
+  return (value);
 }
 
 eOSState cFemonOsd::ProcessKey(eKeys Key)
@@ -1060,32 +1135,10 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                }
             break;
        case kRight:
+            DeviceSwitch(1);
+            break;
        case kLeft:
-            {
-            int device = cDevice::ActualDevice()->DeviceNumber();
-            if (device >= 0) {
-               cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-               for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
-                   if (NORMALKEY(Key) == kRight) {
-                      if (++device >= cDevice::NumDevices()) device = 0;
-                      }
-                   else {
-                      if (--device < 0) device = cDevice::NumDevices() - 1;
-                      }
-                   if (cDevice::GetDevice(device)->ProvidesChannel(channel)) {
-                      Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, Key, device);
-                      // here should be added some checks, if the device is really available (i.e. not recording)
-                      cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
-                      cControl::Shutdown();
-                      cDevice::GetDevice(device)->SwitchChannel(channel, true);
-                      // does this work with primary devices ?
-                      cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
-                      cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
-                      break;
-                      }
-                   }
-               }
-            }
+            DeviceSwitch(-1);
             break;
        case kUp|k_Repeat:
        case kUp:

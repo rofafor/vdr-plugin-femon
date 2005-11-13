@@ -36,6 +36,7 @@ const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
 {
   {
     // eFemonThemeClassic
+    4,          // bpp
     0x7F000000, // clrBackground
     0xFFFCFCFC, // clrTitleBackground
     0xFF000000, // clrTitleText
@@ -47,6 +48,7 @@ const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
   },
   {
     // eFemonThemeElchi
+    4,          // bpp
     0xC8000066, // clrBackground
     0xC833AAEE, // clrTitleBackground
     0xFF000000, // clrTitleText
@@ -58,6 +60,7 @@ const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
   },
   {
     // eFemonThemeDeepBlue
+    4,          // bpp
     0xC80C0C0C, // clrBackground
     0xC832557A, // clrTitleBackground
     0xFF000000, // clrTitleText
@@ -69,6 +72,7 @@ const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
   },
   {
     // eFemonThemeMoronimo
+    4,          // bpp
     0xDF294A6B, // clrBackground
     0xDF3E5578, // clrTitleBackground
     0xFF9BBAD7, // clrTitleText
@@ -80,6 +84,7 @@ const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
   },
   {
     // eFemonThemeEnigma
+    4,          // bpp
     0xB8DEE5FA, // clrBackground
     0xB84158BC, // clrTitleBackground
     0xFFFFFFFF, // clrTitleText
@@ -99,5 +104,17 @@ const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
     0xFFFF0000, // clrRed
     0xFFFCC024, // clrYellow
     0xFF20980B, // clrGreen
+  },
+  {
+    // eFemonThemeDuotone
+    2,          // bpp
+    0x7F000000, // clrBackground
+    0xFFFCFCFC, // clrTitleBackground
+    0x7F000000, // clrTitleText                                                                                                              
+    0xFFFCFCFC, // clrActiveText                                                                                                            
+    0xFFFCFCFC, // clrInactiveText
+    0xFFFC1414, // clrRed
+    0xFFFCFCFC, // clrYellow
+    0xFFFCFCFC, // clrGreen
   },
 };

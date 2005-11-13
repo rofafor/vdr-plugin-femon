@@ -183,3 +183,14 @@ VDR Plugin 'femon' Revision History
 - Added Enigma theme (Thanks to Rolf Hoverath).
 - Added EgalsTry theme (Thanks to Uwe Hanke).
 - Added option to disable rounded corners.
+
+2005-11-13: Version 0.9.5
+
+- Updated for vdr-1.3.36.
+- Added french translation (Thanks to Nicolas Huillard).
+- Enabled bitrate commands via SVDRP.
+- Added new SVDRP commands.
+- Modified femon service without incrementing version number.
+- Added "Duotone" theme for 2bpp on screen displays.
+- Fixed crash bug in femonreceiver.
+- Fixed setup page bug (Thanks to Thomas Günther for reporting this one).

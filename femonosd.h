@@ -21,6 +21,7 @@
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
+  static cFemonOsd *pInstance;
   cOsd *m_Osd;
   cFemonReceiver *m_Receiver;
   int m_Frontend;
@@ -44,16 +45,24 @@ private:
   void DrawInfoWindow(void);
 
 protected:
+  cFemonOsd();
+  cFemonOsd(const cFemonOsd&);
+  cFemonOsd& operator= (const cFemonOsd&);
   virtual void Action(void);
   virtual void ChannelSwitch(const cDevice * device, int channelNumber);
   virtual void SetAudioTrack(int Index, const char * const *Tracks);
 
 public:
-  cFemonOsd(void);
+  static cFemonOsd *Instance(bool create = false);
   ~cFemonOsd();
 
   virtual void Show(void);
   virtual eOSState ProcessKey(eKeys Key);
+
+  bool DeviceSwitch(int direction);
+  double GetVideoBitrate(void);
+  double GetAudioBitrate(void);
+  double GetDolbyBitrate(void);
 };
 
 #endif //__FEMONOSD_H

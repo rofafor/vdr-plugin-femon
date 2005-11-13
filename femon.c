@@ -6,6 +6,7 @@
  * $Id$
  */
 
+#include <vdr/remote.h>
 #include "femoncfg.h"
 #include "femoni18n.h"
 #include "femonreceiver.h"
@@ -14,20 +15,22 @@
 #include "femontools.h"
 #include "femon.h"
 
-#if defined(VDRVERSNUM) && VDRVERSNUM < 10334
+#if defined(VDRVERSNUM) && VDRVERSNUM < 10336
 #error "You don't exist! Go away! Upgrade yourself!"
 #endif
 
-cPluginFemon::cPluginFemon(void)
+cPluginFemon::cPluginFemon()
 {
   // Initialize any member variables here.
   // DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
   // VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
 }
 
 cPluginFemon::~cPluginFemon()
 {
   // Clean up after yourself!
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
 }
 
 const char *cPluginFemon::CommandLineHelp(void)
@@ -68,7 +71,8 @@ void cPluginFemon::Housekeeping(void)
 cOsdObject *cPluginFemon::MainMenuAction(void)
 {
   // Perform the action when selected from the main VDR menu.
-  return new cFemonOsd();
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  return cFemonOsd::Instance(true);
 }
 
 bool cPluginFemon::SetupParse(const char *Name, const char *Value)
@@ -106,8 +110,9 @@ bool cPluginFemon::Service(const char *Id, void *Data)
      data->fe_signal = getSignal(ndx);
      data->fe_ber = getBER(ndx);
      data->fe_unc = getUNC(ndx);
-     data->video_bitrate = getVideoBitrate();
-     data->audio_bitrate = getAudioBitrate();
+     data->video_bitrate = cFemonOsd::Instance() ? cFemonOsd::Instance()->GetVideoBitrate() : 0.0;
+     data->audio_bitrate = cFemonOsd::Instance() ? cFemonOsd::Instance()->GetAudioBitrate() : 0.0;
+     data->dolby_bitrate = cFemonOsd::Instance() ? cFemonOsd::Instance()->GetDolbyBitrate() : 0.0;
      return true;
      }
 
@@ -117,6 +122,14 @@ bool cPluginFemon::Service(const char *Id, void *Data)
 const char **cPluginFemon::SVDRPHelpPages(void)
 { 
   static const char *HelpPages[] = {
+    "OPEN\n"
+    "    Open femon plugin.",
+    "QUIT\n"
+    "    Close femon plugin.",
+    "NEXT\n"
+    "    Switch to next possible device.",
+    "PREV\n"
+    "    Switch to previous possible device.",
     "NAME\n"
     "    Print the current frontend name.",
     "STAT\n"
@@ -130,9 +143,11 @@ const char **cPluginFemon::SVDRPHelpPages(void)
     "UNCB\n"
     "    Print the current uncorrcted blocks rate.",
     "VIBR\n"
-    "    Print the current video bitrate [Mbit/s].",
+    "    Print the actual device and current video bitrate [Mbit/s].",
     "AUBR\n"
-    "    Print the current audio bitrate [kbit/s].",
+    "    Print the actual device and current audio bitrate [kbit/s].",
+    "DDBR\n"
+    "    Print the actual device and current dolby bitrate [kbit/s].",
     NULL
     };
   return HelpPages;
@@ -140,35 +155,72 @@ const char **cPluginFemon::SVDRPHelpPages(void)
 
 cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
 {
-  if (strcasecmp(Command, "NAME") == 0) {
+  if (strcasecmp(Command, "OPEN") == 0) {
+     if (!cFemonOsd::Instance())
+        cRemote::CallPlugin("femon");
+     return cString("Opening femon plugin");
+     }
+  else if (strcasecmp(Command, "QUIT") == 0) {
+     if (cFemonOsd::Instance())
+        cRemote::Put(kBack);
+     return cString("Closing femon plugin");
+     }
+  else if (strcasecmp(Command, "NEXT") == 0) {
+     if (cFemonOsd::Instance())
+        return cString::sprintf("Switching to next device: %s", cFemonOsd::Instance()->DeviceSwitch(1) ? "ok" : "failed");
+     else
+        return cString("Cannot switch device");
+     }
+  else if (strcasecmp(Command, "PREV") == 0) {
+     if (cFemonOsd::Instance())
+        return cString::sprintf("Switching to previous device: %s", cFemonOsd::Instance()->DeviceSwitch(-1) ? "ok" : "failed");
+     else
+        return cString("Cannot switch device");
+     }
+  else if (strcasecmp(Command, "NAME") == 0) {
      return getFrontendName(cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "STAT") == 0) {
      return getFrontendStatus(cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "SGNL") == 0) {
-     return cString::sprintf("%04X", getSignal(cDevice::ActualDevice()->CardIndex()));
+     int value = getSignal(cDevice::ActualDevice()->CardIndex());
+     return cString::sprintf("%04X (%02d%%) on device #%d", value, value / 655, cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "SNRA") == 0) {
-     return cString::sprintf("%04X", getSNR(cDevice::ActualDevice()->CardIndex()));
+     int value = getSNR(cDevice::ActualDevice()->CardIndex());
+     return cString::sprintf("%04X (%02d%%) on device #%d", value, value / 655, cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "BERA") == 0) {
-     return cString::sprintf("%08X", getBER(cDevice::ActualDevice()->CardIndex()));
+     return cString::sprintf("%08X on device #%d", getBER(cDevice::ActualDevice()->CardIndex()), cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "UNCB") == 0) {
-     return cString::sprintf("%08X", getUNC(cDevice::ActualDevice()->CardIndex()));
+     return cString::sprintf("%08X on device #%d", getUNC(cDevice::ActualDevice()->CardIndex()), cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "VIBR") == 0) {
-     return cString::sprintf("%.2f", getVideoBitrate());
+     if (cFemonOsd::Instance())
+        return cString::sprintf("%.2f Mbit/s on device #%d", cFemonOsd::Instance()->GetVideoBitrate(), cDevice::ActualDevice()->CardIndex());
+     else
+        return cString::sprintf("--- Mbit/s on device #%d", cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "AUBR") == 0) {
-     return cString::sprintf("%.0f", getAudioBitrate());
+     if (cFemonOsd::Instance())
+        return cString::sprintf("%.0f kbit/s on device #%d", cFemonOsd::Instance()->GetAudioBitrate(), cDevice::ActualDevice()->CardIndex());
+     else
+        return cString::sprintf("--- kbit/s on device #%d", cDevice::ActualDevice()->CardIndex());
+     }
+  else if (strcasecmp(Command, "DDBR") == 0) {
+     if (cFemonOsd::Instance())
+        return cString::sprintf("%.0f kbit/s on device #%d", cFemonOsd::Instance()->GetDolbyBitrate(), cDevice::ActualDevice()->CardIndex());
+     else
+        return cString::sprintf("--- kbit/s on device #%d", cDevice::ActualDevice()->CardIndex());
      }
   return NULL;
 }
 
 cMenuFemonSetup::cMenuFemonSetup(void)
 {
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
   dispmodes[eFemonModeBasic]       = tr("basic");
   dispmodes[eFemonModeTransponder] = tr("transponder");
   dispmodes[eFemonModeStream]      = tr("stream");
@@ -183,7 +235,9 @@ cMenuFemonSetup::cMenuFemonSetup(void)
   themes[eFemonThemeMoronimo]      = tr("Moronimo");
   themes[eFemonThemeEnigma]        = tr("Enigma");
   themes[eFemonThemeEgalsTry]      = tr("EgalsTry");
+  themes[eFemonThemeDuotone]       = tr("Duotone");
 
+  data = femonConfig;
   Setup();
 }
 
@@ -192,21 +246,21 @@ void cMenuFemonSetup::Setup(void)
   int current = Current();
 
   Clear();
-  Add(new cMenuEditBoolItem(  tr("Hide main menu entry"),        &femonConfig.hidemenu,       tr("no"),            tr("yes")));
-  Add(new cMenuEditBoolItem(  tr("Use syslog output"),           &femonConfig.syslogoutput,   tr("no"),            tr("yes")));
-  Add(new cMenuEditStraItem(  tr("Default display mode"),        &femonConfig.displaymode,    eFemonModeMaxNumber, dispmodes));
-  Add(new cMenuEditStraItem(  tr("Skin"),                        &femonConfig.skin,           eFemonSkinMaxNumber, skins));
-  Add(new cMenuEditStraItem(  tr("Theme"),                       &femonConfig.theme,          eFemonThemeMaxNumber,themes));
-  Add(new cMenuEditBoolItem(  tr("Position"),                    &femonConfig.position,       tr("bottom"),        tr("top")));
-  Add(new cMenuEditIntItem(   tr("Height"),                      &femonConfig.osdheight,      400,                 500));
-  Add(new cMenuEditIntItem(   tr("Horizontal offset"),           &femonConfig.osdoffset,      -50,                 50));
-  Add(new cMenuEditBoolItem(  tr("Show CA system"),              &femonConfig.showcasystem,   tr("no"),            tr("yes")));
-  Add(new cMenuEditIntItem(   tr("Red limit [%]"),               &femonConfig.redlimit,       1,                   50));
-  Add(new cMenuEditIntItem(   tr("Green limit [%]"),             &femonConfig.greenlimit,     51,                  100));
-  Add(new cMenuEditIntItem(   tr("OSD update interval [0.1s]"),  &femonConfig.updateinterval, 1,                   100));
-  Add(new cMenuEditBoolItem(  tr("Analyze stream"),              &femonConfig.analyzestream,  tr("no"),            tr("yes")));
+  Add(new cMenuEditBoolItem(  tr("Hide main menu entry"),        &data.hidemenu,       tr("no"),            tr("yes")));
+  Add(new cMenuEditBoolItem(  tr("Use syslog output"),           &data.syslogoutput,   tr("no"),            tr("yes")));
+  Add(new cMenuEditStraItem(  tr("Default display mode"),        &data.displaymode,    eFemonModeMaxNumber, dispmodes));
+  Add(new cMenuEditStraItem(  tr("Skin"),                        &data.skin,           eFemonSkinMaxNumber, skins));
+  Add(new cMenuEditStraItem(  tr("Theme"),                       &data.theme,          eFemonThemeMaxNumber,themes));
+  Add(new cMenuEditBoolItem(  tr("Position"),                    &data.position,       tr("bottom"),        tr("top")));
+  Add(new cMenuEditIntItem(   tr("Height"),                      &data.osdheight,      400,                 500));
+  Add(new cMenuEditIntItem(   tr("Horizontal offset"),           &data.osdoffset,      -50,                 50));
+  Add(new cMenuEditBoolItem(  tr("Show CA system"),              &data.showcasystem,   tr("no"),            tr("yes")));
+  Add(new cMenuEditIntItem(   tr("Red limit [%]"),               &data.redlimit,       1,                   50));
+  Add(new cMenuEditIntItem(   tr("Green limit [%]"),             &data.greenlimit,     51,                  100));
+  Add(new cMenuEditIntItem(   tr("OSD update interval [0.1s]"),  &data.updateinterval, 1,                   100));
+  Add(new cMenuEditBoolItem(  tr("Analyze stream"),              &data.analyzestream,  tr("no"),            tr("yes")));
   if (femonConfig.analyzestream)
-     Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &femonConfig.calcinterval,   1,                   100));
+     Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &data.calcinterval,   1,                   100));
 
   SetCurrent(Get(current));
   Display();
@@ -214,6 +268,8 @@ void cMenuFemonSetup::Setup(void)
 
 void cMenuFemonSetup::Store(void)
 {
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  femonConfig = data;
   SetupStore("HideMenu",       femonConfig.hidemenu);
   SetupStore("SyslogOutput",   femonConfig.syslogoutput);
   SetupStore("DisplayMode",    femonConfig.displaymode);
@@ -232,11 +288,11 @@ void cMenuFemonSetup::Store(void)
 
 eOSState cMenuFemonSetup::ProcessKey(eKeys Key)
 {
-  int oldAnalyzestream = femonConfig.analyzestream;
+  int oldAnalyzestream = data.analyzestream;
 
   eOSState state = cMenuSetupPage::ProcessKey(Key);
 
-  if (Key != kNone && (femonConfig.analyzestream != oldAnalyzestream)) {
+  if (Key != kNone && (data.analyzestream != oldAnalyzestream)) {
      Setup();
      }
 

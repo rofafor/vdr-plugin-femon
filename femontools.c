@@ -25,7 +25,7 @@ cString getFrontendName(int cardIndex)
   ioctl(fe, FE_GET_INFO, &value);
   close(fe);
 
-  return (cString::sprintf("#%d %s", cardIndex, value.name));
+  return (cString::sprintf("%s on device #%d", value.name, cardIndex));
 }
 
 cString getFrontendStatus(int cardIndex)
@@ -41,7 +41,7 @@ cString getFrontendStatus(int cardIndex)
   CHECK(ioctl(fe, FE_READ_STATUS, &value));
   close(fe);
 
-  return (cString::sprintf("%s:%s:%s:%s:%s", (value & FE_HAS_LOCK) ? "LOCKED" : "-", (value & FE_HAS_SIGNAL) ? "SIGNAL" : "-", (value & FE_HAS_CARRIER) ? "CARRIER" : "-", (value & FE_HAS_VITERBI) ? "VITERBI" : "-", (value & FE_HAS_SYNC) ? "SYNC" : "-"));
+  return (cString::sprintf("Status %s:%s:%s:%s:%s on device #%d", (value & FE_HAS_LOCK) ? "LOCKED" : "-", (value & FE_HAS_SIGNAL) ? "SIGNAL" : "-", (value & FE_HAS_CARRIER) ? "CARRIER" : "-", (value & FE_HAS_VITERBI) ? "VITERBI" : "-", (value & FE_HAS_SYNC) ? "SYNC" : "-", cardIndex));
 }
 
 uint16_t getSignal(int cardIndex)
@@ -108,20 +108,3 @@ uint32_t getUNC(int cardIndex)
   return (value);
 }
 
-double getVideoBitrate(void)
-{
-  double value = 0.0;
-
-  // Not yet implemented.
-
-  return (value);
-}
-
-double getAudioBitrate(void)
-{
-  double value = 0.0;
-
-  // Not yet implemented.
-
-  return (value);
-}

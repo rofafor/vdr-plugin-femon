@@ -26,7 +26,5 @@ uint16_t getSNR(int cardIndex = 0);
 uint16_t getSignal(int cardIndex = 0);
 uint32_t getBER(int cardIndex = 0);
 uint32_t getUNC(int cardIndex = 0);
-double getVideoBitrate(void);
-double getAudioBitrate(void);
 
 #endif // __FEMONTOOLS_H

@@ -15,7 +15,7 @@ const tI18nPhrase Phrases[] = {
     "Visualizza le informazioni sul segnale DVB", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Affiche les informations du signal DVB", // Français
     "", // Norsk
     "Signaalimittari (OSD)", // suomi
     "", // Polski
@@ -36,7 +36,7 @@ const tI18nPhrase Phrases[] = {
     "Informazioni sul segnale", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Signal DVB", // Français
     "", // Norsk
     "Signaalimittari", // suomi
     "", // Polski
@@ -57,7 +57,7 @@ const tI18nPhrase Phrases[] = {
     "Posizione", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Position", // Français
     "", // Norsk
     "Sijainti", // suomi
     "", // Polski
@@ -78,7 +78,7 @@ const tI18nPhrase Phrases[] = {
     "Altezza", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Hauteur", // Français
     "", // Norsk
     "Korkeus", // suomi
     "", // Polski
@@ -99,7 +99,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Déplacement horizontal", // Français
     "", // Norsk
     "Vaakakeskitys", // suomi
     "", // Polski
@@ -120,7 +120,7 @@ const tI18nPhrase Phrases[] = {
     "Modo di visualizzazione standard", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Affichage par défaut", // Français
     "", // Norsk
     "Oletusnäyttötila", // suomi
     "", // Polski
@@ -141,7 +141,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "basique", // Français
     "", // Norsk
     "perus", // suomi
     "", // Polski
@@ -162,7 +162,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "transpondeur", // Français
     "", // Norsk
     "transponderi", // suomi
     "", // Polski
@@ -183,7 +183,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "flux", // Français
     "", // Norsk
     "lähete", // suomi
     "", // Polski
@@ -204,7 +204,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Skin", // Français
     "", // Norsk
     "Ulkoasu", // suomi
     "", // Polski
@@ -225,7 +225,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Thème", // Français
     "", // Norsk
     "Teema", // suomi
     "", // Polski
@@ -246,7 +246,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Classique", // Français
     "", // Norsk
     "Klassinen", // suomi
     "", // Polski
@@ -366,13 +366,34 @@ const tI18nPhrase Phrases[] = {
     "EgalsTry", // Eesti
     "EgalsTry", // Dansk
   },
+  { "Duotone", // English
+    "Duotone", // Deutsch
+    "Duotone", // Slovenski
+    "Duotone", // Italiano
+    "Duotone", // Nederlands
+    "Duotone", // Português
+    "Duotone", // Français
+    "Duotone", // Norsk
+    "Duotone", // suomi
+    "Duotone", // Polski
+    "Duotone", // Español
+    "Duotone", // ÅëëçíéêÜ (Greek)
+    "Duotone", // Svenska
+    "Duotone", // Romaneste
+    "Duotone", // Magyar
+    "Duotone", // Català
+    "Duotone", // ÀãááÚØÙ (Russian)
+    "Duotone", // Hrvatski (Croatian)
+    "Duotone", // Eesti
+    "Duotone", // Dansk
+  },
   { "Hide main menu entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
     "", // Slovenski
     "Nascondi voce menù", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Masquer dans le menu principal", // Français
     "", // Norsk
     "Piilota valinta päävalikosta", // suomi
     "", // Polski
@@ -393,7 +414,7 @@ const tI18nPhrase Phrases[] = {
     "Intervallo di aggiornamento [0.1s]", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Intervalle de mise à jour (0,1s)", // Français
     "", // Norsk
     "Näytön päivitysväli [0.1s]", // suomi
     "", // Polski
@@ -414,7 +435,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Analyser le flux", // Français
     "", // Norsk
     "Lähetteen analysointi", // suomi
     "", // Polski
@@ -435,7 +456,7 @@ const tI18nPhrase Phrases[] = {
     "Intervallo di calcolo [0.1s]", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Intervalle de calcul (0,1s)", // Français
     "", // Norsk
     "Laskennan päivitysväli [0.1s]", // suomi
     "", // Polski
@@ -456,7 +477,7 @@ const tI18nPhrase Phrases[] = {
     "Limite rosso [%]", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Limite du rouge (%)", // Français
     "", // Norsk
     "Punaisen taso [%]", // suomi
     "", // Polski
@@ -477,7 +498,7 @@ const tI18nPhrase Phrases[] = {
     "Limite verde [%]", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Limite du vert (%)", // Français
     "", // Norsk
     "Vihreän taso [%]", // suomi
     "", // Polski
@@ -498,7 +519,7 @@ const tI18nPhrase Phrases[] = {
     "Informazioni transponder", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Information transpondeur", // Français
     "", // Norsk   
     "Transponderin tiedot", // suomi
     "", // Polski
@@ -519,7 +540,7 @@ const tI18nPhrase Phrases[] = {
     "Scheda satellitare", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Carte Satellite", // Français
     "", // Norsk
     "Satelliittikortti", // suomi
     "", // Polski
@@ -540,7 +561,7 @@ const tI18nPhrase Phrases[] = {
     "Scheda via cavo", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Carte Câble", // Français
     "", // Norsk
     "Kaapelikortti", // suomi
     "", // Polski
@@ -561,7 +582,7 @@ const tI18nPhrase Phrases[] = {
     "Scheda terrestre", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Carte TNT", // Français
     "", // Norsk
     "Terrestiaalikortti", // suomi
     "", // Polski
@@ -582,7 +603,7 @@ const tI18nPhrase Phrases[] = {
     "Registra su syslog", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Enregistrer les infos dans syslog", // Français
     "", // Norsk
     "Kirjaa systeemilokiin", // suomi
     "", // Polski
@@ -624,7 +645,7 @@ const tI18nPhrase Phrases[] = {
     "Video", // Italiano
     "Video", // Nederlands
     "Video", // Português
-    "Video", // Français
+    "Vidéo", // Français
     "Video", // Norsk
     "Kuva", // suomi
     "Video", // Polski
@@ -666,7 +687,7 @@ const tI18nPhrase Phrases[] = {
     "None", // Italiano
     "None", // Nederlands
     "None", // Português
-    "None", // Français
+    "Aucun", // Français
     "None", // Norsk
     "ei", // suomi
     "None", // Polski
@@ -687,7 +708,7 @@ const tI18nPhrase Phrases[] = {
     "Off", // Italiano
     "Off", // Nederlands
     "Off", // Português
-    "Off", // Français
+    "Non", // Français
     "Off", // Norsk
     "poissa", // suomi
     "Off", // Polski
@@ -708,7 +729,7 @@ const tI18nPhrase Phrases[] = {
     "On", // Italiano
     "On", // Nederlands
     "On", // Português
-    "On", // Français
+    "Oui", // Français
     "On", // Norsk
     "päällä", // suomi
     "On", // Polski
@@ -792,7 +813,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Information flux", // Français
     "", // Norsk
     "Lähetteen tiedot", // suomi
     "", // Polski
@@ -813,7 +834,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "MPEG Layer", // Français
     "", // Norsk
     "MPEG-taso", // suomi
     "", // Polski
@@ -834,7 +855,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Flux vidéo", // Français
     "", // Norsk
     "Kuvaraita", // suomi
     "", // Polski
@@ -855,7 +876,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Bitrate", // Français
     "", // Norsk
     "Bittinopeus", // suomi
     "", // Polski
@@ -876,7 +897,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Rafraîchissement", // Français
     "", // Norsk
     "Ruudunpäivitysnopeus", // suomi
     "", // Polski
@@ -918,7 +939,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Proportions d'image", // Français
     "", // Norsk
     "Kuvasuhde", // suomi
     "", // Polski
@@ -939,7 +960,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "réservé", // Français
     "", // Norsk
     "varattu", // suomi
     "", // Polski
@@ -960,7 +981,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "libre", // Français
     "", // Norsk
     "vapaa", // suomi
     "", // Polski
@@ -981,7 +1002,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Standard vidéo", // Français
     "", // Norsk
     "Kuvaformaatti", // suomi
     "", // Polski
@@ -1044,7 +1065,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "inconnu", // Français
     "", // Norsk
     "tuntematon", // suomi
     "", // Polski
@@ -1065,7 +1086,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Résolution", // Français
     "", // Norsk
     "Resoluutio", // suomi
     "", // Polski
@@ -1086,7 +1107,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Flux audio", // Français
     "", // Norsk
     "Ääniraita", // suomi
     "", // Polski
@@ -1107,7 +1128,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Fréquence d'échantillonage", // Français
     "", // Norsk
     "Näytteenottotaajuus", // suomi
     "", // Polski
@@ -1296,7 +1317,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "non indiqué", // Français
     "", // Norsk
     "ei ilmaistu", // suomi
     "", // Polski
@@ -1338,7 +1359,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Flux AC-3", // Français
     "", // Norsk
     "AC-3-ääniraita", // suomi
     "", // Polski
@@ -1359,7 +1380,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Taille de paquet", // Français
     "", // Norsk
     "Kehyksen koko", // suomi
     "", // Polski
@@ -1380,7 +1401,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Mode bitstream", // Français
     "", // Norsk
     "Lähetteen tyyppi", // suomi
     "", // Polski
@@ -1401,7 +1422,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Mode de codage audio", // Français
     "", // Norsk
     "Äänikoodaus", // suomi
     "", // Polski
@@ -1422,7 +1443,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Niveau sonore milieu", // Français
     "", // Norsk
     "Keskikanavan taso", // suomi
     "", // Polski
@@ -1443,7 +1464,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Niveau sonore surround", // Français
     "", // Norsk
     "Tehostekanavien taso", // suomi
     "", // Polski
@@ -1464,7 +1485,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Mode Dolby Surround", // Français
     "", // Norsk
     "Dolby Surround -tehoste", // suomi
     "", // Polski
@@ -1485,7 +1506,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Effets de basses", // Français
     "", // Norsk
     "LFE-kanava", // suomi
     "", // Polski
@@ -1506,7 +1527,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Normalisation des dialogues", // Français
     "", // Norsk
     "Dialogin normalisointi", // suomi
     "", // Polski
@@ -1527,7 +1548,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Principal (CM)", // Français
     "", // Norsk
     "Pääasiallinen (CM)", // suomi
     "", // Polski
@@ -1548,7 +1569,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Musique et effets (ME)", // Français
     "", // Norsk
     "Musiikki ja tehosteet (ME)", // suomi
     "", // Polski
@@ -1569,7 +1590,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Malvoyants (VI)", // Français
     "", // Norsk
     "Näkörajoitteinen (VI)", // suomi
     "", // Polski
@@ -1590,7 +1611,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Malentendants (HI)", // Français
     "", // Norsk
     "Kuulorajoitteinen (HI)", // suomi
     "", // Polski
@@ -1611,7 +1632,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Dialogue (D)", // Français
     "", // Norsk
     "Vuoropuhelu (D)", // suomi
     "", // Polski
@@ -1632,7 +1653,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Commentaires (C)", // Français
     "", // Norsk
     "Kommentointi (C)", // suomi
     "", // Polski
@@ -1653,7 +1674,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Urgence (E)", // Français
     "", // Norsk
     "Hätätiedote (E)", // suomi
     "", // Polski
@@ -1674,7 +1695,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Voix off (VO)", // Français
     "", // Norsk
     "Päälle puhuttu (VO)", // suomi
     "", // Polski
@@ -1695,7 +1716,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Karaoke", // Français
     "", // Norsk
     "Karaoke", // suomi
     "", // Polski
@@ -1716,7 +1737,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Can. 1", // Français
     "", // Norsk
     "kan. 1", // suomi
     "", // Polski
@@ -1737,7 +1758,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Can. 2", // Français
     "", // Norsk
     "kan. 2", // suomi
     "", // Polski
@@ -1758,7 +1779,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Centre", // Français
     "", // Norsk
     "K", // suomi
     "", // Polski
@@ -1779,7 +1800,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Gauche", // Français
     "", // Norsk
     "V", // suomi
     "", // Polski
@@ -1800,7 +1821,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Droite", // Français
     "", // Norsk
     "O", // suomi
     "", // Polski
@@ -1821,7 +1842,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Surround", // Français
     "", // Norsk
     "T", // suomi
     "", // Polski
@@ -1842,7 +1863,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Surround gauche", // Français
     "", // Norsk
     "TV", // suomi
     "", // Polski
@@ -1863,7 +1884,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Surround droit", // Français
     "", // Norsk
     "TO", // suomi
     "", // Polski
@@ -1884,7 +1905,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Système CA", // Français
     "", // Norsk
     "Näytä salausjärjestelmä", // suomi
     "", // Polski
@@ -1905,7 +1926,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Fixe", // Français
     "", // Norsk
     "kiinteä", // suomi
     "", // Polski
@@ -1926,7 +1947,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Analogique", // Français
     "", // Norsk
     "analoginen", // suomi
     "", // Polski
@@ -1947,7 +1968,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Free To Air", // Français
     "", // Norsk
     "salaamaton", // suomi
     "", // Polski
@@ -1968,7 +1989,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "SECA/Mediaguard", // Français
     "", // Norsk
     "SECA/Mediaguard", // suomi
     "", // Polski
@@ -1989,7 +2010,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Viaccess", // Français
     "", // Norsk
     "Viaccess", // suomi
     "", // Polski
@@ -2010,7 +2031,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Irdeto", // Français
     "", // Norsk
     "Irdeto", // suomi
     "", // Polski
@@ -2031,7 +2052,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "NDS/Videoguard", // Français
     "", // Norsk
     "NDS/Videoguard", // suomi
     "", // Polski
@@ -2052,7 +2073,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "Conax", // Français
     "", // Norsk
     "Conax", // suomi
     "", // Polski
@@ -2073,7 +2094,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "CryptoWorks", // Français
     "", // Norsk
     "CryptoWorks", // suomi
     "", // Polski
@@ -2094,7 +2115,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "PowerVu", // Français
     "", // Norsk
     "PowerVu", // suomi
     "", // Polski
@@ -2115,7 +2136,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "BetaCrypt", // Français
     "", // Norsk
     "BetaCrypt", // suomi
     "", // Polski
@@ -2136,7 +2157,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "NagraVision", // Français
     "", // Norsk
     "NagraVision", // suomi
     "", // Polski
@@ -2157,7 +2178,7 @@ const tI18nPhrase Phrases[] = {
     "", // Italiano
     "", // Nederlands
     "", // Português
-    "", // Français
+    "SkyCrypt", // Français
     "", // Norsk   
     "SkyCrypt", // suomi
     "", // Polski

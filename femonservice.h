@@ -20,6 +20,7 @@ struct FemonService_v1_0 {
   uint32_t fe_unc;
   double video_bitrate;
   double audio_bitrate;
+  double dolby_bitrate;
   };
 
 #endif //__FEMONSERVICE_H

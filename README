@@ -77,9 +77,8 @@ make plugins
 
 Notes:
 
-- The plugin supports only those DVB cards with _one_ frontend (do any cards
-  with multiple frontends even exist?), because I haven't yet figured howto do
-  it without patching the VDR core.
+- The plugin supports only those DVB cards with _one_ frontend, because I
+  haven't yet figured howto do it without patching the VDR core.
 
 - Disable the stream analyze to speed up heavy zapping sessions.
 

@@ -55,11 +55,13 @@ enum eFemonThemes
   eFemonThemeMoronimo,
   eFemonThemeEnigma,
   eFemonThemeEgalsTry,
+  eFemonThemeDuotone,
   eFemonThemeMaxNumber
 };
 
 struct cFemonTheme
 {
+  int bpp;
   int clrBackground;
   int clrTitleBackground;
   int clrTitleText;

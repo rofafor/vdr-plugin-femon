@@ -58,9 +58,8 @@ cFemonReceiver::cFemonReceiver(int Ca, int Vpid, int Apid[], int Dpid[])
 cFemonReceiver::~cFemonReceiver(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  Detach();
   if (Running())
-     Cancel();
+     Cancel(3);
 }
 
 /* The following function originates from libdvbmpeg: */

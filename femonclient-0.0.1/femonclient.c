@@ -40,6 +40,7 @@ cOsdObject *cPluginFemonClient::MainMenuAction(void)
      printf("UNC    : %08X\n", femon.fe_unc);
      printf("Video  : %.2f Mbit/s\n", femon.video_bitrate);
      printf("Audio  : %.0f kbit/s\n", femon.audio_bitrate);
+     printf("Dolby  : %.0f kbit/s\n", femon.dolby_bitrate);
      }
   else
      printf("\n--- No support for FemonService-v1.0 found ---\n");

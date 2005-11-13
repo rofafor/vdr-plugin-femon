@@ -16,11 +16,7 @@ VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).h | awk '{ pri
 ### The C++ compiler and options:
 
 CXX      ?= g++
-ifdef FEMON_DEBUG
-CXXFLAGS ?= -g -Wall -Woverloaded-virtual -fPIC
-else
-CXXFLAGS ?= -O2 -Wall -Woverloaded-virtual -fPIC
-endif
+CXXFLAGS ?= -fPIC -g -O2 -Wall -Woverloaded-virtual
 
 ### The directory environment:
 
