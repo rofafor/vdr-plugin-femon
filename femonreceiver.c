@@ -230,20 +230,71 @@ void cFemonReceiver::GetAC3Info(uint8_t *mbuf, int count)
      m_AC3FrameSize <<= 1;
   m_AC3BitStreamMode = (headr[3] & 7);
   m_AC3AudioCodingMode = (headr[4] & 0xE0) >> 5;
-  if ((m_AC3AudioCodingMode & 0x01) && (m_AC3AudioCodingMode != 0x01)) // if 3 front channels
+  if ((m_AC3AudioCodingMode & 0x01) && (m_AC3AudioCodingMode != 0x01)) {
+     // 3 front channels
      m_AC3CenterMixLevel = (headr[4] & 0x18) >> 3;
-  else
+     if (m_AC3AudioCodingMode & 0x04) {
+        // a surround channel exists
+        m_AC3SurroundMixLevel = (headr[4] & 0x06) >> 1;
+        if (m_AC3AudioCodingMode == 0x02) {
+           // if in 2/0 mode
+           m_AC3DolbySurroundMode = ((headr[4] & 0x01) << 1) | ((headr[5] & 0x80) >> 7);
+           m_AC3LfeOn = (headr[5] & 0x40) >> 6;
+           m_AC3DialogLevel = (headr[5] & 0x3e) >> 1;
+           }
+        else {
+           m_AC3DolbySurroundMode = FR_NOTVALID;
+           m_AC3LfeOn = (headr[4] & 0x01);
+           m_AC3DialogLevel = (headr[5] & 0xF8) >> 3;
+           }
+        }
+     else {
+        m_AC3SurroundMixLevel = FR_NOTVALID;
+        if (m_AC3AudioCodingMode == 0x02) {
+           // if in 2/0 mode
+            m_AC3DolbySurroundMode = (headr[4] & 0x06) >> 1;
+            m_AC3LfeOn = (headr[4] & 0x01);
+            m_AC3DialogLevel = (headr[5] & 0xF8) >> 3;
+           }
+        else {
+           m_AC3DolbySurroundMode = FR_NOTVALID;
+           m_AC3LfeOn = (headr[4] & 0x04) >> 2;
+           m_AC3DialogLevel = (headr[4] & 0x03) << 3 | ((headr[5] & 0xE0) >> 5);
+           }
+        }
+     }
+  else {
      m_AC3CenterMixLevel = FR_NOTVALID;
-  if (m_AC3AudioCodingMode & 0x04) //  if a surround channel exists
-     m_AC3SurroundMixLevel = (headr[4] & 0x06) >> 1;
-  else
-     m_AC3SurroundMixLevel = FR_NOTVALID;
-  if (m_AC3AudioCodingMode == 0x02) // if in 2/0 mode
-     m_AC3DolbySurroundMode = ((headr[4] & 1) << 1) | ((headr[5] & 0x80) >> 7);
-  else 
-     m_AC3DolbySurroundMode = FR_NOTVALID;
-  m_AC3LfeOn = (headr[5] & 0x40) >> 6;
-  m_AC3DialogLevel = (headr[5] & 0x3e) >> 1;
+     if (m_AC3AudioCodingMode & 0x04) {
+        // a surround channel exists
+        m_AC3SurroundMixLevel = (headr[4] & 0x18) >> 3;
+        if (m_AC3AudioCodingMode == 0x02) {
+           // if in 2/0 mode
+           m_AC3DolbySurroundMode = (headr[4] & 0x06) >> 1;
+           m_AC3LfeOn = (headr[4] & 0x01);
+           m_AC3DialogLevel = (headr[5] & 0xF8) >> 3;
+           }
+        else {
+           m_AC3DolbySurroundMode = FR_NOTVALID;
+           m_AC3LfeOn = (headr[4] & 0x04) >> 2;
+           m_AC3DialogLevel = (headr[4] & 0x03) << 3 | ((headr[5] & 0xE0) >> 5);
+           }
+        }
+     else {
+        m_AC3SurroundMixLevel = FR_NOTVALID;
+        if (m_AC3AudioCodingMode == 0x02) {
+           // if in 2/0 mode
+           m_AC3DolbySurroundMode = (headr[4] & 0x18) >> 3;
+           m_AC3LfeOn = (headr[4] & 0x04) >> 2;
+           m_AC3DialogLevel = (headr[4] & 0x03) << 3 | ((headr[5] & 0xE0) >> 5);
+           }
+        else {
+           m_AC3DolbySurroundMode = FR_NOTVALID;
+           m_AC3LfeOn = (headr[4] & 0x10) >> 4;
+           m_AC3DialogLevel = ((headr[4] & 0x0F) << 1) | ((headr[5] & 0x80) >> 7);
+           }
+        }
+     }
 }
 
 void cFemonReceiver::Activate(bool On)

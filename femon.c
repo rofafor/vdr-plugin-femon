@@ -15,7 +15,7 @@
 #include "femontools.h"
 #include "femon.h"
 
-#if defined(VDRVERSNUM) && VDRVERSNUM < 10336
+#if defined(VDRVERSNUM) && VDRVERSNUM < 10340
 #error "You don't exist! Go away! Upgrade yourself!"
 #endif
 

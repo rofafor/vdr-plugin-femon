@@ -594,7 +594,7 @@ void cFemonOsd::DrawInfoWindow(void)
                break;
 
           default:
-               snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Terrestial Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
+               snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Terrestrial Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                offset += OSDROWHEIGHT;
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frequency"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);

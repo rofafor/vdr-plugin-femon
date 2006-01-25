@@ -576,7 +576,7 @@ const tI18nPhrase Phrases[] = {
     "Kaablikaart", // Eesti
     "", // Dansk
   },
-  { "Terrestial Card", // English
+  { "Terrestrial Card", // English
     "Terrestrische Karte", // Deutsch
     "", // Slovenski
     "Scheda terrestre", // Italiano
@@ -584,7 +584,7 @@ const tI18nPhrase Phrases[] = {
     "", // Português
     "Carte TNT", // Français
     "", // Norsk
-    "Terrestiaalikortti", // suomi
+    "Terrestriaalikortti", // suomi
     "", // Polski
     "", // Español
     "", // ÅëëçíéêÜ (Greek)
