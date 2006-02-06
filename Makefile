@@ -81,7 +81,7 @@ libvdr-$(PLUGIN).so: $(OBJS)
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) -o $@
 	@cp $@ $(LIBDIR)/$@.$(VDRVERSION)
 ifndef FEMON_DEBUG
-	strip $(LIBDIR)/$@.$(VDRVERSION)
+	@strip $(LIBDIR)/$@.$(VDRVERSION)
 endif
 
 dist: clean

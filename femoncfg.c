@@ -118,4 +118,16 @@ const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
     0xFFFCFCFC, // clrYellow
     0xFFFCFCFC, // clrGreen
   },
+  {
+    // eFemonThemeSilverGreen
+    4,          // bpp
+    0xD9526470, // clrBackground
+    0xD9293841, // clrTitleBackground
+    0xFFB3BDCA, // clrTitleText
+    0xFFCE7B00, // clrActiveText
+    0xFFB3BDCA, // clrInactiveText
+    0xFF992900, // clrRed
+    0xFFCE7B00, // clrYellow
+    0xFF336600, // clrGreen
+  },
 };

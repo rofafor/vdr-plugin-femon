@@ -15,7 +15,7 @@
 #include "femontools.h"
 #include "femon.h"
 
-#if defined(VDRVERSNUM) && VDRVERSNUM < 10340
+#if defined(VDRVERSNUM) && VDRVERSNUM < 10342
 #error "You don't exist! Go away! Upgrade yourself!"
 #endif
 
@@ -236,6 +236,7 @@ cMenuFemonSetup::cMenuFemonSetup(void)
   themes[eFemonThemeEnigma]        = tr("Enigma");
   themes[eFemonThemeEgalsTry]      = tr("EgalsTry");
   themes[eFemonThemeDuotone]       = tr("Duotone");
+  themes[eFemonThemeSilverGreen]   = tr("SilverGreen");
 
   data = femonConfig;
   Setup();

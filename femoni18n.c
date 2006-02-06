@@ -29,6 +29,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "DVB Signaalmonitor (OSD)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Signal Information", // English
     "Signalinformationen", // Deutsch
@@ -50,6 +51,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Signaaliinfo", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Position", // English
     "Position", // Deutsch
@@ -71,6 +73,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Positsioon", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Height", // English
     "Höhe", // Deutsch
@@ -92,6 +95,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kõrgus", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Horizontal offset", // English
     "Horizontaler Offset", // Deutsch
@@ -113,6 +117,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Horisontaalne nihe", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Default display mode", // English
     "Standard Anzeigemodus", // Deutsch
@@ -134,6 +139,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Vaikimisi displei moodus", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "basic", // English
     "Standard", // Deutsch
@@ -155,6 +161,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "standard", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "transponder", // English
     "Transponder", // Deutsch
@@ -176,6 +183,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "transponder", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "stream", // English
     "Stream", // Deutsch
@@ -197,6 +205,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "voog", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Skin", // English
     "Oberfläche", // Deutsch
@@ -218,6 +227,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kest", // Eesti
     "", // Dansk 
+    "", // Èesky (Czech)
   },
   { "Theme", // English
     "Thema", // Deutsch
@@ -239,6 +249,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Teema", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Classic", // English
     "Klassischer", // Deutsch
@@ -260,6 +271,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Klassikaline", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Elchi", // English
     "Elchi", // Deutsch
@@ -281,6 +293,7 @@ const tI18nPhrase Phrases[] = {
     "Elchi", // Hrvatski (Croatian)
     "Elchi", // Eesti
     "Elchi", // Dansk
+    "Elchi", // Èesky (Czech)
   },
   { "DeepBlue", // English
     "DeepBlue", // Deutsch
@@ -302,6 +315,7 @@ const tI18nPhrase Phrases[] = {
     "DeepBlue", // Hrvatski (Croatian)
     "DeepBlue", // Eesti
     "DeepBlue", // Dansk
+    "DeepBlue", // Èesky (Czech)
   },
   { "Moronimo", // English
     "Moronimo", // Deutsch
@@ -323,6 +337,7 @@ const tI18nPhrase Phrases[] = {
     "Moronimo", // Hrvatski (Croatian)
     "Moronimo", // Eesti
     "Moronimo", // Dansk
+    "Moronimo", // Èesky (Czech)
   },
   { "Enigma", // English
     "Enigma", // Deutsch
@@ -344,6 +359,7 @@ const tI18nPhrase Phrases[] = {
     "Enigma", // Hrvatski (Croatian)
     "Enigma", // Eesti
     "Enigma", // Dansk
+    "Enigma", // Èesky (Czech)
   },
   { "EgalsTry", // English
     "EgalsTry", // Deutsch
@@ -365,6 +381,7 @@ const tI18nPhrase Phrases[] = {
     "EgalsTry", // Hrvatski (Croatian)
     "EgalsTry", // Eesti
     "EgalsTry", // Dansk
+    "EgalsTry", // Èesky (Czech)
   },
   { "Duotone", // English
     "Duotone", // Deutsch
@@ -386,6 +403,29 @@ const tI18nPhrase Phrases[] = {
     "Duotone", // Hrvatski (Croatian)
     "Duotone", // Eesti
     "Duotone", // Dansk
+    "Duotone", // Èesky (Czech)
+  },
+  { "SilverGreen", // English
+    "SilverGreen", // Deutsch
+    "SilverGreen", // Slovenski
+    "SilverGreen", // Italiano
+    "SilverGreen", // Nederlands
+    "SilverGreen", // Português
+    "SilverGreen", // Français
+    "SilverGreen", // Norsk
+    "SilverGreen", // suomi
+    "SilverGreen", // Polski
+    "SilverGreen", // Español
+    "SilverGreen", // ÅëëçíéêÜ (Greek)
+    "SilverGreen", // Svenska
+    "SilverGreen", // Romaneste
+    "SilverGreen", // Magyar
+    "SilverGreen", // Català
+    "SilverGreen", // ÀãááÚØÙ (Russian)
+    "SilverGreen", // Hrvatski (Croatian)
+    "SilverGreen", // Eesti
+    "SilverGreen", // Dansk
+    "SilverGreen", // Èesky (Czech)
   },
   { "Hide main menu entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
@@ -407,6 +447,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Peida valik peamenüüs", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "OSD update interval [0.1s]", // English
     "OSD Updateintervall [0.1s]", // Deutsch
@@ -428,6 +469,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Uuendusintervall [0,1s]", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Analyze stream", // English
     "Stream analysieren", // Deutsch
@@ -449,6 +491,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Voo analüüs", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Calculation interval [0.1s]", // English
     "Berechnungsintervall [0.1s]", // Deutsch
@@ -470,6 +513,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kalkulatsiooni intervall [0,1s]", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Red limit [%]", // English
     "Grenze Rot [%]", // Deutsch
@@ -491,6 +535,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Punase limiit [%]", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Green limit [%]", // English
     "Grenze Grün [%]", // Deutsch
@@ -512,6 +557,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Rohelise limiit [%]", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Transponder Information", // English
     "Transponderinformation", // Deutsch
@@ -533,6 +579,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Transponderi info", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Satellite Card", // English
     "Satellitenkarte", // Deutsch
@@ -554,6 +601,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Satelliidikaart", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Cable Card", // English
     "Kabelkarte", // Deutsch
@@ -575,6 +623,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kaablikaart", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Terrestrial Card", // English
     "Terrestrische Karte", // Deutsch
@@ -596,6 +645,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Terrestiaalkaart", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Use syslog output", // English
     "Benutze syslog Ausgabe", // Deutsch
@@ -617,6 +667,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kirjuta süsteemilogisse", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Audio", // English
     "Audio", // Deutsch
@@ -638,6 +689,7 @@ const tI18nPhrase Phrases[] = {
     "Audio", // Hrvatski (Croatian)
     "Audio", // Eesti
     "Audio", // Dansk
+    "Audio", // Èesky (Czech)
   },
   { "Video", // English
     "Video", // Deutsch
@@ -659,6 +711,7 @@ const tI18nPhrase Phrases[] = {
     "Video", // Hrvatski (Croatian)
     "Video", // Eesti
     "Video", // Dansk
+    "Video", // Èesky (Czech)
   },
   { "Auto", // English
     "Auto", // Deutsch
@@ -680,6 +733,7 @@ const tI18nPhrase Phrases[] = {
     "Auto", // Hrvatski (Croatian)
     "Auto", // Eesti
     "Auto", // Dansk
+    "Auto", // Èesky (Czech)
   },
   { "None", // English
     "None", // Deutsch
@@ -701,6 +755,7 @@ const tI18nPhrase Phrases[] = {
     "None", // Hrvatski (Croatian)
     "Ei", // Eesti
     "None", // Dansk
+    "None", // Èesky (Czech)
   },
   { "Off", // English
     "Off", // Deutsch
@@ -722,6 +777,7 @@ const tI18nPhrase Phrases[] = {
     "Off", // Hrvatski (Croatian)
     "Väljas", // Eesti
     "Off", // Dansk
+    "Off", // Èesky (Czech)
   },
   { "On", // English
     "On", // Deutsch
@@ -743,6 +799,7 @@ const tI18nPhrase Phrases[] = {
     "On", // Hrvatski (Croatian)
     "Sees", // Eesti
     "On", // Dansk
+    "On", // Èesky (Czech)
   },
   { "MHz", // English
     "MHz", // Deutsch
@@ -764,6 +821,7 @@ const tI18nPhrase Phrases[] = {
     "MHz", // Hrvatski (Croatian)
     "MHz", // Eesti
     "MHz", // Dansk
+    "MHz", // Èesky (Czech)
   },
   { "Mbit/s", // English
     "Mbit/s", // Deutsch
@@ -785,6 +843,7 @@ const tI18nPhrase Phrases[] = {
     "Mbit/s", // Hrvatski (Croatian)
     "Mbit/s", // Eesti
     "Mbit/s", // Dansk
+    "Mbit/s", // Èesky (Czech)
   },
   { "kbit/s", // English
     "kbit/s", // Deutsch
@@ -806,6 +865,7 @@ const tI18nPhrase Phrases[] = {
     "kbit/s", // Hrvatski (Croatian)
     "kbit/s", // Eesti
     "kbit/s", // Dansk
+    "kbit/s", // Èesky (Czech)
   },
   { "Stream Information", // English
     "Streaminformation", // Deutsch
@@ -827,6 +887,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Voo info", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "MPEG Layer", // English
     "MPEG Layer", // Deutsch
@@ -848,6 +909,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "MPEG tase", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Video Stream", // English
     "Video Stream", // Deutsch
@@ -869,6 +931,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Videovoog", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Bitrate", // English
     "Bitrate", // Deutsch
@@ -890,6 +953,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Bitikiirus", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Frame Rate", // English
     "Bildrate", // Deutsch
@@ -911,6 +975,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kaadrisagedus", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Hz", // English
     "Hz", // Deutsch
@@ -932,6 +997,7 @@ const tI18nPhrase Phrases[] = {
     "Hz", // Hrvatski (Croatian)
     "Hz", // Eesti
     "Hz", // Dansk
+    "Hz", // Èesky (Czech)
   },
   { "Aspect Ratio", // English
     "Seitenverhältnis", // Deutsch
@@ -953,6 +1019,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Külgsuhe", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "reserved", // English
     "belegt", // Deutsch
@@ -974,6 +1041,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "reserveeritud", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "free", // English
     "frei", // Deutsch
@@ -995,6 +1063,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "vaba", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Video Format", // English
     "Bildformat", // Deutsch
@@ -1016,6 +1085,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Videoformaat", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "PAL", // English
     "PAL", // Deutsch
@@ -1037,6 +1107,7 @@ const tI18nPhrase Phrases[] = {
     "PAL", // Hrvatski (Croatian)
     "PAL", // Eesti
     "PAL", // Dansk
+    "PAL", // Èesky (Czech)
   },
   { "NTSC", // English
     "NTSC", // Deutsch
@@ -1058,6 +1129,7 @@ const tI18nPhrase Phrases[] = {
     "NTSC", // Hrvatski (Croatian)
     "NTSC", // Eesti
     "NTSC", // Dansk
+    "NTSC", // Èesky (Czech)
   },
   { "unknown", // English
     "unbekannt", // Deutsch
@@ -1079,6 +1151,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "tundmatu", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Resolution", // English
     "Auflösung", // Deutsch
@@ -1100,6 +1173,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Resolutsioon", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Audio Stream", // English
     "Audio Stream", // Deutsch
@@ -1121,6 +1195,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Audiovoog", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Sampling Frequency", // English
     "Abtastrate", // Deutsch
@@ -1142,6 +1217,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Sämplimissagedus", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "kHz", // English
     "kHz", // Deutsch
@@ -1163,6 +1239,7 @@ const tI18nPhrase Phrases[] = {
     "kHz", // Hrvatski (Croatian)
     "kHz", // Eesti
     "kHz", // Dansk
+    "kHz", // Èesky (Czech)
   },
   { "Apid", // English
     "Apid", // Deutsch
@@ -1184,6 +1261,7 @@ const tI18nPhrase Phrases[] = {
     "Apid", // Hrvatski (Croatian)
     "Apid", // Eesti
     "Apid", // Dansk
+    "Apid", // Èesky (Czech)
   },
   { "Dpid", // English
     "Dpid", // Deutsch
@@ -1205,6 +1283,7 @@ const tI18nPhrase Phrases[] = {
     "Dpid", // Hrvatski (Croatian)
     "Dpid", // Eesti
     "Dpid", // Dansk
+    "Dpid", // Èesky (Czech)
   },
   { "Nid", // English
     "Nid", // Deutsch
@@ -1226,6 +1305,7 @@ const tI18nPhrase Phrases[] = {
     "Nid", // Hrvatski (Croatian)
     "Nid", // Eesti
     "Nid", // Dansk
+    "Nid", // Èesky (Czech)
   },
   { "Tid", // English
     "Tid", // Deutsch
@@ -1247,6 +1327,7 @@ const tI18nPhrase Phrases[] = {
     "Tid", // Hrvatski (Croatian)
     "Tid", // Eesti
     "Tid", // Dansk
+    "Tid", // Èesky (Czech)
   },
   { "Rid", // English
     "Rid", // Deutsch
@@ -1268,6 +1349,7 @@ const tI18nPhrase Phrases[] = {
     "Rid", // Hrvatski (Croatian)
     "Rid", // Eesti
     "Rid", // Dansk
+    "Rid", // Èesky (Czech)
   },
   { "Coderate", // English
     "Coderate", // Deutsch
@@ -1289,6 +1371,7 @@ const tI18nPhrase Phrases[] = {
     "Coderate", // Hrvatski (Croatian)
     "Coderate", // Eesti
     "Coderate", // Dansk
+    "Coderate", // Èesky (Czech)
   },
   { "dB", // English
     "dB", // Deutsch
@@ -1310,6 +1393,7 @@ const tI18nPhrase Phrases[] = {
     "dB", // Hrvatski (Croatian)
     "dB", // Eesti
     "dB", // Dansk
+    "dB", // Èesky (Czech)
   },
   { "not indicated", // English
     "nicht angegeben", // Deutsch
@@ -1331,6 +1415,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "märkimata", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "AC-3", // English
     "AC-3", // Deutsch
@@ -1352,6 +1437,7 @@ const tI18nPhrase Phrases[] = {
     "AC-3", // Hrvatski (Croatian)
     "AC-3", // Eesti
     "AC-3", // Dansk
+    "AC-3", // Èesky (Czech)
   },
   { "AC-3 Stream", // English
     "AC-3 Stream", // Deutsch
@@ -1373,6 +1459,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "AC-3 voog", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Frame Size", // English
     "Frame Größe", // Deutsch
@@ -1394,6 +1481,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kaadri suurus", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Bit Stream Mode", // English
     "Bitstream Modus", // Deutsch
@@ -1415,6 +1503,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Bitivoo tüüp", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Audio Coding Mode", // English
     "Audio Coding Modus", // Deutsch
@@ -1436,6 +1525,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Audiokodeering", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Center Mix Level", // English
     "Center Mix Pegel", // Deutsch
@@ -1457,6 +1547,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Keskmise kanali tase", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Surround Mix Level", // English
     "Surround Mix Pegel", // Deutsch
@@ -1478,6 +1569,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Surround kanali tase", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Dolby Surround Mode", // English
     "Dolby Surround Modus", // Deutsch
@@ -1499,6 +1591,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Dolby Surround'i tüüp", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Low Frequency Effects", // English
     "Tieftöner Effekte", // Deutsch
@@ -1520,6 +1613,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "LFE kanal", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Dialogue Normalization", // English
     "Dialog Normalisierung", // Deutsch
@@ -1541,6 +1635,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Dialoogi normalisatsioon", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Complete Main (CM)", // English
     "Complete Main (CM)", // Deutsch
@@ -1562,6 +1657,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Täiskomplekt (CM)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Music and Effects (ME)", // English
     "Musik und Effekte (ME)", // Deutsch
@@ -1583,6 +1679,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Muusika ja efektid (ME)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Visually Impaired (VI)", // English
     "Sehbehindert (VI)", // Deutsch
@@ -1604,6 +1701,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Vaegnägemine (VE)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Hearing Impaired (HI)", // English
     "Hörbehindert (HI)", // Deutsch
@@ -1625,6 +1723,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Vaegkuulmine (HI)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Dialogue (D)", // English
     "Dialog (D)", // Deutsch
@@ -1646,6 +1745,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Dialoog (D)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Commentary (C)", // English
     "Kommentar (C)", // Deutsch
@@ -1667,6 +1767,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kommentaar (C)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Emergency (E)", // English
     "Notfall (E)", // Deutsch
@@ -1688,6 +1789,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Hädateade (E)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Voice Over (VO)", // English
     "überlagerte Stimme (VO)", // Deutsch
@@ -1709,6 +1811,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Pealerääkimine (VO)", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Karaoke", // English
     "Karaoke", // Deutsch
@@ -1730,6 +1833,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Karaoke", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Ch1", // English "Channel 1"
     "Kan1", // Deutsch
@@ -1751,6 +1855,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kan. 1", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Ch2", // English "Channel 2"
     "Kan2", // Deutsch
@@ -1772,6 +1877,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Kan. 2", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "C", // English "Center"
     "C", // Deutsch
@@ -1793,6 +1899,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "C", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "L", // English "Left"
     "L", // Deutsch
@@ -1814,6 +1921,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "L", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "R", // English "Right"
     "R", // Deutsch
@@ -1835,6 +1943,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "R", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "S", // English "Surround"
     "S", // Deutsch
@@ -1856,6 +1965,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "S", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "SL", // English "Surround Left"
     "SL", // Deutsch
@@ -1877,6 +1987,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "SL", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "SR", // English "Surround Right"
     "SR", // Deutsch
@@ -1898,6 +2009,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "SR", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Show CA system", // English
     "CA System anzeigen", // Deutsch
@@ -1919,6 +2031,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Näita CA süsteemi", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Fixed", // English
     "Fest", // Deutsch
@@ -1940,6 +2053,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Fikseeritud", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Analog", // English
     "", // Deutsch
@@ -1961,6 +2075,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Free to Air", // English
     "Free to Air", // Deutsch
@@ -1982,6 +2097,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "FTA", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "SECA/Mediaguard", // English
     "SECA/Mediaguard", // Deutsch
@@ -2003,6 +2119,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "SECA/Mediaguard", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Viaccess", // English
     "Viaccess", // Deutsch
@@ -2024,6 +2141,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Viaccess", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Irdeto", // English
     "Irdeto", // Deutsch
@@ -2045,6 +2163,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Irdeto", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "NDS/Videoguard", // English
     "NDS/Videoguard", // Deutsch
@@ -2066,6 +2185,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "NDS/Videoguard", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "Conax", // English
     "Conax", // Deutsch
@@ -2087,6 +2207,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "Conax", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "CryptoWorks", // English
     "CryptoWorks", // Deutsch
@@ -2108,6 +2229,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "CryptoWorks", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "PowerVu", // English
     "PowerVu", // Deutsch
@@ -2129,6 +2251,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "PowerVu", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "BetaCrypt", // English
     "BetaCrypt", // Deutsch
@@ -2150,6 +2273,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "BetaCrypt", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "NagraVision", // English
     "NagraVision", // Deutsch
@@ -2171,6 +2295,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "NagraVision", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { "SkyCrypt", // English
     "SkyCrypt", // Deutsch
@@ -2192,6 +2317,7 @@ const tI18nPhrase Phrases[] = {
     "", // Hrvatski (Croatian)
     "SkyCrypt", // Eesti
     "", // Dansk
+    "", // Èesky (Czech)
   },
   { NULL }
 };
