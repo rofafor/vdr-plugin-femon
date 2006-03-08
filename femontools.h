@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <vdr/tools.h>
 
-#ifdef FEMON_DEBUG
+#ifdef DEBUG
 #define Dprintf(x...) printf(x);
 #else
 #define Dprintf(x...) ;

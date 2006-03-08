@@ -1,5 +1,5 @@
 /* XPM */
-static char * four_xpm[] = {
+static const char *const four_xpm[] = {
 "15 18 2 1",
 ".	c #FFFFFF",
 "+	c #000000",

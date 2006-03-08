@@ -1,5 +1,5 @@
 /* XPM */
-static char * dolbydigital51_xpm[] = {
+static const char *const dolbydigital51_xpm[] = {
 "51 18 2 1",
 ".	c #FFFFFF",
 "+	c #000000",

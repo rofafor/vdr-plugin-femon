@@ -1,5 +1,5 @@
 /* XPM */
-static char * ar11_xpm[] = {
+static const char *const ar11_xpm[] = {
 "26 18 2 1",
 ".	c #FFFFFF",
 "+	c #000000",

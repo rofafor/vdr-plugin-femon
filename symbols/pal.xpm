@@ -1,5 +1,5 @@
 /* XPM */
-static char * pal_xpm[] = {
+static const char *const pal_xpm[] = {
 "18 18 2 1",
 ".	c #FFFFFF",
 "+	c #000000",

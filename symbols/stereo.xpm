@@ -1,5 +1,5 @@
 /* XPM */
-static char * stereo_xpm[] = {
+static const char *const stereo_xpm[] = {
 "17 18 2 1",
 ".	c #FFFFFF",
 "+	c #000000",

@@ -3,6 +3,12 @@
 #
 # $Id$
 
+# Debugging on/off 
+#FEMON_DEBUG = 1
+
+# NTSC on/off 
+#FEMON_NTSC = 1
+
 # The official name of this plugin.
 # This name will be used in the '-P...' option of VDR to load the plugin.
 # By default the main source file also carries this name.
@@ -45,11 +51,11 @@ INCLUDES += -I$(VDRDIR)/include -I$(DVBDIR)/include
 DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
 ifdef FEMON_NTSC
-DEFINES += -DFEMON_NTSC
+DEFINES += -DNTSC
 endif
 
 ifdef FEMON_DEBUG
-DEFINES += -DFEMON_DEBUG
+DEFINES += -DDEBUG
 endif
 
 .PHONY: all all-redirect

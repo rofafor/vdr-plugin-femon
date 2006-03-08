@@ -19,7 +19,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Signaalimittari (OSD)", // suomi
     "", // Polski
-    "", // Español
+    "Monitorización de la señal DVB", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -41,7 +41,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Signaalimittari", // suomi
     "", // Polski
-    "", // Español
+    "Monitorización de la señal DVB", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -63,7 +63,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Sijainti", // suomi
     "", // Polski
-    "", // Español
+    "Posición", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -85,7 +85,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Korkeus", // suomi
     "", // Polski
-    "", // Español
+    "Altura", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -107,7 +107,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Vaakakeskitys", // suomi
     "", // Polski
-    "", // Español
+    "Desplazamiento horizontal", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -129,7 +129,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Oletusnäyttötila", // suomi
     "", // Polski
-    "", // Español
+    "Modo de visualización estandar", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -151,7 +151,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "perus", // suomi
     "", // Polski
-    "", // Español
+    "Básico", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -173,7 +173,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "transponderi", // suomi
     "", // Polski
-    "", // Español
+    "Transpondedor", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -195,7 +195,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "lähete", // suomi
     "", // Polski
-    "", // Español
+    "Flujo", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -217,7 +217,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Ulkoasu", // suomi
     "", // Polski
-    "", // Español  
+    "Piel", // Español  
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -239,7 +239,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Teema", // suomi
     "", // Polski
-    "", // Español
+    "Tema", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -261,7 +261,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Klassinen", // suomi
     "", // Polski
-    "", // Español
+    "Clásico", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -437,7 +437,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Piilota valinta päävalikosta", // suomi
     "", // Polski
-    "", // Español
+    "Ocultar en el menú principal", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -459,7 +459,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Näytön päivitysväli [0.1s]", // suomi
     "", // Polski
-    "", // Español
+    "Intervalo de actualización (0,1)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -481,7 +481,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Lähetteen analysointi", // suomi
     "", // Polski
-    "", // Español
+    "Analizar el flujo", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -503,7 +503,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Laskennan päivitysväli [0.1s]", // suomi
     "", // Polski
-    "", // Español
+    "Intervalo de cálculo (0,1s)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -525,7 +525,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Punaisen taso [%]", // suomi
     "", // Polski
-    "", // Español
+    "Límite de rojo [%s]", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -540,14 +540,14 @@ const tI18nPhrase Phrases[] = {
   { "Green limit [%]", // English
     "Grenze Grün [%]", // Deutsch
     "", // Slovenski
-    "Limite verde [%]", // Italiano
+    "Limite de verde [%]", // Italiano
     "", // Nederlands
     "", // Português
     "Limite du vert (%)", // Français
     "", // Norsk
     "Vihreän taso [%]", // suomi
     "", // Polski
-    "", // Español
+    "Límite verde [%]", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -569,7 +569,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk   
     "Transponderin tiedot", // suomi
     "", // Polski
-    "", // Español
+    "Información del transpondedor", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -591,7 +591,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Satelliittikortti", // suomi
     "", // Polski
-    "", // Español
+    "Tarjeta Satélite", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -613,7 +613,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Kaapelikortti", // suomi
     "", // Polski
-    "", // Español
+    "Tarjeta Cable", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -635,7 +635,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Terrestriaalikortti", // suomi
     "", // Polski
-    "", // Español
+    "Tarjeta TDT", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -657,7 +657,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Kirjaa systeemilokiin", // suomi
     "", // Polski
-    "", // Español
+    "Usar syslog como registro", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -745,7 +745,7 @@ const tI18nPhrase Phrases[] = {
     "None", // Norsk
     "ei", // suomi
     "None", // Polski
-    "None", // Español
+    "Ninguno", // Español
     "None", // ÅëëçíéêÜ (Greek)
     "None", // Svenska
     "None", // Romaneste
@@ -877,7 +877,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Lähetteen tiedot", // suomi
     "", // Polski
-    "", // Español
+    "Información del flujo", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -899,7 +899,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "MPEG-taso", // suomi
     "", // Polski
-    "", // Español
+    "Nivel MPEG", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -921,7 +921,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Kuvaraita", // suomi
     "", // Polski
-    "", // Español
+    "Flujo de video", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -943,7 +943,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Bittinopeus", // suomi
     "", // Polski
-    "", // Español
+    "Tasa de bits", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -965,7 +965,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Ruudunpäivitysnopeus", // suomi
     "", // Polski
-    "", // Español
+    "Tasa de frames", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1009,7 +1009,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Kuvasuhde", // suomi
     "", // Polski
-    "", // Español
+    "Proporciones de la imagen", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1031,7 +1031,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "varattu", // suomi
     "", // Polski
-    "", // Español
+    "reservado", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1053,7 +1053,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "vapaa", // suomi
     "", // Polski
-    "", // Español
+    "libre", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1075,7 +1075,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Kuvaformaatti", // suomi
     "", // Polski
-    "", // Español
+    "Formato de video", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1141,7 +1141,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "tuntematon", // suomi
     "", // Polski
-    "", // Español
+    "desconocido", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1163,7 +1163,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Resoluutio", // suomi
     "", // Polski
-    "", // Español
+    "Resolución", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1185,7 +1185,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Ääniraita", // suomi
     "", // Polski
-    "", // Español
+    "Flujo de audio", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1207,7 +1207,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Näytteenottotaajuus", // suomi
     "", // Polski
-    "", // Español
+    "Frecuencia de muestreo", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1405,7 +1405,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "ei ilmaistu", // suomi
     "", // Polski
-    "", // Español
+    "no indicado", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1449,7 +1449,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "AC-3-ääniraita", // suomi
     "", // Polski
-    "", // Español
+    "Flujo AC-3", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1471,7 +1471,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Kehyksen koko", // suomi
     "", // Polski
-    "", // Español
+    "Tamaño de frame", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1493,7 +1493,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Lähetteen tyyppi", // suomi
     "", // Polski
-    "", // Español
+    "Modo bitstream", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1515,7 +1515,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Äänikoodaus", // suomi
     "", // Polski
-    "", // Español
+    "Modo de codificación de audio", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1537,7 +1537,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Keskikanavan taso", // suomi
     "", // Polski
-    "", // Español
+    "Nivel sonoro central", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1559,7 +1559,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Tehostekanavien taso", // suomi
     "", // Polski
-    "", // Español
+    "Nivel sonoro surround", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1581,7 +1581,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Dolby Surround -tehoste", // suomi
     "", // Polski
-    "", // Español
+    "Nivel sonoro Dolby Surround", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1603,7 +1603,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "LFE-kanava", // suomi
     "", // Polski
-    "", // Español
+    "Efectos de baja frecuencia", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1625,7 +1625,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Dialogin normalisointi", // suomi
     "", // Polski
-    "", // Español
+    "Normalización del diálogo", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1647,7 +1647,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Pääasiallinen (CM)", // suomi
     "", // Polski
-    "", // Español
+    "Principal (CM)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1669,7 +1669,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Musiikki ja tehosteet (ME)", // suomi
     "", // Polski
-    "", // Español
+    "Música y efectos (ME)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1691,7 +1691,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Näkörajoitteinen (VI)", // suomi
     "", // Polski
-    "", // Español
+    "Imagen deteriorada (VI)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1713,7 +1713,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Kuulorajoitteinen (HI)", // suomi
     "", // Polski
-    "", // Español
+    "Hearing deteriorado", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1735,7 +1735,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Vuoropuhelu (D)", // suomi
     "", // Polski
-    "", // Español
+    "Diálogo (D)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1757,7 +1757,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Kommentointi (C)", // suomi
     "", // Polski
-    "", // Español
+    "Comentario (C)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1779,7 +1779,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Hätätiedote (E)", // suomi
     "", // Polski
-    "", // Español
+    "Emergencia (E)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1801,7 +1801,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Päälle puhuttu (VO)", // suomi
     "", // Polski
-    "", // Español
+    "Voz off (VO)", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1823,7 +1823,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Karaoke", // suomi
     "", // Polski
-    "", // Español
+    "Karaoke", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1845,7 +1845,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "kan. 1", // suomi
     "", // Polski
-    "", // Español
+    "Can. 1", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1867,7 +1867,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "kan. 2", // suomi
     "", // Polski
-    "", // Español
+    "Can. 2", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1889,7 +1889,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "K", // suomi
     "", // Polski
-    "", // Español
+    "C", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1911,7 +1911,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "V", // suomi
     "", // Polski
-    "", // Español
+    "I", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1933,7 +1933,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "O", // suomi
     "", // Polski
-    "", // Español
+    "D", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1955,7 +1955,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "T", // suomi
     "", // Polski
-    "", // Español
+    "S", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1977,7 +1977,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "TV", // suomi
     "", // Polski
-    "", // Español
+    "SI", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -1999,7 +1999,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "TO", // suomi
     "", // Polski
-    "", // Español
+    "SD", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2021,7 +2021,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Näytä salausjärjestelmä", // suomi
     "", // Polski
-    "", // Español
+    "Mostrar sistema CA", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2043,7 +2043,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "kiinteä", // suomi
     "", // Polski
-    "", // Español
+    "Fijo", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2065,7 +2065,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "analoginen", // suomi
     "", // Polski
-    "", // Español
+    "Analógico", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2087,7 +2087,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "salaamaton", // suomi
     "", // Polski
-    "", // Español
+    "Free to air", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2109,7 +2109,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "SECA/Mediaguard", // suomi
     "", // Polski
-    "", // Español
+    "SECA/Mediguard", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2131,7 +2131,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Viaccess", // suomi
     "", // Polski
-    "", // Español
+    "Viaccess", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2153,7 +2153,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Irdeto", // suomi
     "", // Polski
-    "", // Español
+    "Irdeto", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2175,7 +2175,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "NDS/Videoguard", // suomi
     "", // Polski
-    "", // Español
+    "NDS/Videoguard", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2197,7 +2197,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "Conax", // suomi
     "", // Polski
-    "", // Español
+    "Conax", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2219,7 +2219,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "CryptoWorks", // suomi
     "", // Polski
-    "", // Español
+    "CryptoWorks", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2241,7 +2241,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "PowerVu", // suomi
     "", // Polski
-    "", // Español
+    "PowerVu", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2263,7 +2263,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "BetaCrypt", // suomi
     "", // Polski
-    "", // Español
+    "BetaCrypt", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2285,7 +2285,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk
     "NagraVision", // suomi
     "", // Polski
-    "", // Español
+    "NagraVision", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2307,7 +2307,7 @@ const tI18nPhrase Phrases[] = {
     "", // Norsk   
     "SkyCrypt", // suomi
     "", // Polski
-    "", // Español
+    "SkyCrypt", // Español
     "", // ÅëëçíéêÜ (Greek)
     "", // Svenska
     "", // Romaneste
@@ -2321,3 +2321,4 @@ const tI18nPhrase Phrases[] = {
   },
   { NULL }
 };
+
