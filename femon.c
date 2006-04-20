@@ -15,8 +15,8 @@
 #include "femontools.h"
 #include "femon.h"
 
-#if defined(VDRVERSNUM) && VDRVERSNUM < 10344
-#error "You don't exist! Go away! Upgrade yourself!"
+#if defined(APIVERSNUM) && APIVERSNUM < 10347
+#error "VDR API version 10347 or greater is required!"
 #endif
 
 cPluginFemon::cPluginFemon()

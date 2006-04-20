@@ -11,9 +11,9 @@
 #include <vdr/plugin.h>
 #include "femonservice.h"
 
-static const char *VERSION        = "0.0.1";
-static const char *DESCRIPTION    = "Femon client";
-static const char *MAINMENUENTRY  = "Show frontend statistic on console";
+static const char VERSION[]       = "0.0.1";
+static const char DESCRIPTION[]   = "Femon client";
+static const char MAINMENUENTRY[] = "Show frontend statistic on console";
 
 class cPluginFemonClient : public cPlugin {
 public:

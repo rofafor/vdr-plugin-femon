@@ -11,9 +11,9 @@
 
 #include <vdr/plugin.h>
 
-static const char *VERSION        = "0.9.8";
-static const char *DESCRIPTION    = "DVB Signal Information Monitor (OSD)";
-static const char *MAINMENUENTRY  = "Signal Information";
+static const char VERSION[]       = "0.9.9";
+static const char DESCRIPTION[]   = "DVB Signal Information Monitor (OSD)";
+static const char MAINMENUENTRY[] = "Signal Information";
 
 class cPluginFemon : public cPlugin {
 public:
@@ -27,6 +27,8 @@ public:
   virtual bool Start(void);
   virtual void Stop(void);
   virtual void Housekeeping(void);
+  virtual void MainThreadHook(void) {}
+  virtual cString Active(void) { return NULL; }
   virtual const char *MainMenuEntry(void) { return (femonConfig.hidemenu ? NULL : tr(MAINMENUENTRY)); }
   virtual cOsdObject *MainMenuAction(void);
   virtual cMenuSetupPage *SetupMenu(void);
