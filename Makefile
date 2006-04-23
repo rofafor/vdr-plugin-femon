@@ -9,6 +9,9 @@
 # NTSC on/off 
 #FEMON_NTSC = 1
 
+# Strip debug symbols?  Set eg. to /bin/true if not
+STRIP = strip
+
 # The official name of this plugin.
 # This name will be used in the '-P...' option of VDR to load the plugin.
 # By default the main source file also carries this name.
@@ -36,7 +39,7 @@ TMPDIR = /tmp
 
 ### The version number of VDR's plugin API (taken from VDR's "config.h"):
 
-APIVERSION = $(shell grep 'define APIVERSION ' $(VDRDIR)/config.h | awk '{ print $$3 }' | sed -e 's/"//g')
+APIVERSION = $(shell sed -ne '/define APIVERSION/ { s/^.*"\(.*\)".*$$/\1/; p }' $(VDRDIR)/config.h)
 
 ### The name of the distribution archive:
 
@@ -85,7 +88,7 @@ all: libvdr-$(PLUGIN).so
 libvdr-$(PLUGIN).so: $(OBJS)
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) -o $@
 ifndef FEMON_DEBUG
-	@strip $@
+	@$(STRIP) $@
 endif
 	@cp $@ $(LIBDIR)/$@.$(APIVERSION)
 

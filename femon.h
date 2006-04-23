@@ -11,7 +11,7 @@
 
 #include <vdr/plugin.h>
 
-static const char VERSION[]       = "0.9.9";
+static const char VERSION[]       = "0.9.10";
 static const char DESCRIPTION[]   = "DVB Signal Information Monitor (OSD)";
 static const char MAINMENUENTRY[] = "Signal Information";
 
