@@ -39,7 +39,7 @@ TMPDIR = /tmp
 
 ### The version number of VDR's plugin API (taken from VDR's "config.h"):
 
-APIVERSION = $(shell sed -ne '/define APIVERSION/ { s/^.*"\(.*\)".*$$/\1/; p }' $(VDRDIR)/config.h)
+APIVERSION = $(shell sed -ne '/define APIVERSION/s/^.*"\(.*\)".*$$/\1/p' $(VDRDIR)/config.h)
 
 ### The name of the distribution archive:
 

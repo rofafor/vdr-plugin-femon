@@ -736,7 +736,7 @@ const tI18nPhrase Phrases[] = {
     "Auto", // Èesky (Czech)
   },
   { "None", // English
-    "None", // Deutsch
+    "Nichts", // Deutsch
     "None", // Slovenski
     "None", // Italiano
     "None", // Nederlands
@@ -758,7 +758,7 @@ const tI18nPhrase Phrases[] = {
     "None", // Èesky (Czech)
   },
   { "Off", // English
-    "Off", // Deutsch
+    "Aus", // Deutsch
     "Off", // Slovenski
     "Off", // Italiano
     "Off", // Nederlands
@@ -780,7 +780,7 @@ const tI18nPhrase Phrases[] = {
     "Off", // Èesky (Czech)
   },
   { "On", // English
-    "On", // Deutsch
+    "Ein", // Deutsch
     "On", // Slovenski
     "On", // Italiano
     "On", // Nederlands
@@ -1506,7 +1506,7 @@ const tI18nPhrase Phrases[] = {
     "", // Èesky (Czech)
   },
   { "Audio Coding Mode", // English
-    "Audio Coding Modus", // Deutsch
+    "Audiokodierung", // Deutsch
     "", // Slovenski
     "", // Italiano
     "", // Nederlands
@@ -1792,7 +1792,7 @@ const tI18nPhrase Phrases[] = {
     "", // Èesky (Czech)
   },
   { "Voice Over (VO)", // English
-    "überlagerte Stimme (VO)", // Deutsch
+    "Überlagerte Stimme (VO)", // Deutsch
     "", // Slovenski
     "", // Italiano
     "", // Nederlands
@@ -2056,7 +2056,7 @@ const tI18nPhrase Phrases[] = {
     "", // Èesky (Czech)
   },
   { "Analog", // English
-    "", // Deutsch
+    "Analog", // Deutsch
     "", // Slovenski
     "", // Italiano
     "", // Nederlands
@@ -2078,7 +2078,7 @@ const tI18nPhrase Phrases[] = {
     "", // Èesky (Czech)
   },
   { "Free to Air", // English
-    "Free to Air", // Deutsch
+    "Frei empfangbar", // Deutsch
     "", // Slovenski
     "", // Italiano
     "", // Nederlands
