@@ -228,3 +228,8 @@ VDR Plugin 'femon' Revision History
 - Updated for vdr-1.4.0.
 - Modified APIVERSION code in Makefile.
 - Updated german translation (Thanks to Andreas Brachold).
+
+2006-06-06: Version 1.0.1
+
+- Fixed device switching priority (Thanks to Andreas Brugger).
+- Fixed device switching back to the primary device.

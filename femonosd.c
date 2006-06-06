@@ -995,24 +995,26 @@ void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
 bool cFemonOsd::DeviceSwitch(int direction)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  int device = cDevice::ActualDevice()->DeviceNumber();                            
+  int device = cDevice::ActualDevice()->DeviceNumber();
   direction = sgn(direction);
   if (device >= 0) {
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-     for (int i = 0; i < cDevice::NumDevices() - 1; i++) {                         
+     for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
         if (direction) {
-           if (++device >= cDevice::NumDevices()) device = 0;                     
+           if (++device >= cDevice::NumDevices())
+              device = 0;
            }
         else {
-           if (--device < 0) device = cDevice::NumDevices() - 1;
+           if (--device < 0)
+              device = cDevice::NumDevices() - 1;
            }
-        if (cDevice::GetDevice(device)->ProvidesChannel(channel)) {
+        if (cDevice::GetDevice(device)->ProvidesChannel(channel, 0)) {
            Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
-           // here should be added some checks, if the device is really available (i.e. not recording)
            cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
            cControl::Shutdown();
            cDevice::GetDevice(device)->SwitchChannel(channel, true);
-           // does this work with primary devices ?
+           if (cDevice::GetDevice(device) == cDevice::PrimaryDevice())
+              cDevice::GetDevice(device)->ForceTransferMode();
            cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
            cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
            return (true);
