@@ -90,7 +90,7 @@ libvdr-$(PLUGIN).so: $(OBJS)
 ifndef FEMON_DEBUG
 	@$(STRIP) $@
 endif
-	@cp $@ $(LIBDIR)/$@.$(APIVERSION)
+	@cp --remove-destination $@ $(LIBDIR)/$@.$(APIVERSION)
 
 dist: clean
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)

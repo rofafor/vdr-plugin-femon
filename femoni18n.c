@@ -647,28 +647,6 @@ const tI18nPhrase Phrases[] = {
     "", // Dansk
     "", // Èesky (Czech)
   },
-  { "Use syslog output", // English
-    "Benutze syslog Ausgabe", // Deutsch
-    "", // Slovenski
-    "Registra su syslog", // Italiano
-    "", // Nederlands
-    "", // Português
-    "Enregistrer les infos dans syslog", // Français
-    "", // Norsk
-    "Kirjaa systeemilokiin", // suomi
-    "", // Polski
-    "Usar syslog como registro", // Español
-    "", // ÅëëçíéêÜ (Greek)
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
-    "¸áßŞÛì×ŞÒĞâì áÛãÖÑã syslog", // ÀãááÚØÙ (Russian)
-    "", // Hrvatski (Croatian)
-    "Kirjuta süsteemilogisse", // Eesti
-    "", // Dansk
-    "", // Èesky (Czech)
-  },
   { "Audio", // English
     "Audio", // Deutsch
     "Audio", // Slovenski
@@ -2304,7 +2282,7 @@ const tI18nPhrase Phrases[] = {
     "", // Nederlands
     "", // Português
     "SkyCrypt", // Français
-    "", // Norsk   
+    "", // Norsk
     "SkyCrypt", // suomi
     "", // Polski
     "SkyCrypt", // Español
@@ -2316,6 +2294,72 @@ const tI18nPhrase Phrases[] = {
     "", // ÀãááÚØÙ (Russian)
     "", // Hrvatski (Croatian)
     "SkyCrypt", // Eesti
+    "", // Dansk
+    "", // Èesky (Czech)
+  },
+  { "Use SVDRP service", // English
+    "SVDRP Service verwenden", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Käytä SVDRP-palvelua", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
+    "", // Èesky (Czech)
+  },
+  { "SVDRP service IP", // English
+    "SVDRP Service IP", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "SVDRP-palvelun IP-osoite", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
+    "", // Èesky (Czech)
+  },
+  { "SVDRP service port", // English
+    "SVDRP Service Port", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "SVDRP-palvelun portti", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "", // Eesti
     "", // Dansk
     "", // Èesky (Czech)
   },

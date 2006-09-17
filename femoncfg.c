@@ -6,6 +6,7 @@
  * $Id$
  */
 
+#include <string.h>
 #include "femoncfg.h"
 
 cFemonConfig femonConfig;
@@ -22,7 +23,6 @@ cFemonConfig::cFemonConfig(void)
   updateinterval = 5;
   analyzestream  = 1;
   calcinterval   = 20;
-  syslogoutput   = 0;
   showcasystem   = 0;
 #ifdef NTSC
   osdheight      = 420;
@@ -30,6 +30,9 @@ cFemonConfig::cFemonConfig(void)
   osdheight      = 480;
 #endif
   osdoffset      = 0;
+  usesvdrp       = 0;
+  svdrpport      = 2001;
+  strncpy(svdrpip, "0.0.0.0", sizeof(svdrpip));
 }
 
 const cFemonTheme femonTheme[eFemonThemeMaxNumber] =

@@ -233,3 +233,10 @@ VDR Plugin 'femon' Revision History
 
 - Fixed device switching priority (Thanks to Andreas Brugger).
 - Fixed device switching back to the primary device.
+
+2006-09-17: Version 1.1.0
+
+- Added support for svdrpservice plugin (Thanks to Frank Schmirler).
+- Added INFO SVDRP command (partially based on patch by Herbert Pötzl).
+- Removed system log option - use SVDRP instead.
+- Added --remove-destination to the 'cp' command in Makefile.

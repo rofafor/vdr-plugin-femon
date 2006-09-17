@@ -11,7 +11,7 @@
 
 #include <vdr/plugin.h>
 
-static const char VERSION[]       = "1.0.1";
+static const char VERSION[]       = "1.1.0";
 static const char DESCRIPTION[]   = "DVB Signal Information Monitor (OSD)";
 static const char MAINMENUENTRY[] = "Signal Information";
 
@@ -39,17 +39,17 @@ public:
   };
 
 class cMenuFemonSetup : public cMenuSetupPage {
-  private:
-    const char *dispmodes[eFemonModeMaxNumber];
-    const char *skins[eFemonSkinMaxNumber];
-    const char *themes[eFemonThemeMaxNumber];
-    cFemonConfig data;
-    virtual void Setup(void);
-  protected:
-    virtual eOSState ProcessKey(eKeys Key);
-    virtual void Store(void);
-  public:
-    cMenuFemonSetup(void);
+private:
+  const char *dispmodes[eFemonModeMaxNumber];
+  const char *skins[eFemonSkinMaxNumber];
+  const char *themes[eFemonThemeMaxNumber];
+  cFemonConfig data;
+  virtual void Setup(void);
+protected:
+  virtual eOSState ProcessKey(eKeys Key);
+  virtual void Store(void);
+public:
+  cMenuFemonSetup(void);
   };
 
 #endif //__FEMON_H

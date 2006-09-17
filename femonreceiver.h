@@ -47,9 +47,11 @@ enum eDolbySurroundMode {
   DSM_RESERVED          = 3,
   };
 
-#define FR_RESERVED    -1
-#define FR_FREE        -2
-#define FR_NOTVALID    -3
+enum eReveiverCodes {
+  FR_RESERVED = -1,
+  FR_FREE     = -2,
+  FR_NOTVALID = -3
+  };
 
 class cFemonReceiver : public cReceiver, public cThread {
 private:
@@ -103,19 +105,19 @@ public:
   int VideoAspectRatio(void)      { return m_VideoAspectRatio; };    // eAspectRatio
   int VideoFormat(void)           { return m_VideoFormat; };         // eVideoFormat
   double VideoFrameRate(void)     { return m_VideoFrameRate; };      // Hz
-  double VideoStreamBitrate(void) { return m_VideoStreamBitrate; };  // Mbit/s
-  double VideoBitrate(void)       { return m_VideoBitrate; };        // Mbit/s
+  double VideoStreamBitrate(void) { return m_VideoStreamBitrate; };  // bit/s
+  double VideoBitrate(void)       { return m_VideoBitrate; };        // bit/s
 
   bool AudioValid(void)           { return m_AudioValid; };          // boolean
   int AudioMPEGLayer(void)        { return m_AudioMPEGLayer; };      // layer number
   int AudioSamplingFreq(void)     { return m_AudioSamplingFreq; };   // Hz
-  double AudioStreamBitrate(void) { return m_AudioStreamBitrate; };  // kbit/s
-  double AudioBitrate(void)       { return m_AudioBitrate; };        // kbit/s
+  double AudioStreamBitrate(void) { return m_AudioStreamBitrate; };  // bit/s
+  double AudioBitrate(void)       { return m_AudioBitrate; };        // bit/s
 
   bool AC3Valid(void)             { return m_AC3Valid; };                // boolean
   int AC3SamplingFreq(void)       { return m_AC3SamplingFreq; };         // Hz
-  double AC3StreamBitrate(void)   { return m_AC3StreamBitrate; };        // kbit/s
-  double AC3Bitrate(void)         { return m_AC3Bitrate; };              // kbit/s
+  double AC3StreamBitrate(void)   { return m_AC3StreamBitrate; };        // bit/s
+  double AC3Bitrate(void)         { return m_AC3Bitrate; };              // bit/s
   int AC3FrameSize(void)          { return m_AC3FrameSize; };            // Bytes
   int AC3BitStreamMode(void)      { return m_AC3BitStreamMode; };        // 0..7
   int AC3AudioCodingMode(void)    { return m_AC3AudioCodingMode; };      // 0..7

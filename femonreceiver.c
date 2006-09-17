@@ -141,7 +141,7 @@ void cFemonReceiver::GetVideoInfo(uint8_t *mbuf, int count)
       m_VideoFormat = VF_UNKNOWN;
       break;
     }
-  m_VideoStreamBitrate = 400 * (((headr[4] << 10) & 0x0003FC00UL) | ((headr[5] << 2) & 0x000003FCUL) | (((headr[6] & 0xC0) >> 6) & 0x00000003UL)) / 1000000.0;
+  m_VideoStreamBitrate = 400.0 * (((headr[4] << 10) & 0x0003FC00UL) | ((headr[5] << 2) & 0x000003FCUL) | (((headr[6] & 0xC0) >> 6) & 0x00000003UL));
 }
 
 static unsigned int bitrates[3][16] =
@@ -179,7 +179,7 @@ void cFemonReceiver::GetAudioInfo(uint8_t *mbuf, int count)
   else if (tmp == 0xf)
      m_AudioStreamBitrate = (double)FR_RESERVED;
   else
-     m_AudioStreamBitrate = tmp / 1000.0;
+     m_AudioStreamBitrate = tmp;
   tmp = samplerates[((headr[2] & 0x0c) >> 2)] * 100;
   if (tmp == 3)
      m_AudioSamplingFreq = FR_RESERVED;
@@ -222,7 +222,7 @@ void cFemonReceiver::GetAC3Info(uint8_t *mbuf, int count)
   m_AC3Valid = true;
   headr = mbuf + c + 2;
   frame = (headr[2] & 0x3f);
-  m_AC3StreamBitrate = ac3_bitrates[frame >> 1];
+  m_AC3StreamBitrate = ac3_bitrates[frame >> 1] * 1000;
   int fr = (headr[2] & 0xc0 ) >> 6;
   m_AC3SamplingFreq = ac3_freq[fr] * 100;
   m_AC3FrameSize = ac3_frames[fr][frame >> 1];
@@ -355,11 +355,11 @@ void cFemonReceiver::Action(void)
   while (Running()) {
         t.Set(0);
         // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
-        m_VideoBitrate = (8.0 * 184.0 * m_VideoPacketCount) / (femonConfig.calcinterval * 100000.0);
+        m_VideoBitrate = (10.0 * 8.0 * 184.0 * m_VideoPacketCount) / femonConfig.calcinterval;
         m_VideoPacketCount = 0;
-        m_AudioBitrate = (8.0 * 184.0 * m_AudioPacketCount) / (femonConfig.calcinterval * 100.0);
+        m_AudioBitrate = (10.0 * 8.0 * 184.0 * m_AudioPacketCount) / femonConfig.calcinterval;
         m_AudioPacketCount = 0;
-        m_AC3Bitrate   = (8.0 * 184.0 * m_AC3PacketCount)   / (femonConfig.calcinterval * 100.0);
+        m_AC3Bitrate   = (10.0 * 8.0 * 184.0 * m_AC3PacketCount)   / femonConfig.calcinterval;
         m_AC3PacketCount = 0;
         cCondWait::SleepMs(100 * femonConfig.calcinterval - t.Elapsed());
     }

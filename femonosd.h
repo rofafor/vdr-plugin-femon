@@ -15,16 +15,26 @@
 #include <vdr/osd.h>
 #include <vdr/thread.h>
 #include <vdr/status.h>
+#include <vdr/plugin.h>
 #include <vdr/channels.h>
 #include <vdr/transfer.h>
 #include <vdr/tools.h>
+#include "svdrpservice.h"
+
+#define MAX_BM_NUMBER 5
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
+  enum { MAX_BMNUMBERS = 6 };
   static cFemonOsd *pInstance;
   cOsd *m_Osd;
   cFemonReceiver *m_Receiver;
   int m_Frontend;
+  int m_SvdrpFrontend;
+  double m_SvdrpVideoBitrate;
+  double m_SvdrpAudioBitrate;
+  SvdrpConnection_v1_0 m_SvdrpConnection;
+  cPlugin *m_SvdrpPlugin;
   struct dvb_frontend_info m_FrontendInfo;
   int m_Number;
   int m_OldNumber;
@@ -38,11 +48,14 @@ private:
   cTimeMs m_InputTime;
   cMutex* m_Mutex;
   static cBitmap bmStereo, bmMonoLeft, bmMonoRight, bmDD, bmDD20, bmDD51;
-  static cBitmap bmZero, bmDevice, bmPAL, bmNTSC, bmOne, bmTwo, bmThree, bmFour, bmFive;
+  static cBitmap bmNumbers[MAX_BMNUMBERS];
+  static cBitmap bmDevice, bmPAL, bmNTSC, bmSVDRP;
   static cBitmap bmAspectRatio_1_1, bmAspectRatio_16_9, bmAspectRatio_2_21_1, bmAspectRatio_4_3;
   static cBitmap bmLock, bmSignal, bmCarrier, bmViterbi, bmSync;
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);
+  bool SvdrpConnect(void);
+  bool SvdrpTune(void);
 
 protected:
   cFemonOsd();

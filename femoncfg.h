@@ -9,6 +9,8 @@
 #ifndef __FEMONCFG_H
 #define __FEMONCFG_H
 
+#define MaxSvdrpIp 15 // xxx.xxx.xxx.xxx
+
 enum eFemonModes
 {
   eFemonModeBasic,
@@ -32,10 +34,12 @@ public:
   int updateinterval;
   int analyzestream;
   int calcinterval;
-  int syslogoutput;
   int showcasystem;
   int osdheight;
   int osdoffset;
+  int usesvdrp;
+  int svdrpport;
+  char svdrpip[MaxSvdrpIp + 1]; // must end with additional null
 };
 
 extern cFemonConfig femonConfig;

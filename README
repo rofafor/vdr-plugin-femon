@@ -28,7 +28,7 @@ the 'libdvb' library by Metzler Brothers.
 Terminology:
 
 --------------------------------------------------------------
-|## Channel Name ########################## [AR][VF][A/DD][D]|
+|## Channel Name ################### [SVDRP][AR][VF][A/DD][D]|
 |[=====Signal Strength in % ==============|=================]|
 |[=====Signal-to-Noise Ratio in % ========|=================]|
 | STR: #0000 (0%)       BER: #00000000       Video: 0 Mbit/s |
@@ -49,10 +49,11 @@ CARRIER - Found a DVB signal
 VITERBI - FEC (forward error correction) is stable
 SYNC    - Found sync bytes
 
+SVDRP   - SVDRP connection active (optional)
 AR      - Aspect Ratio: 1:1/4:3/16:9/2.21:1 (optional)
 VF      - Video format: PAL/NTSC (optional)
-A/DD    - Audio (0..5) / AC-3 track (optional)
-D       - Device number: 0..3 (optional)
+A/DD    - Audio (0..N) / AC-3 track (optional)
+D       - Device number: 0..N (optional)
 
 Controls:
 
@@ -75,6 +76,22 @@ make
 make plugins
 ./vdr -P femon
 
+Client-server architecture:
+
+The SVDRP service extension can be used in client-server configurations.
+A streamdev based VDR-to-VDR streaming client can retrieve frontend
+information from a server, if the SVDRP service has been activated and
+properly configured in femon. The svdrpservice plugin is required on the
+VDR client.
+
+If the client fails to open a DVB card frontend corresponding to the
+current receiving device, it will connect to the SVDRP server, look for
+the femon plugin and tune the channel on the server to the one currently
+viewed on the client. If one of these steps fails, the femon OSD won't
+open on the client. An SVDRP icon in the femon title bar indicates that
+the data source is SVDRP. The device number in the title bar is always
+the local device number.
+
 Notes:
 
 - The plugin supports only those DVB cards with _one_ frontend, because I
@@ -90,5 +107,11 @@ Notes:
   small. Please, try to adjust the variable on the setup page before writing
   any bug reports. NTSC users should use a shrinked default OSD height by
   compiling the plugin with: make FEMON_NTSC=1
+
+- If the SVDRP service is used: femon won't notice if the server is tuned
+  to a different channel and tuning the channel on the server might annoy
+  people watching live TV. In some situations the server will refuse
+  switching to the requested channel. On a headless server you can avoid
+  this by installing the dummydevice plugin.
 
 "Femon - A real womon who lives according to her natural feminine inclinations."

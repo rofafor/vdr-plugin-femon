@@ -79,7 +79,6 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
 {
   // Parse your own setup parameters and store their values.
   if      (!strcasecmp(Name, "HideMenu"))       femonConfig.hidemenu       = atoi(Value);
-  else if (!strcasecmp(Name, "SyslogOutput"))   femonConfig.syslogoutput   = atoi(Value);
   else if (!strcasecmp(Name, "DisplayMode"))    femonConfig.displaymode    = atoi(Value);
   else if (!strcasecmp(Name, "Position"))       femonConfig.position       = atoi(Value);
   else if (!strcasecmp(Name, "OSDHeight"))      femonConfig.osdheight      = atoi(Value);
@@ -92,6 +91,9 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
   else if (!strcasecmp(Name, "UpdateInterval")) femonConfig.updateinterval = atoi(Value);
   else if (!strcasecmp(Name, "AnalStream"))     femonConfig.analyzestream  = atoi(Value);
   else if (!strcasecmp(Name, "CalcInterval"))   femonConfig.calcinterval   = atoi(Value);
+  else if (!strcasecmp(Name, "UseSvdrp"))       femonConfig.usesvdrp       = atoi(Value);
+  else if (!strcasecmp(Name, "ServerPort"))     femonConfig.svdrpport      = atoi(Value);
+  else if (!strcasecmp(Name, "ServerIp"))       strn0cpy(femonConfig.svdrpip, Value, sizeof(femonConfig.svdrpip));
   else
     return false;
   if (femonConfig.displaymode < 0 || femonConfig.displaymode >= eFemonModeMaxNumber) femonConfig.displaymode = 0;
@@ -130,6 +132,8 @@ const char **cPluginFemon::SVDRPHelpPages(void)
     "    Switch to next possible device.",
     "PREV\n"
     "    Switch to previous possible device.",
+    "INFO\n"
+    "    Print the current frontend information.",
     "NAME\n"
     "    Print the current frontend name.",
     "STAT\n"
@@ -141,7 +145,7 @@ const char **cPluginFemon::SVDRPHelpPages(void)
     "BERA\n"
     "    Print the current bit error rate.",
     "UNCB\n"
-    "    Print the current uncorrcted blocks rate.",
+    "    Print the current uncorrected blocks rate.",
     "VIBR\n"
     "    Print the actual device and current video bitrate [Mbit/s].",
     "AUBR\n"
@@ -177,6 +181,9 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
      else
         return cString("Cannot switch device");
      }
+  else if (strcasecmp(Command, "INFO") == 0) {
+     return getFrontendInfo(cDevice::ActualDevice()->CardIndex());
+     }
   else if (strcasecmp(Command, "NAME") == 0) {
      return getFrontendName(cDevice::ActualDevice()->CardIndex());
      }
@@ -199,19 +206,19 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
      }
   else if (strcasecmp(Command, "VIBR") == 0) {
      if (cFemonOsd::Instance())
-        return cString::sprintf("%.2f Mbit/s on device #%d", cFemonOsd::Instance()->GetVideoBitrate(), cDevice::ActualDevice()->CardIndex());
+        return cString::sprintf("%s on device #%d", *getBitrateMbits(cFemonOsd::Instance()->GetVideoBitrate()), cDevice::ActualDevice()->CardIndex());
      else
         return cString::sprintf("--- Mbit/s on device #%d", cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "AUBR") == 0) {
      if (cFemonOsd::Instance())
-        return cString::sprintf("%.0f kbit/s on device #%d", cFemonOsd::Instance()->GetAudioBitrate(), cDevice::ActualDevice()->CardIndex());
+        return cString::sprintf("%s on device #%d", *getBitrateKbits(cFemonOsd::Instance()->GetAudioBitrate()), cDevice::ActualDevice()->CardIndex());
      else
         return cString::sprintf("--- kbit/s on device #%d", cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "DDBR") == 0) {
      if (cFemonOsd::Instance())
-        return cString::sprintf("%.0f kbit/s on device #%d", cFemonOsd::Instance()->GetDolbyBitrate(), cDevice::ActualDevice()->CardIndex());
+        return cString::sprintf("%s on device #%d", *getBitrateKbits(cFemonOsd::Instance()->GetDolbyBitrate()), cDevice::ActualDevice()->CardIndex());
      else
         return cString::sprintf("--- kbit/s on device #%d", cDevice::ActualDevice()->CardIndex());
      }
@@ -248,7 +255,6 @@ void cMenuFemonSetup::Setup(void)
 
   Clear();
   Add(new cMenuEditBoolItem(  tr("Hide main menu entry"),        &data.hidemenu,       tr("no"),            tr("yes")));
-  Add(new cMenuEditBoolItem(  tr("Use syslog output"),           &data.syslogoutput,   tr("no"),            tr("yes")));
   Add(new cMenuEditStraItem(  tr("Default display mode"),        &data.displaymode,    eFemonModeMaxNumber, dispmodes));
   Add(new cMenuEditStraItem(  tr("Skin"),                        &data.skin,           eFemonSkinMaxNumber, skins));
   Add(new cMenuEditStraItem(  tr("Theme"),                       &data.theme,          eFemonThemeMaxNumber,themes));
@@ -262,6 +268,11 @@ void cMenuFemonSetup::Setup(void)
   Add(new cMenuEditBoolItem(  tr("Analyze stream"),              &data.analyzestream,  tr("no"),            tr("yes")));
   if (femonConfig.analyzestream)
      Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &data.calcinterval,   1,                   100));
+  Add(new cMenuEditBoolItem(  tr("Use SVDRP service"),           &data.usesvdrp));
+  if (data.usesvdrp) {
+     Add(new cMenuEditIntItem(tr("SVDRP service port"),          &data.svdrpport,      1,                   65535));
+     Add(new cMenuEditStrItem(tr("SVDRP service IP"),             data.svdrpip,        MaxSvdrpIp,          ".1234567890"));
+     }
 
   SetCurrent(Get(current));
   Display();
@@ -272,7 +283,6 @@ void cMenuFemonSetup::Store(void)
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   femonConfig = data;
   SetupStore("HideMenu",       femonConfig.hidemenu);
-  SetupStore("SyslogOutput",   femonConfig.syslogoutput);
   SetupStore("DisplayMode",    femonConfig.displaymode);
   SetupStore("Skin",           femonConfig.skin);
   SetupStore("Theme",          femonConfig.theme);
@@ -285,15 +295,19 @@ void cMenuFemonSetup::Store(void)
   SetupStore("UpdateInterval", femonConfig.updateinterval);
   SetupStore("AnalStream",     femonConfig.analyzestream);
   SetupStore("CalcInterval",   femonConfig.calcinterval);
+  SetupStore("UseSvdrp",       femonConfig.usesvdrp);
+  SetupStore("ServerPort",     femonConfig.svdrpport);
+  SetupStore("ServerIp",       femonConfig.svdrpip);
 }
 
 eOSState cMenuFemonSetup::ProcessKey(eKeys Key)
 {
+  int oldUsesvdrp = data.usesvdrp;
   int oldAnalyzestream = data.analyzestream;
 
   eOSState state = cMenuSetupPage::ProcessKey(Key);
 
-  if (Key != kNone && (data.analyzestream != oldAnalyzestream)) {
+  if (Key != kNone && (data.analyzestream != oldAnalyzestream || data.usesvdrp != oldUsesvdrp)) {
      Setup();
      }
 

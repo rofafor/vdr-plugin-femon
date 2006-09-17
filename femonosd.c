@@ -23,6 +23,7 @@
 #include "symbols/three.xpm"
 #include "symbols/four.xpm"
 #include "symbols/five.xpm"
+#include "symbols/svdrp.xpm"
 #include "symbols/ar11.xpm"
 #include "symbols/ar169.xpm"
 #include "symbols/ar2211.xpm"
@@ -56,16 +57,17 @@
 #define OSDSTATUSWIN_XSYMBOL(c,w) (c * ((OSDWIDTH - (5 * w)) / 6) + ((c - 1) * w))
 #define OSDBARWIDTH(x)            (OSDWIDTH * x / 100)
 
+#define SVDRPPLUGIN               "svdrpservice"
+
 cBitmap cFemonOsd::bmDevice(device_xpm);
 cBitmap cFemonOsd::bmStereo(stereo_xpm);
 cBitmap cFemonOsd::bmMonoLeft(monoleft_xpm);
 cBitmap cFemonOsd::bmMonoRight(monoright_xpm);
-cBitmap cFemonOsd::bmZero(zero_xpm);
-cBitmap cFemonOsd::bmOne(one_xpm);
-cBitmap cFemonOsd::bmTwo(two_xpm);
-cBitmap cFemonOsd::bmThree(three_xpm);
-cBitmap cFemonOsd::bmFour(four_xpm);
-cBitmap cFemonOsd::bmFive(five_xpm);
+cBitmap cFemonOsd::bmNumbers[MAX_BMNUMBERS] = {
+   cBitmap(zero_xpm),  cBitmap(one_xpm),  cBitmap(two_xpm),
+   cBitmap(three_xpm), cBitmap(four_xpm), cBitmap(five_xpm)
+};
+cBitmap cFemonOsd::bmSVDRP(svdrp_xpm);
 cBitmap cFemonOsd::bmAspectRatio_1_1(ar11_xpm);
 cBitmap cFemonOsd::bmAspectRatio_16_9(ar169_xpm);
 cBitmap cFemonOsd::bmAspectRatio_2_21_1(ar2211_xpm);
@@ -100,6 +102,11 @@ cFemonOsd::cFemonOsd()
   m_Osd = NULL;
   m_Receiver = NULL;
   m_Frontend = -1;
+  m_SvdrpVideoBitrate = -1.0;
+  m_SvdrpAudioBitrate = -1.0;
+  m_SvdrpFrontend = -1;
+  m_SvdrpConnection.handle = -1;
+  m_SvdrpPlugin = NULL;
   m_Number = 0;
   m_OldNumber = 0;
   m_Signal = 0;
@@ -124,6 +131,11 @@ cFemonOsd::~cFemonOsd(void)
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   if (Running())
      Cancel(3);
+  if (m_SvdrpConnection.handle >= 0) {
+     m_SvdrpPlugin = cPluginManager::GetPlugin(SVDRPPLUGIN);
+     if (m_SvdrpPlugin)
+        m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection);
+     }
   if (m_Receiver)
      delete m_Receiver;
   if (m_Osd)
@@ -134,170 +146,96 @@ cFemonOsd::~cFemonOsd(void)
 void cFemonOsd::DrawStatusWindow(void)
 {
   cMutexLock lock(m_Mutex);
-  char buf[128];
+  unsigned int number = 0;
+  cBitmap *bm = NULL;
   int snr = m_SNR / 655;
   int signal = m_Signal / 655;
   int offset = 0;
   int x = OSDWIDTH - OSDCORNERING;
   int y = 0;
-  int value = 0;
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   if (m_Osd) {
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), femonTheme[femonConfig.theme].clrBackground);
-     snprintf(buf, sizeof(buf), "%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true));
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
-     m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), *cString::sprintf("%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true)), femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
      if (IS_OSDCORNERING) {
         m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDCORNERING, OSDSTATUSWIN_Y(OSDCORNERING), clrTransparent, -2);
         m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDCORNERING), clrTransparent, -1);
         }
-     if (m_Receiver) {
-        value = cDevice::ActualDevice()->CardIndex();
-        if (value == 1) {
-           x -= bmOne.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmOne.Height()) / 2;
-           if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmOne, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-           }
-        else if (value == 2) {
-           x -= bmTwo.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmTwo.Height()) / 2;
-           if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmTwo, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-           }
-        else if (value == 3) {
-           x -= bmThree.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmThree.Height()) / 2;
-           if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmThree, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-           }
-        else {
-           x -= bmZero.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmZero.Height()) / 2;
-           if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmZero, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-           }
-        x -= bmDevice.Width();
-        y = (OSDROWHEIGHT - bmDevice.Height()) / 2;
+     if (m_SvdrpFrontend >= 0) {
+        x -= bmSVDRP.Width() + OSDSPACING;
+        y = (OSDROWHEIGHT - bmSVDRP.Height()) / 2;
         if (y < 0) y = 0;
-        m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDevice, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-        if (IS_AUDIO_TRACK(track)) {
-           value = int(track - ttAudioFirst);
-           if (value == 1) {
-              x -= bmOne.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmOne.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmOne, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else if (value == 2) {
-              x -= bmTwo.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmTwo.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmTwo, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else if (value == 3) {
-              x -= bmThree.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmThree.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmThree, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else if (value == 4) {
-              x -= bmFour.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmFour.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmFour, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else if (value == 5) {
-              x -= bmFive.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmFive.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmFive, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else {
-              x -= bmZero.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmZero.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmZero, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           value = cDevice::PrimaryDevice()->GetAudioChannel();
-           if (value == 1) {
-              x -= bmMonoLeft.Width();
-              y = (OSDROWHEIGHT - bmMonoLeft.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmMonoLeft, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else if (value == 2) {
-              x -= bmMonoRight.Width();
-              y = (OSDROWHEIGHT - bmMonoRight.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmMonoRight, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else {
-              x -= bmStereo.Width();
-              y = (OSDROWHEIGHT - bmStereo.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmStereo, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           }
-        else if (m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
-           if (m_Receiver->AC3_5_1()) {
-              x -= bmDD51.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmDD51.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD51, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else if (m_Receiver->AC3_2_0()) {
-              x -= bmDD20.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmDD20.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD20, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           else {
-              x -= bmDD.Width() + OSDSPACING;
-              y = (OSDROWHEIGHT - bmDD.Height()) / 2;
-              if (y < 0) y = 0;
-              m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDD, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
-              }
-           }
-        value = m_Receiver->VideoFormat();
-        if (value == VF_PAL) {
-           x -= bmPAL.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmPAL.Height()) / 2;
+        m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmSVDRP, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+        }
+    number = cDevice::ActualDevice()->CardIndex();
+    if (number < MAX_BMNUMBERS) {
+       x -= bmNumbers[number].Width() + OSDSPACING;
+       y = (OSDROWHEIGHT - bmNumbers[number].Height()) / 2;
+       if (y < 0) y = 0;
+       m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmNumbers[number], femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+       x -= bmDevice.Width();
+       y = (OSDROWHEIGHT - bmDevice.Height()) / 2;
+       if (y < 0) y = 0;
+       m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmDevice, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+       }
+     if (IS_AUDIO_TRACK(track)) {
+        number = int(track - ttAudioFirst);
+        if (number < MAX_BMNUMBERS) {
+           x -= bmNumbers[number].Width() + OSDSPACING;
+           y = (OSDROWHEIGHT - bmNumbers[number].Height()) / 2;
            if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmPAL, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmNumbers[number], femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
            }
-        else if (value == VF_NTSC) {
-           x -= bmNTSC.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmNTSC.Height()) / 2;
-           if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmNTSC, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+        switch (cDevice::PrimaryDevice()->GetAudioChannel()) {
+           case 1:  bm = &bmMonoLeft;  break;
+           case 2:  bm = &bmMonoRight; break;
+           default: bm = &bmStereo;    break;
            }
-        value = m_Receiver->VideoAspectRatio();
-        if (value == AR_1_1) {
-           x -= bmAspectRatio_1_1.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmAspectRatio_1_1.Height()) / 2;
+        if (bm) {
+           x -= bm->Width();
+           y = (OSDROWHEIGHT - bm->Height()) / 2;
            if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmAspectRatio_1_1, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), *bm, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
            }
-        else if (value == AR_4_3) {
-           x -= bmAspectRatio_4_3.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmAspectRatio_4_3.Height()) / 2;
+        }
+     else if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
+        if (m_Receiver->AC3_5_1())      bm = &bmDD51;
+        else if (m_Receiver->AC3_2_0()) bm = &bmDD20;
+        else                            bm = &bmDD;
+        if (bm) {
+           x -= bm->Width() + OSDSPACING;
+           y = (OSDROWHEIGHT - bm->Height()) / 2;
            if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmAspectRatio_4_3, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), *bm, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
            }
-        else if (value == AR_16_9) {
-           x -= bmAspectRatio_16_9.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmAspectRatio_16_9.Height()) / 2;
-           if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmAspectRatio_16_9, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+        }
+     if (m_Receiver) {
+        switch (m_Receiver->VideoFormat()) {
+           case VF_PAL:  bm = &bmPAL;  break;
+           case VF_NTSC: bm = &bmNTSC; break;
+           default:      bm = NULL;    break;
            }
-        else if (value == AR_2_21_1) {
-           x -= bmAspectRatio_2_21_1.Width() + OSDSPACING;
-           y = (OSDROWHEIGHT - bmAspectRatio_2_21_1.Height()) / 2;
+        if (bm) {
+           x -= bm->Width() + OSDSPACING;
+           y = (OSDROWHEIGHT - bm->Height()) / 2;
            if (y < 0) y = 0;
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), bmAspectRatio_2_21_1, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), *bm, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
+           }
+        switch (m_Receiver->VideoAspectRatio()) {
+           case AR_1_1:    bm = &bmAspectRatio_1_1;    break;
+           case AR_4_3:    bm = &bmAspectRatio_4_3;    break;
+           case AR_16_9:   bm = &bmAspectRatio_16_9;   break;
+           case AR_2_21_1: bm = &bmAspectRatio_2_21_1; break;
+           default:        bm = NULL;                  break;
+           }
+        if (bm) {
+           x -= bm->Width() + OSDSPACING;
+           y = (OSDROWHEIGHT - bm->Height()) / 2;
+           if (y < 0) y = 0;
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset+y), *bm, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground);
            }
         }
      offset += OSDROWHEIGHT;
@@ -324,32 +262,20 @@ void cFemonOsd::DrawStatusWindow(void)
         }
      offset += OSDROWHEIGHT;
      m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), "STR:", femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%04x", m_Signal);
-     m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "(%2d%%)", m_Signal / 655);
-     m_Osd->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), *cString::sprintf("%04x", m_Signal), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), *cString::sprintf("(%2d%%)", m_Signal / 655), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
      m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), "BER:", femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%08x", m_BER);
-     m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%s:", tr("Video"));
-     m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s", m_Receiver->VideoBitrate(), tr("Mbit/s"));
-     else            snprintf(buf, sizeof(buf), "--- %s", tr("Mbit/s"));
-     m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), *cString::sprintf("%08x", m_BER), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), *cString::sprintf("%s:", tr("Video")), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), *getBitrateMbits(m_Receiver ? m_Receiver->VideoBitrate() : (m_SvdrpFrontend >= 0 ? m_SvdrpVideoBitrate : -1.0)), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
      offset += OSDROWHEIGHT;
      m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), "SNR:", femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%04x", m_SNR);
-     m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "(%2d%%)", m_SNR / 655);
-     m_Osd->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), *cString::sprintf("%04x", m_SNR), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), *cString::sprintf("(%2d%%)", m_SNR / 655), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
      m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), "UNC:", femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%08x", m_UNC);
-     m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     snprintf(buf, sizeof(buf), "%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio"));
-     m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-     if (m_Receiver) snprintf(buf, sizeof(buf), "%.0f %s", (m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate(), tr("kbit/s"));
-     else            snprintf(buf, sizeof(buf), "--- %s", tr("kbit/s"));
-     m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), *cString::sprintf("%08x", m_UNC), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), *cString::sprintf("%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio")), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+     m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), *getBitrateKbits(m_Receiver ? ((m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate()) : (m_SvdrpFrontend >= 0 ? m_SvdrpAudioBitrate : -1.0)), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
      offset += OSDROWHEIGHT;
      x = bmLock.Width();
      y = (OSDROWHEIGHT - bmLock.Height()) / 2;
@@ -369,11 +295,7 @@ void cFemonOsd::DrawStatusWindow(void)
 void cFemonOsd::DrawInfoWindow(void)
 {
   cMutexLock lock(m_Mutex);
-  char buf[128];
-  char buf2[20];
   int offset = 0;
-  int value = 0;
-  double dvalue = 0.0;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
 
@@ -388,293 +310,94 @@ void cFemonOsd::DrawInfoWindow(void)
            }
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Vpid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Vpid());
-        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Vpid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Ppid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Ppid());
-        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Ppid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Apid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Apid(0));
-        value = 1;
-        while (channel->Apid(value) && (value < MAXAPIDS)) {
-           snprintf(buf2, sizeof(buf2), ", %d", channel->Apid(value++));
-           strncat(buf, buf2, sizeof(buf));
-           }
-        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getApids(channel), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Dpid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Dpid(0));
-        value = 1;
-        while (channel->Dpid(value) && (value < MAXDPIDS)) {
-           snprintf(buf2, sizeof(buf2), ", %d", channel->Dpid(value++));
-           strncat(buf, buf2, sizeof(buf));
-           }
-        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *getDpids(channel), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        value = channel->Ca();
-        if (femonConfig.showcasystem) {
-           /* http://www.dvb.org/index.php?id=174 */
-           switch (value) {
-             case 0x0000:
-                  /* Reserved */
-                  snprintf(buf, sizeof(buf), "%s", tr("Free to Air"));
-                  break;
-             case 0x0001 ... 0x00FF:
-                  /* Standardized systems */
-                  if ((value == 0x00A0) || (value == 0x00A1))
-                     snprintf(buf, sizeof(buf), "%s", tr("Analog"));
-                  else
-                     snprintf(buf, sizeof(buf), "%s", tr("Fixed"));
-                  break;
-             case 0x0100 ... 0x01FF:
-                  /* Canal Plus */
-                  snprintf(buf, sizeof(buf), "%s", tr("SECA/Mediaguard"));
-                  break;
-             case 0x0500 ... 0x05FF:
-                  /* France Telecom */
-                  snprintf(buf, sizeof(buf), "%s", tr("Viaccess"));
-                  break;
-             case 0x0600 ... 0x06FF:
-                  /* Irdeto */
-                  snprintf(buf, sizeof(buf), "%s", tr("Irdeto"));
-                  break;
-             case 0x0900 ... 0x09FF:
-                  /* News Datacom */
-                  snprintf(buf, sizeof(buf), "%s", tr("NDS/Videoguard"));
-                  break;
-             case 0x0B00 ... 0x0BFF:
-                  /* Norwegian Telekom */
-                  snprintf(buf, sizeof(buf), "%s", tr("Conax"));
-                  break;
-             case 0x0D00 ... 0x0DFF:
-                  /* Philips */
-                  snprintf(buf, sizeof(buf), "%s", tr("CryptoWorks"));
-                  break;
-             case 0x0E00 ... 0x0EFF:
-                  /* Scientific Atlanta */
-                  snprintf(buf, sizeof(buf), "%s", tr("PowerVu"));
-                  break;
-             case 0x1200 ... 0x12FF:
-                  /* BellVu Express */
-                  snprintf(buf, sizeof(buf), "%s", tr("NagraVision"));
-                  break;
-             case 0x1700 ... 0x17FF:
-                  /* BetaTechnik */
-                  snprintf(buf, sizeof(buf), "%s", tr("BetaCrypt"));
-                  break;
-             case 0x1800 ... 0x18FF:
-                  /* Kudelski SA */
-                  snprintf(buf, sizeof(buf), "%s", tr("NagraVision"));
-                  break;
-             case 0x4A60 ... 0x4A6F:
-                  /* @Sky */
-                  snprintf(buf, sizeof(buf), "%s", tr("SkyCrypt"));
-                  break;
-             default:
-                  snprintf(buf, sizeof(buf), "%X", value);
-                  break;
-             }
-           }
-        else {
-           snprintf(buf, sizeof(buf), "%X", value);
-           value = 1;
-           while (channel->Ca(value) && (value < MAXCAIDS)) {
-             snprintf(buf2, sizeof(buf2), ", %X", channel->Ca(value++));
-             strncat(buf, buf2, sizeof(buf));
-             }
-           }
-        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getCAids(channel, femonConfig.showcasystem), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Tpid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Tpid());
-        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Tpid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Sid());
-        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Sid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Nid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Nid());
-        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Nid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Tid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Tid());
-        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Tid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Rid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "%d", channel->Rid());
-        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Rid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         switch (m_FrontendInfo.type) {
           case FE_QPSK:
-               snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Satellite Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
-               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), *cString::sprintf("%s #%d - %s", tr("Satellite Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                offset += OSDROWHEIGHT;
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frequency"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Frequency();
-               while (value > 20000) value /= 1000;
-               snprintf(buf, sizeof(buf), "%d %s", value, tr("MHz"));
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getFrequencyMHz(channel->Frequency()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Source"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               snprintf(buf, sizeof(buf), "%s", *cSource::ToString(channel->Source()));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cSource::ToString(channel->Source()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                offset += OSDROWHEIGHT;
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Srate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               snprintf(buf, sizeof(buf), "%d", channel->Srate());
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Srate()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Polarization"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               snprintf(buf, sizeof(buf), "%c", toupper(channel->Polarization()));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cString::sprintf("%c", toupper(channel->Polarization())), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                offset += OSDROWHEIGHT;
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Inversion"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Inversion();
-               if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), tr("Off"));
-               else if (value == INVERSION_ON)    snprintf(buf, sizeof(buf), tr("On"));
-               else            /*INVERSION_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getInversion(channel->Inversion()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("CoderateH"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->CoderateH();
-               if      (value == FEC_NONE)  snprintf(buf, sizeof(buf), tr("None"));
-               else if (value == FEC_1_2)   snprintf(buf, sizeof(buf), "1/2");
-               else if (value == FEC_2_3)   snprintf(buf, sizeof(buf), "2/3");
-               else if (value == FEC_3_4)   snprintf(buf, sizeof(buf), "3/4");
-               else if (value == FEC_4_5)   snprintf(buf, sizeof(buf), "4/5");
-               else if (value == FEC_5_6)   snprintf(buf, sizeof(buf), "5/6");
-               else if (value == FEC_6_7)   snprintf(buf, sizeof(buf), "6/7");
-               else if (value == FEC_7_8)   snprintf(buf, sizeof(buf), "7/8");
-               else if (value == FEC_8_9)   snprintf(buf, sizeof(buf), "8/9");
-               else            /*FEC_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *getCoderate(channel->CoderateH()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                break;
 
           case FE_QAM:
-               snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Cable Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
-               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), *cString::sprintf("%s #%d - %s", tr("Cable Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                offset += OSDROWHEIGHT;
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frequency"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Frequency();
-               while (value > 20000) value /= 1000;
-               snprintf(buf, sizeof(buf), "%d %s", value, tr("MHz"));
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getFrequencyMHz(channel->Frequency()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Source"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               snprintf(buf, sizeof(buf), "%s", *cSource::ToString(channel->Source()));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cSource::ToString(channel->Source()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                offset += OSDROWHEIGHT;
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Srate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               snprintf(buf, sizeof(buf), "%d", channel->Srate());
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Srate()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Modulation"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Modulation();
-               if      (value == QPSK)      snprintf(buf, sizeof(buf), "QPSK");
-               else if (value == QAM_16)    snprintf(buf, sizeof(buf), "QAM 16");
-               else if (value == QAM_32)    snprintf(buf, sizeof(buf), "QAM 32");
-               else if (value == QAM_64)    snprintf(buf, sizeof(buf), "QAM 64");
-               else if (value == QAM_128)   snprintf(buf, sizeof(buf), "QAM 128");
-               else if (value == QAM_256)   snprintf(buf, sizeof(buf), "QAM 256");
-               else            /*QAM_AUTO*/ snprintf(buf, sizeof(buf), "QAM %s", tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *getModulation(channel->Modulation()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                offset += OSDROWHEIGHT;
                m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Inversion"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Inversion();
-               if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), tr("Off"));
-               else if (value == INVERSION_ON)    snprintf(buf, sizeof(buf), tr("On"));
-               else            /*INVERSION_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getInversion(channel->Inversion()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("CoderateH"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->CoderateH();
-               if      (value == FEC_NONE)  snprintf(buf, sizeof(buf), tr("None"));
-               else if (value == FEC_1_2)   snprintf(buf, sizeof(buf), "1/2");
-               else if (value == FEC_2_3)   snprintf(buf, sizeof(buf), "2/3");
-               else if (value == FEC_3_4)   snprintf(buf, sizeof(buf), "3/4");
-               else if (value == FEC_4_5)   snprintf(buf, sizeof(buf), "4/5");
-               else if (value == FEC_5_6)   snprintf(buf, sizeof(buf), "5/6");
-               else if (value == FEC_6_7)   snprintf(buf, sizeof(buf), "6/7");
-               else if (value == FEC_7_8)   snprintf(buf, sizeof(buf), "7/8");
-               else if (value == FEC_8_9)   snprintf(buf, sizeof(buf), "8/9");
-               else            /*FEC_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *getCoderate(channel->CoderateH()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               break;
+
+          case FE_OFDM:
+               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), *cString::sprintf("%s #%d - %s", tr("Terrestrial Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               offset += OSDROWHEIGHT;
+               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frequency"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getFrequencyMHz(channel->Frequency()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Transmission"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *getTransmission(channel->Transmission()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               offset += OSDROWHEIGHT;
+               m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bandwidth"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getBandwidth(channel->Bandwidth()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Modulation"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *getModulation(channel->Modulation()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               offset += OSDROWHEIGHT;
+               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Inversion"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getInversion(channel->Inversion()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Coderate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cString::sprintf("%s (H) %s (L)", *getCoderate(channel->CoderateH()), *getCoderate(channel->CoderateL())), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               offset += OSDROWHEIGHT;
+               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Hierarchy"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getHierarchy(channel->Hierarchy()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Guard"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *getGuard(channel->Guard()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                break;
 
           default:
-               snprintf(buf, sizeof(buf), "%s #%d - %s", tr("Terrestrial Card"), cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name);
-               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               offset += OSDROWHEIGHT;
-               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frequency"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Frequency();
-               while (value > 20000) value /= 1000;
-               snprintf(buf, sizeof(buf), "%d %s", value, tr("MHz"));
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Transmission"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Transmission();
-               if      (value == TRANSMISSION_MODE_2K)    snprintf(buf, sizeof(buf), "2K");
-               else if (value == TRANSMISSION_MODE_8K)    snprintf(buf, sizeof(buf), "8K");
-               else            /*TRANSMISSION_MODE_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               offset += OSDROWHEIGHT;
-               m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bandwidth"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Bandwidth();
-               if      (value == BANDWIDTH_8_MHZ) snprintf(buf, sizeof(buf), "8 %s", tr("MHz"));
-               else if (value == BANDWIDTH_7_MHZ) snprintf(buf, sizeof(buf), "7 %s", tr("MHz"));
-               else if (value == BANDWIDTH_6_MHZ) snprintf(buf, sizeof(buf), "6 %s", tr("MHz"));
-               else            /*BANDWIDTH_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Modulation"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Modulation();
-               if      (value == QPSK)      snprintf(buf, sizeof(buf), "QPSK");
-               else if (value == QAM_16)    snprintf(buf, sizeof(buf), "QAM 16");
-               else if (value == QAM_32)    snprintf(buf, sizeof(buf), "QAM 32");
-               else if (value == QAM_64)    snprintf(buf, sizeof(buf), "QAM 64");
-               else if (value == QAM_128)   snprintf(buf, sizeof(buf), "QAM 128");
-               else if (value == QAM_256)   snprintf(buf, sizeof(buf), "QAM 256");
-               else            /*QAM_AUTO*/ snprintf(buf, sizeof(buf), "QAM %s", tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               offset += OSDROWHEIGHT;
-               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Inversion"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Inversion();
-               if      (value == INVERSION_OFF)   snprintf(buf, sizeof(buf), tr("Off"));
-               else if (value == INVERSION_ON)    snprintf(buf, sizeof(buf), tr("On"));
-               else            /*INVERSION_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Coderate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->CoderateH();
-               if      (value == FEC_NONE)  snprintf(buf, sizeof(buf), "%s (H)", tr("None"));
-               else if (value == FEC_1_2)   snprintf(buf, sizeof(buf), "1/2 (H)");
-               else if (value == FEC_2_3)   snprintf(buf, sizeof(buf), "2/3 (H)");
-               else if (value == FEC_3_4)   snprintf(buf, sizeof(buf), "3/4 (H)");
-               else if (value == FEC_4_5)   snprintf(buf, sizeof(buf), "4/5 (H)");
-               else if (value == FEC_5_6)   snprintf(buf, sizeof(buf), "5/6 (H)");
-               else if (value == FEC_6_7)   snprintf(buf, sizeof(buf), "6/7 (H)");
-               else if (value == FEC_7_8)   snprintf(buf, sizeof(buf), "7/8 (H)");
-               else if (value == FEC_8_9)   snprintf(buf, sizeof(buf), "8/9 (H)");
-               else            /*FEC_AUTO*/ snprintf(buf, sizeof(buf), "%s (H)", tr("Auto"));
-               value = channel->CoderateL();
-               if      (value == FEC_NONE)  snprintf(buf2, sizeof(buf2), " %s (L)", tr("None"));
-               else if (value == FEC_1_2)   snprintf(buf2, sizeof(buf2), " 1/2 (L)");
-               else if (value == FEC_2_3)   snprintf(buf2, sizeof(buf2), " 2/3 (L)");
-               else if (value == FEC_3_4)   snprintf(buf2, sizeof(buf2), " 3/4 (L)");
-               else if (value == FEC_4_5)   snprintf(buf2, sizeof(buf2), " 4/5 (L)");
-               else if (value == FEC_5_6)   snprintf(buf2, sizeof(buf2), " 5/6 (L)");
-               else if (value == FEC_6_7)   snprintf(buf2, sizeof(buf2), " 6/7 (L)");
-               else if (value == FEC_7_8)   snprintf(buf2, sizeof(buf2), " 7/8 (L)");
-               else if (value == FEC_8_9)   snprintf(buf2, sizeof(buf2), " 8/9 (L)");
-               else            /*FEC_AUTO*/ snprintf(buf2, sizeof(buf2), " %s (L)", tr("Auto"));
-               strncat(buf, buf2, sizeof(buf));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               offset += OSDROWHEIGHT;
-               m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Hierarchy"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Hierarchy();
-               if      (value == HIERARCHY_NONE)  snprintf(buf, sizeof(buf), tr("None"));
-               else if (value == HIERARCHY_1)     snprintf(buf, sizeof(buf), "1");
-               else if (value == HIERARCHY_2)     snprintf(buf, sizeof(buf), "2");
-               else if (value == HIERARCHY_4)     snprintf(buf, sizeof(buf), "4");
-               else            /*HIERARCHY_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Guard"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-               value = channel->Guard();
-               if      (value == GUARD_INTERVAL_1_32)  snprintf(buf, sizeof(buf), "1/32");
-               else if (value == GUARD_INTERVAL_1_16)  snprintf(buf, sizeof(buf), "1/16");
-               else if (value == GUARD_INTERVAL_1_8)   snprintf(buf, sizeof(buf), "1/8");
-               else if (value == GUARD_INTERVAL_1_4)   snprintf(buf, sizeof(buf), "1/4");
-               else            /*GUARD_INTERVAL_AUTO*/ snprintf(buf, sizeof(buf), tr("Auto"));
-               m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
                break;
           }
         if (IS_OSDCORNERING) {
@@ -692,73 +415,34 @@ void cFemonOsd::DrawInfoWindow(void)
            }
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Video Stream"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "#%d", channel->Vpid());
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("#%d", channel->Vpid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s (%.2f %s)", m_Receiver->VideoStreamBitrate(), tr("Mbit/s"), m_Receiver->VideoBitrate(), tr("Mbit/s"));
-        else            snprintf(buf, sizeof(buf), "---");
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), m_Receiver ? *cString::sprintf("%s (%s)", *getBitrateMbits(m_Receiver->VideoStreamBitrate()), *getBitrateMbits(m_Receiver->VideoBitrate())) : *cString::sprintf("---"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Aspect Ratio"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        if (m_Receiver) {
-           value = m_Receiver->VideoAspectRatio();
-           if      (value == AR_1_1)    snprintf(buf, sizeof(buf), "1:1");
-           else if (value == AR_4_3)    snprintf(buf, sizeof(buf), "4:3");
-           else if (value == AR_16_9)   snprintf(buf, sizeof(buf), "16:9");
-           else if (value == AR_2_21_1) snprintf(buf, sizeof(buf), "2.21:1");
-           else                         snprintf(buf, sizeof(buf), "%s", tr("reserved"));
-           }
-        else                            snprintf(buf, sizeof(buf), "---");
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAspectRatio(m_Receiver ? m_Receiver->VideoAspectRatio() : -1), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frame Rate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        if (m_Receiver) snprintf(buf, sizeof(buf), "%.2f %s", m_Receiver->VideoFrameRate(), tr("Hz"));
-        else            snprintf(buf, sizeof(buf), "---");
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), m_Receiver ? *cString::sprintf("%.2f %s", m_Receiver->VideoFrameRate(), tr("Hz")) : *cString::sprintf("---"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Video Format"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        if (m_Receiver) {
-           value = m_Receiver->VideoFormat();
-           if      (value == VF_PAL)  snprintf(buf, sizeof(buf), "%s", tr("PAL"));
-           else if (value == VF_NTSC) snprintf(buf, sizeof(buf), "%s", tr("NTSC"));
-           else                       snprintf(buf, sizeof(buf), "%s", tr("unknown"));
-           }
-        else                          snprintf(buf, sizeof(buf), "---");
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getVideoFormat(m_Receiver ? m_Receiver->VideoFormat() : -1), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Resolution"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        if (m_Receiver) snprintf(buf, sizeof(buf), "%d x %d", m_Receiver->VideoHorizontalSize(), m_Receiver->VideoVerticalSize());
-        else            snprintf(buf, sizeof(buf), "---");
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), m_Receiver ? *cString::sprintf("%d x %d", m_Receiver->VideoHorizontalSize(), m_Receiver->VideoVerticalSize()) : *cString::sprintf("---"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Stream"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        snprintf(buf, sizeof(buf), "#%d %s", IS_AUDIO_TRACK(track) ? channel->Apid(int(track - ttAudioFirst)) : channel->Apid(0), IS_AUDIO_TRACK(track) ? channel->Alang(int(track - ttAudioFirst)) : channel->Alang(0));
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("#%d %s", IS_AUDIO_TRACK(track) ? channel->Apid(int(track - ttAudioFirst)) : channel->Apid(0), IS_AUDIO_TRACK(track) ? channel->Alang(int(track - ttAudioFirst)) : channel->Alang(0)), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        if (m_Receiver) {
-           dvalue = m_Receiver->AudioStreamBitrate();
-           if      (dvalue == (double)FR_RESERVED) snprintf(buf, sizeof(buf), "%s (%.0f %s)", tr("reserved"), m_Receiver->AudioBitrate(), tr("kbit/s"));
-           else if (dvalue == (double)FR_FREE)     snprintf(buf, sizeof(buf), "%s (%.0f %s)", tr("free"), m_Receiver->AudioBitrate(), tr("kbit/s"));
-           else                                    snprintf(buf, sizeof(buf), "%.0f %s (%.0f %s)", dvalue, tr("kbit/s"), m_Receiver->AudioBitrate(), tr("kbit/s"));
-           }
-        else                                       snprintf(buf, sizeof(buf), "---");
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAudioBitrate(m_Receiver ? m_Receiver->AudioBitrate() : (double)FR_NOTVALID, m_Receiver ? m_Receiver->AudioStreamBitrate() : (double)FR_NOTVALID), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("MPEG Layer"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        if (m_Receiver) snprintf(buf, sizeof(buf), "%d", m_Receiver->AudioMPEGLayer());
-        else            snprintf(buf, sizeof(buf), "---");
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), m_Receiver ? *cString::sprintf("%d", m_Receiver->AudioMPEGLayer()) : *cString::sprintf("---"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sampling Frequency"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        if (m_Receiver) {
-           value = m_Receiver->AudioSamplingFreq();
-           if (value == FR_RESERVED) snprintf(buf, sizeof(buf), "%s", tr("reserved"));
-           else                      snprintf(buf, sizeof(buf), "%.1f %s", (value / 1000.0), tr("kHz"));
-           }
-        else                         snprintf(buf, sizeof(buf), "---");
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAudioSamplingFreq(m_Receiver ? m_Receiver->AudioSamplingFreq() : FR_NOTVALID), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         if (IS_OSDCORNERING) {
            m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3);
            m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4);
@@ -767,8 +451,7 @@ void cFemonOsd::DrawInfoWindow(void)
      else if (m_DisplayMode == eFemonModeAC3) {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), femonTheme[femonConfig.theme].clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
-        snprintf(buf, sizeof(buf), "%s - %s #%d %s", tr("Stream Information"), tr("AC-3 Stream"), IS_DOLBY_TRACK(track) ? channel->Dpid(int(track - ttDolbyFirst)) : channel->Dpid(0), IS_DOLBY_TRACK(track) ? channel->Dlang(int(track - ttDolbyFirst)) : channel->Dlang(0));
-        m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
+        m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), *cString::sprintf("%s - %s #%d %s", tr("Stream Information"), tr("AC-3 Stream"), IS_DOLBY_TRACK(track) ? channel->Dpid(int(track - ttDolbyFirst)) : channel->Dpid(0), IS_DOLBY_TRACK(track) ? channel->Dlang(int(track - ttDolbyFirst)) : channel->Dlang(0)), femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
         if (IS_OSDCORNERING) {
            m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2);
            m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1);
@@ -776,87 +459,34 @@ void cFemonOsd::DrawInfoWindow(void)
         offset += OSDROWHEIGHT;
         if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           snprintf(buf, sizeof(buf), "%.0f %s (%0.f %s)", m_Receiver->AC3StreamBitrate(), tr("kbit/s"), m_Receiver->AC3Bitrate(), tr("kbit/s"));
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("%s (%s)", *getBitrateKbits(m_Receiver->AC3StreamBitrate()), *getBitrateKbits(m_Receiver->AC3Bitrate())), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Sampling Frequency"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           snprintf(buf, sizeof(buf), "%.1f %s", m_Receiver->AC3SamplingFreq() / 1000., tr("kHz"));
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("%.1f %s", m_Receiver->AC3SamplingFreq() / 1000., tr("kHz")), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Frame Size"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           snprintf(buf, sizeof(buf), "%d", m_Receiver->AC3FrameSize());
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("%d", m_Receiver->AC3FrameSize()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bit Stream Mode"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           switch (m_Receiver->AC3BitStreamMode()) {
-             case 0: snprintf(buf, sizeof(buf), tr("Complete Main (CM)"));     break;
-             case 1: snprintf(buf, sizeof(buf), tr("Music and Effects (ME)")); break;
-             case 2: snprintf(buf, sizeof(buf), tr("Visually Impaired (VI)")); break;
-             case 3: snprintf(buf, sizeof(buf), tr("Hearing Impaired (HI)"));  break;
-             case 4: snprintf(buf, sizeof(buf), tr("Dialogue (D)"));           break;
-             case 5: snprintf(buf, sizeof(buf), tr("Commentary (C)"));         break;
-             case 6: snprintf(buf, sizeof(buf), tr("Emergency (E)"));          break;
-             case 7: (m_Receiver->AC3AudioCodingMode() == 1) ? snprintf(buf, sizeof(buf), tr("Voice Over (VO)")) : snprintf(buf, sizeof(buf), tr("Karaoke")); break;
-             default: snprintf(buf, sizeof(buf), "---");
-             }
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAC3BitStreamMode(m_Receiver->AC3BitStreamMode(), m_Receiver->AC3AudioCodingMode()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Coding Mode"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           if (m_Receiver->AC3BitStreamMode() != 7) {
-              switch (m_Receiver->AC3AudioCodingMode()) {
-                case 0:  snprintf(buf, sizeof(buf), "1+1 - %s, %s",             tr("Ch1"), tr("Ch2"));                           break;
-                case 1:  snprintf(buf, sizeof(buf), "1/0 - %s",                 tr("C"));                                        break;
-                case 2:  snprintf(buf, sizeof(buf), "2/0 - %s, %s",             tr("L"), tr("R"));                               break;
-                case 3:  snprintf(buf, sizeof(buf), "3/0 - %s, %s, %s",         tr("L"), tr("C"), tr("R"));                      break;
-                case 4:  snprintf(buf, sizeof(buf), "2/1 - %s, %s, %s",         tr("L"), tr("R"), tr("S"));                      break;
-                case 5:  snprintf(buf, sizeof(buf), "3/1 - %s, %s, %s, %s",     tr("L"), tr("C"), tr("R"),  tr("S"));            break;
-                case 6:  snprintf(buf, sizeof(buf), "2/2 - %s, %s, %s, %s",     tr("L"), tr("R"), tr("SL"), tr("SR"));           break;
-                case 7:  snprintf(buf, sizeof(buf), "3/2 - %s, %s, %s, %s, %s", tr("L"), tr("C"), tr("R"),  tr("SL"), tr("SR")); break;
-                default: snprintf(buf, sizeof(buf), "---");
-                }
-             }
-	   else snprintf(buf, sizeof(buf), "---");
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAC3AudioCodingMode(m_Receiver->AC3AudioCodingMode(), m_Receiver->AC3BitStreamMode()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Center Mix Level"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           switch (m_Receiver->AC3CenterMixLevel()) {
-             case CML_MINUS_3dB:   snprintf(buf, sizeof(buf), "-3.0 %s", tr("dB"));  break;
-             case CML_MINUS_4_5dB: snprintf(buf, sizeof(buf), "-4.5 %s", tr("dB"));  break;
-             case CML_MINUS_6dB:   snprintf(buf, sizeof(buf), "-6.0 %s", tr("dB"));  break;
-             case CML_RESERVED:    snprintf(buf, sizeof(buf), "%s", tr("reserved")); break;
-             default:              snprintf(buf, sizeof(buf), "---");
-             }
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAC3CenterMixLevel(m_Receiver->AC3CenterMixLevel()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Surround Mix Level"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           switch (m_Receiver->AC3SurroundMixLevel()) {
-             case SML_MINUS_3dB: snprintf(buf, sizeof(buf), "-3 %s", tr("dB"));    break;
-             case SML_MINUS_6dB: snprintf(buf, sizeof(buf), "-6 %s", tr("dB"));    break;
-             case SML_0_dB:      snprintf(buf, sizeof(buf), "0 %s", tr("dB"));     break;
-             case SML_RESERVED:  snprintf(buf, sizeof(buf), "%s", tr("reserved")); break;
-             default:            snprintf(buf, sizeof(buf), "---");
-             }
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAC3SurroundMixLevel(m_Receiver->AC3SurroundMixLevel()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Dolby Surround Mode"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           switch (m_Receiver->AC3DolbySurroundMode()) {
-             case DSM_NOT_INDICATED:     snprintf(buf, sizeof(buf), "%s", tr("not indicated")); break;
-             case DSM_NOT_DOLBYSURROUND: snprintf(buf, sizeof(buf), "%s", tr("no"));            break;
-             case DSM_DOLBYSURROUND:     snprintf(buf, sizeof(buf), "%s", tr("yes"));           break;
-             case DSM_RESERVED:          snprintf(buf, sizeof(buf), "%s", tr("reserved"));      break;
-             default:                    snprintf(buf, sizeof(buf), "---");
-             }
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAC3DolbySurroundMode(m_Receiver->AC3DolbySurroundMode()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Low Frequency Effects"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           snprintf(buf, sizeof(buf), "%s", m_Receiver->AC3LfeOn() ? tr("On") : tr("Off"));
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("%s", m_Receiver->AC3LfeOn() ? tr("On") : tr("Off")), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Dialogue Normalization"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-           value = m_Receiver->AC3DialogLevel();
-           if (value > 0) snprintf(buf, sizeof(buf), "-%d %s", value, tr("dB"));
-           else           snprintf(buf, sizeof(buf), "---");
-           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), buf, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *getAC3DialogLevel(m_Receiver->AC3DialogLevel()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            }
         if (IS_OSDCORNERING) {
            m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3);
@@ -874,8 +504,13 @@ void cFemonOsd::Action(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   cTimeMs t;
+  SvdrpCommand_v1_0 cmd;
+  cmd.command = cString::sprintf("PLUG %s INFO\r\n", PLUGIN_NAME_I18N);
   while (Running()) {
     t.Set(0);
+    m_SvdrpFrontend = -1;
+    m_SvdrpVideoBitrate = -1.0;
+    m_SvdrpAudioBitrate = -1.0;
     if (m_Frontend != -1) {
        CHECK(ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus));
        CHECK(ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal));
@@ -884,9 +519,37 @@ void cFemonOsd::Action(void)
        CHECK(ioctl(m_Frontend, FE_READ_UNCORRECTED_BLOCKS, &m_UNC));
        DrawInfoWindow();
        DrawStatusWindow();
-       if (femonConfig.syslogoutput) {
-          isyslog("Card #%d (%s) STR: %04x SNR: %04x BER: %08x UNC: %08x |%c|%c|%c|%c|%c|", cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name, m_Signal, m_SNR, m_BER, m_UNC, (m_FrontendStatus & FE_HAS_LOCK) ? 'L' : ' ', (m_FrontendStatus & FE_HAS_SIGNAL) ? 'S' : ' ', (m_FrontendStatus & FE_HAS_CARRIER) ? 'C' : ' ', (m_FrontendStatus & FE_HAS_VITERBI) ? 'V' : ' ', (m_FrontendStatus & FE_HAS_SYNC) ? 'Z' : ' ');
+       }
+    else if (m_SvdrpConnection.handle >= 0) {
+       cmd.handle = m_SvdrpConnection.handle; 
+       m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
+       if (cmd.responseCode == 900) {
+          for (cLine *line = cmd.reply.First(); line; line = cmd.reply.Next(line)) {
+             const char *s = line->Text();
+	      if (strncasecmp(s, "CARD:", 5) == 0)
+                m_SvdrpFrontend = strtol(s + 5, NULL, 10);
+             else if (strncasecmp(s, "TYPE:", 5) == 0)
+                m_FrontendInfo.type = (fe_type_t) strtol(s + 5, NULL, 10);
+             else if (strncasecmp(s, "NAME:", 5) == 0)
+                strn0cpy(m_FrontendInfo.name, s + 5, sizeof(m_FrontendInfo.name));
+             else if (strncasecmp(s, "STAT:", 5) == 0)
+                m_FrontendStatus = (fe_status_t) strtol(s + 5, NULL, 16);
+             else if (strncasecmp(s, "SGNL:", 5) == 0)
+                m_Signal = strtol(s + 5, NULL, 16);
+             else if (strncasecmp(s, "SNRA:", 5) == 0)
+                m_SNR = strtol(s + 5, NULL, 16);
+             else if (strncasecmp(s, "BERA:", 5) == 0)
+                m_BER = strtol(s + 5, NULL, 16);
+             else if (strncasecmp(s, "UNCB:", 5) == 0)
+                m_UNC = strtol(s + 5, NULL, 16);
+             else if (strncasecmp(s, "VIBR:", 5) == 0)
+                m_SvdrpVideoBitrate = strtol(s + 5, NULL, 10);
+             else if (strncasecmp(s, "AUBR:", 5) == 0)
+                m_SvdrpAudioBitrate = strtol(s + 5, NULL, 10);
+             }
           }
+       DrawInfoWindow();
+       DrawStatusWindow();
        }
     cCondWait::SleepMs(100 * femonConfig.updateinterval - t.Elapsed());
     }
@@ -902,17 +565,23 @@ void cFemonOsd::Show(void)
   asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
   free(dev);
-  if (m_Frontend < 0) {
+  if (m_Frontend >= 0) {
+     if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
+        esyslog("ERROR: cFemonOsd::Show() cannot read frontend info.");
+        close(m_Frontend);
+        m_Frontend = -1;
+        return;
+        }
+     }
+  else if (femonConfig.usesvdrp) {
+     if (!SvdrpConnect() || !SvdrpTune())
+        return;
+     }
+  else {
      esyslog("ERROR: cFemonOsd::Show() cannot open frontend device.");
-     m_Frontend = -1;
      return;
      }
-  if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-     esyslog("ERROR: cFemonOsd::Show() cannot read frontend info.");
-     close(m_Frontend);
-     m_Frontend = -1;
-     return;
-     }
+
   m_Osd = cOsdProvider::NewOsd(((Setup.OSDWidth - OSDWIDTH) / 2) + Setup.OSDLeft + femonConfig.osdoffset, ((Setup.OSDHeight - OSDHEIGHT) / 2) + Setup.OSDTop);
   if (m_Osd) {
      tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, femonTheme[femonConfig.theme].bpp } };
@@ -953,17 +622,23 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
   free(dev);
-  if (m_Frontend < 0) {
+  if (m_Frontend >= 0) {
+     if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
+        esyslog("ERROR: cFemonOsd::ChannelSwitch() cannot read frontend info.");
+        close(m_Frontend);
+        m_Frontend = -1;
+        return;
+        }
+     }
+  else if (femonConfig.usesvdrp) {
+     if (!SvdrpConnect() || !SvdrpTune())
+        return;
+     }
+  else {
      esyslog("ERROR: cFemonOsd::ChannelSwitch() cannot open frontend device.");
-     m_Frontend = -1;
      return;
      }
-  if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-     esyslog("ERROR: cFemonOsd::ChannelSwitch() cannot read frontend info.");
-     close(m_Frontend);
-     m_Frontend = -1;
-     return;
-     }
+
   if (m_Receiver)
      delete m_Receiver;
   if (femonConfig.analyzestream) {
@@ -1022,6 +697,55 @@ bool cFemonOsd::DeviceSwitch(int direction)
         }
      }
    return (false);
+}
+
+bool cFemonOsd::SvdrpConnect(void)
+{
+   if (m_SvdrpConnection.handle < 0) {
+      m_SvdrpPlugin = cPluginManager::GetPlugin(SVDRPPLUGIN);
+      if (m_SvdrpPlugin) {
+         m_SvdrpConnection.serverIp = femonConfig.svdrpip;
+         m_SvdrpConnection.serverPort = femonConfig.svdrpport;
+         m_SvdrpConnection.shared = true;
+         m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection);
+         if (m_SvdrpConnection.handle >= 0) {
+            SvdrpCommand_v1_0 cmd;
+            cmd.handle = m_SvdrpConnection.handle; 
+            cmd.command = cString::sprintf("PLUG %s\r\n", PLUGIN_NAME_I18N);
+            m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
+            if (cmd.responseCode != 214) {
+               m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection); // close connection
+               esyslog("ERROR: cFemonOsd::SvdrpConnect() cannot find plugin '%s' on server %s.", PLUGIN_NAME_I18N, *m_SvdrpConnection.serverIp);
+               }
+            }
+         else
+            esyslog("ERROR: cFemonOsd::SvdrpConnect() cannot connect to SVDRP server.");
+         }
+      else
+         esyslog("ERROR: cFemonOsd::SvdrpConnect() cannot find plugin '%s'.", SVDRPPLUGIN);
+      }
+   return m_SvdrpConnection.handle >= 0;
+}
+
+bool cFemonOsd::SvdrpTune(void)
+{
+   if (m_SvdrpPlugin && m_SvdrpConnection.handle >= 0) {
+      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+      if (channel) {
+         SvdrpCommand_v1_0 cmd;
+         cmd.handle = m_SvdrpConnection.handle; 
+         cmd.command = cString::sprintf("CHAN %s\r\n", *channel->GetChannelID().ToString());
+         m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
+         if (cmd.responseCode == 250)
+            return true;
+         esyslog("ERROR: cFemonOsd::SvdrpTune() cannot tune server channel.");
+         }
+      else
+         esyslog("ERROR: cFemonOsd::SvdrpTune() invalid channel.");
+      }
+   else
+      esyslog("ERROR: cFemonOsd::SvdrpTune() unexpected connection state.");
+   return false;
 }
 
 double cFemonOsd::GetVideoBitrate(void)
