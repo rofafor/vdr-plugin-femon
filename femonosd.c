@@ -602,7 +602,7 @@ void cFemonOsd::Show(void)
         cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
         IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
         IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-        m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), apid, dpid);
+        m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      Start();
@@ -645,7 +645,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
      IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-     m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), apid, dpid);
+     m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
 }
@@ -662,7 +662,7 @@ void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
      IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-     m_Receiver = new cFemonReceiver(channel->Ca(), channel->Vpid(), apid, dpid);
+     m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
 }
@@ -690,7 +690,11 @@ bool cFemonOsd::DeviceSwitch(int direction)
            cDevice::GetDevice(device)->SwitchChannel(channel, true);
            if (cDevice::GetDevice(device) == cDevice::PrimaryDevice())
               cDevice::GetDevice(device)->ForceTransferMode();
+#if defined(APIVERSNUM) && APIVERSNUM < 10500
            cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
+#else
+           cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->GetChannelID(), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
+#endif
            cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
            return (true);
            }

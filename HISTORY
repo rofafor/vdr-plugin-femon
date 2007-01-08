@@ -240,3 +240,7 @@ VDR Plugin 'femon' Revision History
 - Added INFO SVDRP command (partially based on patch by Herbert Pötzl).
 - Removed system log option - use SVDRP instead.
 - Added --remove-destination to the 'cp' command in Makefile.
+
+2007-01-08: Version 1.1.1
+
+- Updated for vdr-1.5.0.
