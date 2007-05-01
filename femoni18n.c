@@ -2363,6 +2363,28 @@ const tI18nPhrase Phrases[] = {
     "", // Dansk
     "", // Èesky (Czech)
   },
+  { "Femon not available while replaying", // English
+    "", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Signaalimittari ei ole käytettävissä toiston aikana", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ (Greek)
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+    "", // ÀãááÚØÙ (Russian)
+    "", // Hrvatski (Croatian)
+    "", // Eesti
+    "", // Dansk
+    "", // Èesky (Czech)
+  },
   { NULL }
 };
 

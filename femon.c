@@ -6,6 +6,7 @@
  * $Id$
  */
 
+#include <vdr/menu.h>
 #include <vdr/remote.h>
 #include "femoncfg.h"
 #include "femoni18n.h"
@@ -72,7 +73,11 @@ cOsdObject *cPluginFemon::MainMenuAction(void)
 {
   // Perform the action when selected from the main VDR menu.
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  return cFemonOsd::Instance(true);
+  if (cReplayControl::NowReplaying())
+     Skins.Message(mtInfo, tr("Femon not available while replaying"));
+  else
+     return cFemonOsd::Instance(true);
+  return NULL;
 }
 
 bool cPluginFemon::SetupParse(const char *Name, const char *Value)
@@ -160,6 +165,10 @@ const char **cPluginFemon::SVDRPHelpPages(void)
 cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
 {
   if (strcasecmp(Command, "OPEN") == 0) {
+     if (cReplayControl::NowReplaying()) {
+        ReplyCode = 550; // Requested action not taken
+        return cString("Cannot open femon plugin while replaying");
+        }
      if (!cFemonOsd::Instance())
         cRemote::CallPlugin("femon");
      return cString("Opening femon plugin");

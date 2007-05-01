@@ -244,3 +244,7 @@ VDR Plugin 'femon' Revision History
 2007-01-08: Version 1.1.1
 
 - Updated for vdr-1.5.0.
+
+2007-05-01: Version 1.1.2
+
+- Fixed opening while replaying (Thanks to Antti Seppälä for reporting this one).
