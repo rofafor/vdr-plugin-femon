@@ -64,6 +64,7 @@ cFemonReceiver::~cFemonReceiver(void)
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   if (Running())
      Cancel(3);
+  Detach();
 }
 
 /* The following function originates from libdvbmpeg: */

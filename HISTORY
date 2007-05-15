@@ -248,3 +248,7 @@ VDR Plugin 'femon' Revision History
 2007-05-01: Version 1.1.2
 
 - Fixed opening while replaying (Thanks to Antti Seppälä for reporting this one).
+
+2007-05-15: Version 1.1.3
+
+- Fixed a race condition in cFemonReceiver (Thanks to Reinhard Nissl).
