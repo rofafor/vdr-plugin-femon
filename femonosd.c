@@ -8,7 +8,6 @@
 
 #include <ctype.h>
 #include "femoncfg.h"
-#include "femoni18n.h"
 #include "femonreceiver.h"
 #include "femontools.h"
 #include "femonosd.h"
@@ -582,7 +581,7 @@ void cFemonOsd::Show(void)
      return;
      }
 
-  m_Osd = cOsdProvider::NewOsd(((Setup.OSDWidth - OSDWIDTH) / 2) + Setup.OSDLeft + femonConfig.osdoffset, ((Setup.OSDHeight - OSDHEIGHT) / 2) + Setup.OSDTop);
+  m_Osd = cOsdProvider::NewOsd(((cOsd::OsdWidth() - OSDWIDTH) / 2) + cOsd::OsdLeft() + femonConfig.osdoffset, ((cOsd::OsdHeight() - OSDHEIGHT) / 2) + cOsd::OsdTop());
   if (m_Osd) {
      tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, femonTheme[femonConfig.theme].bpp } };
      if (m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {

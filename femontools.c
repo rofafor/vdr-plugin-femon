@@ -10,7 +10,6 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <linux/dvb/frontend.h>
-#include "femoni18n.h"
 #include "femonreceiver.h"
 #include "femonosd.h"
 #include "femontools.h"
