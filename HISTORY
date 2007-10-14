@@ -253,6 +253,10 @@ VDR Plugin 'femon' Revision History
 
 - Fixed a race condition in cFemonReceiver (Thanks to Reinhard Nissl).
 
+2007-10-14: Version 1.1.4
+
+- Backported from 1.2.2.
+
 2007-08-14: Version 1.2.0
 
 - Updated for vdr-1.5.7.
@@ -260,3 +264,8 @@ VDR Plugin 'femon' Revision History
 2007-08-19: Version 1.2.1
 
 - Updated for vdr-1.5.8.
+
+2007-10-14: Version 1.2.2
+
+- Added Spids support.
+- Minor OSD layout changes.

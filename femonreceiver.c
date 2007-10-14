@@ -18,11 +18,7 @@
 #define PTS_DTS_FLAGS 0xC0
 
 cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[], int Dpid[])
-#if defined(APIVERSNUM) && APIVERSNUM < 10500
-:cReceiver(Ca, -1, Vpid, Apid, Dpid, NULL), cThread("femon receiver")
-#else
 :cReceiver(ChannelID, -1, Vpid, Apid, Dpid, NULL), cThread("femon receiver")
-#endif
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   m_VideoPid = Vpid;

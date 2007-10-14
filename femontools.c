@@ -164,6 +164,15 @@ cString getDpids(const cChannel *channel)
   return dpids;
 }
 
+cString getSpids(const cChannel *channel)
+{
+  int value = 0;
+  cString spids = cString::sprintf("%d", channel->Spid(value));
+  while (channel->Spid(++value) && (value < MAXSPIDS))
+    spids = cString::sprintf("%s, %d", *spids, channel->Spid(value));
+  return spids;
+}
+
 cString getCAids(const cChannel *channel, bool identify)
 {
   cString caids;
@@ -186,7 +195,7 @@ cString getCA(int value)
 {
   /* http://www.dvb.org/index.php?id=174 */
   switch (value) {
-    case 0x0000:            return cString::sprintf("%s", tr("Free to Air")); /* Reserved */
+    case 0x0000:            return cString::sprintf("%s", trVDR("Free To Air")); /* Reserved */
     case 0x0001 ... 0x009F:
     case 0x00A2 ... 0x00FF: return cString::sprintf("%s", tr("Fixed")); /* Standardized systems */
     case 0x00A0 ... 0x00A1: return cString::sprintf("%s", tr("Analog")); /* Analog signals */
@@ -208,7 +217,7 @@ cString getCA(int value)
 cString getCoderate(int value)
 {
   switch (value) {
-    case FEC_NONE: return cString::sprintf("%s", tr("None"));
+    case FEC_NONE: return cString::sprintf("%s", tr("none"));
     case FEC_1_2:  return cString::sprintf("1/2");
     case FEC_2_3:  return cString::sprintf("2/3");
     case FEC_3_4:  return cString::sprintf("3/4");
@@ -217,7 +226,7 @@ cString getCoderate(int value)
     case FEC_6_7:  return cString::sprintf("6/7");
     case FEC_7_8:  return cString::sprintf("7/8");
     case FEC_8_9:  return cString::sprintf("8/9");
-    case FEC_AUTO: return cString::sprintf("%s", tr("Auto"));
+    case FEC_AUTO: return cString::sprintf("%s", tr("auto"));
     }
   return cString::sprintf("---");
 }
@@ -227,7 +236,7 @@ cString getTransmission(int value)
   switch (value) {
     case TRANSMISSION_MODE_2K:   return cString::sprintf("2K");
     case TRANSMISSION_MODE_8K:   return cString::sprintf("8K");
-    case TRANSMISSION_MODE_AUTO: return cString::sprintf("%s", tr("Auto"));
+    case TRANSMISSION_MODE_AUTO: return cString::sprintf("%s", tr("auto"));
     }
   return cString::sprintf("---");
 }
@@ -238,7 +247,7 @@ cString getBandwidth(int value)
     case BANDWIDTH_8_MHZ: return cString::sprintf("8 %s", tr("MHz"));
     case BANDWIDTH_7_MHZ: return cString::sprintf("7 %s", tr("MHz"));
     case BANDWIDTH_6_MHZ: return cString::sprintf("6 %s", tr("MHz"));
-    case BANDWIDTH_AUTO:  return cString::sprintf("%s", tr("Auto"));
+    case BANDWIDTH_AUTO:  return cString::sprintf("%s", tr("auto"));
     }
   return cString::sprintf("---");
 }
@@ -246,9 +255,9 @@ cString getBandwidth(int value)
 cString getInversion(int value)
 {
   switch (value) {
-    case INVERSION_OFF:  return cString::sprintf("%s", tr("Off"));
-    case INVERSION_ON:   return cString::sprintf("%s", tr("On"));
-    case INVERSION_AUTO: return cString::sprintf("%s", tr("Auto"));
+    case INVERSION_OFF:  return cString::sprintf("%s", tr("off"));
+    case INVERSION_ON:   return cString::sprintf("%s", tr("on"));
+    case INVERSION_AUTO: return cString::sprintf("%s", tr("auto"));
     }
   return cString::sprintf("---");
 }
@@ -256,11 +265,11 @@ cString getInversion(int value)
 cString getHierarchy(int value)
 {
   switch (value) {
-    case HIERARCHY_NONE: return cString::sprintf("%s", tr("None"));
+    case HIERARCHY_NONE: return cString::sprintf("%s", tr("none"));
     case HIERARCHY_1:    return cString::sprintf("1");
     case HIERARCHY_2:    return cString::sprintf("2");
     case HIERARCHY_4:    return cString::sprintf("4");
-    case HIERARCHY_AUTO: cString::sprintf("%s", tr("Auto"));
+    case HIERARCHY_AUTO: cString::sprintf("%s", tr("auto"));
     }
   return cString::sprintf("---");
 }
@@ -272,7 +281,7 @@ cString getGuard(int value)
     case GUARD_INTERVAL_1_16: return cString::sprintf("1/16");
     case GUARD_INTERVAL_1_8:  return cString::sprintf("1/8");
     case GUARD_INTERVAL_1_4:  return cString::sprintf("1/4");
-    case GUARD_INTERVAL_AUTO: cString::sprintf("%s", tr("Auto"));
+    case GUARD_INTERVAL_AUTO: cString::sprintf("%s", tr("auto"));
     }
   return cString::sprintf("---");
 }
@@ -286,7 +295,7 @@ cString getModulation(int value)
     case QAM_64:   return cString::sprintf("QAM 64");
     case QAM_128:  return cString::sprintf("QAM 128");
     case QAM_256:  return cString::sprintf("QAM 256");
-    case QAM_AUTO: return cString::sprintf("QAM %s", tr("Auto"));
+    case QAM_AUTO: return cString::sprintf("QAM %s", tr("auto"));
     }
   return cString::sprintf("---");
 }
@@ -371,8 +380,8 @@ cString getAC3DolbySurroundMode(int value)
 {
   switch (value) {
     case DSM_NOT_INDICATED:     return cString::sprintf("%s", tr("not indicated"));
-    case DSM_NOT_DOLBYSURROUND: return cString::sprintf("%s", tr("no"));
-    case DSM_DOLBYSURROUND:     return cString::sprintf("%s", tr("yes"));
+    case DSM_NOT_DOLBYSURROUND: return cString::sprintf("%s", trVDR("no"));
+    case DSM_DOLBYSURROUND:     return cString::sprintf("%s", trVDR("yes"));
     case DSM_RESERVED:          return cString::sprintf("%s", tr("reserved"));
     }
   return cString::sprintf("---");

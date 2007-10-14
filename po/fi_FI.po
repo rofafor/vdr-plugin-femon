@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2007-08-12 23:22+0300\n"
+"POT-Creation-Date: 2007-10-14 19:34+0300\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -15,519 +15,317 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: femon.c:22
 msgid "DVB Signal Information Monitor (OSD)"
 msgstr "Signaalimittari (OSD)"
 
-#: femon.c:23
 msgid "Signal Information"
 msgstr "Signaalimittari"
 
-#: femon.c:101
 msgid "Femon not available while replaying"
 msgstr "Signaalimittari ei ole käytettävissä toiston aikana"
 
-#: femon.c:278
 msgid "basic"
 msgstr "perus"
 
-#: femon.c:279
 msgid "transponder"
 msgstr "transponderi"
 
-#: femon.c:280
 msgid "stream"
 msgstr "lähete"
 
-#: femon.c:281 femonosd.c:276
 msgid "AC-3"
 msgstr "AC-3"
 
-#: femon.c:283 femon.c:286
 msgid "Classic"
 msgstr "Klassinen"
 
-#: femon.c:284 femon.c:287
 msgid "Elchi"
 msgstr "Elchi"
 
-#: femon.c:288
 msgid "DeepBlue"
 msgstr "DeepBlue"
 
-#: femon.c:289
 msgid "Moronimo"
 msgstr "Moronimo"
 
-#: femon.c:290
 msgid "Enigma"
 msgstr "Enigma"
 
-#: femon.c:291
 msgid "EgalsTry"
 msgstr "EgalsTry"
 
-#: femon.c:292
 msgid "Duotone"
 msgstr "Duotone"
 
-#: femon.c:293
 msgid "SilverGreen"
 msgstr "SilverGreen"
 
-#: femon.c:304
 msgid "Hide main menu entry"
 msgstr "Piilota valinta päävalikosta"
 
-#: femon.c:304 femon.c:311 femon.c:315 femontools.c:374
-msgid "no"
-msgstr "ei"
-
-#: femon.c:304 femon.c:311 femon.c:315 femontools.c:375
-msgid "yes"
-msgstr "kyllä"
-
-#: femon.c:305
 msgid "Default display mode"
 msgstr "Oletusnäyttötila"
 
-#: femon.c:306
-msgid "Skin"
-msgstr "Ulkoasu"
-
-#: femon.c:307
-msgid "Theme"
-msgstr "Teema"
-
-#: femon.c:308
 msgid "Position"
 msgstr "Sijainti"
 
-#: femon.c:308
-msgid "bottom"
-msgstr "alareuna"
-
-#: femon.c:308
-msgid "top"
-msgstr "yläreuna"
-
-#: femon.c:309
-msgid "Height"
-msgstr "Korkeus"
-
-#: femon.c:310
 msgid "Horizontal offset"
 msgstr "Vaakakeskitys"
 
-#: femon.c:311
 msgid "Show CA system"
 msgstr "Näytä salausjärjestelmä"
 
-#: femon.c:312
 msgid "Red limit [%]"
 msgstr "Punaisen taso [%]"
 
-#: femon.c:313
 msgid "Green limit [%]"
 msgstr "Vihreän taso [%]"
 
-#: femon.c:314
 msgid "OSD update interval [0.1s]"
 msgstr "Näytön päivitysväli [0.1s]"
 
-#: femon.c:315
 msgid "Analyze stream"
 msgstr "Lähetteen analysointi"
 
-#: femon.c:317
 msgid "Calculation interval [0.1s]"
 msgstr "Laskennan päivitysväli [0.1s]"
 
-#: femon.c:318
 msgid "Use SVDRP service"
 msgstr "Käytä SVDRP-palvelua"
 
-#: femon.c:320
 msgid "SVDRP service port"
 msgstr "SVDRP-palvelun portti"
 
-#: femon.c:321
 msgid "SVDRP service IP"
 msgstr "SVDRP-palvelun IP-osoite"
 
-#: femonosd.c:268
 msgid "Video"
 msgstr "Kuva"
 
-#: femonosd.c:276
 msgid "Audio"
 msgstr "Ääni"
 
-#: femonosd.c:305
 msgid "Transponder Information"
 msgstr "Transponderin tiedot"
 
-#: femonosd.c:311
-msgid "Vpid"
-msgstr "Kuva-PID"
-
-#: femonosd.c:313
-msgid "Ppid"
-msgstr "PCR-PID"
-
-#: femonosd.c:316
 msgid "Apid"
 msgstr "Ääni-PID"
 
-#: femonosd.c:318
 msgid "Dpid"
 msgstr "Dolby-PID"
 
-#: femonosd.c:321
-msgid "CA"
-msgstr "Salaus (CA)"
+msgid "Spid"
+msgstr "Tekstitys-PID"
 
-#: femonosd.c:323
-msgid "Tpid"
-msgstr "Teksti-TV-PID"
-
-#: femonosd.c:326
-msgid "Sid"
-msgstr "Palvelu-ID"
-
-#: femonosd.c:328
 msgid "Nid"
 msgstr "Verkko-ID"
 
-#: femonosd.c:331
 msgid "Tid"
 msgstr "Lähete-ID"
 
-#: femonosd.c:333
 msgid "Rid"
 msgstr "Radio-ID"
 
-#: femonosd.c:338
 msgid "Satellite Card"
 msgstr "Satelliittikortti"
 
-#: femonosd.c:340 femonosd.c:359 femonosd.c:378
-msgid "Frequency"
-msgstr "Taajuus"
-
-#: femonosd.c:342 femonosd.c:361
-msgid "Source"
-msgstr "Lähde"
-
-#: femonosd.c:345 femonosd.c:364
-msgid "Srate"
-msgstr "Symbolinopeus"
-
-#: femonosd.c:347
-msgid "Polarization"
-msgstr "Polarisaatio"
-
-#: femonosd.c:350 femonosd.c:369 femonosd.c:388
-msgid "Inversion"
-msgstr "Inversio"
-
-#: femonosd.c:352 femonosd.c:371
-msgid "CoderateH"
-msgstr "Suojaustaso (HP)"
-
-#: femonosd.c:357
 msgid "Cable Card"
 msgstr "Kaapelikortti"
 
-#: femonosd.c:366 femonosd.c:385
-msgid "Modulation"
-msgstr "Modulaatio"
-
-#: femonosd.c:376
 msgid "Terrestrial Card"
 msgstr "Terrestriaalikortti"
 
-#: femonosd.c:380
-msgid "Transmission"
-msgstr "Transmissio"
-
-#: femonosd.c:383
-msgid "Bandwidth"
-msgstr "Kaistanleveys"
-
-#: femonosd.c:390
 msgid "Coderate"
 msgstr "Suojaustaso"
 
-#: femonosd.c:393
-msgid "Hierarchy"
-msgstr "Hierarkia"
-
-#: femonosd.c:395
-msgid "Guard"
-msgstr "Suojaväli"
-
-#: femonosd.c:410 femonosd.c:453
 msgid "Stream Information"
 msgstr "Lähetteen tiedot"
 
-#: femonosd.c:416
 msgid "Video Stream"
 msgstr "Kuvaraita"
 
-#: femonosd.c:419 femonosd.c:437 femonosd.c:460
 msgid "Bitrate"
 msgstr "Bittinopeus"
 
-#: femonosd.c:422
 msgid "Aspect Ratio"
 msgstr "Kuvasuhde"
 
-#: femonosd.c:425
 msgid "Frame Rate"
 msgstr "Ruudunpäivitystaajuus"
 
-#: femonosd.c:426
 msgid "Hz"
 msgstr "Hz"
 
-#: femonosd.c:428
 msgid "Video Format"
 msgstr "Kuvaformaatti"
 
-#: femonosd.c:431
 msgid "Resolution"
 msgstr "Resoluutio"
 
-#: femonosd.c:434
 msgid "Audio Stream"
 msgstr "Ääniraita"
 
-#: femonosd.c:440
 msgid "MPEG Layer"
 msgstr "MPEG-taso"
 
-#: femonosd.c:443 femonosd.c:463
 msgid "Sampling Frequency"
 msgstr "Näytteenottotaajuus"
 
-#: femonosd.c:453
 msgid "AC-3 Stream"
 msgstr "AC-3-ääniraita"
 
-#: femonosd.c:464 femontools.c:400
 msgid "kHz"
 msgstr "kHz"
 
-#: femonosd.c:466
 msgid "Frame Size"
 msgstr "Kehyksen koko"
 
-#: femonosd.c:469
 msgid "Bit Stream Mode"
 msgstr "Lähetteen tyyppi"
 
-#: femonosd.c:472
 msgid "Audio Coding Mode"
 msgstr "Äänikoodaus"
 
-#: femonosd.c:475
 msgid "Center Mix Level"
 msgstr "Keskikanavan taso"
 
-#: femonosd.c:478
 msgid "Surround Mix Level"
 msgstr "Tehostekanavien taso"
 
-#: femonosd.c:481
 msgid "Dolby Surround Mode"
 msgstr "Dolby Surround -tehoste"
 
-#: femonosd.c:484
 msgid "Low Frequency Effects"
 msgstr "LFE-kanava"
 
-#: femonosd.c:485 femontools.c:249
-msgid "Off"
-msgstr "poissa"
-
-#: femonosd.c:485 femontools.c:250
-msgid "On"
+msgid "on"
 msgstr "päällä"
 
-#: femonosd.c:487
+msgid "off"
+msgstr "poissa"
+
 msgid "Dialogue Normalization"
 msgstr "Dialogin normalisointi"
 
-#: femontools.c:189
-msgid "Free to Air"
-msgstr "salaamaton"
-
-#: femontools.c:191
 msgid "Fixed"
 msgstr "kiinteä"
 
-#: femontools.c:192
 msgid "Analog"
 msgstr "analoginen"
 
-#: femontools.c:193
 msgid "SECA/Mediaguard"
 msgstr "SECA/Mediaguard"
 
-#: femontools.c:194
 msgid "Viaccess"
 msgstr "Viaccess"
 
-#: femontools.c:195
 msgid "Irdeto"
 msgstr "Irdeto"
 
-#: femontools.c:196
 msgid "NDS/Videoguard"
 msgstr "NDS/Videoguard"
 
-#: femontools.c:197
 msgid "Conax"
 msgstr "Conax"
 
-#: femontools.c:198
 msgid "CryptoWorks"
 msgstr "CryptoWorks"
 
-#: femontools.c:199
 msgid "PowerVu"
 msgstr "PowerVu"
 
-#: femontools.c:200 femontools.c:202
 msgid "NagraVision"
 msgstr "NagraVision"
 
-#: femontools.c:201
 msgid "BetaCrypt"
 msgstr "BetaCrypt"
 
-#: femontools.c:203
 msgid "SkyCrypt"
 msgstr "SkyCrypt"
 
-#: femontools.c:211 femontools.c:259
-msgid "None"
+msgid "none"
 msgstr "ei"
 
-#: femontools.c:220 femontools.c:230 femontools.c:241 femontools.c:251
-#: femontools.c:263 femontools.c:275 femontools.c:289
-msgid "Auto"
+msgid "auto"
 msgstr "auto"
 
-#: femontools.c:238 femontools.c:239 femontools.c:240 femontools.c:391
 msgid "MHz"
 msgstr "MHz"
 
-#: femontools.c:297 femontools.c:354 femontools.c:365 femontools.c:376
-#: femontools.c:398 femontools.c:407
 msgid "reserved"
 msgstr "varattu"
 
-#: femontools.c:309
 msgid "unknown"
 msgstr "tuntematon"
 
-#: femontools.c:310
 msgid "PAL"
 msgstr "PAL"
 
-#: femontools.c:311
 msgid "NTSC"
 msgstr "NTSC"
 
-#: femontools.c:319
 msgid "Complete Main (CM)"
 msgstr "Pääasiallinen (CM)"
 
-#: femontools.c:320
 msgid "Music and Effects (ME)"
 msgstr "Musiikki ja tehosteet (ME)"
 
-#: femontools.c:321
 msgid "Visually Impaired (VI)"
 msgstr "Näkörajoitteinen (VI)"
 
-#: femontools.c:322
 msgid "Hearing Impaired (HI)"
 msgstr "Kuulorajoitteinen (HI)"
 
-#: femontools.c:323
 msgid "Dialogue (D)"
 msgstr "Vuoropuhelu (D)"
 
-#: femontools.c:324
 msgid "Commentary (C)"
 msgstr "Kommentointi (C)"
 
-#: femontools.c:325
 msgid "Emergency (E)"
 msgstr "Hätätiedote (E)"
 
-#: femontools.c:326
-msgid "Karaoke"
-msgstr "Karaoke"
-
-#: femontools.c:326
 msgid "Voice Over (VO)"
 msgstr "Päälle puhuttu (VO)"
 
-#: femontools.c:335
+msgid "Karaoke"
+msgstr "Karaoke"
+
 msgid "Ch1"
 msgstr "kan. 1"
 
-#: femontools.c:335
 msgid "Ch2"
 msgstr "kan. 2"
 
-#: femontools.c:336 femontools.c:338 femontools.c:340 femontools.c:342
 msgid "C"
 msgstr "K"
 
-#: femontools.c:337 femontools.c:338 femontools.c:339 femontools.c:340
-#: femontools.c:341 femontools.c:342
 msgid "L"
 msgstr "V"
 
-#: femontools.c:337 femontools.c:338 femontools.c:339 femontools.c:340
-#: femontools.c:341 femontools.c:342
 msgid "R"
 msgstr "O"
 
-#: femontools.c:339 femontools.c:340
 msgid "S"
 msgstr "T"
 
-#: femontools.c:341 femontools.c:342
 msgid "SL"
 msgstr "TV"
 
-#: femontools.c:341 femontools.c:342
 msgid "SR"
 msgstr "TO"
 
-#: femontools.c:351 femontools.c:352 femontools.c:353 femontools.c:362
-#: femontools.c:363 femontools.c:364 femontools.c:384
 msgid "dB"
 msgstr "dB"
 
-#: femontools.c:373
 msgid "not indicated"
 msgstr "ei ilmaistu"
 
-#: femontools.c:408
 msgid "free"
 msgstr "vapaa"
 
-#: femontools.c:416 femontools.c:417
 msgid "Mbit/s"
 msgstr "Mbit/s"
 
-#: femontools.c:423 femontools.c:424
 msgid "kbit/s"
 msgstr "kbit/s"

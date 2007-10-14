@@ -18,7 +18,7 @@
 #error "VDR-1.5.8 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.2.1";
+static const char VERSION[]       = "1.2.2";
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -301,18 +301,18 @@ void cMenuFemonSetup::Setup(void)
   int current = Current();
 
   Clear();
-  Add(new cMenuEditBoolItem(  tr("Hide main menu entry"),        &data.hidemenu,       tr("no"),            tr("yes")));
+  Add(new cMenuEditBoolItem(  tr("Hide main menu entry"),        &data.hidemenu));
   Add(new cMenuEditStraItem(  tr("Default display mode"),        &data.displaymode,    eFemonModeMaxNumber, dispmodes));
-  Add(new cMenuEditStraItem(  tr("Skin"),                        &data.skin,           eFemonSkinMaxNumber, skins));
-  Add(new cMenuEditStraItem(  tr("Theme"),                       &data.theme,          eFemonThemeMaxNumber,themes));
-  Add(new cMenuEditBoolItem(  tr("Position"),                    &data.position,       tr("bottom"),        tr("top")));
-  Add(new cMenuEditIntItem(   tr("Height"),                      &data.osdheight,      400,                 500));
+  Add(new cMenuEditStraItem(  trVDR("Setup.OSD$Skin"),           &data.skin,           eFemonSkinMaxNumber, skins));
+  Add(new cMenuEditStraItem(  trVDR("Setup.OSD$Theme"),          &data.theme,          eFemonThemeMaxNumber,themes));
+  Add(new cMenuEditBoolItem(  tr("Position"),                    &data.position,       trVDR("bottom"),     trVDR("top")));
+  Add(new cMenuEditIntItem(   trVDR("Setup.OSD$Height"),         &data.osdheight,      400,                 500));
   Add(new cMenuEditIntItem(   tr("Horizontal offset"),           &data.osdoffset,      -50,                 50));
-  Add(new cMenuEditBoolItem(  tr("Show CA system"),              &data.showcasystem,   tr("no"),            tr("yes")));
+  Add(new cMenuEditBoolItem(  tr("Show CA system"),              &data.showcasystem));
   Add(new cMenuEditIntItem(   tr("Red limit [%]"),               &data.redlimit,       1,                   50));
   Add(new cMenuEditIntItem(   tr("Green limit [%]"),             &data.greenlimit,     51,                  100));
   Add(new cMenuEditIntItem(   tr("OSD update interval [0.1s]"),  &data.updateinterval, 1,                   100));
-  Add(new cMenuEditBoolItem(  tr("Analyze stream"),              &data.analyzestream,  tr("no"),            tr("yes")));
+  Add(new cMenuEditBoolItem(  tr("Analyze stream"),              &data.analyzestream));
   if (femonConfig.analyzestream)
      Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &data.calcinterval,   1,                   100));
   Add(new cMenuEditBoolItem(  tr("Use SVDRP service"),           &data.usesvdrp));
