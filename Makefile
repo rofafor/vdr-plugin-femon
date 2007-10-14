@@ -20,7 +20,7 @@ PLUGIN = femon
 
 ### The version number of this plugin (taken from the main source file):
 
-VERSION = $(shell grep 'static const char VERSION\[\] *=' $(PLUGIN).h | awk '{ print $$6 }' | sed -e 's/[";]//g')
+VERSION = $(shell grep 'static const char VERSION\[\] *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
 
 ### The C++ compiler and options:
 
@@ -67,6 +67,10 @@ all-redirect: all
 
 OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femoni18n.o femontools.o
 
+### The main target:
+
+all: libvdr-$(PLUGIN).so
+
 ### Implicit rules:
 
 %.o: %.c
@@ -82,8 +86,6 @@ $(DEPFILE): Makefile
 -include $(DEPFILE)
 
 ### Targets:
-
-all: libvdr-$(PLUGIN).so
 
 libvdr-$(PLUGIN).so: $(OBJS)
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) -o $@

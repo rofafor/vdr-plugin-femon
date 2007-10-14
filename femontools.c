@@ -165,6 +165,15 @@ cString getDpids(const cChannel *channel)
   return dpids;
 }
 
+cString getSpids(const cChannel *channel)
+{
+  int value = 0;
+  cString spids = cString::sprintf("%d", channel->Spid(value));
+  while (channel->Spid(++value) && (value < MAXSPIDS))
+    spids = cString::sprintf("%s, %d", *spids, channel->Spid(value));
+  return spids;
+}
+
 cString getCAids(const cChannel *channel, bool identify)
 {
   cString caids;

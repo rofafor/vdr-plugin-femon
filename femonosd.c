@@ -44,7 +44,7 @@
 #define OSDHEIGHT                 femonConfig.osdheight   // in pixels
 #define OSDWIDTH                  600                     // in pixels
 #define OSDROWHEIGHT              m_Font->Height()        // in pixels
-#define OSDINFOHEIGHT             (OSDROWHEIGHT * 11)     // in pixels (11 rows)
+#define OSDINFOHEIGHT             (OSDROWHEIGHT * 12)     // in pixels (12 rows)
 #define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 6)      // in pixels (6 rows)
 #define OSDSPACING                5
 #define OSDCORNERING              10
@@ -319,8 +319,8 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Dpid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *getDpids(channel), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
-        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
-        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getCAids(channel, femonConfig.showcasystem), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Spid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getSpids(channel), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Tpid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Tpid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
@@ -333,6 +333,9 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Tid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), tr("Rid"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), *cString::sprintf("%d", channel->Rid()), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        offset += OSDROWHEIGHT;
+        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("CA"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), *getCAids(channel, femonConfig.showcasystem), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
         switch (m_FrontendInfo.type) {
           case FE_QPSK:
@@ -432,6 +435,7 @@ void cFemonOsd::DrawInfoWindow(void)
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Resolution"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), m_Receiver ? *cString::sprintf("%d x %d", m_Receiver->VideoHorizontalSize(), m_Receiver->VideoVerticalSize()) : *cString::sprintf("---"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
+        offset += OSDROWHEIGHT;
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Audio Stream"), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("#%d %s", IS_AUDIO_TRACK(track) ? channel->Apid(int(track - ttAudioFirst)) : channel->Apid(0), IS_AUDIO_TRACK(track) ? channel->Alang(int(track - ttAudioFirst)) : channel->Alang(0)), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
         offset += OSDROWHEIGHT;
@@ -451,13 +455,16 @@ void cFemonOsd::DrawInfoWindow(void)
      else if (m_DisplayMode == eFemonModeAC3) {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), femonTheme[femonConfig.theme].clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
-        m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), *cString::sprintf("%s - %s #%d %s", tr("Stream Information"), tr("AC-3 Stream"), IS_DOLBY_TRACK(track) ? channel->Dpid(int(track - ttDolbyFirst)) : channel->Dpid(0), IS_DOLBY_TRACK(track) ? channel->Dlang(int(track - ttDolbyFirst)) : channel->Dlang(0)), femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
+        m_Osd->DrawText( OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Stream Information"), femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
         if (IS_OSDCORNERING) {
            m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2);
            m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1);
            }
         offset += OSDROWHEIGHT;
         if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
+           m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("AC-3 Stream"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
+           m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("#%d %s", channel->Dpid(int(track - ttDolbyFirst)), channel->Dlang(int(track - ttDolbyFirst))), femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
+           offset += OSDROWHEIGHT;
            m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), tr("Bitrate"), femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), *cString::sprintf("%s (%s)", *getBitrateKbits(m_Receiver->AC3StreamBitrate()), *getBitrateKbits(m_Receiver->AC3Bitrate())), femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font);
            offset += OSDROWHEIGHT;

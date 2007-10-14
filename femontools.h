@@ -33,6 +33,7 @@ uint32_t getUNC(int cardIndex = 0);
 
 cString getApids(const cChannel *channel);
 cString getDpids(const cChannel *channel);
+cString getSpids(const cChannel *channel);
 cString getCAids(const cChannel *channel, bool identify = false);
 cString getCA(int value);
 cString getCoderate(int value);

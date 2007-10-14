@@ -14,11 +14,37 @@
 #include "femonosd.h"
 #include "femonservice.h"
 #include "femontools.h"
-#include "femon.h"
 
 #if defined(APIVERSNUM) && APIVERSNUM < 10400
 #error "VDR-1.4.0 API version or greater is required!"
 #endif
+
+static const char VERSION[]       = "1.1.4";
+static const char DESCRIPTION[]   = "DVB Signal Information Monitor (OSD)";
+static const char MAINMENUENTRY[] = "Signal Information";
+
+class cPluginFemon : public cPlugin {
+public:
+  cPluginFemon(void);
+  virtual ~cPluginFemon();
+  virtual const char *Version(void) { return VERSION; }
+  virtual const char *Description(void) { return tr(DESCRIPTION); }
+  virtual const char *CommandLineHelp(void);
+  virtual bool ProcessArgs(int argc, char *argv[]);
+  virtual bool Initialize(void);
+  virtual bool Start(void);
+  virtual void Stop(void);
+  virtual void Housekeeping(void);
+  virtual void MainThreadHook(void) {}
+  virtual cString Active(void) { return NULL; }
+  virtual const char *MainMenuEntry(void) { return (femonConfig.hidemenu ? NULL : tr(MAINMENUENTRY)); }
+  virtual cOsdObject *MainMenuAction(void);
+  virtual cMenuSetupPage *SetupMenu(void);
+  virtual bool SetupParse(const char *Name, const char *Value);
+  virtual bool Service(const char *Id, void *Data);
+  virtual const char **SVDRPHelpPages(void);
+  virtual cString SVDRPCommand(const char *Command, const char *Option, int &ReplyCode);
+  };
 
 cPluginFemon::cPluginFemon()
 {
@@ -233,6 +259,20 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
      }
   return NULL;
 }
+
+class cMenuFemonSetup : public cMenuSetupPage {
+private:
+  const char *dispmodes[eFemonModeMaxNumber];
+  const char *skins[eFemonSkinMaxNumber];
+  const char *themes[eFemonThemeMaxNumber];
+  cFemonConfig data;
+  virtual void Setup(void);
+protected:
+  virtual eOSState ProcessKey(eKeys Key);
+  virtual void Store(void);
+public:
+  cMenuFemonSetup(void);
+  };
 
 cMenuFemonSetup::cMenuFemonSetup(void)
 {
