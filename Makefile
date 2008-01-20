@@ -15,6 +15,8 @@ STRIP = strip
 # The official name of this plugin.
 # This name will be used in the '-P...' option of VDR to load the plugin.
 # By default the main source file also carries this name.
+# IMPORTANT: the presence of this macro is important for the Make.config
+# file. So it must be defined, even if it is not used here!
 #
 PLUGIN = femon
 
@@ -25,7 +27,7 @@ VERSION = $(shell grep 'static const char VERSION\[\] *=' $(PLUGIN).c | awk '{ p
 ### The C++ compiler and options:
 
 CXX      ?= g++
-CXXFLAGS ?= -fPIC -g -O2 -Wall -Woverloaded-virtual
+CXXFLAGS ?= -fPIC -g -O2 -Wall -Woverloaded-virtual -Wno-parentheses
 
 ### The directory environment:
 
@@ -76,9 +78,9 @@ all: libvdr-$(PLUGIN).so
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -c $(DEFINES) $(INCLUDES) $<
 
-# Dependencies:
+### Dependencies:
 
-MAKEDEP = g++ -MM -MG
+MAKEDEP = $(CXX) -MM -MG
 DEPFILE = .dependencies
 $(DEPFILE): Makefile
 	@$(MAKEDEP) $(DEFINES) $(INCLUDES) $(OBJS:%.o=%.c) > $@

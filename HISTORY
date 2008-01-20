@@ -257,6 +257,11 @@ VDR Plugin 'femon' Revision History
 
 - Backported from 1.2.2.
 
+2008-01-20: Version 1.1.5
+
+- Updated Italian translation (Thanks to Gringo).
+- Added '-Wno-parentheses' to the compiler options.
+
 2007-08-14: Version 1.2.0
 
 - Updated for vdr-1.5.7.
@@ -269,3 +274,9 @@ VDR Plugin 'femon' Revision History
 
 - Added Spids support.
 - Minor OSD layout changes.
+
+2008-01-20: Version 1.2.3
+
+- Updated Italian translation (Thanks to Gringo).
+- Added '-Wno-parentheses' to the compiler options.
+- Mapped 'kInfo' as help key in setup menu.

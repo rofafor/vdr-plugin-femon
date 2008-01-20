@@ -19,7 +19,7 @@
 #error "VDR-1.4.0 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.1.4";
+static const char VERSION[]       = "1.1.5";
 static const char DESCRIPTION[]   = "DVB Signal Information Monitor (OSD)";
 static const char MAINMENUENTRY[] = "Signal Information";
 

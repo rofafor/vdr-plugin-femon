@@ -12,7 +12,7 @@ const tI18nPhrase Phrases[] = {
   { "DVB Signal Information Monitor (OSD)", // English
     "DVB Signal Informationsanzeige (OSD)", // Deutsch
     "", // Slovenski
-    "Visualizza le informazioni sul segnale DVB", // Italiano
+    "Visualizza informazioni segnale DVB", // Italiano
     "", // Nederlands
     "", // Português
     "Affiche les informations du signal DVB", // Français
@@ -34,7 +34,7 @@ const tI18nPhrase Phrases[] = {
   { "Signal Information", // English
     "Signalinformationen", // Deutsch
     "", // Slovenski
-    "Informazioni sul segnale", // Italiano
+    "Informazioni segnale", // Italiano
     "", // Nederlands
     "", // Português
     "Signal DVB", // Français
@@ -100,7 +100,7 @@ const tI18nPhrase Phrases[] = {
   { "Horizontal offset", // English
     "Horizontaler Offset", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Limite orizzontale", // Italiano
     "", // Nederlands
     "", // Português
     "Déplacement horizontal", // Français
@@ -122,7 +122,7 @@ const tI18nPhrase Phrases[] = {
   { "Default display mode", // English
     "Standard Anzeigemodus", // Deutsch
     "", // Slovenski
-    "Modo di visualizzazione standard", // Italiano
+    "Modalità visualizz. standard", // Italiano
     "", // Nederlands
     "", // Português
     "Affichage par défaut", // Français
@@ -144,7 +144,7 @@ const tI18nPhrase Phrases[] = {
   { "basic", // English
     "Standard", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "base", // Italiano
     "", // Nederlands
     "", // Português
     "basique", // Français
@@ -166,7 +166,7 @@ const tI18nPhrase Phrases[] = {
   { "transponder", // English
     "Transponder", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "transponder", // Italiano
     "", // Nederlands
     "", // Português
     "transpondeur", // Français
@@ -188,7 +188,7 @@ const tI18nPhrase Phrases[] = {
   { "stream", // English
     "Stream", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "flusso", // Italiano
     "", // Nederlands
     "", // Português
     "flux", // Français
@@ -210,7 +210,7 @@ const tI18nPhrase Phrases[] = {
   { "Skin", // English
     "Oberfläche", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Interfaccia", // Italiano
     "", // Nederlands
     "", // Português
     "Skin", // Français
@@ -232,7 +232,7 @@ const tI18nPhrase Phrases[] = {
   { "Theme", // English
     "Thema", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Tema", // Italiano
     "", // Nederlands
     "", // Português
     "Thème", // Français
@@ -254,7 +254,7 @@ const tI18nPhrase Phrases[] = {
   { "Classic", // English
     "Klassischer", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Classico", // Italiano
     "", // Nederlands
     "", // Português
     "Classique", // Français
@@ -430,7 +430,7 @@ const tI18nPhrase Phrases[] = {
   { "Hide main menu entry", // English
     "Hauptmenüeintrag verstecken", // Deutsch
     "", // Slovenski
-    "Nascondi voce menù", // Italiano
+    "Nascondi voce menu principale", // Italiano
     "", // Nederlands
     "", // Português
     "Masquer dans le menu principal", // Français
@@ -452,7 +452,7 @@ const tI18nPhrase Phrases[] = {
   { "OSD update interval [0.1s]", // English
     "OSD Updateintervall [0.1s]", // Deutsch
     "", // Slovenski
-    "Intervallo di aggiornamento [0.1s]", // Italiano
+    "Intervallo aggiornamento OSD [0.1s]", // Italiano
     "", // Nederlands
     "", // Português
     "Intervalle de mise à jour (0,1s)", // Français
@@ -474,7 +474,7 @@ const tI18nPhrase Phrases[] = {
   { "Analyze stream", // English
     "Stream analysieren", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Analizza flusso", // Italiano
     "", // Nederlands
     "", // Português
     "Analyser le flux", // Français
@@ -496,7 +496,7 @@ const tI18nPhrase Phrases[] = {
   { "Calculation interval [0.1s]", // English
     "Berechnungsintervall [0.1s]", // Deutsch
     "", // Slovenski
-    "Intervallo di calcolo [0.1s]", // Italiano
+    "Intervallo calcolo [0.1s]", // Italiano
     "", // Nederlands
     "", // Português
     "Intervalle de calcul (0,1s)", // Français
@@ -540,7 +540,7 @@ const tI18nPhrase Phrases[] = {
   { "Green limit [%]", // English
     "Grenze Grün [%]", // Deutsch
     "", // Slovenski
-    "Limite de verde [%]", // Italiano
+    "Limite verde [%]", // Italiano
     "", // Nederlands
     "", // Português
     "Limite du vert (%)", // Français
@@ -716,7 +716,7 @@ const tI18nPhrase Phrases[] = {
   { "None", // English
     "Nichts", // Deutsch
     "None", // Slovenski
-    "None", // Italiano
+    "Nessuno", // Italiano
     "None", // Nederlands
     "None", // Português
     "Aucun", // Français
@@ -738,7 +738,7 @@ const tI18nPhrase Phrases[] = {
   { "Off", // English
     "Aus", // Deutsch
     "Off", // Slovenski
-    "Off", // Italiano
+    "Disattivo", // Italiano
     "Off", // Nederlands
     "Off", // Português
     "Non", // Français
@@ -760,7 +760,7 @@ const tI18nPhrase Phrases[] = {
   { "On", // English
     "Ein", // Deutsch
     "On", // Slovenski
-    "On", // Italiano
+    "Attivo", // Italiano
     "On", // Nederlands
     "On", // Português
     "Oui", // Français
@@ -848,7 +848,7 @@ const tI18nPhrase Phrases[] = {
   { "Stream Information", // English
     "Streaminformation", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Informazione flusso", // Italiano
     "", // Nederlands
     "", // Português
     "Information flux", // Français
@@ -870,7 +870,7 @@ const tI18nPhrase Phrases[] = {
   { "MPEG Layer", // English
     "MPEG Layer", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Formato MPEG", // Italiano
     "", // Nederlands
     "", // Português
     "MPEG Layer", // Français
@@ -892,7 +892,7 @@ const tI18nPhrase Phrases[] = {
   { "Video Stream", // English
     "Video Stream", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Flusso video", // Italiano
     "", // Nederlands
     "", // Português
     "Flux vidéo", // Français
@@ -914,7 +914,7 @@ const tI18nPhrase Phrases[] = {
   { "Bitrate", // English
     "Bitrate", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Bitrate", // Italiano
     "", // Nederlands
     "", // Português
     "Bitrate", // Français
@@ -936,7 +936,7 @@ const tI18nPhrase Phrases[] = {
   { "Frame Rate", // English
     "Bildrate", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Frame rate", // Italiano
     "", // Nederlands
     "", // Português
     "Rafraîchissement", // Français
@@ -980,7 +980,7 @@ const tI18nPhrase Phrases[] = {
   { "Aspect Ratio", // English
     "Seitenverhältnis", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Dimensione immagine", // Italiano
     "", // Nederlands
     "", // Português
     "Proportions d'image", // Français
@@ -1002,7 +1002,7 @@ const tI18nPhrase Phrases[] = {
   { "reserved", // English
     "belegt", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "riservato", // Italiano
     "", // Nederlands
     "", // Português
     "réservé", // Français
@@ -1024,7 +1024,7 @@ const tI18nPhrase Phrases[] = {
   { "free", // English
     "frei", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "libero", // Italiano
     "", // Nederlands
     "", // Português
     "libre", // Français
@@ -1046,7 +1046,7 @@ const tI18nPhrase Phrases[] = {
   { "Video Format", // English
     "Bildformat", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Formato video", // Italiano
     "", // Nederlands
     "", // Português
     "Standard vidéo", // Français
@@ -1112,7 +1112,7 @@ const tI18nPhrase Phrases[] = {
   { "unknown", // English
     "unbekannt", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "sconosciuto", // Italiano
     "", // Nederlands
     "", // Português
     "inconnu", // Français
@@ -1134,7 +1134,7 @@ const tI18nPhrase Phrases[] = {
   { "Resolution", // English
     "Auflösung", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Risoluzione", // Italiano
     "", // Nederlands
     "", // Português
     "Résolution", // Français
@@ -1156,7 +1156,7 @@ const tI18nPhrase Phrases[] = {
   { "Audio Stream", // English
     "Audio Stream", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Flusso audio", // Italiano
     "", // Nederlands
     "", // Português
     "Flux audio", // Français
@@ -1178,7 +1178,7 @@ const tI18nPhrase Phrases[] = {
   { "Sampling Frequency", // English
     "Abtastrate", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Frequenza campionamento", // Italiano
     "", // Nederlands
     "", // Português
     "Fréquence d'échantillonage", // Français
@@ -1376,7 +1376,7 @@ const tI18nPhrase Phrases[] = {
   { "not indicated", // English
     "nicht angegeben", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "non indicato", // Italiano
     "", // Nederlands
     "", // Português
     "non indiqué", // Français
@@ -1420,7 +1420,7 @@ const tI18nPhrase Phrases[] = {
   { "AC-3 Stream", // English
     "AC-3 Stream", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Flusso AC-3", // Italiano
     "", // Nederlands
     "", // Português
     "Flux AC-3", // Français
@@ -1442,7 +1442,7 @@ const tI18nPhrase Phrases[] = {
   { "Frame Size", // English
     "Frame Größe", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Dimensione frame", // Italiano
     "", // Nederlands
     "", // Português
     "Taille de paquet", // Français
@@ -1464,7 +1464,7 @@ const tI18nPhrase Phrases[] = {
   { "Bit Stream Mode", // English
     "Bitstream Modus", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Modalità bitstream", // Italiano
     "", // Nederlands
     "", // Português
     "Mode bitstream", // Français
@@ -1486,7 +1486,7 @@ const tI18nPhrase Phrases[] = {
   { "Audio Coding Mode", // English
     "Audiokodierung", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Modalità codifica audio", // Italiano
     "", // Nederlands
     "", // Português
     "Mode de codage audio", // Français
@@ -1508,7 +1508,7 @@ const tI18nPhrase Phrases[] = {
   { "Center Mix Level", // English
     "Center Mix Pegel", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Livello sonoro centrale", // Italiano
     "", // Nederlands
     "", // Português
     "Niveau sonore milieu", // Français
@@ -1530,7 +1530,7 @@ const tI18nPhrase Phrases[] = {
   { "Surround Mix Level", // English
     "Surround Mix Pegel", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Livello sonoro surround", // Italiano
     "", // Nederlands
     "", // Português
     "Niveau sonore surround", // Français
@@ -1552,7 +1552,7 @@ const tI18nPhrase Phrases[] = {
   { "Dolby Surround Mode", // English
     "Dolby Surround Modus", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Modalità Dolby Surround", // Italiano
     "", // Nederlands
     "", // Português
     "Mode Dolby Surround", // Français
@@ -1574,7 +1574,7 @@ const tI18nPhrase Phrases[] = {
   { "Low Frequency Effects", // English
     "Tieftöner Effekte", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Effetti bassa frequenza", // Italiano
     "", // Nederlands
     "", // Português
     "Effets de basses", // Français
@@ -1596,7 +1596,7 @@ const tI18nPhrase Phrases[] = {
   { "Dialogue Normalization", // English
     "Dialog Normalisierung", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Normalizzazione dialoghi", // Italiano
     "", // Nederlands
     "", // Português
     "Normalisation des dialogues", // Français
@@ -1618,7 +1618,7 @@ const tI18nPhrase Phrases[] = {
   { "Complete Main (CM)", // English
     "Complete Main (CM)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Principale (CM)", // Italiano
     "", // Nederlands
     "", // Português
     "Principal (CM)", // Français
@@ -1640,7 +1640,7 @@ const tI18nPhrase Phrases[] = {
   { "Music and Effects (ME)", // English
     "Musik und Effekte (ME)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Musica ed effetti (ME)", // Italiano
     "", // Nederlands
     "", // Português
     "Musique et effets (ME)", // Français
@@ -1662,7 +1662,7 @@ const tI18nPhrase Phrases[] = {
   { "Visually Impaired (VI)", // English
     "Sehbehindert (VI)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Immagine alterata (VI)", // Italiano
     "", // Nederlands
     "", // Português
     "Malvoyants (VI)", // Français
@@ -1684,7 +1684,7 @@ const tI18nPhrase Phrases[] = {
   { "Hearing Impaired (HI)", // English
     "Hörbehindert (HI)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Suono deteriorato (HI)", // Italiano
     "", // Nederlands
     "", // Português
     "Malentendants (HI)", // Français
@@ -1706,7 +1706,7 @@ const tI18nPhrase Phrases[] = {
   { "Dialogue (D)", // English
     "Dialog (D)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Dialogo (D)", // Italiano
     "", // Nederlands
     "", // Português
     "Dialogue (D)", // Français
@@ -1728,7 +1728,7 @@ const tI18nPhrase Phrases[] = {
   { "Commentary (C)", // English
     "Kommentar (C)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Commenti (C)", // Italiano
     "", // Nederlands
     "", // Português
     "Commentaires (C)", // Français
@@ -1750,7 +1750,7 @@ const tI18nPhrase Phrases[] = {
   { "Emergency (E)", // English
     "Notfall (E)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Emergenza (E)", // Italiano
     "", // Nederlands
     "", // Português
     "Urgence (E)", // Français
@@ -1772,7 +1772,7 @@ const tI18nPhrase Phrases[] = {
   { "Voice Over (VO)", // English
     "Überlagerte Stimme (VO)", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Voce off (VO)", // Italiano
     "", // Nederlands
     "", // Português
     "Voix off (VO)", // Français
@@ -1794,7 +1794,7 @@ const tI18nPhrase Phrases[] = {
   { "Karaoke", // English
     "Karaoke", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Karaoke", // Italiano
     "", // Nederlands
     "", // Português
     "Karaoke", // Français
@@ -1816,7 +1816,7 @@ const tI18nPhrase Phrases[] = {
   { "Ch1", // English "Channel 1"
     "Kan1", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Can. 1", // Italiano
     "", // Nederlands
     "", // Português
     "Can. 1", // Français
@@ -1838,7 +1838,7 @@ const tI18nPhrase Phrases[] = {
   { "Ch2", // English "Channel 2"
     "Kan2", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Can. 2", // Italiano
     "", // Nederlands
     "", // Português
     "Can. 2", // Français
@@ -1860,7 +1860,7 @@ const tI18nPhrase Phrases[] = {
   { "C", // English "Center"
     "C", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "C", // Italiano
     "", // Nederlands
     "", // Português
     "Centre", // Français
@@ -1882,7 +1882,7 @@ const tI18nPhrase Phrases[] = {
   { "L", // English "Left"
     "L", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "S", // Italiano
     "", // Nederlands
     "", // Português
     "Gauche", // Français
@@ -1904,7 +1904,7 @@ const tI18nPhrase Phrases[] = {
   { "R", // English "Right"
     "R", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "D", // Italiano
     "", // Nederlands
     "", // Português
     "Droite", // Français
@@ -1926,7 +1926,7 @@ const tI18nPhrase Phrases[] = {
   { "S", // English "Surround"
     "S", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "S", // Italiano
     "", // Nederlands
     "", // Português
     "Surround", // Français
@@ -1948,7 +1948,7 @@ const tI18nPhrase Phrases[] = {
   { "SL", // English "Surround Left"
     "SL", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "SS", // Italiano
     "", // Nederlands
     "", // Português
     "Surround gauche", // Français
@@ -1970,7 +1970,7 @@ const tI18nPhrase Phrases[] = {
   { "SR", // English "Surround Right"
     "SR", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "SD", // Italiano
     "", // Nederlands
     "", // Português
     "Surround droit", // Français
@@ -1992,7 +1992,7 @@ const tI18nPhrase Phrases[] = {
   { "Show CA system", // English
     "CA System anzeigen", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Mostra sistema CA", // Italiano
     "", // Nederlands
     "", // Português
     "Système CA", // Français
@@ -2014,7 +2014,7 @@ const tI18nPhrase Phrases[] = {
   { "Fixed", // English
     "Fest", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Fisso", // Italiano
     "", // Nederlands
     "", // Português
     "Fixe", // Français
@@ -2036,7 +2036,7 @@ const tI18nPhrase Phrases[] = {
   { "Analog", // English
     "Analog", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Analogico", // Italiano
     "", // Nederlands
     "", // Português
     "Analogique", // Français
@@ -2058,7 +2058,7 @@ const tI18nPhrase Phrases[] = {
   { "Free to Air", // English
     "Frei empfangbar", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "In chiaro", // Italiano
     "", // Nederlands
     "", // Português
     "Free To Air", // Français
@@ -2080,7 +2080,7 @@ const tI18nPhrase Phrases[] = {
   { "SECA/Mediaguard", // English
     "SECA/Mediaguard", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "SECA/Mediaguard", // Italiano
     "", // Nederlands
     "", // Português
     "SECA/Mediaguard", // Français
@@ -2102,7 +2102,7 @@ const tI18nPhrase Phrases[] = {
   { "Viaccess", // English
     "Viaccess", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Viaccess", // Italiano
     "", // Nederlands
     "", // Português
     "Viaccess", // Français
@@ -2124,7 +2124,7 @@ const tI18nPhrase Phrases[] = {
   { "Irdeto", // English
     "Irdeto", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Irdeto", // Italiano
     "", // Nederlands
     "", // Português
     "Irdeto", // Français
@@ -2146,7 +2146,7 @@ const tI18nPhrase Phrases[] = {
   { "NDS/Videoguard", // English
     "NDS/Videoguard", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "NDS/Videoguard", // Italiano
     "", // Nederlands
     "", // Português
     "NDS/Videoguard", // Français
@@ -2168,7 +2168,7 @@ const tI18nPhrase Phrases[] = {
   { "Conax", // English
     "Conax", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Conax", // Italiano
     "", // Nederlands
     "", // Português
     "Conax", // Français
@@ -2190,7 +2190,7 @@ const tI18nPhrase Phrases[] = {
   { "CryptoWorks", // English
     "CryptoWorks", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "CryptoWorks", // Italiano
     "", // Nederlands
     "", // Português
     "CryptoWorks", // Français
@@ -2212,7 +2212,7 @@ const tI18nPhrase Phrases[] = {
   { "PowerVu", // English
     "PowerVu", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "PowerVu", // Italiano
     "", // Nederlands
     "", // Português
     "PowerVu", // Français
@@ -2234,7 +2234,7 @@ const tI18nPhrase Phrases[] = {
   { "BetaCrypt", // English
     "BetaCrypt", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "BetaCrypt", // Italiano
     "", // Nederlands
     "", // Português
     "BetaCrypt", // Français
@@ -2256,7 +2256,7 @@ const tI18nPhrase Phrases[] = {
   { "NagraVision", // English
     "NagraVision", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "NagraVision", // Italiano
     "", // Nederlands
     "", // Português
     "NagraVision", // Français
@@ -2278,7 +2278,7 @@ const tI18nPhrase Phrases[] = {
   { "SkyCrypt", // English
     "SkyCrypt", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "SkyCrypt", // Italiano
     "", // Nederlands
     "", // Português
     "SkyCrypt", // Français
@@ -2300,7 +2300,7 @@ const tI18nPhrase Phrases[] = {
   { "Use SVDRP service", // English
     "SVDRP Service verwenden", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Utilizza servizio SVDRP", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -2322,7 +2322,7 @@ const tI18nPhrase Phrases[] = {
   { "SVDRP service IP", // English
     "SVDRP Service IP", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "IP servizio SVDRP", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -2344,7 +2344,7 @@ const tI18nPhrase Phrases[] = {
   { "SVDRP service port", // English
     "SVDRP Service Port", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Porta servizio SVDRP", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
@@ -2366,7 +2366,7 @@ const tI18nPhrase Phrases[] = {
   { "Femon not available while replaying", // English
     "", // Deutsch
     "", // Slovenski
-    "", // Italiano
+    "Femon non disponibile durante la riproduzione", // Italiano
     "", // Nederlands
     "", // Português
     "", // Français
