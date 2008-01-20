@@ -1,13 +1,13 @@
 # VDR plugin language source file.
-# Copyright (C) 2007 Klaus Schmidinger <kls@cadsoft.de>
-# This file is distributed under the same license as the VDR package.
+# Copyright (C) 2007 Rolf Ahrenberg
+# This file is distributed under the same license as the femon package.
 # Rolf Ahrenberg
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: VDR 1.5.7\n"
+"Project-Id-Version: femon 1.2.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2007-10-14 19:34+0300\n"
+"POT-Creation-Date: 2008-01-20 00:50+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -63,41 +63,92 @@ msgstr "SilverGreen"
 msgid "Hide main menu entry"
 msgstr "Piilota valinta p‰‰valikosta"
 
+msgid "Define whether the main manu entry is hidden."
+msgstr "M‰‰rittele, n‰ytet‰‰nkˆ laajennoksen valinta p‰‰valikossa."
+
 msgid "Default display mode"
 msgstr "Oletusn‰yttˆtila"
+
+msgid "Define the default display mode at startup."
+msgstr "M‰‰rittele k‰ytett‰v‰ n‰yttˆtila k‰ynnistett‰ess‰."
+
+msgid "Define the used OSD skin."
+msgstr "M‰‰rittele k‰ytett‰v‰ ulkoasu n‰ytˆlle."
+
+msgid "Define the used OSD theme."
+msgstr "M‰‰rittele k‰ytett‰v‰ v‰riteema n‰ytˆlle."
 
 msgid "Position"
 msgstr "Sijainti"
 
+msgid "Define the position of OSD."
+msgstr "M‰‰rittele n‰ytˆn sijainti."
+
+msgid "Define the height of OSD."
+msgstr "M‰‰rittele n‰ytˆn korkeus."
+
 msgid "Horizontal offset"
 msgstr "Vaakakeskitys"
+
+msgid "Define the horizontal offset of OSD."
+msgstr "M‰‰rittele n‰ytˆn vaakakeskitys."
 
 msgid "Show CA system"
 msgstr "N‰yt‰ salausj‰rjestelm‰"
 
+msgid "Define whether the CA system is shown as text."
+msgstr "M‰‰rittele, n‰ytet‰‰n salausj‰rjestelm‰ tekstin‰."
+
 msgid "Red limit [%]"
 msgstr "Punaisen taso [%]"
+
+msgid "Define a limit for red bar, which is used to indicate a bad signal."
+msgstr "M‰‰rittele taso punaiselle palkille, jota k‰ytet‰‰n huonon signaalin ilmaisimena."
 
 msgid "Green limit [%]"
 msgstr "Vihre‰n taso [%]"
 
+msgid "Define a limit for green bar, which is used to indicate a good signal."
+msgstr "M‰‰rittele taso vihre‰lle palkille, jota k‰ytet‰‰n hyv‰n signaalin ilmaisimena."
+
 msgid "OSD update interval [0.1s]"
 msgstr "N‰ytˆn p‰ivitysv‰li [0.1s]"
+
+msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
+msgstr "M‰‰rittele n‰ytˆnvirkistystaajuus. Mit‰ pienempi arvo, sit‰ suurempi CPU-kuorma."
 
 msgid "Analyze stream"
 msgstr "L‰hetteen analysointi"
 
+msgid "Define whether the DVB stream is analyzed and bitrates calculated."
+msgstr "M‰‰rittele, analysoidaanko DVB-l‰hetett‰ ja lasketaanko bittinopeuksia."
+
 msgid "Calculation interval [0.1s]"
 msgstr "Laskennan p‰ivitysv‰li [0.1s]"
+
+msgid "Define an interval for calculation. The bigger interval generates more stable values."
+msgstr "M‰‰rittele laskentaikkunan koko. Mit‰ suurempi laskentaikkuna, sit‰ todenmukaisemmat lopputulokset."
 
 msgid "Use SVDRP service"
 msgstr "K‰yt‰ SVDRP-palvelua"
 
+msgid "Define whether the SVDRP service is used in client/server setups."
+msgstr "M‰‰rittele k‰ytet‰‰nkˆ SVDRP-palvelua asiakas/palvelin-kokoonpanoissa."
+
 msgid "SVDRP service port"
 msgstr "SVDRP-palvelun portti"
 
+msgid "Define the port number of SVDRP service."
+msgstr "M‰‰rittele SVDRP-palvelun k‰ytt‰m‰ portti."
+
 msgid "SVDRP service IP"
 msgstr "SVDRP-palvelun IP-osoite"
+
+msgid "Define the IP address of SVDRP service."
+msgstr "M‰‰rittele SVDRP-palvelun k‰ytt‰m‰ IP-osoite."
+
+msgid "Help"
+msgstr "Opaste"
 
 msgid "Video"
 msgstr "Kuva"

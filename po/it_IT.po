@@ -1,43 +1,44 @@
 # VDR plugin language source file.
-# Copyright (C) 2007 Klaus Schmidinger <kls@cadsoft.de>
+# Copyright (C) 2007 Rolf Ahrenberg
 # This file is distributed under the same license as the VDR package.
 # Sean Carlos
+# Gringo <vdr-italian@tiscali.it>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: VDR 1.5.7\n"
+"Project-Id-Version: femon 1.2.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2007-10-14 19:34+0300\n"
-"PO-Revision-Date: 2007-08-12 23:22+0300\n"
-"Last-Translator: Sean Carlos\n"
+"POT-Creation-Date: 2008-01-20 01:23+0200\n"
+"PO-Revision-Date: 2007-12-26 19:38+0100\n"
+"Last-Translator: Gringo <vdr-italian@tiscali.it>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "DVB Signal Information Monitor (OSD)"
-msgstr "Visualizza le informazioni sul segnale DVB"
+msgstr "Visualizza informazioni segnale DVB"
 
 msgid "Signal Information"
-msgstr "Informazioni sul segnale"
+msgstr "Informazioni segnale"
 
 msgid "Femon not available while replaying"
-msgstr ""
+msgstr "Femon non disponibile durante la riproduzione"
 
 msgid "basic"
-msgstr ""
+msgstr "base"
 
 msgid "transponder"
-msgstr ""
+msgstr "transponder"
 
 msgid "stream"
-msgstr ""
+msgstr "flusso"
 
 msgid "AC-3"
 msgstr "AC-3"
 
 msgid "Classic"
-msgstr ""
+msgstr "Classico"
 
 msgid "Elchi"
 msgstr "Elchi"
@@ -61,43 +62,94 @@ msgid "SilverGreen"
 msgstr "SilverGreen"
 
 msgid "Hide main menu entry"
-msgstr "Nascondi voce menù"
+msgstr "Nascondi voce menu principale"
+
+msgid "Define whether the main manu entry is hidden."
+msgstr ""
 
 msgid "Default display mode"
-msgstr "Modo di visualizzazione standard"
+msgstr "Modalità visualizz. standard"
+
+msgid "Define the default display mode at startup."
+msgstr ""
+
+msgid "Define the used OSD skin."
+msgstr ""
+
+msgid "Define the used OSD theme."
+msgstr ""
 
 msgid "Position"
 msgstr "Posizione"
 
+msgid "Define the position of OSD."
+msgstr ""
+
+msgid "Define the height of OSD."
+msgstr ""
+
 msgid "Horizontal offset"
+msgstr "Limite orizzontale"
+
+msgid "Define the horizontal offset of OSD."
 msgstr ""
 
 msgid "Show CA system"
+msgstr "Mostra sistema CA"
+
+msgid "Define whether the CA system is shown as text."
 msgstr ""
 
 msgid "Red limit [%]"
 msgstr "Limite rosso [%]"
 
+msgid "Define a limit for red bar, which is used to indicate a bad signal."
+msgstr ""
+
 msgid "Green limit [%]"
-msgstr "Limite de verde [%]"
+msgstr "Limite verde [%]"
+
+msgid "Define a limit for green bar, which is used to indicate a good signal."
+msgstr ""
 
 msgid "OSD update interval [0.1s]"
-msgstr "Intervallo di aggiornamento [0.1s]"
+msgstr "Intervallo aggiornamento OSD [0.1s]"
+
+msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
+msgstr ""
 
 msgid "Analyze stream"
+msgstr "Analizza flusso"
+
+msgid "Define whether the DVB stream is analyzed and bitrates calculated."
 msgstr ""
 
 msgid "Calculation interval [0.1s]"
-msgstr "Intervallo di calcolo [0.1s]"
+msgstr "Intervallo calcolo [0.1s]"
+
+msgid "Define an interval for calculation. The bigger interval generates more stable values."
+msgstr ""
 
 msgid "Use SVDRP service"
+msgstr "Utilizza servizio SVDRP"
+
+msgid "Define whether the SVDRP service is used in client/server setups."
 msgstr ""
 
 msgid "SVDRP service port"
+msgstr "Porta servizio SVDRP"
+
+msgid "Define the port number of SVDRP service."
 msgstr ""
 
 msgid "SVDRP service IP"
+msgstr "IP servizio SVDRP"
+
+msgid "Define the IP address of SVDRP service."
 msgstr ""
+
+msgid "Help"
+msgstr "Aiuto"
 
 msgid "Video"
 msgstr "Video"
@@ -139,112 +191,112 @@ msgid "Coderate"
 msgstr "Coderate"
 
 msgid "Stream Information"
-msgstr ""
+msgstr "Informazione flusso"
 
 msgid "Video Stream"
-msgstr ""
+msgstr "Flusso video"
 
 msgid "Bitrate"
-msgstr ""
+msgstr "Bitrate"
 
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "Dimensione immagine"
 
 msgid "Frame Rate"
-msgstr ""
+msgstr "Frame rate"
 
 msgid "Hz"
 msgstr "Hz"
 
 msgid "Video Format"
-msgstr ""
+msgstr "Formato video"
 
 msgid "Resolution"
-msgstr ""
+msgstr "Risoluzione"
 
 msgid "Audio Stream"
-msgstr ""
+msgstr "Flusso audio"
 
 msgid "MPEG Layer"
-msgstr ""
+msgstr "Formato MPEG"
 
 msgid "Sampling Frequency"
-msgstr ""
+msgstr "Frequenza campionamento"
 
 msgid "AC-3 Stream"
-msgstr ""
+msgstr "Flusso AC-3"
 
 msgid "kHz"
 msgstr "kHz"
 
 msgid "Frame Size"
-msgstr ""
+msgstr "Dimensione frame"
 
 msgid "Bit Stream Mode"
-msgstr ""
+msgstr "Modalità bitstream"
 
 msgid "Audio Coding Mode"
-msgstr ""
+msgstr "Modalità codifica audio"
 
 msgid "Center Mix Level"
-msgstr ""
+msgstr "Livello sonoro centrale"
 
 msgid "Surround Mix Level"
-msgstr ""
+msgstr "Livello sonoro surround"
 
 msgid "Dolby Surround Mode"
-msgstr ""
+msgstr "Modalità Dolby Surround"
 
 msgid "Low Frequency Effects"
-msgstr ""
+msgstr "Effetti bassa frequenza"
 
 msgid "on"
-msgstr "On"
+msgstr "Attivo"
 
 msgid "off"
-msgstr "Off"
+msgstr "Disattivo"
 
 msgid "Dialogue Normalization"
-msgstr ""
+msgstr "Normalizzazione dialoghi"
 
 msgid "Fixed"
-msgstr ""
+msgstr "Fisso"
 
 msgid "Analog"
-msgstr ""
+msgstr "Analogico"
 
 msgid "SECA/Mediaguard"
-msgstr ""
+msgstr "SECA/Mediaguard"
 
 msgid "Viaccess"
-msgstr ""
+msgstr "Viaccess"
 
 msgid "Irdeto"
-msgstr ""
+msgstr "Irdeto"
 
 msgid "NDS/Videoguard"
-msgstr ""
+msgstr "NDS/Videoguard"
 
 msgid "Conax"
-msgstr ""
+msgstr "Conax"
 
 msgid "CryptoWorks"
-msgstr ""
+msgstr "CryptoWorks"
 
 msgid "PowerVu"
-msgstr ""
+msgstr "PowerVu"
 
 msgid "NagraVision"
-msgstr ""
+msgstr "NagraVision"
 
 msgid "BetaCrypt"
-msgstr ""
+msgstr "BetaCrypt"
 
 msgid "SkyCrypt"
-msgstr ""
+msgstr "SkyCrypt"
 
 msgid "none"
-msgstr "None"
+msgstr "Nessuno"
 
 msgid "auto"
 msgstr "Auto"
@@ -253,10 +305,10 @@ msgid "MHz"
 msgstr "MHz"
 
 msgid "reserved"
-msgstr ""
+msgstr "riservato"
 
 msgid "unknown"
-msgstr ""
+msgstr "sconosciuto"
 
 msgid "PAL"
 msgstr "PAL"
@@ -265,64 +317,64 @@ msgid "NTSC"
 msgstr "NTSC"
 
 msgid "Complete Main (CM)"
-msgstr ""
+msgstr "Principale (CM)"
 
 msgid "Music and Effects (ME)"
-msgstr ""
+msgstr "Musica ed effetti (ME)"
 
 msgid "Visually Impaired (VI)"
-msgstr ""
+msgstr "Immagine alterata (VI)"
 
 msgid "Hearing Impaired (HI)"
-msgstr ""
+msgstr "Suono deteriorato (HI)"
 
 msgid "Dialogue (D)"
-msgstr ""
+msgstr "Dialogo (D)"
 
 msgid "Commentary (C)"
-msgstr ""
+msgstr "Commenti (C)"
 
 msgid "Emergency (E)"
-msgstr ""
+msgstr "Emergenza (E)"
 
 msgid "Voice Over (VO)"
-msgstr ""
+msgstr "Voce off (VO)"
 
 msgid "Karaoke"
-msgstr ""
+msgstr "Karaoke"
 
 msgid "Ch1"
-msgstr ""
+msgstr "Can. 1"
 
 msgid "Ch2"
-msgstr ""
+msgstr "Can. 2"
 
 msgid "C"
-msgstr ""
+msgstr "C"
 
 msgid "L"
-msgstr ""
+msgstr "S"
 
 msgid "R"
-msgstr ""
+msgstr "D"
 
 msgid "S"
-msgstr ""
+msgstr "S"
 
 msgid "SL"
-msgstr ""
+msgstr "SS"
 
 msgid "SR"
-msgstr ""
+msgstr "SD"
 
 msgid "dB"
 msgstr "dB"
 
 msgid "not indicated"
-msgstr ""
+msgstr "non indicato"
 
 msgid "free"
-msgstr ""
+msgstr "libero"
 
 msgid "Mbit/s"
 msgstr "Mbit/s"

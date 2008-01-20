@@ -8,6 +8,7 @@
 
 #include <vdr/menu.h>
 #include <vdr/remote.h>
+#include <vdr/menu.h>
 #include "femoncfg.h"
 #include "femonreceiver.h"
 #include "femonosd.h"
@@ -18,7 +19,7 @@
 #error "VDR-1.5.8 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.2.2";
+static const char VERSION[]       = "1.2.3";
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -264,7 +265,8 @@ private:
   const char *skins[eFemonSkinMaxNumber];
   const char *themes[eFemonThemeMaxNumber];
   cFemonConfig data;
-  virtual void Setup(void);
+  cVector<const char*> help;
+  void Setup(void);
 protected:
   virtual eOSState ProcessKey(eKeys Key);
   virtual void Store(void);
@@ -301,24 +303,58 @@ void cMenuFemonSetup::Setup(void)
   int current = Current();
 
   Clear();
-  Add(new cMenuEditBoolItem(  tr("Hide main menu entry"),        &data.hidemenu));
-  Add(new cMenuEditStraItem(  tr("Default display mode"),        &data.displaymode,    eFemonModeMaxNumber, dispmodes));
-  Add(new cMenuEditStraItem(  trVDR("Setup.OSD$Skin"),           &data.skin,           eFemonSkinMaxNumber, skins));
-  Add(new cMenuEditStraItem(  trVDR("Setup.OSD$Theme"),          &data.theme,          eFemonThemeMaxNumber,themes));
-  Add(new cMenuEditBoolItem(  tr("Position"),                    &data.position,       trVDR("bottom"),     trVDR("top")));
-  Add(new cMenuEditIntItem(   trVDR("Setup.OSD$Height"),         &data.osdheight,      400,                 500));
-  Add(new cMenuEditIntItem(   tr("Horizontal offset"),           &data.osdoffset,      -50,                 50));
-  Add(new cMenuEditBoolItem(  tr("Show CA system"),              &data.showcasystem));
-  Add(new cMenuEditIntItem(   tr("Red limit [%]"),               &data.redlimit,       1,                   50));
-  Add(new cMenuEditIntItem(   tr("Green limit [%]"),             &data.greenlimit,     51,                  100));
-  Add(new cMenuEditIntItem(   tr("OSD update interval [0.1s]"),  &data.updateinterval, 1,                   100));
-  Add(new cMenuEditBoolItem(  tr("Analyze stream"),              &data.analyzestream));
-  if (femonConfig.analyzestream)
-     Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &data.calcinterval,   1,                   100));
-  Add(new cMenuEditBoolItem(  tr("Use SVDRP service"),           &data.usesvdrp));
+  help.Clear();
+
+  Add(new cMenuEditBoolItem(tr("Hide main menu entry"), &data.hidemenu));
+  help.Append(tr("Define whether the main manu entry is hidden."));
+
+  Add(new cMenuEditStraItem(tr("Default display mode"), &data.displaymode, eFemonModeMaxNumber, dispmodes));
+  help.Append(tr("Define the default display mode at startup."));
+
+  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Skin"), &data.skin, eFemonSkinMaxNumber, skins));
+  help.Append(tr("Define the used OSD skin."));
+
+  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Theme"), &data.theme, eFemonThemeMaxNumber,themes));
+  help.Append(tr("Define the used OSD theme."));
+
+  Add(new cMenuEditBoolItem(tr("Position"), &data.position, trVDR("bottom"), trVDR("top")));
+  help.Append(tr("Define the position of OSD."));
+
+  Add(new cMenuEditIntItem(trVDR("Setup.OSD$Height"), &data.osdheight, 400, 500));
+  help.Append(tr("Define the height of OSD."));
+
+  Add(new cMenuEditIntItem(tr("Horizontal offset"), &data.osdoffset, -50, 50));
+  help.Append(tr("Define the horizontal offset of OSD."));
+
+  Add(new cMenuEditBoolItem(tr("Show CA system"), &data.showcasystem));
+  help.Append(tr("Define whether the CA system is shown as text."));
+
+  Add(new cMenuEditIntItem(tr("Red limit [%]"), &data.redlimit, 1, 50));
+  help.Append(tr("Define a limit for red bar, which is used to indicate a bad signal."));
+
+  Add(new cMenuEditIntItem(tr("Green limit [%]"), &data.greenlimit, 51, 100));
+  help.Append(tr("Define a limit for green bar, which is used to indicate a good signal."));
+
+  Add(new cMenuEditIntItem(tr("OSD update interval [0.1s]"), &data.updateinterval, 1, 100));
+  help.Append(tr("Define an interval for OSD updates. The smaller interval generates higher CPU load."));
+
+  Add(new cMenuEditBoolItem(tr("Analyze stream"), &data.analyzestream));
+  help.Append(tr("Define whether the DVB stream is analyzed and bitrates calculated."));
+
+  if (femonConfig.analyzestream) {
+     Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &data.calcinterval, 1, 100));
+     help.Append(tr("Define an interval for calculation. The bigger interval generates more stable values."));
+     }
+
+  Add(new cMenuEditBoolItem(tr("Use SVDRP service"), &data.usesvdrp));
+  help.Append(tr("Define whether the SVDRP service is used in client/server setups."));
+
   if (data.usesvdrp) {
-     Add(new cMenuEditIntItem(tr("SVDRP service port"),          &data.svdrpport,      1,                   65535));
-     Add(new cMenuEditStrItem(tr("SVDRP service IP"),             data.svdrpip,        MaxSvdrpIp,          ".1234567890"));
+     Add(new cMenuEditIntItem(tr("SVDRP service port"), &data.svdrpport, 1, 65535));
+     help.Append(tr("Define the port number of SVDRP service."));
+
+     Add(new cMenuEditStrItem(tr("SVDRP service IP"), data.svdrpip, MaxSvdrpIp, ".1234567890"));
+     help.Append(tr("Define the IP address of SVDRP service."));
      }
 
   SetCurrent(Get(current));
@@ -354,9 +390,11 @@ eOSState cMenuFemonSetup::ProcessKey(eKeys Key)
 
   eOSState state = cMenuSetupPage::ProcessKey(Key);
 
-  if (Key != kNone && (data.analyzestream != oldAnalyzestream || data.usesvdrp != oldUsesvdrp)) {
+  if (Key != kNone && (data.analyzestream != oldAnalyzestream || data.usesvdrp != oldUsesvdrp))
      Setup();
-     }
+
+  if ((Key == kInfo) && (state == osUnknown) && (Current() < help.Size()))
+     return AddSubMenu(new cMenuText(cString::sprintf("%s - %s '%s'", tr("Help"), trVDR("Plugin"), PLUGIN_NAME_I18N), help[Current()]));
 
   return state;
 }

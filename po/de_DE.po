@@ -1,15 +1,15 @@
 # VDR plugin language source file.
-# Copyright (C) 2007 Klaus Schmidinger <kls@cadsoft.de>
-# This file is distributed under the same license as the VDR package.
+# Copyright (C) 2007 Rolf Ahrenberg
+# This file is distributed under the same license as the femon package.
 # Peter Marquardt
 # Andreas Brachold
 # Christian Wieninger 
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: VDR 1.5.7\n"
+"Project-Id-Version: femon 1.2.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2007-10-14 19:34+0300\n"
+"POT-Creation-Date: 2008-01-20 01:23+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Christian Wieninger\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -65,41 +65,92 @@ msgstr "SilverGreen"
 msgid "Hide main menu entry"
 msgstr "Hauptmenüeintrag verstecken"
 
+msgid "Define whether the main manu entry is hidden."
+msgstr ""
+
 msgid "Default display mode"
 msgstr "Standard Anzeigemodus"
+
+msgid "Define the default display mode at startup."
+msgstr ""
+
+msgid "Define the used OSD skin."
+msgstr ""
+
+msgid "Define the used OSD theme."
+msgstr ""
 
 msgid "Position"
 msgstr "Position"
 
+msgid "Define the position of OSD."
+msgstr ""
+
+msgid "Define the height of OSD."
+msgstr ""
+
 msgid "Horizontal offset"
 msgstr "Horizontaler Offset"
+
+msgid "Define the horizontal offset of OSD."
+msgstr ""
 
 msgid "Show CA system"
 msgstr "CA System anzeigen"
 
+msgid "Define whether the CA system is shown as text."
+msgstr ""
+
 msgid "Red limit [%]"
 msgstr "Grenze Rot [%]"
+
+msgid "Define a limit for red bar, which is used to indicate a bad signal."
+msgstr ""
 
 msgid "Green limit [%]"
 msgstr "Grenze Grün [%]"
 
+msgid "Define a limit for green bar, which is used to indicate a good signal."
+msgstr ""
+
 msgid "OSD update interval [0.1s]"
 msgstr "OSD Updateintervall [0.1s]"
+
+msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
+msgstr ""
 
 msgid "Analyze stream"
 msgstr "Stream analysieren"
 
+msgid "Define whether the DVB stream is analyzed and bitrates calculated."
+msgstr ""
+
 msgid "Calculation interval [0.1s]"
 msgstr "Berechnungsintervall [0.1s]"
+
+msgid "Define an interval for calculation. The bigger interval generates more stable values."
+msgstr ""
 
 msgid "Use SVDRP service"
 msgstr "SVDRP Service verwenden"
 
+msgid "Define whether the SVDRP service is used in client/server setups."
+msgstr ""
+
 msgid "SVDRP service port"
 msgstr "SVDRP Service Port"
 
+msgid "Define the port number of SVDRP service."
+msgstr ""
+
 msgid "SVDRP service IP"
 msgstr "SVDRP Service IP"
+
+msgid "Define the IP address of SVDRP service."
+msgstr ""
+
+msgid "Help"
+msgstr "Hilfe"
 
 msgid "Video"
 msgstr "Video"
