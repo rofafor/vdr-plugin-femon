@@ -566,11 +566,9 @@ void cFemonOsd::Show(void)
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   int apid[2] = {0, 0};
   int dpid[2] = {0, 0};
-  char *dev = NULL;
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev);
   if (m_Frontend >= 0) {
      if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
         esyslog("ERROR: cFemonOsd::Show() cannot read frontend info.");
@@ -590,8 +588,9 @@ void cFemonOsd::Show(void)
 
   m_Osd = cOsdProvider::NewOsd(((cOsd::OsdWidth() - OSDWIDTH) / 2) + cOsd::OsdLeft() + femonConfig.osdoffset, ((cOsd::OsdHeight() - OSDHEIGHT) / 2) + cOsd::OsdTop());
   if (m_Osd) {
-     tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, femonTheme[femonConfig.theme].bpp } };
-     if (m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
+     // try to use single 8bpp area
+     tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, 8 } };
+     if (femonConfig.usesinglearea && m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
         m_Osd->SetAreas(Areas1, sizeof(Areas1) / sizeof(tArea));
         }
      else {
@@ -620,14 +619,12 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   Dprintf("%s(%d,%d)\n", __PRETTY_FUNCTION__, device->DeviceNumber(), channelNumber);
   int apid[2] = {0, 0};
   int dpid[2] = {0, 0};
-  char *dev = NULL;
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   if (!device->IsPrimaryDevice() || !channelNumber || cDevice::PrimaryDevice()->CurrentChannel() != channelNumber)
      return;
   close(m_Frontend);
-  asprintf(&dev, FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev);
   if (m_Frontend >= 0) {
      if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
         esyslog("ERROR: cFemonOsd::ChannelSwitch() cannot read frontend info.");

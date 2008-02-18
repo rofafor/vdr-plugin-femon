@@ -23,12 +23,10 @@ cString getFrontendInfo(int cardIndex)
   uint16_t snr = 0;
   uint32_t ber = 0;
   uint32_t unc = 0;
-  char *dev = NULL;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  asprintf(&dev, FRONTEND_DEVICE, cardIndex, 0);
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev); 
   if (fe < 0)
      return NULL;
   CHECK(ioctl(fe, FE_GET_INFO, &value));
@@ -53,11 +51,9 @@ cString getFrontendInfo(int cardIndex)
 cString getFrontendName(int cardIndex)
 {
   struct dvb_frontend_info value;
-  char *dev = NULL;
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  asprintf(&dev, FRONTEND_DEVICE, cardIndex, 0);
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev);
   if (fe < 0)
      return NULL;
   CHECK(ioctl(fe, FE_GET_INFO, &value));
@@ -69,11 +65,9 @@ cString getFrontendName(int cardIndex)
 cString getFrontendStatus(int cardIndex)
 {
   fe_status_t value;
-  char *dev = NULL;
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  asprintf(&dev, FRONTEND_DEVICE, cardIndex, 0);
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev);
   if (fe < 0)
      return NULL;
   CHECK(ioctl(fe, FE_READ_STATUS, &value));
@@ -85,11 +79,9 @@ cString getFrontendStatus(int cardIndex)
 uint16_t getSignal(int cardIndex)
 {
   uint16_t value = 0;
-  char *dev = NULL;
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  asprintf(&dev, FRONTEND_DEVICE, cardIndex, 0);
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev);
   if (fe < 0)
      return (value);
   CHECK(ioctl(fe, FE_READ_SIGNAL_STRENGTH, &value));
@@ -101,11 +93,9 @@ uint16_t getSignal(int cardIndex)
 uint16_t getSNR(int cardIndex)
 {
   uint16_t value = 0;
-  char *dev = NULL;
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  asprintf(&dev, FRONTEND_DEVICE, cardIndex, 0);
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev);
   if (fe < 0)
      return (value);
   CHECK(ioctl(fe, FE_READ_SNR, &value));
@@ -117,11 +107,9 @@ uint16_t getSNR(int cardIndex)
 uint32_t getBER(int cardIndex)
 {
   uint32_t value = 0;
-  char *dev = NULL;
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  asprintf(&dev, FRONTEND_DEVICE, cardIndex, 0);
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev);
   if (fe < 0)
      return (value);
   CHECK(ioctl(fe, FE_READ_BER, &value));
@@ -133,11 +121,9 @@ uint32_t getBER(int cardIndex)
 uint32_t getUNC(int cardIndex)
 {
   uint32_t value = 0;
-  char *dev = NULL;
+  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  asprintf(&dev, FRONTEND_DEVICE, cardIndex, 0);
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
-  free(dev);
   if (fe < 0)
      return (value);
   CHECK(ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &value));

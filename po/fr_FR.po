@@ -5,12 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.2.3\n"
+"Project-Id-Version: femon 1.2.4\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-01-20 01:23+0200\n"
-"PO-Revision-Date: 2007-08-12 23:22+0300\n"
-"Last-Translator: Nicolas Huillard\n"
-"Language-Team: <vdr@linuxtv.org>\n"
+"POT-Creation-Date: 2008-02-16 01:01+0200\n"
+"PO-Revision-Date: 2008-01-26 09:59+0100\n"
+"Last-Translator: NIVAL Michaël <mnival@club-internet.fr>\n"
+"Language-Team:  <vdr@linuxtv.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,7 +22,7 @@ msgid "Signal Information"
 msgstr "Signal DVB"
 
 msgid "Femon not available while replaying"
-msgstr ""
+msgstr "Femon n'est pas disponible lors de la lecture"
 
 msgid "basic"
 msgstr "basique"
@@ -63,89 +63,101 @@ msgstr "SilverGreen"
 msgid "Hide main menu entry"
 msgstr "Masquer dans le menu principal"
 
-msgid "Define whether the main manu entry is hidden."
+msgid "Define whether the main menu entry is hidden."
+msgstr "Définit si l'entrée doit être masquée dans le menu principal."
+
+msgid "Use single area (8bpp)"
+msgstr "Utiliser zone unique (8bpp)"
+
+msgid ""
+"Define whether a single 8bpp OSD area is preferred.\n"
+"\n"
+"Required by Truetype fonts and anti-aliasing."
 msgstr ""
+"Définit si une seule zone OSD de 8bpp est préférée.\n"
+"\n"
+"Requis par les polices Truetype et l'anti-aliasing."
 
 msgid "Default display mode"
 msgstr "Affichage par défaut"
 
 msgid "Define the default display mode at startup."
-msgstr ""
+msgstr "Définit l'affichage par défaut au démarrage."
 
 msgid "Define the used OSD skin."
-msgstr ""
+msgstr "Définit le skin OSD à utiliser."
 
 msgid "Define the used OSD theme."
-msgstr ""
+msgstr "Définit le thème OSD à utiliser."
 
 msgid "Position"
 msgstr "Position"
 
 msgid "Define the position of OSD."
-msgstr ""
+msgstr "Définit la position de l'OSD."
 
 msgid "Define the height of OSD."
-msgstr ""
+msgstr "Définit l'hauteur de l'OSD."
 
 msgid "Horizontal offset"
 msgstr "Déplacement horizontal"
 
 msgid "Define the horizontal offset of OSD."
-msgstr ""
+msgstr "Définit le déplacement horizontal de l'OSD."
 
 msgid "Show CA system"
-msgstr "Système CA"
+msgstr "Afficher système CA"
 
 msgid "Define whether the CA system is shown as text."
-msgstr ""
+msgstr "Définit si le système CA doit être affiché."
 
 msgid "Red limit [%]"
 msgstr "Limite du rouge (%)"
 
 msgid "Define a limit for red bar, which is used to indicate a bad signal."
-msgstr ""
+msgstr "Définit la limite de la barre rouge, qui est utilisé pour indiquer un mauvais signal."
 
 msgid "Green limit [%]"
 msgstr "Limite du vert (%)"
 
 msgid "Define a limit for green bar, which is used to indicate a good signal."
-msgstr ""
+msgstr "Définit la limite de la barre rouge, qui est utilisé pour indiquer un bon signal."
 
 msgid "OSD update interval [0.1s]"
 msgstr "Intervalle de mise à jour (0,1s)"
 
 msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
-msgstr ""
+msgstr "Définit l'intervalle de mise à jour de l'OSD. Un petit intervalle génère une charge CPU plus importante."
 
 msgid "Analyze stream"
 msgstr "Analyser le flux"
 
 msgid "Define whether the DVB stream is analyzed and bitrates calculated."
-msgstr ""
+msgstr "Définit si le flux DVB est analysé et le bitrates calculé."
 
 msgid "Calculation interval [0.1s]"
 msgstr "Intervalle de calcul (0,1s)"
 
 msgid "Define an interval for calculation. The bigger interval generates more stable values."
-msgstr ""
+msgstr "Définit l'intervalle de cacul. Un plus grand intervalle génère une valeur plus stable."
 
 msgid "Use SVDRP service"
-msgstr ""
+msgstr "Utiliser le service SVDRP"
 
 msgid "Define whether the SVDRP service is used in client/server setups."
-msgstr ""
+msgstr "Définit si le service SVDRP est utilisé en configuration client/serveur."
 
 msgid "SVDRP service port"
-msgstr ""
+msgstr "Port du service SVDRP"
 
 msgid "Define the port number of SVDRP service."
-msgstr ""
+msgstr "Définit le port d'écoute du service SVDRP."
 
 msgid "SVDRP service IP"
-msgstr ""
+msgstr "IP du service SVDRP"
 
 msgid "Define the IP address of SVDRP service."
-msgstr ""
+msgstr "Définit l'adresse IP du service SVDRP."
 
 msgid "Help"
 msgstr "Aide"

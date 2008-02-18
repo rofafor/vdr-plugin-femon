@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.2.3\n"
+"Project-Id-Version: femon 1.2.4\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-01-20 01:23+0200\n"
+"POT-Creation-Date: 2008-02-16 01:01+0200\n"
 "PO-Revision-Date: 2007-12-26 19:38+0100\n"
 "Last-Translator: Gringo <vdr-italian@tiscali.it>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -64,7 +64,16 @@ msgstr "SilverGreen"
 msgid "Hide main menu entry"
 msgstr "Nascondi voce menu principale"
 
-msgid "Define whether the main manu entry is hidden."
+msgid "Define whether the main menu entry is hidden."
+msgstr ""
+
+msgid "Use single area (8bpp)"
+msgstr "Utilizza area singola (8bpp)"
+
+msgid ""
+"Define whether a single 8bpp OSD area is preferred.\n"
+"\n"
+"Required by Truetype fonts and anti-aliasing."
 msgstr ""
 
 msgid "Default display mode"
