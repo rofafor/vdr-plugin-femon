@@ -15,11 +15,11 @@
 #include "femonservice.h"
 #include "femontools.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 10508
-#error "VDR-1.5.8 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 10600
+#error "VDR-1.6.0 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.2.4";
+static const char VERSION[]       = "1.6.0";
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -290,6 +290,7 @@ cMenuFemonSetup::cMenuFemonSetup(void)
 
   themes[eFemonThemeClassic]       = tr("Classic");
   themes[eFemonThemeElchi]         = tr("Elchi");
+  themes[eFemonThemeSTTNG]         = tr("ST:TNG");
   themes[eFemonThemeDeepBlue]      = tr("DeepBlue");
   themes[eFemonThemeMoronimo]      = tr("Moronimo");
   themes[eFemonThemeEnigma]        = tr("Enigma");

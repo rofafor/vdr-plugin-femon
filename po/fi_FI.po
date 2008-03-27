@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.2.4\n"
+"Project-Id-Version: femon 1.6.0\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-02-16 01:01+0200\n"
+"POT-Creation-Date: 2008-03-23 14:42+0100\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -41,6 +41,9 @@ msgstr "Klassinen"
 
 msgid "Elchi"
 msgstr "Elchi"
+
+msgid "ST:TNG"
+msgstr "ST:TNG"
 
 msgid "DeepBlue"
 msgstr "DeepBlue"

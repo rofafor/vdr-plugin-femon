@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.2.4\n"
+"Project-Id-Version: femon 1.6.0\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
 "POT-Creation-Date: 2008-02-16 01:01+0200\n"
-"PO-Revision-Date: 2007-12-26 19:38+0100\n"
+"PO-Revision-Date: 2008-02-22 01:27+0100\n"
 "Last-Translator: Gringo <vdr-italian@tiscali.it>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "DVB Signal Information Monitor (OSD)"
-msgstr "Visualizza informazioni segnale DVB"
+msgstr "Visualizza informazioni segnale DVB (OSD)"
 
 msgid "Signal Information"
 msgstr "Informazioni segnale"
@@ -43,6 +43,9 @@ msgstr "Classico"
 msgid "Elchi"
 msgstr "Elchi"
 
+msgid "ST:TNG"
+msgstr "ST:TNG"
+
 msgid "DeepBlue"
 msgstr "DeepBlue"
 
@@ -62,10 +65,10 @@ msgid "SilverGreen"
 msgstr "SilverGreen"
 
 msgid "Hide main menu entry"
-msgstr "Nascondi voce menu principale"
+msgstr "Nascondi voce nel menu principale"
 
 msgid "Define whether the main menu entry is hidden."
-msgstr ""
+msgstr "Definisce se la voce del menu principale è nascosta."
 
 msgid "Use single area (8bpp)"
 msgstr "Utilizza area singola (8bpp)"
@@ -75,87 +78,90 @@ msgid ""
 "\n"
 "Required by Truetype fonts and anti-aliasing."
 msgstr ""
+"Definisce se è preferita un'area OSD singola a 8bpp.\n"
+"\n"
+"Richiesto dai caratteri Truetype e anti-aliasing."
 
 msgid "Default display mode"
-msgstr "Modalità visualizz. standard"
+msgstr "Modalità visualizz. predefinita"
 
 msgid "Define the default display mode at startup."
-msgstr ""
+msgstr "Definisce la modalità di visualizz. predefinita all'avvio."
 
 msgid "Define the used OSD skin."
-msgstr ""
+msgstr "Definisce lo stile interfaccia OSD utilizzato."
 
 msgid "Define the used OSD theme."
-msgstr ""
+msgstr "Definisce il tema OSD utilizzato."
 
 msgid "Position"
 msgstr "Posizione"
 
 msgid "Define the position of OSD."
-msgstr ""
+msgstr "Definisce la posizione dell'OSD."
 
 msgid "Define the height of OSD."
-msgstr ""
+msgstr "Definisce l'altezza dell'OSD."
 
 msgid "Horizontal offset"
 msgstr "Limite orizzontale"
 
 msgid "Define the horizontal offset of OSD."
-msgstr ""
+msgstr "Definisce il limite orizzontale dell'OSD."
 
 msgid "Show CA system"
 msgstr "Mostra sistema CA"
 
 msgid "Define whether the CA system is shown as text."
-msgstr ""
+msgstr "Definisce se il sistema CA viene mostrato come testo."
 
 msgid "Red limit [%]"
 msgstr "Limite rosso [%]"
 
 msgid "Define a limit for red bar, which is used to indicate a bad signal."
-msgstr ""
+msgstr "Definisce un limite per la barra rossa, usata per indicare un cattivo segnale."
 
 msgid "Green limit [%]"
 msgstr "Limite verde [%]"
 
 msgid "Define a limit for green bar, which is used to indicate a good signal."
-msgstr ""
+msgstr "Definisce un limite per la barra verde, usata per indicare un buon segnale."
 
 msgid "OSD update interval [0.1s]"
 msgstr "Intervallo aggiornamento OSD [0.1s]"
 
 msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
-msgstr ""
+msgstr "Definisce un intervallo per gli aggiornamenti OSD. Più piccolo è l'intervallo maggiore sarà l'uso di CPU."
 
 msgid "Analyze stream"
 msgstr "Analizza flusso"
 
 msgid "Define whether the DVB stream is analyzed and bitrates calculated."
-msgstr ""
+msgstr "Definisce se il flusso DVB è analizzato e i bitrate calcolati."
 
 msgid "Calculation interval [0.1s]"
 msgstr "Intervallo calcolo [0.1s]"
 
 msgid "Define an interval for calculation. The bigger interval generates more stable values."
-msgstr ""
+msgstr "Definisce un intervallo di calcolo. L'intervallo più grande genera più valori stabili."
 
 msgid "Use SVDRP service"
 msgstr "Utilizza servizio SVDRP"
 
 msgid "Define whether the SVDRP service is used in client/server setups."
-msgstr ""
+msgstr "Definisce se il servizio SVDRP è usato nelle impostazioni client/server."
 
 msgid "SVDRP service port"
 msgstr "Porta servizio SVDRP"
 
 msgid "Define the port number of SVDRP service."
-msgstr ""
+msgstr "Definisce il numero di porta del servizio SVDRP."
 
 msgid "SVDRP service IP"
 msgstr "IP servizio SVDRP"
 
 msgid "Define the IP address of SVDRP service."
-msgstr ""
+msgstr "Definisce l'indirizzo IP del servizio SVDRP."
 
 msgid "Help"
 msgstr "Aiuto"
@@ -188,7 +194,7 @@ msgid "Rid"
 msgstr "Rid"
 
 msgid "Satellite Card"
-msgstr "Scheda satellitare"
+msgstr "Scheda satellite"
 
 msgid "Cable Card"
 msgstr "Scheda via cavo"
@@ -200,7 +206,7 @@ msgid "Coderate"
 msgstr "Coderate"
 
 msgid "Stream Information"
-msgstr "Informazione flusso"
+msgstr "Informazioni flusso"
 
 msgid "Video Stream"
 msgstr "Flusso video"
@@ -305,10 +311,10 @@ msgid "SkyCrypt"
 msgstr "SkyCrypt"
 
 msgid "none"
-msgstr "Nessuno"
+msgstr "nessuno"
 
 msgid "auto"
-msgstr "Auto"
+msgstr "auto"
 
 msgid "MHz"
 msgstr "MHz"
@@ -326,19 +332,19 @@ msgid "NTSC"
 msgstr "NTSC"
 
 msgid "Complete Main (CM)"
-msgstr "Principale (CM)"
+msgstr "Principale (P)"
 
 msgid "Music and Effects (ME)"
 msgstr "Musica ed effetti (ME)"
 
 msgid "Visually Impaired (VI)"
-msgstr "Immagine alterata (VI)"
+msgstr "Immagine alterata (IA)"
 
 msgid "Hearing Impaired (HI)"
-msgstr "Suono deteriorato (HI)"
+msgstr "Suono deteriorato (SD)"
 
 msgid "Dialogue (D)"
-msgstr "Dialogo (D)"
+msgstr "Dialogui (D)"
 
 msgid "Commentary (C)"
 msgstr "Commenti (C)"
@@ -347,7 +353,7 @@ msgid "Emergency (E)"
 msgstr "Emergenza (E)"
 
 msgid "Voice Over (VO)"
-msgstr "Voce off (VO)"
+msgstr "Voce su (VS)"
 
 msgid "Karaoke"
 msgstr "Karaoke"

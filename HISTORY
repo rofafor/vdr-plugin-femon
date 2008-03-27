@@ -287,3 +287,9 @@ VDR Plugin 'femon' Revision History
 - Updated French translation (Thanks to Michaël Nival).
 - Fixed service call with null data.
 - Added setup option to use a single 8 bpp OSD area.
+
+2008-03-27: Version 1.6.0
+
+- Updated for vdr-1.6.0.
+- Updated Italian translation (Thanks to Gringo).
+- Added ST:TNG theme (Thanks to Fabian Förg).

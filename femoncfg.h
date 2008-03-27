@@ -56,6 +56,7 @@ enum eFemonThemes
 {
   eFemonThemeClassic,
   eFemonThemeElchi,
+  eFemonThemeSTTNG,
   eFemonThemeDeepBlue,
   eFemonThemeMoronimo,
   eFemonThemeEnigma,
