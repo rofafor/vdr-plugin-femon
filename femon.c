@@ -19,7 +19,7 @@
 #error "VDR-1.6.0 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.6.0";
+static const char VERSION[]       = "1.6.1";
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -98,8 +98,8 @@ cOsdObject *cPluginFemon::MainMenuAction(void)
 {
   // Perform the action when selected from the main VDR menu.
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  if (cReplayControl::NowReplaying())
-     Skins.Message(mtInfo, tr("Femon not available while replaying"));
+  if (cReplayControl::NowReplaying() || (Channels.Count() <= 0))
+     Skins.Message(mtInfo, tr("Femon not available"));
   else
      return cFemonOsd::Instance(true);
   return NULL;

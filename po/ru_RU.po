@@ -21,7 +21,7 @@ msgstr "Монитор качества сигнала"
 msgid "Signal Information"
 msgstr "Сигнал"
 
-msgid "Femon not available while replaying"
+msgid "Femon not available"
 msgstr ""
 
 msgid "basic"

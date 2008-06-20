@@ -259,7 +259,7 @@ VDR Plugin 'femon' Revision History
 
 2008-01-20: Version 1.1.5
 
-- Updated Italian translation (Thanks to Gringo).
+- Updated Italian translation (Thanks to Diego Pierotto).
 - Added '-Wno-parentheses' to the compiler options.
 
 2007-08-14: Version 1.2.0
@@ -277,7 +277,7 @@ VDR Plugin 'femon' Revision History
 
 2008-01-20: Version 1.2.3
 
-- Updated Italian translation (Thanks to Gringo).
+- Updated Italian translation (Thanks to Diego Pierotto).
 - Added '-Wno-parentheses' to the compiler options.
 - Mapped 'kInfo' as help key in setup menu.
 
@@ -291,5 +291,10 @@ VDR Plugin 'femon' Revision History
 2008-03-27: Version 1.6.0
 
 - Updated for vdr-1.6.0.
-- Updated Italian translation (Thanks to Gringo).
+- Updated Italian translation (Thanks to Diego Pierotto).
 - Added ST:TNG theme (Thanks to Fabian Förg).
+
+2008-06-20: Version 1.6.1
+
+- Updated Italian translation (Thanks to Diego Pierotto).
+- Fixed a crash if no channel available (Thanks to Winfried Köhler)

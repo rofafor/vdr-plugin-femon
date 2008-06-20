@@ -21,8 +21,8 @@ msgstr "Affiche les informations du signal DVB"
 msgid "Signal Information"
 msgstr "Signal DVB"
 
-msgid "Femon not available while replaying"
-msgstr "Femon n'est pas disponible lors de la lecture"
+msgid "Femon not available"
+msgstr "Femon n'est pas disponible"
 
 msgid "basic"
 msgstr "basique"

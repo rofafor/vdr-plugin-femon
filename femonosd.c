@@ -155,7 +155,7 @@ void cFemonOsd::DrawStatusWindow(void)
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (m_Osd) {
+  if (m_Osd && channel) {
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), femonTheme[femonConfig.theme].clrBackground);
      m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
      m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), *cString::sprintf("%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true)), femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font);
@@ -298,7 +298,7 @@ void cFemonOsd::DrawInfoWindow(void)
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
 
-  if (m_Osd) {
+  if (m_Osd && channel) {
      if (m_DisplayMode == eFemonModeTransponder) {
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), femonTheme[femonConfig.theme].clrBackground);
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground);
@@ -605,10 +605,12 @@ void cFemonOsd::Show(void)
         delete m_Receiver;
      if (femonConfig.analyzestream) {
         cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-        IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
-        IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-        m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
-        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+        if (channel) {
+           IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
+           IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
+           m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
+           cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+           }
         }
      Start();
      }
@@ -646,10 +648,12 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
      delete m_Receiver;
   if (femonConfig.analyzestream) {
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-     IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
-     IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-     m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
-     cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+     if (channel) {
+        IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
+        IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
+        m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
+        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+        }
      }
 }
 
@@ -663,10 +667,12 @@ void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
      delete m_Receiver;
   if (femonConfig.analyzestream) {
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-     IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
-     IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-     m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
-     cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+     if (channel) {
+        IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
+        IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
+        m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
+        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+        }
      }
 }
 
@@ -677,25 +683,27 @@ bool cFemonOsd::DeviceSwitch(int direction)
   direction = sgn(direction);
   if (device >= 0) {
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-     for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
-        if (direction) {
-           if (++device >= cDevice::NumDevices())
-              device = 0;
-           }
-        else {
-           if (--device < 0)
-              device = cDevice::NumDevices() - 1;
-           }
-        if (cDevice::GetDevice(device)->ProvidesChannel(channel, 0)) {
-           Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
-           cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
-           cControl::Shutdown();
-           cDevice::GetDevice(device)->SwitchChannel(channel, true);
-           if (cDevice::GetDevice(device) == cDevice::PrimaryDevice())
-              cDevice::GetDevice(device)->ForceTransferMode();
-           cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->GetChannelID(), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
-           cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
-           return (true);
+     if (channel) {
+        for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
+           if (direction) {
+              if (++device >= cDevice::NumDevices())
+                 device = 0;
+              }
+           else {
+              if (--device < 0)
+                 device = cDevice::NumDevices() - 1;
+              }
+           if (cDevice::GetDevice(device)->ProvidesChannel(channel, 0)) {
+              Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
+              cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
+              cControl::Shutdown();
+              cDevice::GetDevice(device)->SwitchChannel(channel, true);
+              if (cDevice::GetDevice(device) == cDevice::PrimaryDevice())
+                 cDevice::GetDevice(device)->ForceTransferMode();
+              cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel->GetChannelID(), channel->Vpid(), channel->Apids(), channel->Dpids(), channel->Spids()));
+              cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
+              return (true);
+              }
            }
         }
      }
@@ -891,10 +899,13 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                }
             break;
        case kOk:
+            {
             // toggle between display modes
-            if (++m_DisplayMode == eFemonModeAC3 && !Channels.GetByNumber(cDevice::CurrentChannel())->Dpid(0)) m_DisplayMode++;
+            cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+            if (++m_DisplayMode == eFemonModeAC3 && channel && !channel->Dpid(0)) m_DisplayMode++;
             if (m_DisplayMode >= eFemonModeMaxNumber) m_DisplayMode = 0;
             DrawInfoWindow();
+            }
             break;
        default:
             break;

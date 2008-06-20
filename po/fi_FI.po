@@ -21,8 +21,8 @@ msgstr "Signaalimittari (OSD)"
 msgid "Signal Information"
 msgstr "Signaalimittari"
 
-msgid "Femon not available while replaying"
-msgstr "Signaalimittari ei ole käytettävissä toiston aikana"
+msgid "Femon not available"
+msgstr "Signaalimittari ei ole käytettävissä"
 
 msgid "basic"
 msgstr "perus"

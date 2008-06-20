@@ -21,7 +21,7 @@ msgstr "DVB Signaalmonitor (OSD)"
 msgid "Signal Information"
 msgstr "Signaaliinfo"
 
-msgid "Femon not available while replaying"
+msgid "Femon not available"
 msgstr ""
 
 msgid "basic"
