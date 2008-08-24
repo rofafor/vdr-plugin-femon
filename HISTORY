@@ -76,7 +76,7 @@ VDR Plugin 'femon' Revision History
 - Added "Stream Information" display mode.
   Toggle between different modes with 'OK' key:
   .-> basic -> transponder -> stream -.
-  `-----------------------------------´
+  `-----------------------------------'
 - Added missing german translations (Thanks to Peter Marquardt).
 
 2004-06-06: Version 0.1.2
@@ -150,7 +150,7 @@ VDR Plugin 'femon' Revision History
 
 2005-04-02: Version 0.8.8
 
-- Cleaned up Finnish translations (Thanks to Ville Skyttä).
+- Cleaned up Finnish translations (Thanks to Ville SkyttÃ¤).
 
 2005-04-04: Version 0.8.9
 
@@ -193,7 +193,7 @@ VDR Plugin 'femon' Revision History
 - Modified femon service without incrementing version number.
 - Added "Duotone" theme for 2bpp on screen displays.
 - Fixed crash bug in femonreceiver.
-- Fixed setup page bug (Thanks to Thomas Günther for reporting this one).
+- Fixed setup page bug (Thanks to Thomas GÃ¼nther for reporting this one).
 
 2006-01-25: Version 0.9.6
 
@@ -220,7 +220,7 @@ VDR Plugin 'femon' Revision History
 
 2006-04-23: Version 0.9.10
 
-- Added STRIP option for Makefile (Thanks to Ville Skyttä).
+- Added STRIP option for Makefile (Thanks to Ville SkyttÃ¤).
 - Modified APIVERSION code in Makefile.
 
 2006-04-30: Version 1.0.0
@@ -237,7 +237,7 @@ VDR Plugin 'femon' Revision History
 2006-09-17: Version 1.1.0
 
 - Added support for svdrpservice plugin (Thanks to Frank Schmirler).
-- Added INFO SVDRP command (partially based on patch by Herbert Pötzl).
+- Added INFO SVDRP command (partially based on patch by Herbert PÃ¶tzl).
 - Removed system log option - use SVDRP instead.
 - Added --remove-destination to the 'cp' command in Makefile.
 
@@ -247,7 +247,7 @@ VDR Plugin 'femon' Revision History
 
 2007-05-01: Version 1.1.2
 
-- Fixed opening while replaying (Thanks to Antti Seppälä for reporting this one).
+- Fixed opening while replaying (Thanks to Antti SeppÃ¤lÃ¤ for reporting this one).
 
 2007-05-15: Version 1.1.3
 
@@ -284,7 +284,7 @@ VDR Plugin 'femon' Revision History
 2008-02-18: Version 1.2.4
 
 - Replaced asprintf with cString.
-- Updated French translation (Thanks to Michaël Nival).
+- Updated French translation (Thanks to MichaÃ«l Nival).
 - Fixed service call with null data.
 - Added setup option to use a single 8 bpp OSD area.
 
@@ -292,9 +292,13 @@ VDR Plugin 'femon' Revision History
 
 - Updated for vdr-1.6.0.
 - Updated Italian translation (Thanks to Diego Pierotto).
-- Added ST:TNG theme (Thanks to Fabian Förg).
+- Added ST:TNG theme (Thanks to Fabian FÃ¶rg).
 
 2008-06-20: Version 1.6.1
 
 - Updated Italian translation (Thanks to Diego Pierotto).
-- Fixed a crash if no channel available (Thanks to Winfried Köhler)
+- Fixed a crash if no channel available (Thanks to Winfried KÃ¶hler)
+
+2008-xx-xx: Version 1.6.2
+
+- Converted HISTORY and fi_FI.po to UTF-8.

@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: <vdr@linuxtv.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "DVB Signal Information Monitor (OSD)"
@@ -22,7 +22,7 @@ msgid "Signal Information"
 msgstr "Signaalimittari"
 
 msgid "Femon not available"
-msgstr "Signaalimittari ei ole k‰ytett‰viss‰"
+msgstr "Signaalimittari ei ole k√§ytett√§viss√§"
 
 msgid "basic"
 msgstr "perus"
@@ -31,7 +31,7 @@ msgid "transponder"
 msgstr "transponderi"
 
 msgid "stream"
-msgstr "l‰hete"
+msgstr "l√§hete"
 
 msgid "AC-3"
 msgstr "AC-3"
@@ -64,103 +64,103 @@ msgid "SilverGreen"
 msgstr "SilverGreen"
 
 msgid "Hide main menu entry"
-msgstr "Piilota valinta p‰‰valikosta"
+msgstr "Piilota valinta p√§√§valikosta"
 
 msgid "Define whether the main menu entry is hidden."
-msgstr "M‰‰rittele, n‰ytet‰‰nkˆ laajennoksen valinta p‰‰valikossa."
+msgstr "M√§√§rittele, n√§ytet√§√§nk√∂ laajennoksen valinta p√§√§valikossa."
 
 msgid "Use single area (8bpp)"
-msgstr "K‰yt‰ yksitt‰ist‰ kuva-aluetta (8bpp)"
+msgstr "K√§yt√§ yksitt√§ist√§ kuva-aluetta (8bpp)"
 
 msgid ""
 "Define whether a single 8bpp OSD area is preferred.\n"
 "\n"
 "Required by Truetype fonts and anti-aliasing."
 msgstr ""
-"M‰‰rittele, yritet‰‰nkˆ k‰ytt‰‰ yksitt‰ist‰ 8bpp kuva-aluetta.\n"
+"M√§√§rittele, yritet√§√§nk√∂ k√§ytt√§√§ yksitt√§ist√§ 8bpp kuva-aluetta.\n"
 "\n"
-"Truetype-kirjasimet ja reunan pehmennys vaativat t‰m‰n asetuksen."
+"Truetype-kirjasimet ja reunan pehmennys vaativat t√§m√§n asetuksen."
 
 msgid "Default display mode"
-msgstr "Oletusn‰yttˆtila"
+msgstr "Oletusn√§ytt√∂tila"
 
 msgid "Define the default display mode at startup."
-msgstr "M‰‰rittele k‰ytett‰v‰ n‰yttˆtila k‰ynnistett‰ess‰."
+msgstr "M√§√§rittele k√§ytett√§v√§ n√§ytt√∂tila k√§ynnistett√§ess√§."
 
 msgid "Define the used OSD skin."
-msgstr "M‰‰rittele k‰ytett‰v‰ ulkoasu n‰ytˆlle."
+msgstr "M√§√§rittele k√§ytett√§v√§ ulkoasu n√§yt√∂lle."
 
 msgid "Define the used OSD theme."
-msgstr "M‰‰rittele k‰ytett‰v‰ v‰riteema n‰ytˆlle."
+msgstr "M√§√§rittele k√§ytett√§v√§ v√§riteema n√§yt√∂lle."
 
 msgid "Position"
 msgstr "Sijainti"
 
 msgid "Define the position of OSD."
-msgstr "M‰‰rittele n‰ytˆn sijainti."
+msgstr "M√§√§rittele n√§yt√∂n sijainti."
 
 msgid "Define the height of OSD."
-msgstr "M‰‰rittele n‰ytˆn korkeus."
+msgstr "M√§√§rittele n√§yt√∂n korkeus."
 
 msgid "Horizontal offset"
 msgstr "Vaakakeskitys"
 
 msgid "Define the horizontal offset of OSD."
-msgstr "M‰‰rittele n‰ytˆn vaakakeskitys."
+msgstr "M√§√§rittele n√§yt√∂n vaakakeskitys."
 
 msgid "Show CA system"
-msgstr "N‰yt‰ salausj‰rjestelm‰"
+msgstr "N√§yt√§ salausj√§rjestelm√§"
 
 msgid "Define whether the CA system is shown as text."
-msgstr "M‰‰rittele, n‰ytet‰‰n salausj‰rjestelm‰ tekstin‰."
+msgstr "M√§√§rittele, n√§ytet√§√§n salausj√§rjestelm√§ tekstin√§."
 
 msgid "Red limit [%]"
 msgstr "Punaisen taso [%]"
 
 msgid "Define a limit for red bar, which is used to indicate a bad signal."
-msgstr "M‰‰rittele taso punaiselle palkille, jota k‰ytet‰‰n huonon signaalin ilmaisimena."
+msgstr "M√§√§rittele taso punaiselle palkille, jota k√§ytet√§√§n huonon signaalin ilmaisimena."
 
 msgid "Green limit [%]"
-msgstr "Vihre‰n taso [%]"
+msgstr "Vihre√§n taso [%]"
 
 msgid "Define a limit for green bar, which is used to indicate a good signal."
-msgstr "M‰‰rittele taso vihre‰lle palkille, jota k‰ytet‰‰n hyv‰n signaalin ilmaisimena."
+msgstr "M√§√§rittele taso vihre√§lle palkille, jota k√§ytet√§√§n hyv√§n signaalin ilmaisimena."
 
 msgid "OSD update interval [0.1s]"
-msgstr "N‰ytˆn p‰ivitysv‰li [0.1s]"
+msgstr "N√§yt√∂n p√§ivitysv√§li [0.1s]"
 
 msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
-msgstr "M‰‰rittele n‰ytˆnvirkistystaajuus. Mit‰ pienempi arvo, sit‰ suurempi CPU-kuorma."
+msgstr "M√§√§rittele n√§yt√∂nvirkistystaajuus. Mit√§ pienempi arvo, sit√§ suurempi CPU-kuorma."
 
 msgid "Analyze stream"
-msgstr "L‰hetteen analysointi"
+msgstr "L√§hetteen analysointi"
 
 msgid "Define whether the DVB stream is analyzed and bitrates calculated."
-msgstr "M‰‰rittele, analysoidaanko DVB-l‰hetett‰ ja lasketaanko bittinopeuksia."
+msgstr "M√§√§rittele, analysoidaanko DVB-l√§hetett√§ ja lasketaanko bittinopeuksia."
 
 msgid "Calculation interval [0.1s]"
-msgstr "Laskennan p‰ivitysv‰li [0.1s]"
+msgstr "Laskennan p√§ivitysv√§li [0.1s]"
 
 msgid "Define an interval for calculation. The bigger interval generates more stable values."
-msgstr "M‰‰rittele laskentaikkunan koko. Mit‰ suurempi laskentaikkuna, sit‰ todenmukaisemmat lopputulokset."
+msgstr "M√§√§rittele laskentaikkunan koko. Mit√§ suurempi laskentaikkuna, sit√§ todenmukaisemmat lopputulokset."
 
 msgid "Use SVDRP service"
-msgstr "K‰yt‰ SVDRP-palvelua"
+msgstr "K√§yt√§ SVDRP-palvelua"
 
 msgid "Define whether the SVDRP service is used in client/server setups."
-msgstr "M‰‰rittele k‰ytet‰‰nkˆ SVDRP-palvelua asiakas/palvelin-kokoonpanoissa."
+msgstr "M√§√§rittele k√§ytet√§√§nk√∂ SVDRP-palvelua asiakas/palvelin-kokoonpanoissa."
 
 msgid "SVDRP service port"
 msgstr "SVDRP-palvelun portti"
 
 msgid "Define the port number of SVDRP service."
-msgstr "M‰‰rittele SVDRP-palvelun k‰ytt‰m‰ portti."
+msgstr "M√§√§rittele SVDRP-palvelun k√§ytt√§m√§ portti."
 
 msgid "SVDRP service IP"
 msgstr "SVDRP-palvelun IP-osoite"
 
 msgid "Define the IP address of SVDRP service."
-msgstr "M‰‰rittele SVDRP-palvelun k‰ytt‰m‰ IP-osoite."
+msgstr "M√§√§rittele SVDRP-palvelun k√§ytt√§m√§ IP-osoite."
 
 msgid "Help"
 msgstr "Opaste"
@@ -169,13 +169,13 @@ msgid "Video"
 msgstr "Kuva"
 
 msgid "Audio"
-msgstr "ƒ‰ni"
+msgstr "√Ñ√§ni"
 
 msgid "Transponder Information"
 msgstr "Transponderin tiedot"
 
 msgid "Apid"
-msgstr "ƒ‰ni-PID"
+msgstr "√Ñ√§ni-PID"
 
 msgid "Dpid"
 msgstr "Dolby-PID"
@@ -187,7 +187,7 @@ msgid "Nid"
 msgstr "Verkko-ID"
 
 msgid "Tid"
-msgstr "L‰hete-ID"
+msgstr "L√§hete-ID"
 
 msgid "Rid"
 msgstr "Radio-ID"
@@ -205,7 +205,7 @@ msgid "Coderate"
 msgstr "Suojaustaso"
 
 msgid "Stream Information"
-msgstr "L‰hetteen tiedot"
+msgstr "L√§hetteen tiedot"
 
 msgid "Video Stream"
 msgstr "Kuvaraita"
@@ -217,7 +217,7 @@ msgid "Aspect Ratio"
 msgstr "Kuvasuhde"
 
 msgid "Frame Rate"
-msgstr "Ruudunp‰ivitystaajuus"
+msgstr "Ruudunp√§ivitystaajuus"
 
 msgid "Hz"
 msgstr "Hz"
@@ -229,16 +229,16 @@ msgid "Resolution"
 msgstr "Resoluutio"
 
 msgid "Audio Stream"
-msgstr "ƒ‰niraita"
+msgstr "√Ñ√§niraita"
 
 msgid "MPEG Layer"
 msgstr "MPEG-taso"
 
 msgid "Sampling Frequency"
-msgstr "N‰ytteenottotaajuus"
+msgstr "N√§ytteenottotaajuus"
 
 msgid "AC-3 Stream"
-msgstr "AC-3-‰‰niraita"
+msgstr "AC-3-√§√§niraita"
 
 msgid "kHz"
 msgstr "kHz"
@@ -247,10 +247,10 @@ msgid "Frame Size"
 msgstr "Kehyksen koko"
 
 msgid "Bit Stream Mode"
-msgstr "L‰hetteen tyyppi"
+msgstr "L√§hetteen tyyppi"
 
 msgid "Audio Coding Mode"
-msgstr "ƒ‰nikoodaus"
+msgstr "√Ñ√§nikoodaus"
 
 msgid "Center Mix Level"
 msgstr "Keskikanavan taso"
@@ -265,7 +265,7 @@ msgid "Low Frequency Effects"
 msgstr "LFE-kanava"
 
 msgid "on"
-msgstr "p‰‰ll‰"
+msgstr "p√§√§ll√§"
 
 msgid "off"
 msgstr "poissa"
@@ -274,7 +274,7 @@ msgid "Dialogue Normalization"
 msgstr "Dialogin normalisointi"
 
 msgid "Fixed"
-msgstr "kiinte‰"
+msgstr "kiinte√§"
 
 msgid "Analog"
 msgstr "analoginen"
@@ -331,13 +331,13 @@ msgid "NTSC"
 msgstr "NTSC"
 
 msgid "Complete Main (CM)"
-msgstr "P‰‰asiallinen (CM)"
+msgstr "P√§√§asiallinen (CM)"
 
 msgid "Music and Effects (ME)"
 msgstr "Musiikki ja tehosteet (ME)"
 
 msgid "Visually Impaired (VI)"
-msgstr "N‰kˆrajoitteinen (VI)"
+msgstr "N√§k√∂rajoitteinen (VI)"
 
 msgid "Hearing Impaired (HI)"
 msgstr "Kuulorajoitteinen (HI)"
@@ -349,10 +349,10 @@ msgid "Commentary (C)"
 msgstr "Kommentointi (C)"
 
 msgid "Emergency (E)"
-msgstr "H‰t‰tiedote (E)"
+msgstr "H√§t√§tiedote (E)"
 
 msgid "Voice Over (VO)"
-msgstr "P‰‰lle puhuttu (VO)"
+msgstr "P√§√§lle puhuttu (VO)"
 
 msgid "Karaoke"
 msgstr "Karaoke"
