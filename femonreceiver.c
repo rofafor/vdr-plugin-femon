@@ -58,6 +58,7 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[
 cFemonReceiver::~cFemonReceiver(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  m_Sleep.Signal();
   if (Running())
      Cancel(3);
   Detach();
@@ -362,6 +363,6 @@ void cFemonReceiver::Action(void)
         m_AudioPacketCount = 0;
         m_AC3Bitrate   = (10.0 * 8.0 * 184.0 * m_AC3PacketCount)   / femonConfig.calcinterval;
         m_AC3PacketCount = 0;
-        cCondWait::SleepMs(100 * femonConfig.calcinterval - t.Elapsed());
+        m_Sleep.Wait(max((int)(100 * femonConfig.calcinterval - t.Elapsed()), 3));
     }
 }

@@ -47,7 +47,7 @@ enum eDolbySurroundMode {
   DSM_RESERVED          = 3,
   };
 
-enum eReveiverCodes {
+enum eReceiverCodes {
   FR_RESERVED = -1,
   FR_FREE     = -2,
   FR_NOTVALID = -3
@@ -55,40 +55,41 @@ enum eReveiverCodes {
 
 class cFemonReceiver : public cReceiver, public cThread {
 private:
-  int    m_VideoPid;
-  int    m_AudioPid;
-  int    m_AC3Pid;
-  bool   m_VideoValid;
-  int    m_VideoPacketCount;
-  int    m_VideoHorizontalSize;
-  int    m_VideoVerticalSize;
-  int    m_VideoAspectRatio;
-  int    m_VideoFormat;
-  double m_VideoFrameRate;
-  double m_VideoStreamBitrate;
-  double m_VideoBitrate;
-  bool   m_AudioValid;
-  int    m_AudioPacketCount;
-  double m_AudioStreamBitrate;
-  double m_AudioBitrate;
-  int    m_AudioSamplingFreq;
-  int    m_AudioMPEGLayer;
-  bool   m_AC3Valid;
-  int    m_AC3PacketCount;
-  double m_AC3Bitrate;
-  int    m_AC3FrameSize;
-  int    m_AC3SamplingFreq;
-  int    m_AC3StreamBitrate;
-  int    m_AC3BitStreamMode;
-  int    m_AC3AudioCodingMode;
-  int    m_AC3CenterMixLevel;
-  int    m_AC3SurroundMixLevel;
-  int    m_AC3DolbySurroundMode;
-  bool   m_AC3LfeOn;
-  int    m_AC3DialogLevel;  
-  void   GetVideoInfo(uint8_t *mbuf, int count);
-  void   GetAudioInfo(uint8_t *mbuf, int count);
-  void   GetAC3Info(uint8_t *mbuf, int count);
+  cCondWait m_Sleep;
+  int       m_VideoPid;
+  int       m_AudioPid;
+  int       m_AC3Pid;
+  bool      m_VideoValid;
+  int       m_VideoPacketCount;
+  int       m_VideoHorizontalSize;
+  int       m_VideoVerticalSize;
+  int       m_VideoAspectRatio;
+  int       m_VideoFormat;
+  double    m_VideoFrameRate;
+  double    m_VideoStreamBitrate;
+  double    m_VideoBitrate;
+  bool      m_AudioValid;
+  int       m_AudioPacketCount;
+  double    m_AudioStreamBitrate;
+  double    m_AudioBitrate;
+  int       m_AudioSamplingFreq;
+  int       m_AudioMPEGLayer;
+  bool      m_AC3Valid;
+  int       m_AC3PacketCount;
+  double    m_AC3Bitrate;
+  int       m_AC3FrameSize;
+  int       m_AC3SamplingFreq;
+  int       m_AC3StreamBitrate;
+  int       m_AC3BitStreamMode;
+  int       m_AC3AudioCodingMode;
+  int       m_AC3CenterMixLevel;
+  int       m_AC3SurroundMixLevel;
+  int       m_AC3DolbySurroundMode;
+  bool      m_AC3LfeOn;
+  int       m_AC3DialogLevel;  
+  void      GetVideoInfo(uint8_t *mbuf, int count);
+  void      GetAudioInfo(uint8_t *mbuf, int count);
+  void      GetAC3Info(uint8_t *mbuf, int count);
 
 protected:
   virtual void Activate(bool On);
