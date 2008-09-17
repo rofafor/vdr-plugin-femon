@@ -302,4 +302,4 @@ VDR Plugin 'femon' Revision History
 2008-xx-xx: Version 1.6.2
 
 - Converted HISTORY and fi_FI.po to UTF-8.
-- Optimized receiver thread termination.
+- Optimized receiver and OSD thread termination.

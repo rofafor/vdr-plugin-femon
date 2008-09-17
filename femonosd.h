@@ -46,6 +46,7 @@ private:
   int m_DisplayMode;
   const cFont *m_Font;
   cTimeMs m_InputTime;
+  cCondWait m_Sleep;
   cMutex* m_Mutex;
   static cBitmap bmStereo, bmMonoLeft, bmMonoRight, bmDD, bmDD20, bmDD51;
   static cBitmap bmNumbers[MAX_BMNUMBERS];

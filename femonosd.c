@@ -128,6 +128,7 @@ cFemonOsd::cFemonOsd()
 cFemonOsd::~cFemonOsd(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  m_Sleep.Signal();
   if (Running())
      Cancel(3);
   if (m_SvdrpConnection.handle >= 0) {
@@ -557,7 +558,7 @@ void cFemonOsd::Action(void)
        DrawInfoWindow();
        DrawStatusWindow();
        }
-    cCondWait::SleepMs(100 * femonConfig.updateinterval - t.Elapsed());
+    m_Sleep.Wait(max((int)(100 * femonConfig.updateinterval - t.Elapsed()), 3));
     }
 }
 
