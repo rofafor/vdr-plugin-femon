@@ -299,7 +299,7 @@ VDR Plugin 'femon' Revision History
 - Updated Italian translation (Thanks to Diego Pierotto).
 - Fixed a crash if no channel available (Thanks to Winfried Köhler)
 
-2008-xx-xx: Version 1.6.2
+2008-10-12: Version 1.6.2
 
 - Converted HISTORY and fi_FI.po to UTF-8.
 - Optimized receiver and OSD thread termination.
