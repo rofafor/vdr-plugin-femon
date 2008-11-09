@@ -28,7 +28,8 @@ The plugin is based on a neat console frontend status monitor application
 called 'femon' by Johannes Stezenbach (see DVB-apps/szap/femon.c for further
 information). The bitrate calculation trick originates from the 'dvbstream'
 application by Dave Chapman and the stream information routines are taken from
-the 'libdvb' library by Metzler Brothers.
+the 'libdvb' library by Metzler Brothers. The H.264 parsing routines are taken
+from vdr-xineliboutput plugin by Petri Hintukainen.
 
 Terminology:
 

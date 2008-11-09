@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.0\n"
+"Project-Id-Version: femon 1.6.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-03-23 14:42+0100\n"
+"POT-Creation-Date: 2008-11-09 13:31+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Luis Palacios\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -207,6 +207,9 @@ msgstr "Información del flujo"
 msgid "Video Stream"
 msgstr "Flujo de video"
 
+msgid "Codec"
+msgstr ""
+
 msgid "Bitrate"
 msgstr "Tasa de bits"
 
@@ -215,9 +218,6 @@ msgstr "Proporciones de la imagen"
 
 msgid "Frame Rate"
 msgstr "Tasa de frames"
-
-msgid "Hz"
-msgstr "Hz"
 
 msgid "Video Format"
 msgstr "Formato de video"
@@ -228,20 +228,14 @@ msgstr "Resolución"
 msgid "Audio Stream"
 msgstr "Flujo de audio"
 
-msgid "MPEG Layer"
-msgstr "Nivel MPEG"
+msgid "Channel Mode"
+msgstr ""
 
 msgid "Sampling Frequency"
 msgstr "Frecuencia de muestreo"
 
 msgid "AC-3 Stream"
 msgstr "Flujo AC-3"
-
-msgid "kHz"
-msgstr "kHz"
-
-msgid "Frame Size"
-msgstr "Tamaño de frame"
 
 msgid "Bit Stream Mode"
 msgstr "Modo bitstream"
@@ -306,6 +300,45 @@ msgstr "BetaCrypt"
 msgid "SkyCrypt"
 msgstr "SkyCrypt"
 
+msgid "MPEG-2"
+msgstr ""
+
+msgid "H.264"
+msgstr ""
+
+msgid "MPEG-1 Layer I"
+msgstr ""
+
+msgid "MPEG-1 Layer II"
+msgstr ""
+
+msgid "MPEG-1 Layer III"
+msgstr ""
+
+msgid "MPEG-2 Layer I"
+msgstr ""
+
+msgid "MPEG-2 Layer II"
+msgstr ""
+
+msgid "MPEG-2 Layer III"
+msgstr ""
+
+msgid "HE-AAC"
+msgstr ""
+
+msgid "stereo"
+msgstr ""
+
+msgid "joint Stereo"
+msgstr ""
+
+msgid "dual"
+msgstr ""
+
+msgid "mono"
+msgstr "o"
+
 msgid "none"
 msgstr "ninguno"
 
@@ -315,17 +348,38 @@ msgstr "auto"
 msgid "MHz"
 msgstr "MHz"
 
+msgid "interlaced"
+msgstr ""
+
+msgid "progressive"
+msgstr ""
+
 msgid "reserved"
 msgstr "reservado"
 
+msgid "extended"
+msgstr ""
+
 msgid "unknown"
 msgstr "desconocido"
+
+msgid "component"
+msgstr ""
 
 msgid "PAL"
 msgstr "PAL"
 
 msgid "NTSC"
 msgstr "NTSC"
+
+msgid "SECAM"
+msgstr ""
+
+msgid "MAC"
+msgstr ""
+
+msgid "Hz"
+msgstr "Hz"
 
 msgid "Complete Main (CM)"
 msgstr "Principal (CM)"

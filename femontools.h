@@ -3,7 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id$
  */
 
 #ifndef __FEMONTOOLS_H
@@ -18,6 +17,8 @@
 #else
 #define Dprintf(x...) ;
 #endif
+
+#define ELEMENTS(x) (sizeof(x) / sizeof(x[0]))
 
 #define FRONTEND_DEVICE "/dev/dvb/adapter%d/frontend%d"
 
@@ -36,6 +37,9 @@ cString getDpids(const cChannel *channel);
 cString getSpids(const cChannel *channel);
 cString getCAids(const cChannel *channel, bool identify = false);
 cString getCA(int value);
+cString getVideoCodec(int value);
+cString getAudioCodec(int value);
+cString getAudioChannelMode(int value);
 cString getCoderate(int value);
 cString getTransmission(int value);
 cString getBandwidth(int value);
@@ -43,8 +47,14 @@ cString getInversion(int value);
 cString getHierarchy(int value);
 cString getGuard(int value);
 cString getModulation(int value);
+cString getAlpha(int value);
+cString getPriority(int value);
+cString getSystem(int value);
+cString getRollOff(int value);
+cString getResolution(int width, int height, int scan);
 cString getAspectRatio(int value);
 cString getVideoFormat(int value);
+cString getFrameRate(double value);
 cString getAC3BitStreamMode(int value, int coding);
 cString getAC3AudioCodingMode(int value, int stream);
 cString getAC3CenterMixLevel(int value);
@@ -54,6 +64,7 @@ cString getAC3DialogLevel(int value);
 cString getFrequencyMHz(int value);
 cString getAudioSamplingFreq(int value);
 cString getAudioBitrate(double value, double stream);
+cString getVideoBitrate(double value, double stream);
 cString getBitrateMbits(double value);
 cString getBitrateKbits(double value);
 

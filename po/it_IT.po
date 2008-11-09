@@ -1,14 +1,14 @@
 # VDR plugin language source file.
 # Copyright (C) 2007 Rolf Ahrenberg
-# This file is distributed under the same license as the VDR package.
+# This file is distributed under the same license as the femon package.
 # Sean Carlos
 # Diego Pierotto <vdr-italian@tiscali.it>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.0\n"
+"Project-Id-Version: femon 1.6.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-02-16 01:01+0200\n"
+"POT-Creation-Date: 2008-11-09 13:31+0200\n"
 "PO-Revision-Date: 2008-04-17 00:18+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -211,6 +211,9 @@ msgstr "Informazioni flusso"
 msgid "Video Stream"
 msgstr "Flusso video"
 
+msgid "Codec"
+msgstr ""
+
 msgid "Bitrate"
 msgstr "Bitrate"
 
@@ -219,9 +222,6 @@ msgstr "Formato immagine"
 
 msgid "Frame Rate"
 msgstr "Frame rate"
-
-msgid "Hz"
-msgstr "Hz"
 
 msgid "Video Format"
 msgstr "Formato video"
@@ -232,20 +232,14 @@ msgstr "Risoluzione"
 msgid "Audio Stream"
 msgstr "Flusso audio"
 
-msgid "MPEG Layer"
-msgstr "Formato MPEG"
+msgid "Channel Mode"
+msgstr ""
 
 msgid "Sampling Frequency"
 msgstr "Frequenza campionamento"
 
 msgid "AC-3 Stream"
 msgstr "Flusso AC-3"
-
-msgid "kHz"
-msgstr "kHz"
-
-msgid "Frame Size"
-msgstr "Dimensione frame"
 
 msgid "Bit Stream Mode"
 msgstr "Modalità bitstream"
@@ -310,6 +304,45 @@ msgstr "BetaCrypt"
 msgid "SkyCrypt"
 msgstr "SkyCrypt"
 
+msgid "MPEG-2"
+msgstr ""
+
+msgid "H.264"
+msgstr ""
+
+msgid "MPEG-1 Layer I"
+msgstr ""
+
+msgid "MPEG-1 Layer II"
+msgstr ""
+
+msgid "MPEG-1 Layer III"
+msgstr ""
+
+msgid "MPEG-2 Layer I"
+msgstr ""
+
+msgid "MPEG-2 Layer II"
+msgstr ""
+
+msgid "MPEG-2 Layer III"
+msgstr ""
+
+msgid "HE-AAC"
+msgstr ""
+
+msgid "stereo"
+msgstr ""
+
+msgid "joint Stereo"
+msgstr ""
+
+msgid "dual"
+msgstr ""
+
+msgid "mono"
+msgstr ""
+
 msgid "none"
 msgstr "nessuna"
 
@@ -319,17 +352,38 @@ msgstr "auto"
 msgid "MHz"
 msgstr "MHz"
 
+msgid "interlaced"
+msgstr ""
+
+msgid "progressive"
+msgstr ""
+
 msgid "reserved"
 msgstr "riservato"
 
+msgid "extended"
+msgstr ""
+
 msgid "unknown"
 msgstr "sconosciuto"
+
+msgid "component"
+msgstr ""
 
 msgid "PAL"
 msgstr "PAL"
 
 msgid "NTSC"
 msgstr "NTSC"
+
+msgid "SECAM"
+msgstr ""
+
+msgid "MAC"
+msgstr ""
+
+msgid "Hz"
+msgstr "Hz"
 
 msgid "Complete Main (CM)"
 msgstr "Principale (P)"
@@ -396,4 +450,3 @@ msgstr "Mbit/s"
 
 msgid "kbit/s"
 msgstr "kbit/s"
-

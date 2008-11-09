@@ -3,12 +3,15 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id$
  */
 
 #include <unistd.h>
 #include "femontools.h"
 #include "femoncfg.h"
+#include "femonmpeg.h"
+#include "femonaac.h"
+#include "femonac3.h"
+#include "femonh264.h"
 #include "femonreceiver.h"
 
 #define TS_SIZE       188
@@ -18,43 +21,57 @@
 #define PTS_DTS_FLAGS 0xC0
 
 cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[], int Dpid[])
-:cReceiver(ChannelID, -1, Vpid, Apid, Dpid, NULL), cThread("femon receiver")
+: cReceiver(ChannelID, -1, Vpid, Apid, Dpid, NULL),
+  cThread("femon receiver"),
+  m_VideoPid(Vpid),
+  m_VideoPacketCount(0),
+  m_VideoBitrate(0.0),
+  m_VideoValid(false),
+  m_VideoInfoBufferIndex(0),
+  m_AudioPid(Apid[0]),
+  m_AudioPacketCount(0),
+  m_AudioBitrate(0.0),
+  m_AudioValid(false),
+  m_AudioInfoBufferIndex(0),
+  m_AC3Pid(Dpid[0]),
+  m_AC3PacketCount(0), 
+  m_AC3Bitrate(0),
+  m_AC3Valid(false),
+  m_AC3InfoBufferIndex(0)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  m_VideoPid = Vpid;
-  m_AudioPid = Apid[0];
-  m_AC3Pid = Dpid[0];
-  m_VideoValid = false;
-  m_VideoPacketCount = 0;
-  m_VideoHorizontalSize = 0;
-  m_VideoVerticalSize = 0;
-  m_VideoAspectRatio = AR_RESERVED;
-  m_VideoFormat = VF_UNKNOWN;
-  m_VideoFrameRate = 0.0;
-  m_VideoStreamBitrate = 0.0;
-  m_VideoBitrate = 0.0;
-  m_AudioValid = false;
-  m_AudioPacketCount = 0;
-  m_AudioStreamBitrate = -2.0;
-  m_AudioBitrate = 0.0;
-  m_AudioSamplingFreq = -1;
-  m_AudioMPEGLayer = 0;
-  m_AudioBitrate = 0.0;
-  m_AC3Valid = false;
-  m_AC3PacketCount = 0; 
-  m_AC3StreamBitrate = 0;
-  m_AC3SamplingFreq = 0;
-  m_AC3Bitrate = 0;
-  m_AC3FrameSize = 0;
-  m_AC3BitStreamMode = FR_NOTVALID;
-  m_AC3AudioCodingMode = FR_NOTVALID;
-  m_AC3CenterMixLevel = FR_NOTVALID;
-  m_AC3SurroundMixLevel = FR_NOTVALID;
-  m_AC3DolbySurroundMode = FR_NOTVALID;
-  m_AC3LfeOn = false;
-  m_AC3DialogLevel = FR_NOTVALID;
+
+  m_VideoInfo.codec = VIDEO_CODEC_INVALID;
+  m_VideoInfo.format = VIDEO_FORMAT_INVALID;
+  m_VideoInfo.scan = VIDEO_SCAN_INVALID;
+  m_VideoInfo.aspectRatio = VIDEO_ASPECT_RATIO_INVALID;
+  m_VideoInfo.width = 0;
+  m_VideoInfo.height = 0;
+  m_VideoInfo.frameRate = 0;
+  m_VideoInfo.bitrate = AUDIO_BITRATE_INVALID;
+  for (unsigned int i = 0; i < ELEMENTS(m_VideoInfoBuffer); ++i)
+      memcpy(&m_VideoInfoBuffer[i], &m_VideoInfo, sizeof(video_info_t));
+
+  m_AudioInfo.codec = AUDIO_CODEC_UNKNOWN;
+  m_AudioInfo.bitrate = AUDIO_BITRATE_INVALID;
+  m_AudioInfo.samplingFrequency = AUDIO_SAMPLING_FREQUENCY_INVALID;
+  m_AudioInfo.channelMode = AUDIO_CHANNEL_MODE_INVALID;
+  for (unsigned int i = 0; i < ELEMENTS(m_AudioInfoBuffer); ++i)
+      memcpy(&m_AudioInfoBuffer[i], &m_AudioInfo, sizeof(audio_info_t));
+
+  m_AC3Info.bitrate = AUDIO_BITRATE_INVALID;
+  m_AC3Info.samplingFrequency = AUDIO_SAMPLING_FREQUENCY_INVALID;
+  m_AC3Info.bitstreamMode = AUDIO_BITSTREAM_MODE_INVALID;
+  m_AC3Info.audioCodingMode = AUDIO_CODING_MODE_INVALID;
+  m_AC3Info.dolbySurroundMode = AUDIO_DOLBY_SURROUND_MODE_INVALID;
+  m_AC3Info.centerMixLevel = AUDIO_CENTER_MIX_LEVEL_INVALID;
+  m_AC3Info.surroundMixLevel = AUDIO_SURROUND_MIX_LEVEL_INVALID;
+  m_AC3Info.dialogLevel = 0;
+  m_AC3Info.lfe = false;
+  for (unsigned int i = 0; i < ELEMENTS(m_AC3InfoBuffer); ++i)
+      memcpy(&m_AC3InfoBuffer[i], &m_AC3Info, sizeof(ac3_info_t));
 }
- 
+
 cFemonReceiver::~cFemonReceiver(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
@@ -64,239 +81,82 @@ cFemonReceiver::~cFemonReceiver(void)
   Detach();
 }
 
-/* The following function originates from libdvbmpeg: */
-void cFemonReceiver::GetVideoInfo(uint8_t *mbuf, int count)
+void cFemonReceiver::GetVideoInfo(uint8_t *buf, int len)
 {
-  uint8_t *headr;
-  int found = 0;
   int c = 0;
-  //m_VideoValid = false;
-  while ((found < 4) && ((c + 4) < count)) {
-    uint8_t *b;
-    b = mbuf + c;
-    if ((b[0] == 0x00) && (b[1] == 0x00) && (b[2] == 0x01) && (b[3] == 0xb3))
-       found = 4;
-    else
-       c++;
+
+  while (c < len) {
+    video_info_t tmp;
+    uint8_t *b = buf + c;
+    if (getMPEGVideoInfo(b, len - c, &tmp) || getH264VideoInfo(b, len - c, &tmp)) {
+       bool coherent = true;
+       memcpy(&m_VideoInfoBuffer[m_VideoInfoBufferIndex], &tmp, sizeof(video_info_t));
+       m_VideoInfoBufferIndex = (m_VideoInfoBufferIndex + 1) % ELEMENTS(m_VideoInfoBuffer);
+       for (unsigned int i = 1; i < ELEMENTS(m_VideoInfoBuffer); ++i) {
+           if (memcmp(&m_VideoInfoBuffer[0], &m_VideoInfoBuffer[i], sizeof(video_info_t)))
+              coherent = false;
+              break;
+           }
+       if (!m_VideoValid || coherent) {
+          m_VideoValid = true;
+          memcpy(&m_VideoInfo, &m_VideoInfoBuffer[0], sizeof(video_info_t));
+          }
+       return;
+       }
+    c++;
     }
-  if ((!found) || ((c + 16) >= count)) return;
-  m_VideoValid = true;
-  headr = mbuf + c + 4;
-  m_VideoHorizontalSize = ((headr[1] & 0xF0) >> 4) | (headr[0] << 4);
-  m_VideoVerticalSize = ((headr[1] & 0x0F) << 8) | (headr[2]);
-  int sw = (int)((headr[3] & 0xF0) >> 4);
-  switch ( sw ){
-    case 1:
-      m_VideoAspectRatio = AR_1_1;
-      break;
-    case 2:
-      m_VideoAspectRatio = AR_4_3;
-      break;
-    case 3:
-      m_VideoAspectRatio = AR_16_9;
-      break;
-    case 4:
-      m_VideoAspectRatio = AR_2_21_1;
-      break;
-    case 5 ... 15:
-    default:
-      m_VideoAspectRatio = AR_RESERVED;
-      break;
-    }
-  sw = (int)(headr[3] & 0x0F);
-  switch ( sw ) {
-    case 1:
-      m_VideoFrameRate = 24000 / 1001.0;
-      m_VideoFormat = VF_UNKNOWN;
-      break;
-    case 2:
-      m_VideoFrameRate = 24.0;
-      m_VideoFormat = VF_UNKNOWN;
-      break;
-    case 3:
-      m_VideoFrameRate = 25.0;
-      m_VideoFormat = VF_PAL;
-      break;
-    case 4:
-      m_VideoFrameRate = 30000 / 1001.0;
-      m_VideoFormat = VF_NTSC;
-      break;
-    case 5:
-      m_VideoFrameRate = 30.0;
-      m_VideoFormat = VF_NTSC;
-      break;
-    case 6:
-      m_VideoFrameRate = 50.0;
-      m_VideoFormat = VF_PAL;
-      break;
-    case 7:
-      m_VideoFrameRate = 60.0;
-      m_VideoFormat = VF_NTSC;
-      break;
-    case 8:
-      m_VideoFrameRate = 60000 / 1001.0;
-      m_VideoFormat = VF_NTSC;
-      break;
-    case 9 ... 15:
-    default:
-      m_VideoFrameRate = 0;
-      m_VideoFormat = VF_UNKNOWN;
-      break;
-    }
-  m_VideoStreamBitrate = 400.0 * (((headr[4] << 10) & 0x0003FC00UL) | ((headr[5] << 2) & 0x000003FCUL) | (((headr[6] & 0xC0) >> 6) & 0x00000003UL));
 }
 
-static unsigned int bitrates[3][16] =
+void cFemonReceiver::GetAudioInfo(uint8_t *buf, int len)
 {
-  {0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 0},
-  {0, 32, 48, 56, 64,  80,  96,  112, 128, 160, 192, 224, 256, 320, 384, 0},
-  {0, 32, 40, 48, 56,  64,  80,  96,  112, 128, 160, 192, 224, 256, 320, 0}
-};
-
-static unsigned int samplerates[4] =
-{441, 480, 320, 0};
-
-/* The following function originates from libdvbmpeg: */
-void cFemonReceiver::GetAudioInfo(uint8_t *mbuf, int count)
-{
-  uint8_t *headr;
-  int found = 0;
   int c = 0;
-  int tmp = 0;
-  //m_AudioValid = false;
-  while (!found && (c < count)) {
-    uint8_t *b = mbuf + c;
-    if ((b[0] == 0xff) && ((b[1] & 0xf8) == 0xf8))
-       found = 1;
-    else
-       c++;
+
+  while (c < len) {
+    audio_info_t tmp;
+    uint8_t *b = buf + c;
+    if (getAACAudioInfo(b, len - c, &tmp) || getMPEGAudioInfo(b, len - c, &tmp)) {
+       bool coherent = true;
+       memcpy(&m_AudioInfoBuffer[m_AudioInfoBufferIndex], &tmp, sizeof(audio_info_t));
+       m_AudioInfoBufferIndex = (m_AudioInfoBufferIndex + 1) % ELEMENTS(m_AudioInfoBuffer);
+       for (unsigned int i = 1; i < ELEMENTS(m_AudioInfoBuffer); ++i) {
+           if (memcmp(&m_AudioInfoBuffer[0], &m_AudioInfoBuffer[i], sizeof(audio_info_t)))
+              coherent = false;
+              break;
+           }
+       if (!m_AudioValid || coherent) {
+          m_AudioValid = true;
+          memcpy(&m_AudioInfo, &m_AudioInfoBuffer[0], sizeof(audio_info_t));
+          }
+       return;
+       }
+    c++;
     }	
-  if ((!found) || ((c + 3) >= count)) return;
-  m_AudioValid = true;
-  headr = mbuf + c;
-  m_AudioMPEGLayer = 4 - ((headr[1] & 0x06) >> 1);
-  tmp = bitrates[(3 - ((headr[1] & 0x06) >> 1))][(headr[2] >> 4)] * 1000;
-  if (tmp == 0)
-     m_AudioStreamBitrate = (double)FR_FREE;
-  else if (tmp == 0xf)
-     m_AudioStreamBitrate = (double)FR_RESERVED;
-  else
-     m_AudioStreamBitrate = tmp;
-  tmp = samplerates[((headr[2] & 0x0c) >> 2)] * 100;
-  if (tmp == 3)
-     m_AudioSamplingFreq = FR_RESERVED;
-  else
-     m_AudioSamplingFreq = tmp;
 }
 
-static unsigned int ac3_bitrates[32] =
-{32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 384, 448, 512, 576, 640, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-static unsigned int ac3_freq[4] =
-{480, 441, 320, 0};
-
-static unsigned int ac3_frames[3][32] =
+void cFemonReceiver::GetAC3Info(uint8_t *buf, int len)
 {
-  {64, 80,  96,  112, 128, 160, 192, 224, 256, 320, 384, 448, 512, 640, 768,  896,  1024, 1152, 1280, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {69, 87,  104, 121, 139, 174, 208, 243, 278, 348, 417, 487, 557, 696, 835,  975,  1114, 1253, 1393, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {96, 120, 144, 168, 192, 240, 288, 336, 384, 480, 576, 672, 768, 960, 1152, 1344, 1536, 1728, 1920, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-};
-
-/*
-** AC3 Audio Header: http://www.atsc.org/standards/a_52a.pdf
-** The following function originates from libdvbmpeg:
-*/
-void cFemonReceiver::GetAC3Info(uint8_t *mbuf, int count)
-{
-  uint8_t *headr;
-  int found = 0;
   int c = 0;
-  uint8_t frame;
-  //m_AC3Valid = false;
-  while (!found && (c < count)) {
-    uint8_t *b = mbuf + c;
-    if ((b[0] == 0x0b) && (b[1] == 0x77))
-       found = 1;
-    else
-       c++;
+
+  while (c < len) {
+    ac3_info_t tmp;
+    uint8_t *b = buf + c;
+    if (getAC3AudioInfo(b, len - c, &tmp)) {
+       bool coherent = true;
+       memcpy(&m_AC3InfoBuffer[m_AC3InfoBufferIndex], &tmp, sizeof(ac3_info_t));
+       m_AC3InfoBufferIndex = (m_AC3InfoBufferIndex + 1) % ELEMENTS(m_AC3InfoBuffer);
+       for (unsigned int i = 1; i < ELEMENTS(m_AC3InfoBuffer); ++i) {
+           if (memcmp(&m_AC3InfoBuffer[0], &m_AC3InfoBuffer[i], sizeof(ac3_info_t)))
+              coherent = false;
+              break;
+           }
+       if (!m_AC3Valid || coherent) {
+          m_AC3Valid = true;
+          memcpy(&m_AC3Info, &m_AC3InfoBuffer[0], sizeof(ac3_info_t));
+          }   
+       return;
+       }
+    c++;
     }
-  if ((!found) || ((c + 5) >= count)) return;
-  m_AC3Valid = true;
-  headr = mbuf + c + 2;
-  frame = (headr[2] & 0x3f);
-  m_AC3StreamBitrate = ac3_bitrates[frame >> 1] * 1000;
-  int fr = (headr[2] & 0xc0 ) >> 6;
-  m_AC3SamplingFreq = ac3_freq[fr] * 100;
-  m_AC3FrameSize = ac3_frames[fr][frame >> 1];
-  if ((frame & 1) && (fr == 1)) m_AC3FrameSize++;
-     m_AC3FrameSize <<= 1;
-  m_AC3BitStreamMode = (headr[3] & 7);
-  m_AC3AudioCodingMode = (headr[4] & 0xE0) >> 5;
-  if ((m_AC3AudioCodingMode & 0x01) && (m_AC3AudioCodingMode != 0x01)) {
-     // 3 front channels
-     m_AC3CenterMixLevel = (headr[4] & 0x18) >> 3;
-     if (m_AC3AudioCodingMode & 0x04) {
-        // a surround channel exists
-        m_AC3SurroundMixLevel = (headr[4] & 0x06) >> 1;
-        if (m_AC3AudioCodingMode == 0x02) {
-           // if in 2/0 mode
-           m_AC3DolbySurroundMode = ((headr[4] & 0x01) << 1) | ((headr[5] & 0x80) >> 7);
-           m_AC3LfeOn = (headr[5] & 0x40) >> 6;
-           m_AC3DialogLevel = (headr[5] & 0x3e) >> 1;
-           }
-        else {
-           m_AC3DolbySurroundMode = FR_NOTVALID;
-           m_AC3LfeOn = (headr[4] & 0x01);
-           m_AC3DialogLevel = (headr[5] & 0xF8) >> 3;
-           }
-        }
-     else {
-        m_AC3SurroundMixLevel = FR_NOTVALID;
-        if (m_AC3AudioCodingMode == 0x02) {
-           // if in 2/0 mode
-            m_AC3DolbySurroundMode = (headr[4] & 0x06) >> 1;
-            m_AC3LfeOn = (headr[4] & 0x01);
-            m_AC3DialogLevel = (headr[5] & 0xF8) >> 3;
-           }
-        else {
-           m_AC3DolbySurroundMode = FR_NOTVALID;
-           m_AC3LfeOn = (headr[4] & 0x04) >> 2;
-           m_AC3DialogLevel = (headr[4] & 0x03) << 3 | ((headr[5] & 0xE0) >> 5);
-           }
-        }
-     }
-  else {
-     m_AC3CenterMixLevel = FR_NOTVALID;
-     if (m_AC3AudioCodingMode & 0x04) {
-        // a surround channel exists
-        m_AC3SurroundMixLevel = (headr[4] & 0x18) >> 3;
-        if (m_AC3AudioCodingMode == 0x02) {
-           // if in 2/0 mode
-           m_AC3DolbySurroundMode = (headr[4] & 0x06) >> 1;
-           m_AC3LfeOn = (headr[4] & 0x01);
-           m_AC3DialogLevel = (headr[5] & 0xF8) >> 3;
-           }
-        else {
-           m_AC3DolbySurroundMode = FR_NOTVALID;
-           m_AC3LfeOn = (headr[4] & 0x04) >> 2;
-           m_AC3DialogLevel = (headr[4] & 0x03) << 3 | ((headr[5] & 0xE0) >> 5);
-           }
-        }
-     else {
-        m_AC3SurroundMixLevel = FR_NOTVALID;
-        if (m_AC3AudioCodingMode == 0x02) {
-           // if in 2/0 mode
-           m_AC3DolbySurroundMode = (headr[4] & 0x18) >> 3;
-           m_AC3LfeOn = (headr[4] & 0x04) >> 2;
-           m_AC3DialogLevel = (headr[4] & 0x03) << 3 | ((headr[5] & 0xE0) >> 5);
-           }
-        else {
-           m_AC3DolbySurroundMode = FR_NOTVALID;
-           m_AC3LfeOn = (headr[4] & 0x10) >> 4;
-           m_AC3DialogLevel = ((headr[4] & 0x0F) << 1) | ((headr[5] & 0x80) >> 7);
-           }
-        }
-     }
 }
 
 void cFemonReceiver::Activate(bool On)

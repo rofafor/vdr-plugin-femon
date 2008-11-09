@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.0\n"
+"Project-Id-Version: femon 1.6.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-03-23 14:53+0100\n"
+"POT-Creation-Date: 2008-11-09 13:31+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Christian Wieninger\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -209,6 +209,9 @@ msgstr "Streaminformation"
 msgid "Video Stream"
 msgstr "Video Stream"
 
+msgid "Codec"
+msgstr ""
+
 msgid "Bitrate"
 msgstr "Bitrate"
 
@@ -217,9 +220,6 @@ msgstr "Seitenverhältnis"
 
 msgid "Frame Rate"
 msgstr "Bildrate"
-
-msgid "Hz"
-msgstr "Hz"
 
 msgid "Video Format"
 msgstr "Bildformat"
@@ -230,20 +230,14 @@ msgstr "Auflösung"
 msgid "Audio Stream"
 msgstr "Audio Stream"
 
-msgid "MPEG Layer"
-msgstr "MPEG Layer"
+msgid "Channel Mode"
+msgstr ""
 
 msgid "Sampling Frequency"
 msgstr "Abtastrate"
 
 msgid "AC-3 Stream"
 msgstr "AC-3 Stream"
-
-msgid "kHz"
-msgstr "kHz"
-
-msgid "Frame Size"
-msgstr "Frame Größe"
 
 msgid "Bit Stream Mode"
 msgstr "Bitstream Modus"
@@ -308,6 +302,45 @@ msgstr "BetaCrypt"
 msgid "SkyCrypt"
 msgstr "SkyCrypt"
 
+msgid "MPEG-2"
+msgstr ""
+
+msgid "H.264"
+msgstr ""
+
+msgid "MPEG-1 Layer I"
+msgstr ""
+
+msgid "MPEG-1 Layer II"
+msgstr ""
+
+msgid "MPEG-1 Layer III"
+msgstr ""
+
+msgid "MPEG-2 Layer I"
+msgstr ""
+
+msgid "MPEG-2 Layer II"
+msgstr ""
+
+msgid "MPEG-2 Layer III"
+msgstr ""
+
+msgid "HE-AAC"
+msgstr ""
+
+msgid "stereo"
+msgstr ""
+
+msgid "joint Stereo"
+msgstr ""
+
+msgid "dual"
+msgstr ""
+
+msgid "mono"
+msgstr ""
+
 msgid "none"
 msgstr "Nichts"
 
@@ -317,17 +350,38 @@ msgstr "Auto"
 msgid "MHz"
 msgstr "MHz"
 
+msgid "interlaced"
+msgstr ""
+
+msgid "progressive"
+msgstr ""
+
 msgid "reserved"
 msgstr "belegt"
 
+msgid "extended"
+msgstr ""
+
 msgid "unknown"
 msgstr "unbekannt"
+
+msgid "component"
+msgstr ""
 
 msgid "PAL"
 msgstr "PAL"
 
 msgid "NTSC"
 msgstr "NTSC"
+
+msgid "SECAM"
+msgstr ""
+
+msgid "MAC"
+msgstr ""
+
+msgid "Hz"
+msgstr "Hz"
 
 msgid "Complete Main (CM)"
 msgstr "Complete Main (CM)"

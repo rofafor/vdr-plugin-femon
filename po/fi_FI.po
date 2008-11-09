@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.0\n"
+"Project-Id-Version: femon 1.6.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-03-23 14:42+0100\n"
+"POT-Creation-Date: 2008-11-09 13:31+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -210,6 +210,9 @@ msgstr "Lähetteen tiedot"
 msgid "Video Stream"
 msgstr "Kuvaraita"
 
+msgid "Codec"
+msgstr "Koodekki"
+
 msgid "Bitrate"
 msgstr "Bittinopeus"
 
@@ -218,9 +221,6 @@ msgstr "Kuvasuhde"
 
 msgid "Frame Rate"
 msgstr "Ruudunpäivitystaajuus"
-
-msgid "Hz"
-msgstr "Hz"
 
 msgid "Video Format"
 msgstr "Kuvaformaatti"
@@ -231,20 +231,14 @@ msgstr "Resoluutio"
 msgid "Audio Stream"
 msgstr "Ääniraita"
 
-msgid "MPEG Layer"
-msgstr "MPEG-taso"
+msgid "Channel Mode"
+msgstr "Kanavatila"
 
 msgid "Sampling Frequency"
 msgstr "Näytteenottotaajuus"
 
 msgid "AC-3 Stream"
 msgstr "AC-3-ääniraita"
-
-msgid "kHz"
-msgstr "kHz"
-
-msgid "Frame Size"
-msgstr "Kehyksen koko"
 
 msgid "Bit Stream Mode"
 msgstr "Lähetteen tyyppi"
@@ -309,6 +303,45 @@ msgstr "BetaCrypt"
 msgid "SkyCrypt"
 msgstr "SkyCrypt"
 
+msgid "MPEG-2"
+msgstr "MPEG-2"
+
+msgid "H.264"
+msgstr "H.264"
+
+msgid "MPEG-1 Layer I"
+msgstr "MPEG-1 kerros I"
+
+msgid "MPEG-1 Layer II"
+msgstr "MPEG-1 kerros II"
+
+msgid "MPEG-1 Layer III"
+msgstr "MPEG-1 kerros III"
+
+msgid "MPEG-2 Layer I"
+msgstr "MPEG-2 kerros I"
+
+msgid "MPEG-2 Layer II"
+msgstr "MPEG-2 kerros II"
+
+msgid "MPEG-2 Layer III"
+msgstr "MPEG-2 kerros III"
+
+msgid "HE-AAC"
+msgstr "HE-AAC"
+
+msgid "stereo"
+msgstr "stereo"
+
+msgid "joint Stereo"
+msgstr "joint-stereo"
+
+msgid "dual"
+msgstr "kaksikanavainen"
+
+msgid "mono"
+msgstr "mono"
+
 msgid "none"
 msgstr "ei"
 
@@ -318,17 +351,38 @@ msgstr "auto"
 msgid "MHz"
 msgstr "MHz"
 
+msgid "interlaced"
+msgstr "lomiteltu"
+
+msgid "progressive"
+msgstr "lomittelematon"
+
 msgid "reserved"
 msgstr "varattu"
 
+msgid "extended"
+msgstr "laajennettu"
+
 msgid "unknown"
 msgstr "tuntematon"
+
+msgid "component"
+msgstr "komponentti"
 
 msgid "PAL"
 msgstr "PAL"
 
 msgid "NTSC"
 msgstr "NTSC"
+
+msgid "SECAM"
+msgstr "SECAM"
+
+msgid "MAC"
+msgstr "MAC"
+
+msgid "Hz"
+msgstr "Hz"
 
 msgid "Complete Main (CM)"
 msgstr "Pääasiallinen (CM)"

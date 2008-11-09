@@ -1,3 +1,4 @@
+
 ===================================
 VDR Plugin 'femon' Revision History
 ===================================
@@ -303,3 +304,9 @@ VDR Plugin 'femon' Revision History
 
 - Converted HISTORY and fi_FI.po to UTF-8.
 - Optimized receiver and OSD thread termination.
+
+2008-11-09: Version 1.6.3
+
+- Added initial support for H.264 and HE-AAC.
+- Fixed detection of false positives in audio/video streams.
+- Refactored source code.

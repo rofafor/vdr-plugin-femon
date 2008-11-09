@@ -3,7 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id$
  */
 
 #include <stdlib.h>
@@ -181,23 +180,57 @@ cString getCA(int value)
 {
   /* http://www.dvb.org/index.php?id=174 */
   switch (value) {
-    case 0x0000:            return cString::sprintf("%s", trVDR("Free To Air")); /* Reserved */
+    case 0x0000:            return cString::sprintf("%s", trVDR("Free To Air"));  // Reserved
     case 0x0001 ... 0x009F:
-    case 0x00A2 ... 0x00FF: return cString::sprintf("%s", tr("Fixed")); /* Standardized systems */
-    case 0x00A0 ... 0x00A1: return cString::sprintf("%s", tr("Analog")); /* Analog signals */
-    case 0x0100 ... 0x01FF: return cString::sprintf("%s", tr("SECA/Mediaguard")); /* Canal Plus */
-    case 0x0500 ... 0x05FF: return cString::sprintf("%s", tr("Viaccess")); /* France Telecom */
-    case 0x0600 ... 0x06FF: return cString::sprintf("%s", tr("Irdeto")); /* Irdeto */
-    case 0x0900 ... 0x09FF: return cString::sprintf("%s", tr("NDS/Videoguard")); /* News Datacom */
-    case 0x0B00 ... 0x0BFF: return cString::sprintf("%s", tr("Conax")); /* Norwegian Telekom */
-    case 0x0D00 ... 0x0DFF: return cString::sprintf("%s", tr("CryptoWorks")); /* Philips */
-    case 0x0E00 ... 0x0EFF: return cString::sprintf("%s", tr("PowerVu")); /* Scientific Atlanta */
-    case 0x1200 ... 0x12FF: return cString::sprintf("%s", tr("NagraVision")); /* BellVu Express */
-    case 0x1700 ... 0x17FF: return cString::sprintf("%s", tr("BetaCrypt")); /* BetaTechnik */
-    case 0x1800 ... 0x18FF: return cString::sprintf("%s", tr("NagraVision")); /* Kudelski SA */
-    case 0x4A60 ... 0x4A6F: return cString::sprintf("%s", tr("SkyCrypt")); /* @Sky */
+    case 0x00A2 ... 0x00FF: return cString::sprintf("%s", tr("Fixed"));           // Standardized systems
+    case 0x00A0 ... 0x00A1: return cString::sprintf("%s", tr("Analog"));          // Analog signals
+    case 0x0100 ... 0x01FF: return cString::sprintf("%s", tr("SECA/Mediaguard")); // Canal Plus
+    case 0x0500 ... 0x05FF: return cString::sprintf("%s", tr("Viaccess"));        // France Telecom
+    case 0x0600 ... 0x06FF: return cString::sprintf("%s", tr("Irdeto"));          // Irdeto
+    case 0x0900 ... 0x09FF: return cString::sprintf("%s", tr("NDS/Videoguard"));  // News Datacom
+    case 0x0B00 ... 0x0BFF: return cString::sprintf("%s", tr("Conax"));           // Norwegian Telekom
+    case 0x0D00 ... 0x0DFF: return cString::sprintf("%s", tr("CryptoWorks"));     // Philips
+    case 0x0E00 ... 0x0EFF: return cString::sprintf("%s", tr("PowerVu"));         // Scientific Atlanta
+    case 0x1200 ... 0x12FF: return cString::sprintf("%s", tr("NagraVision"));     // BellVu Express
+    case 0x1700 ... 0x17FF: return cString::sprintf("%s", tr("BetaCrypt"));       // BetaTechnik
+    case 0x1800 ... 0x18FF: return cString::sprintf("%s", tr("NagraVision"));     // Kudelski SA
+    case 0x4A60 ... 0x4A6F: return cString::sprintf("%s", tr("SkyCrypt"));        // @Sky
     }
   return cString::sprintf("%X", value);
+}
+
+cString getVideoCodec(int value)
+{
+  switch (value) {
+    case VIDEO_CODEC_MPEG2: return cString::sprintf("%s", tr("MPEG-2"));
+    case VIDEO_CODEC_H264:  return cString::sprintf("%s", tr("H.264"));
+    }
+  return cString::sprintf("---");
+}
+
+cString getAudioCodec(int value)
+{
+  switch (value) {
+    case AUDIO_CODEC_MPEG1_I:   return cString::sprintf("%s", tr("MPEG-1 Layer I"));
+    case AUDIO_CODEC_MPEG1_II:  return cString::sprintf("%s", tr("MPEG-1 Layer II"));
+    case AUDIO_CODEC_MPEG1_III: return cString::sprintf("%s", tr("MPEG-1 Layer III"));
+    case AUDIO_CODEC_MPEG2_I:   return cString::sprintf("%s", tr("MPEG-2 Layer I"));
+    case AUDIO_CODEC_MPEG2_II:  return cString::sprintf("%s", tr("MPEG-2 Layer II"));
+    case AUDIO_CODEC_MPEG2_III: return cString::sprintf("%s", tr("MPEG-2 Layer III"));
+    case AUDIO_CODEC_HEAAC:     return cString::sprintf("%s", tr("HE-AAC"));
+    }
+  return cString::sprintf("---");
+}
+
+cString getAudioChannelMode(int value)
+{
+  switch (value) {
+    case AUDIO_CHANNEL_MODE_STEREO:       return cString::sprintf("%s", tr("stereo"));
+    case AUDIO_CHANNEL_MODE_JOINT_STEREO: return cString::sprintf("%s", tr("joint Stereo"));
+    case AUDIO_CHANNEL_MODE_DUAL:         return cString::sprintf("%s", tr("dual"));
+    case AUDIO_CHANNEL_MODE_SINGLE:       return cString::sprintf("%s", tr("mono"));
+    }
+  return cString::sprintf("---");
 }
 
 cString getCoderate(int value)
@@ -286,14 +319,61 @@ cString getModulation(int value)
   return cString::sprintf("---");
 }
 
+cString getAlpha(int value)
+{
+  return cString::sprintf("---");
+}
+
+cString getPriority(int value)
+{
+  return cString::sprintf("---");
+}
+
+cString getSystem(int value)
+{
+  return cString::sprintf("---");
+}
+
+cString getRollOff(int value)
+{
+  return cString::sprintf("---");
+}
+
+cString getResolution(int width, int height, int scan)
+{
+  if ((width > 0) && (height > 0)) {
+     switch (scan) {
+       case VIDEO_SCAN_INTERLACED:  return cString::sprintf("%dx%d %s", width, height, tr("interlaced"));
+       case VIDEO_SCAN_PROGRESSIVE: return cString::sprintf("%dx%d %s", width, height, tr("progressive"));
+       default:                     return cString::sprintf("%dx%d",    width, height);
+       }
+     }
+  return cString::sprintf("---");
+}
+
 cString getAspectRatio(int value)
 {
   switch (value) {
-    case AR_RESERVED: return cString::sprintf("%s", tr("reserved"));
-    case AR_1_1:      return cString::sprintf("1:1");
-    case AR_4_3:      return cString::sprintf("4:3");
-    case AR_16_9:     return cString::sprintf("16:9");
-    case AR_2_21_1:   return cString::sprintf("2.21:1");
+    case VIDEO_ASPECT_RATIO_RESERVED: return cString::sprintf("%s", tr("reserved"));
+    case VIDEO_ASPECT_RATIO_EXTENDED: return cString::sprintf("%s", tr("extended"));
+    case VIDEO_ASPECT_RATIO_1_1:      return cString::sprintf("1:1");
+    case VIDEO_ASPECT_RATIO_4_3:      return cString::sprintf("4:3");
+    case VIDEO_ASPECT_RATIO_16_9:     return cString::sprintf("16:9");
+    case VIDEO_ASPECT_RATIO_2_21_1:   return cString::sprintf("2.21:1");
+    case VIDEO_ASPECT_RATIO_12_11:    return cString::sprintf("12:11");
+    case VIDEO_ASPECT_RATIO_10_11:    return cString::sprintf("10:11");
+    case VIDEO_ASPECT_RATIO_16_11:    return cString::sprintf("16:11");
+    case VIDEO_ASPECT_RATIO_40_33:    return cString::sprintf("40:33");
+    case VIDEO_ASPECT_RATIO_24_11:    return cString::sprintf("24:11");
+    case VIDEO_ASPECT_RATIO_20_11:    return cString::sprintf("20:11");
+    case VIDEO_ASPECT_RATIO_32_11:    return cString::sprintf("32:11");
+    case VIDEO_ASPECT_RATIO_80_33:    return cString::sprintf("80:33");
+    case VIDEO_ASPECT_RATIO_18_11:    return cString::sprintf("18:11");
+    case VIDEO_ASPECT_RATIO_15_11:    return cString::sprintf("15:11");
+    case VIDEO_ASPECT_RATIO_64_33:    return cString::sprintf("64:33");
+    case VIDEO_ASPECT_RATIO_160_99:   return cString::sprintf("160:99");
+    case VIDEO_ASPECT_RATIO_3_2:      return cString::sprintf("3:2");
+    case VIDEO_ASPECT_RATIO_2_1:      return cString::sprintf("2:1");
     }
   return cString::sprintf("---");
 }
@@ -301,24 +381,35 @@ cString getAspectRatio(int value)
 cString getVideoFormat(int value)
 {
   switch (value) {
-    case VF_UNKNOWN: return cString::sprintf("%s", tr("unknown"));
-    case VF_PAL:     return cString::sprintf("%s", tr("PAL"));
-    case VF_NTSC:    return cString::sprintf("%s", tr("NTSC"));
+    case VIDEO_FORMAT_UNKNOWN:   return cString::sprintf("%s", tr("unknown"));
+    case VIDEO_FORMAT_RESERVED:  return cString::sprintf("%s", tr("reserved"));
+    case VIDEO_FORMAT_COMPONENT: return cString::sprintf("%s", tr("component"));
+    case VIDEO_FORMAT_PAL:       return cString::sprintf("%s", tr("PAL"));
+    case VIDEO_FORMAT_NTSC:      return cString::sprintf("%s", tr("NTSC"));
+    case VIDEO_FORMAT_SECAM:     return cString::sprintf("%s", tr("SECAM"));
+    case VIDEO_FORMAT_MAC:       return cString::sprintf("%s", tr("MAC"));
     }
+  return cString::sprintf("---");
+}
+
+cString getFrameRate(double value)
+{
+  if (value > 0)
+     return cString::sprintf("%.2f %s", value, tr("Hz"));
   return cString::sprintf("---");
 }
 
 cString getAC3BitStreamMode(int value, int coding)
 {
   switch (value) {
-    case 0: return cString::sprintf("%s", tr("Complete Main (CM)"));
-    case 1: return cString::sprintf("%s", tr("Music and Effects (ME)"));
-    case 2: return cString::sprintf("%s", tr("Visually Impaired (VI)"));
-    case 3: return cString::sprintf("%s", tr("Hearing Impaired (HI)"));
-    case 4: return cString::sprintf("%s", tr("Dialogue (D)"));
-    case 5: return cString::sprintf("%s", tr("Commentary (C)"));
-    case 6: return cString::sprintf("%s", tr("Emergency (E)"));
-    case 7: return cString::sprintf("%s", (coding == 1) ? tr("Voice Over (VO)") : tr("Karaoke"));
+    case AUDIO_BITSTREAM_MODE_CM:     return cString::sprintf("%s", tr("Complete Main (CM)"));
+    case AUDIO_BITSTREAM_MODE_ME:     return cString::sprintf("%s", tr("Music and Effects (ME)"));
+    case AUDIO_BITSTREAM_MODE_VI:     return cString::sprintf("%s", tr("Visually Impaired (VI)"));
+    case AUDIO_BITSTREAM_MODE_HI:     return cString::sprintf("%s", tr("Hearing Impaired (HI)"));
+    case AUDIO_BITSTREAM_MODE_D:      return cString::sprintf("%s", tr("Dialogue (D)"));
+    case AUDIO_BITSTREAM_MODE_C:      return cString::sprintf("%s", tr("Commentary (C)"));
+    case AUDIO_BITSTREAM_MODE_E:      return cString::sprintf("%s", tr("Emergency (E)"));
+    case AUDIO_BITSTREAM_MODE_VO_KAR: return cString::sprintf("%s", (coding == 1) ? tr("Voice Over (VO)") : tr("Karaoke"));
     }
   return cString::sprintf("---");
 }
@@ -327,14 +418,14 @@ cString getAC3AudioCodingMode(int value, int stream)
 {
   if (stream != 7) {
      switch (value) {
-       case 0: return cString::sprintf("1+1 - %s, %s", tr("Ch1"), tr("Ch2"));
-       case 1: return cString::sprintf("1/0 - %s", tr("C"));
-       case 2: return cString::sprintf("2/0 - %s, %s", tr("L"), tr("R"));
-       case 3: return cString::sprintf("3/0 - %s, %s, %s", tr("L"), tr("C"), tr("R"));
-       case 4: return cString::sprintf("2/1 - %s, %s, %s", tr("L"), tr("R"), tr("S"));
-       case 5: return cString::sprintf("3/1 - %s, %s, %s, %s", tr("L"), tr("C"), tr("R"), tr("S"));
-       case 6: return cString::sprintf("2/2 - %s, %s, %s, %s", tr("L"), tr("R"), tr("SL"), tr("SR"));
-       case 7: return cString::sprintf("3/2 - %s, %s, %s, %s, %s", tr("L"), tr("C"), tr("R"), tr("SL"), tr("SR"));
+       case AUDIO_CODING_MODE_1_1: return cString::sprintf("1+1 - %s, %s", tr("Ch1"), tr("Ch2"));
+       case AUDIO_CODING_MODE_1_0: return cString::sprintf("1/0 - %s", tr("C"));
+       case AUDIO_CODING_MODE_2_0: return cString::sprintf("2/0 - %s, %s", tr("L"), tr("R"));
+       case AUDIO_CODING_MODE_3_0: return cString::sprintf("3/0 - %s, %s, %s", tr("L"), tr("C"), tr("R"));
+       case AUDIO_CODING_MODE_2_1: return cString::sprintf("2/1 - %s, %s, %s", tr("L"), tr("R"), tr("S"));
+       case AUDIO_CODING_MODE_3_1: return cString::sprintf("3/1 - %s, %s, %s, %s", tr("L"), tr("C"), tr("R"), tr("S"));
+       case AUDIO_CODING_MODE_2_2: return cString::sprintf("2/2 - %s, %s, %s, %s", tr("L"), tr("R"), tr("SL"), tr("SR"));
+       case AUDIO_CODING_MODE_3_2: return cString::sprintf("3/2 - %s, %s, %s, %s, %s", tr("L"), tr("C"), tr("R"), tr("SL"), tr("SR"));
        }
      }
   return cString::sprintf("---");
@@ -343,10 +434,10 @@ cString getAC3AudioCodingMode(int value, int stream)
 cString getAC3CenterMixLevel(int value)
 {
   switch (value) {
-    case CML_MINUS_3dB:   return cString::sprintf("-3.0 %s", tr("dB"));
-    case CML_MINUS_4_5dB: return cString::sprintf("-4.5 %s", tr("dB"));
-    case CML_MINUS_6dB:   return cString::sprintf("-6.0 %s", tr("dB"));
-    case CML_RESERVED:    return cString::sprintf("%s", tr("reserved"));
+    case AUDIO_CENTER_MIX_LEVEL_MINUS_3dB:   return cString::sprintf("-3.0 %s", tr("dB"));
+    case AUDIO_CENTER_MIX_LEVEL_MINUS_4_5dB: return cString::sprintf("-4.5 %s", tr("dB"));
+    case AUDIO_CENTER_MIX_LEVEL_MINUS_6dB:   return cString::sprintf("-6.0 %s", tr("dB"));
+    case AUDIO_CENTER_MIX_LEVEL_RESERVED:    return cString::sprintf("%s", tr("reserved"));
     }
   return cString::sprintf("---");
 }
@@ -354,10 +445,10 @@ cString getAC3CenterMixLevel(int value)
 cString getAC3SurroundMixLevel(int value)
 {
   switch (value) {
-    case SML_MINUS_3dB: return cString::sprintf("-3 %s", tr("dB"));
-    case SML_MINUS_6dB: return cString::sprintf("-6 %s", tr("dB"));
-    case SML_0_dB:      return cString::sprintf("0 %s", tr("dB"));
-    case SML_RESERVED:  return cString::sprintf("%s", tr("reserved"));
+    case AUDIO_SURROUND_MIX_LEVEL_MINUS_3dB: return cString::sprintf("-3 %s", tr("dB"));
+    case AUDIO_SURROUND_MIX_LEVEL_MINUS_6dB: return cString::sprintf("-6 %s", tr("dB"));
+    case AUDIO_SURROUND_MIX_LEVEL_0_dB:      return cString::sprintf("0 %s", tr("dB"));
+    case AUDIO_SURROUND_MIX_LEVEL_RESERVED:  return cString::sprintf("%s", tr("reserved"));
     }
   return cString::sprintf("---");
 }
@@ -365,10 +456,10 @@ cString getAC3SurroundMixLevel(int value)
 cString getAC3DolbySurroundMode(int value)
 {
   switch (value) {
-    case DSM_NOT_INDICATED:     return cString::sprintf("%s", tr("not indicated"));
-    case DSM_NOT_DOLBYSURROUND: return cString::sprintf("%s", trVDR("no"));
-    case DSM_DOLBYSURROUND:     return cString::sprintf("%s", trVDR("yes"));
-    case DSM_RESERVED:          return cString::sprintf("%s", tr("reserved"));
+    case AUDIO_DOLBY_SURROUND_MODE_NOT_INDICATED:     return cString::sprintf("%s", tr("not indicated"));
+    case AUDIO_DOLBY_SURROUND_MODE_NOT_DOLBYSURROUND: return cString::sprintf("%s", trVDR("no"));
+    case AUDIO_DOLBY_SURROUND_MODE_DOLBYSURROUND:     return cString::sprintf("%s", trVDR("yes"));
+    case AUDIO_DOLBY_SURROUND_MODE_RESERVED:          return cString::sprintf("%s", tr("reserved"));
     }
   return cString::sprintf("---");
 }
@@ -389,32 +480,37 @@ cString getFrequencyMHz(int value)
 cString getAudioSamplingFreq(int value)
 {
   switch (value) {
-    case FR_NOTVALID: return cString::sprintf("---");
-    case FR_RESERVED: return cString::sprintf("%s", tr("reserved"));
+    case AUDIO_SAMPLING_FREQUENCY_INVALID:  return cString::sprintf("---");
+    case AUDIO_SAMPLING_FREQUENCY_RESERVED: return cString::sprintf("%s", tr("reserved"));
     }
-  return cString::sprintf("%.1f %s", ((double)value / 1000.0), tr("kHz"));
+  return cString::sprintf("%d %s", value, tr("Hz"));
 }
 
 cString getAudioBitrate(double value, double stream)
 {
   switch ((int)stream) {
-    case FR_NOTVALID: return cString::sprintf("---");
-    case FR_RESERVED: return cString::sprintf("%s (%s)", tr("reserved"), *getBitrateKbits(value));
-    case FR_FREE:     return cString::sprintf("%s (%s)", tr("free"), *getBitrateKbits(value));
+    case AUDIO_BITRATE_INVALID:  return cString::sprintf("---");
+    case AUDIO_BITRATE_RESERVED: return cString::sprintf("%s (%s)", tr("reserved"), *getBitrateKbits(value));
+    case AUDIO_BITRATE_FREE:     return cString::sprintf("%s (%s)", tr("free"), *getBitrateKbits(value));
     }
   return cString::sprintf("%s (%s)", *getBitrateKbits(stream), *getBitrateKbits(value));
 }
 
+cString getVideoBitrate(double value, double stream)
+{
+  return cString::sprintf("%s (%s)", *getBitrateMbits(stream), *getBitrateMbits(value));
+}
+
 cString getBitrateMbits(double value)
 {
-  if (value >= 0)
+  if (value > 0)
      return cString::sprintf("%.2f %s", value / 1000000.0, tr("Mbit/s"));
-  return cString::sprintf("--- %s", tr("Mbit/s"));
+  return cString::sprintf("---");
 }
 
 cString getBitrateKbits(double value)
 {
-  if (value >= 0) 
+  if (value > 0) 
      return cString::sprintf("%.0f %s", value / 1000.0, tr("kbit/s"));
-  return cString::sprintf("--- %s", tr("kbit/s"));
+  return cString::sprintf("---");
 }

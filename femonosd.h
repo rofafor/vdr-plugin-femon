@@ -3,7 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id$
  */
 
 #ifndef __FEMONOSD_H
@@ -21,11 +20,10 @@
 #include <vdr/tools.h>
 #include "svdrpservice.h"
 
-#define MAX_BM_NUMBER 5
+#define MAX_BM_NUMBER 8
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
-  enum { MAX_BMNUMBERS = 6 };
   static cFemonOsd *pInstance;
   cOsd *m_Osd;
   cFemonReceiver *m_Receiver;
@@ -48,11 +46,6 @@ private:
   cTimeMs m_InputTime;
   cCondWait m_Sleep;
   cMutex* m_Mutex;
-  static cBitmap bmStereo, bmMonoLeft, bmMonoRight, bmDD, bmDD20, bmDD51;
-  static cBitmap bmNumbers[MAX_BMNUMBERS];
-  static cBitmap bmDevice, bmPAL, bmNTSC, bmSVDRP;
-  static cBitmap bmAspectRatio_1_1, bmAspectRatio_16_9, bmAspectRatio_2_21_1, bmAspectRatio_4_3;
-  static cBitmap bmLock, bmSignal, bmCarrier, bmViterbi, bmSync;
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);
   bool SvdrpConnect(void);

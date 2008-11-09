@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.0\n"
+"Project-Id-Version: femon 1.6.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-03-23 14:42+0100\n"
+"POT-Creation-Date: 2008-11-09 13:31+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Arthur Konovalov\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -207,6 +207,9 @@ msgstr "Voo info"
 msgid "Video Stream"
 msgstr "Videovoog"
 
+msgid "Codec"
+msgstr ""
+
 msgid "Bitrate"
 msgstr "Bitikiirus"
 
@@ -215,9 +218,6 @@ msgstr "Külgsuhe"
 
 msgid "Frame Rate"
 msgstr "Kaadrisagedus"
-
-msgid "Hz"
-msgstr "Hz"
 
 msgid "Video Format"
 msgstr "Videoformaat"
@@ -228,20 +228,14 @@ msgstr "Resolutsioon"
 msgid "Audio Stream"
 msgstr "Audiovoog"
 
-msgid "MPEG Layer"
-msgstr "MPEG tase"
+msgid "Channel Mode"
+msgstr ""
 
 msgid "Sampling Frequency"
 msgstr "Sämplimissagedus"
 
 msgid "AC-3 Stream"
 msgstr "AC-3 voog"
-
-msgid "kHz"
-msgstr "kHz"
-
-msgid "Frame Size"
-msgstr "Kaadri suurus"
 
 msgid "Bit Stream Mode"
 msgstr "Bitivoo tüüp"
@@ -306,6 +300,45 @@ msgstr "BetaCrypt"
 msgid "SkyCrypt"
 msgstr "SkyCrypt"
 
+msgid "MPEG-2"
+msgstr ""
+
+msgid "H.264"
+msgstr ""
+
+msgid "MPEG-1 Layer I"
+msgstr ""
+
+msgid "MPEG-1 Layer II"
+msgstr ""
+
+msgid "MPEG-1 Layer III"
+msgstr ""
+
+msgid "MPEG-2 Layer I"
+msgstr ""
+
+msgid "MPEG-2 Layer II"
+msgstr ""
+
+msgid "MPEG-2 Layer III"
+msgstr ""
+
+msgid "HE-AAC"
+msgstr ""
+
+msgid "stereo"
+msgstr ""
+
+msgid "joint Stereo"
+msgstr ""
+
+msgid "dual"
+msgstr ""
+
+msgid "mono"
+msgstr ""
+
 msgid "none"
 msgstr "ei"
 
@@ -315,17 +348,38 @@ msgstr "auto"
 msgid "MHz"
 msgstr "MHz"
 
+msgid "interlaced"
+msgstr ""
+
+msgid "progressive"
+msgstr ""
+
 msgid "reserved"
 msgstr "reserveeritud"
 
+msgid "extended"
+msgstr ""
+
 msgid "unknown"
 msgstr "tundmatu"
+
+msgid "component"
+msgstr ""
 
 msgid "PAL"
 msgstr "PAL"
 
 msgid "NTSC"
 msgstr "NTSC"
+
+msgid "SECAM"
+msgstr ""
+
+msgid "MAC"
+msgstr ""
+
+msgid "Hz"
+msgstr "Hz"
 
 msgid "Complete Main (CM)"
 msgstr "Täiskomplekt (CM)"

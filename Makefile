@@ -1,7 +1,6 @@
 #
-# Makefile for a Video Disk Recorder plugin
+# Makefile for Frontend Status Monitor plugin
 #
-# $Id$
 
 # Debugging on/off 
 #FEMON_DEBUG = 1
@@ -67,7 +66,7 @@ all-redirect: all
 
 ### The object files (add further files here):
 
-OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femontools.o
+OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femontools.o femonmpeg.o femonac3.o femonaac.o femonh264.o femonsymbol.o
 
 ### The main target:
 

@@ -3,7 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id$
  */
 
 #ifndef __FEMONRECEIVER_H
@@ -12,84 +11,40 @@
 #include <vdr/thread.h>
 #include <vdr/receiver.h>
 
-enum eVideoFormat {
-  VF_UNKNOWN = 0,
-  VF_PAL     = 1,
-  VF_NTSC    = 2,
-  };
-
-enum eAspectRatio {
-  AR_RESERVED = 0,
-  AR_1_1      = 100,
-  AR_4_3      = 133,
-  AR_16_9     = 177,
-  AR_2_21_1   = 233,
-  };
-
-enum eCenterMixLevel {
-  CML_MINUS_3dB   = 0,
-  CML_MINUS_4_5dB = 1,
-  CML_MINUS_6dB   = 2,
-  CML_RESERVED    = 3,
-  };
-
-enum eSurroundMixLevel {
-  SML_MINUS_3dB = 0,
-  SML_MINUS_6dB = 1,
-  SML_0_dB      = 2,
-  SML_RESERVED  = 3,
-  };
-
-enum eDolbySurroundMode {
-  DSM_NOT_INDICATED     = 0,
-  DSM_NOT_DOLBYSURROUND = 1,
-  DSM_DOLBYSURROUND     = 2,
-  DSM_RESERVED          = 3,
-  };
-
-enum eReceiverCodes {
-  FR_RESERVED = -1,
-  FR_FREE     = -2,
-  FR_NOTVALID = -3
-  };
+#include "femonaudio.h"
+#include "femonvideo.h"
 
 class cFemonReceiver : public cReceiver, public cThread {
 private:
-  cCondWait m_Sleep;
-  int       m_VideoPid;
-  int       m_AudioPid;
-  int       m_AC3Pid;
-  bool      m_VideoValid;
-  int       m_VideoPacketCount;
-  int       m_VideoHorizontalSize;
-  int       m_VideoVerticalSize;
-  int       m_VideoAspectRatio;
-  int       m_VideoFormat;
-  double    m_VideoFrameRate;
-  double    m_VideoStreamBitrate;
-  double    m_VideoBitrate;
-  bool      m_AudioValid;
-  int       m_AudioPacketCount;
-  double    m_AudioStreamBitrate;
-  double    m_AudioBitrate;
-  int       m_AudioSamplingFreq;
-  int       m_AudioMPEGLayer;
-  bool      m_AC3Valid;
-  int       m_AC3PacketCount;
-  double    m_AC3Bitrate;
-  int       m_AC3FrameSize;
-  int       m_AC3SamplingFreq;
-  int       m_AC3StreamBitrate;
-  int       m_AC3BitStreamMode;
-  int       m_AC3AudioCodingMode;
-  int       m_AC3CenterMixLevel;
-  int       m_AC3SurroundMixLevel;
-  int       m_AC3DolbySurroundMode;
-  bool      m_AC3LfeOn;
-  int       m_AC3DialogLevel;  
-  void      GetVideoInfo(uint8_t *mbuf, int count);
-  void      GetAudioInfo(uint8_t *mbuf, int count);
-  void      GetAC3Info(uint8_t *mbuf, int count);
+  cCondWait     m_Sleep;
+
+  int           m_VideoPid;
+  int           m_VideoPacketCount;
+  double        m_VideoBitrate;
+  bool          m_VideoValid;
+  video_info_t  m_VideoInfo;
+  video_info_t  m_VideoInfoBuffer[3];
+  unsigned int  m_VideoInfoBufferIndex;
+
+  int           m_AudioPid;
+  int           m_AudioPacketCount;
+  double        m_AudioBitrate;
+  bool          m_AudioValid;
+  audio_info_t  m_AudioInfo;
+  audio_info_t  m_AudioInfoBuffer[3];
+  unsigned int  m_AudioInfoBufferIndex;
+
+  int           m_AC3Pid;
+  int           m_AC3PacketCount;
+  double        m_AC3Bitrate;
+  bool          m_AC3Valid;
+  ac3_info_t    m_AC3Info;
+  ac3_info_t    m_AC3InfoBuffer[3];
+  unsigned int  m_AC3InfoBufferIndex;
+
+  void          GetVideoInfo(uint8_t *buf, int len);
+  void          GetAudioInfo(uint8_t *buf, int len);
+  void          GetAC3Info(uint8_t *buf, int len);
 
 protected:
   virtual void Activate(bool On);
@@ -100,35 +55,37 @@ public:
   cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[], int Dpid[]);
   virtual ~cFemonReceiver();
 
-  bool VideoValid(void)           { return m_VideoValid; };          // boolean
-  int VideoHorizontalSize(void)   { return m_VideoHorizontalSize; }; // pixels
-  int VideoVerticalSize(void)     { return m_VideoVerticalSize; };   // pixels
-  int VideoAspectRatio(void)      { return m_VideoAspectRatio; };    // eAspectRatio
-  int VideoFormat(void)           { return m_VideoFormat; };         // eVideoFormat
-  double VideoFrameRate(void)     { return m_VideoFrameRate; };      // Hz
-  double VideoStreamBitrate(void) { return m_VideoStreamBitrate; };  // bit/s
-  double VideoBitrate(void)       { return m_VideoBitrate; };        // bit/s
+  bool   VideoValid(void)           { return m_VideoValid; };                  // boolean
+  double VideoBitrate(void)         { return m_VideoBitrate; };                // bit/s
+  int    VideoCodec(void)           { return m_VideoInfo.codec; };             // eVideoCodec
+  int    VideoFormat(void)          { return m_VideoInfo.format; };            // eVideoFormat
+  int    VideoScan(void)            { return m_VideoInfo.scan; };              // eVideoScan
+  int    VideoAspectRatio(void)     { return m_VideoInfo.aspectRatio; };       // eVideoAspectRatio
+  int    VideoHorizontalSize(void)  { return m_VideoInfo.width; };             // pixels
+  int    VideoVerticalSize(void)    { return m_VideoInfo.height; };            // pixels
+  double VideoFrameRate(void)       { return m_VideoInfo.frameRate; };         // Hz
+  double VideoStreamBitrate(void)   { return m_VideoInfo.bitrate; };           // bit/s
 
-  bool AudioValid(void)           { return m_AudioValid; };          // boolean
-  int AudioMPEGLayer(void)        { return m_AudioMPEGLayer; };      // layer number
-  int AudioSamplingFreq(void)     { return m_AudioSamplingFreq; };   // Hz
-  double AudioStreamBitrate(void) { return m_AudioStreamBitrate; };  // bit/s
-  double AudioBitrate(void)       { return m_AudioBitrate; };        // bit/s
+  bool   AudioValid(void)           { return m_AudioValid; };                  // boolean
+  double AudioBitrate(void)         { return m_AudioBitrate; };                // bit/s
+  int    AudioCodec(void)           { return m_AudioInfo.codec; };             // eAudioCodec
+  int    AudioChannelMode(void)     { return m_AudioInfo.channelMode; };       // eAudioChannelMode
+  double AudioStreamBitrate(void)   { return m_AudioInfo.bitrate; };           // bit/s or eAudioBitrate
+  int    AudioSamplingFreq(void)    { return m_AudioInfo.samplingFrequency; }; // Hz or eAudioSamplingFrequency
 
-  bool AC3Valid(void)             { return m_AC3Valid; };                // boolean
-  int AC3SamplingFreq(void)       { return m_AC3SamplingFreq; };         // Hz
-  double AC3StreamBitrate(void)   { return m_AC3StreamBitrate; };        // bit/s
-  double AC3Bitrate(void)         { return m_AC3Bitrate; };              // bit/s
-  int AC3FrameSize(void)          { return m_AC3FrameSize; };            // Bytes
-  int AC3BitStreamMode(void)      { return m_AC3BitStreamMode; };        // 0..7
-  int AC3AudioCodingMode(void)    { return m_AC3AudioCodingMode; };      // 0..7
-  bool AC3_2_0(void)		  { return m_AC3AudioCodingMode == 2; }; // DD 2.0
-  bool AC3_5_1(void)	          { return m_AC3AudioCodingMode == 7; }; // DD 5.1
-  int AC3CenterMixLevel(void)     { return m_AC3CenterMixLevel; };       // eCenterMixLevel
-  int AC3SurroundMixLevel(void)   { return m_AC3SurroundMixLevel; };     // eSurroundMixLevel
-  int AC3DolbySurroundMode(void)  { return m_AC3DolbySurroundMode; };    // eDolbySurroundMode
-  bool AC3LfeOn(void)             { return m_AC3LfeOn; };                // boolean
-  int AC3DialogLevel(void)        { return m_AC3DialogLevel; };          // -dB
+  bool   AC3Valid(void)             { return m_AC3Valid; };                    // boolean
+  double AC3Bitrate(void)           { return m_AC3Bitrate; };                  // bit/s
+  double AC3StreamBitrate(void)     { return m_AC3Info.bitrate; };             // bit/s or eAudioBitrate
+  int    AC3SamplingFreq(void)      { return m_AC3Info.samplingFrequency; };   // Hz or eAudioSamplingFrequency
+  int    AC3BitStreamMode(void)     { return m_AC3Info.bitstreamMode; };       // 0..7 or eAudioBitstreamMode
+  int    AC3AudioCodingMode(void)   { return m_AC3Info.audioCodingMode; };     // 0..7 or eAudioCodingMode
+  bool   AC3_2_0(void)              { return m_AC3Info.audioCodingMode == AUDIO_CODING_MODE_2_0; }; // boolean
+  bool   AC3_5_1(void)	            { return m_AC3Info.audioCodingMode == AUDIO_CODING_MODE_3_2; }; // boolean
+  int    AC3DolbySurroundMode(void) { return m_AC3Info.dolbySurroundMode; };   // eAudioDolbySurroundMode
+  int    AC3CenterMixLevel(void)    { return m_AC3Info.centerMixLevel; };      // eAudioCenterMixLevel
+  int    AC3SurroundMixLevel(void)  { return m_AC3Info.surroundMixLevel; };    // eAudioSurroundMixLevel
+  int    AC3DialogLevel(void)       { return m_AC3Info.dialogLevel; };         // -dB
+  bool   AC3Lfe(void)               { return m_AC3Info.lfe; };                 // boolean
   };
 
 #endif //__FEMONRECEIVER_H
