@@ -252,6 +252,10 @@ void cFemonOsd::DrawStatusWindow(void)
            }
         OSDDRAWSTATUSBM(OSDSPACING);
         }
+     if (channel->Ca() > 0xFF) {
+        bm = &bmSymbol[SYMBOL_ENCRYPTED];
+        OSDDRAWSTATUSBM(OSDSPACING);
+        }
      offset += OSDROWHEIGHT;
      OSDDRAWSTATUSBAR(signal);
      offset += OSDROWHEIGHT;

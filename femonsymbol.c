@@ -17,6 +17,7 @@
 #include "symbols/h264.xpm"
 #include "symbols/ntsc.xpm"
 #include "symbols/pal.xpm"
+#include "symbols/encrypted.xpm"
 #include "symbols/svdrp.xpm"
 #include "symbols/lock.xpm"
 #include "symbols/signal.xpm"
@@ -49,6 +50,7 @@ cBitmap bmSymbol[SYMBOL_MAX_COUNT] =
   cBitmap(h264_xpm),           // SYMBOL_H264
   cBitmap(pal_xpm),            // SYMBOL_PAL
   cBitmap(ntsc_xpm),           // SYMBOL_NTSC
+  cBitmap(encrypted_xpm),      // SYMBOL_ENCRYPTED
   cBitmap(svdrp_xpm),          // SYMBOL_SVDRP
   cBitmap(lock_xpm),           // SYMBOL_LOCK
   cBitmap(signal_xpm),         // SYMBOL_SIGNAL
