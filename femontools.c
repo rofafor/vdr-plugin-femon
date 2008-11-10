@@ -199,6 +199,27 @@ cString getCA(int value)
   return cString::sprintf("%X", value);
 }
 
+cString getVideoStream(int value)
+{
+  if (value != 0)
+     return cString::sprintf("#%d", value);
+  return cString::sprintf("---");
+}
+
+cString getAudioStream(int value, const cChannel *channel)
+{
+  int pid = 0;
+  if (IS_AUDIO_TRACK(value))
+     pid = int(value - ttAudioFirst);
+  if (channel && channel->Apid(pid)) {
+     if (channel->Alang(pid))
+        return cString::sprintf("#%d (%s)", channel->Apid(pid), channel->Alang(pid));
+     else
+        return cString::sprintf("#%d", channel->Apid(pid));
+     }
+  return cString::sprintf("---");
+}
+
 cString getVideoCodec(int value)
 {
   switch (value) {

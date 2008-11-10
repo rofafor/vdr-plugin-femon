@@ -367,7 +367,7 @@ void cFemonOsd::DrawInfoWindow(void)
        case eFemonModeStream:
             OSDDRAWINFOTITLEBAR(tr("Stream Information"));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOACTIVE(  tr("Video Stream"),       *cString::sprintf("#%d", channel->Vpid()));
+            OSDDRAWINFOACTIVE(  tr("Video Stream"),       *getVideoStream(channel->Vpid()));
             offset += OSDROWHEIGHT;
             OSDDRAWINFOINACTIVE(tr("Codec"),              *getVideoCodec(m_Receiver ? m_Receiver->VideoCodec() : VIDEO_CODEC_INVALID));
             offset += OSDROWHEIGHT;
@@ -381,7 +381,7 @@ void cFemonOsd::DrawInfoWindow(void)
             offset += OSDROWHEIGHT;
             OSDDRAWINFOINACTIVE(tr("Resolution"),         *getResolution(m_Receiver ? m_Receiver->VideoHorizontalSize() : 0, m_Receiver ? m_Receiver->VideoVerticalSize() : 0, m_Receiver ? m_Receiver->VideoScan() : VIDEO_SCAN_INVALID));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOACTIVE(  tr("Audio Stream"),       *cString::sprintf("#%d (%s)", IS_AUDIO_TRACK(track) ? channel->Apid(int(track - ttAudioFirst)) : channel->Apid(0), IS_AUDIO_TRACK(track) ? channel->Alang(int(track - ttAudioFirst)) : channel->Alang(0)));
+            OSDDRAWINFOACTIVE(  tr("Audio Stream"),       *getAudioStream(track, channel));
             offset += OSDROWHEIGHT;
             OSDDRAWINFOINACTIVE(tr("Codec"),              *getAudioCodec(m_Receiver ? m_Receiver->AudioCodec() : AUDIO_CODEC_INVALID));
             offset += OSDROWHEIGHT;
