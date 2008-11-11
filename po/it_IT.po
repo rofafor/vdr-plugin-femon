@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: femon 1.6.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
 "POT-Creation-Date: 2008-11-09 13:31+0200\n"
-"PO-Revision-Date: 2008-04-17 00:18+0100\n"
+"PO-Revision-Date: 2008-11-10 23:37+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
 "MIME-Version: 1.0\n"
@@ -212,7 +212,7 @@ msgid "Video Stream"
 msgstr "Flusso video"
 
 msgid "Codec"
-msgstr ""
+msgstr "Codifica"
 
 msgid "Bitrate"
 msgstr "Bitrate"
@@ -233,7 +233,7 @@ msgid "Audio Stream"
 msgstr "Flusso audio"
 
 msgid "Channel Mode"
-msgstr ""
+msgstr "Modalità canale"
 
 msgid "Sampling Frequency"
 msgstr "Frequenza campionamento"
@@ -305,43 +305,43 @@ msgid "SkyCrypt"
 msgstr "SkyCrypt"
 
 msgid "MPEG-2"
-msgstr ""
+msgstr "MPEG-2"
 
 msgid "H.264"
-msgstr ""
+msgstr "H.264"
 
 msgid "MPEG-1 Layer I"
-msgstr ""
+msgstr "MPEG-1 Layer I"
 
 msgid "MPEG-1 Layer II"
-msgstr ""
+msgstr "MPEG-1 Layer II"
 
 msgid "MPEG-1 Layer III"
-msgstr ""
+msgstr "MPEG-1 Layer III"
 
 msgid "MPEG-2 Layer I"
-msgstr ""
+msgstr "MPEG-2 Layer I"
 
 msgid "MPEG-2 Layer II"
-msgstr ""
+msgstr "MPEG-2 Layer II"
 
 msgid "MPEG-2 Layer III"
-msgstr ""
+msgstr "MPEG-2 Layer III"
 
 msgid "HE-AAC"
-msgstr ""
+msgstr "HE-AAC"
 
 msgid "stereo"
-msgstr ""
+msgstr "stereo"
 
 msgid "joint Stereo"
-msgstr ""
+msgstr "joint Stereo"
 
 msgid "dual"
-msgstr ""
+msgstr "dual"
 
 msgid "mono"
-msgstr ""
+msgstr "mono"
 
 msgid "none"
 msgstr "nessuna"
@@ -353,22 +353,22 @@ msgid "MHz"
 msgstr "MHz"
 
 msgid "interlaced"
-msgstr ""
+msgstr "interlacciato"
 
 msgid "progressive"
-msgstr ""
+msgstr "progressivo"
 
 msgid "reserved"
 msgstr "riservato"
 
 msgid "extended"
-msgstr ""
+msgstr "esteso"
 
 msgid "unknown"
 msgstr "sconosciuto"
 
 msgid "component"
-msgstr ""
+msgstr "componente"
 
 msgid "PAL"
 msgstr "PAL"
@@ -377,10 +377,10 @@ msgid "NTSC"
 msgstr "NTSC"
 
 msgid "SECAM"
-msgstr ""
+msgstr "SECAM"
 
 msgid "MAC"
-msgstr ""
+msgstr "MAC"
 
 msgid "Hz"
 msgstr "Hz"

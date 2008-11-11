@@ -310,3 +310,8 @@ VDR Plugin 'femon' Revision History
 - Added initial support for H.264 and HE-AAC.
 - Fixed detection of false positives in audio/video streams.
 - Refactored source code.
+
+2008-xx-xx: Version 1.6.4
+
+- Added getVideoStream() and getAudioStream() functions.
+- Updated Italian translation (Thanks to Diego Pierotto).
