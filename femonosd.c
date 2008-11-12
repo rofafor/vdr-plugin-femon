@@ -126,26 +126,29 @@ cFemonOsd *cFemonOsd::Instance(bool create)
 }
 
 cFemonOsd::cFemonOsd()
-:cOsdObject(true), cThread("femon osd")
+: cOsdObject(true), cThread("femon osd"),
+  m_Osd(NULL),
+  m_Receiver(NULL),
+  m_Frontend(-1),
+  m_SvdrpFrontend(-1),
+  m_SvdrpVideoBitrate(-1),
+  m_SvdrpAudioBitrate(-1),
+  m_SvdrpPlugin(NULL),
+  m_Number(0),
+  m_OldNumber(0),
+  m_SNR(0),
+  m_Signal(0),
+  m_BER(0),
+  m_UNC(0),
+  m_DisplayMode(femonConfig.displaymode),
+  m_InputTime(0),
+  m_Sleep(),
+  m_Mutex()
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  m_Osd = NULL;
-  m_Receiver = NULL;
-  m_Frontend = -1;
-  m_SvdrpVideoBitrate = -1.0;
-  m_SvdrpAudioBitrate = -1.0;
-  m_SvdrpFrontend = -1;
   m_SvdrpConnection.handle = -1;
-  m_SvdrpPlugin = NULL;
-  m_Number = 0;
-  m_OldNumber = 0;
-  m_Signal = 0;
-  m_SNR = 0;
-  m_BER = 0;
-  m_UNC = 0;
-  m_DisplayMode = femonConfig.displaymode;
-  m_InputTime.Set(0);
-  m_Mutex = new cMutex();
+  if (femonConfig.osdheight < (OSDSTATUSHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT))
+     femonConfig.osdheight = (OSDSTATUSHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT);
   if (Setup.UseSmallFont == 0) {
      // Dirty hack to force the small fonts...
      Setup.UseSmallFont = 1;
@@ -176,7 +179,7 @@ cFemonOsd::~cFemonOsd(void)
 
 void cFemonOsd::DrawStatusWindow(void)
 {
-  cMutexLock lock(m_Mutex);
+  cMutexLock lock(&m_Mutex);
   cBitmap *bm = NULL;
   int snr = m_SNR / 655;
   int signal = m_Signal / 655;
@@ -282,7 +285,7 @@ void cFemonOsd::DrawStatusWindow(void)
 
 void cFemonOsd::DrawInfoWindow(void)
 {
-  cMutexLock lock(m_Mutex);
+  cMutexLock lock(&m_Mutex);
   int offset = 0;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
