@@ -21,8 +21,8 @@
 #define OSDINFOHEIGHT             (OSDROWHEIGHT * 13)     // in pixels (13 rows)
 #define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 6)      // in pixels (6 rows)
 #define OSDSPACING                5
-#define OSDCORNERING              10
-#define IS_OSDCORNERING           (femonConfig.skin == eFemonSkinElchi)
+#define OSDROUNDING               10
+#define IS_OSDROUNDING            (femonConfig.skin == eFemonSkinElchi)
 
 #define OSDINFOWIN_Y(offset)      (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
 #define OSDINFOWIN_X(col)         ((col == 4) ? 455 : (col == 3) ? 305 : (col == 2) ? 155 : 15)
@@ -65,15 +65,15 @@
         m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), femonTheme[femonConfig.theme].clrBackground); \
         m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground); \
         m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), title, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font); \
-        if (IS_OSDCORNERING) { \
-           m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDCORNERING, OSDSTATUSWIN_Y(OSDCORNERING), clrTransparent, -2); \
-           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDCORNERING), clrTransparent, -1); \
+        if (IS_OSDROUNDING) { \
+           m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDROUNDING, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -2); \
+           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -1); \
            }
 
 #define OSDDRAWSTATUSBOTTOMBAR() \
-        if (IS_OSDCORNERING) { \
-           m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT-OSDCORNERING), OSDCORNERING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -3); \
-           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDSTATUSWIN_Y(OSDSTATUSHEIGHT-OSDCORNERING), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -4); \
+        if (IS_OSDROUNDING) { \
+           m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT - OSDROUNDING), OSDROUNDING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -3); \
+           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDSTATUSWIN_Y(OSDSTATUSHEIGHT - OSDROUNDING), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -4); \
            }
 
 #define OSDDRAWINFOLEFT(label, value) \
@@ -99,15 +99,15 @@
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), femonTheme[femonConfig.theme].clrBackground); \
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset + OSDROWHEIGHT - 1), femonTheme[femonConfig.theme].clrTitleBackground); \
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), title, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font); \
-        if (IS_OSDCORNERING) { \
-           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDCORNERING, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -2); \
-           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDCORNERING), clrTransparent, -1); \
+        if (IS_OSDROUNDING) { \
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDROUNDING, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -2); \
+           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -1); \
            }
 
 #define OSDDRAWINFOBOTTOMBAR() \
-        if (IS_OSDCORNERING) { \
-           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDCORNERING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3); \
-           m_Osd->DrawEllipse((OSDWIDTH-OSDCORNERING), OSDINFOWIN_Y(OSDINFOHEIGHT-OSDCORNERING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4); \
+        if (IS_OSDROUNDING) { \
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT - OSDROUNDING), OSDROUNDING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3); \
+           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDINFOWIN_Y(OSDINFOHEIGHT - OSDROUNDING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4); \
            }
 
 #define OSDCLEARINFO() \
@@ -184,7 +184,7 @@ void cFemonOsd::DrawStatusWindow(void)
   int snr = m_SNR / 655;
   int signal = m_Signal / 655;
   int offset = 0;
-  int x = OSDWIDTH - OSDCORNERING;
+  int x = OSDWIDTH - OSDROUNDING;
   int y = 0;
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
@@ -400,7 +400,7 @@ void cFemonOsd::DrawInfoWindow(void)
             OSDDRAWINFOTITLEBAR(tr("Stream Information"));
             if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("AC-3 Stream"),            *cString::sprintf("#%d %s", channel->Dpid(int(track - ttDolbyFirst)), channel->Dlang(int(track - ttDolbyFirst))));
+               OSDDRAWINFOACTIVE(  tr("AC-3 Stream"),            *getAC3Stream(track, channel));
                offset += OSDROWHEIGHT;
                OSDDRAWINFOINACTIVE(tr("Bitrate"),                *getAudioBitrate(m_Receiver->AC3Bitrate(), m_Receiver->AC3StreamBitrate()));
                offset += OSDROWHEIGHT;

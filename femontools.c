@@ -220,6 +220,20 @@ cString getAudioStream(int value, const cChannel *channel)
   return cString::sprintf("---");
 }
 
+cString getAC3Stream(int value, const cChannel *channel)
+{
+  int pid = 0;
+  if (IS_DOLBY_TRACK(value))
+     pid = int(value - ttDolbyFirst);
+  if (channel && channel->Dpid(pid)) {
+     if (channel->Dlang(pid))
+        return cString::sprintf("#%d (%s)", channel->Dpid(pid), channel->Dlang(pid));
+     else
+        return cString::sprintf("#%d", channel->Dpid(pid));
+     }
+  return cString::sprintf("---");
+}
+
 cString getVideoCodec(int value)
 {
   switch (value) {

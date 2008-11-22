@@ -57,6 +57,7 @@ cString getResolution(int width, int height, int scan);
 cString getAspectRatio(int value);
 cString getVideoFormat(int value);
 cString getFrameRate(double value);
+cString getAC3Stream(int value, const cChannel *channel);
 cString getAC3BitStreamMode(int value, int coding);
 cString getAC3AudioCodingMode(int value, int stream);
 cString getAC3CenterMixLevel(int value);
