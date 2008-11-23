@@ -515,7 +515,7 @@ void cFemonOsd::Show(void)
   if (m_Osd) {
      // try to use single 8bpp area
      tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, 8 } };
-     if (femonConfig.usesinglearea && m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
+     if (Setup.AntiAlias && m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
         m_Osd->SetAreas(Areas1, sizeof(Areas1) / sizeof(tArea));
         }
      else {

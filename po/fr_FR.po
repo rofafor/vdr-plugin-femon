@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.3\n"
+"Project-Id-Version: femon 1.6.4\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
 "POT-Creation-Date: 2008-11-09 13:31+0200\n"
 "PO-Revision-Date: 2008-01-26 09:59+0100\n"
@@ -68,18 +68,6 @@ msgstr "Masquer dans le menu principal"
 
 msgid "Define whether the main menu entry is hidden."
 msgstr "Définit si l'entrée doit être masquée dans le menu principal."
-
-msgid "Use single area (8bpp)"
-msgstr "Utiliser zone unique (8bpp)"
-
-msgid ""
-"Define whether a single 8bpp OSD area is preferred.\n"
-"\n"
-"Required by Truetype fonts and anti-aliasing."
-msgstr ""
-"Définit si une seule zone OSD de 8bpp est préférée.\n"
-"\n"
-"Requis par les polices Truetype et l'anti-aliasing."
 
 msgid "Default display mode"
 msgstr "Affichage par défaut"

@@ -24,7 +24,6 @@ struct cFemonConfig
 public:
   cFemonConfig(void);
   int hidemenu;
-  int usesinglearea;
   int displaymode;
   int skin;
   int theme;

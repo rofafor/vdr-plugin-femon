@@ -108,7 +108,6 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
 {
   // Parse your own setup parameters and store their values.
   if      (!strcasecmp(Name, "HideMenu"))       femonConfig.hidemenu       = atoi(Value);
-  else if (!strcasecmp(Name, "UseSingleArea"))  femonConfig.usesinglearea  = atoi(Value);
   else if (!strcasecmp(Name, "DisplayMode"))    femonConfig.displaymode    = atoi(Value);
   else if (!strcasecmp(Name, "Position"))       femonConfig.position       = atoi(Value);
   else if (!strcasecmp(Name, "OSDHeight"))      femonConfig.osdheight      = atoi(Value);
@@ -311,9 +310,6 @@ void cMenuFemonSetup::Setup(void)
   Add(new cMenuEditBoolItem(tr("Hide main menu entry"), &data.hidemenu));
   help.Append(tr("Define whether the main menu entry is hidden."));
 
-  Add(new cMenuEditBoolItem(tr("Use single area (8bpp)"), &data.usesinglearea));
-  help.Append(tr("Define whether a single 8bpp OSD area is preferred.\n\nRequired by Truetype fonts and anti-aliasing."));
-
   Add(new cMenuEditStraItem(tr("Default display mode"), &data.displaymode, eFemonModeMaxNumber, dispmodes));
   help.Append(tr("Define the default display mode at startup."));
 
@@ -372,7 +368,6 @@ void cMenuFemonSetup::Store(void)
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   femonConfig = data;
   SetupStore("HideMenu",       femonConfig.hidemenu);
-  SetupStore("UseSingleArea",  femonConfig.usesinglearea);
   SetupStore("DisplayMode",    femonConfig.displaymode);
   SetupStore("Skin",           femonConfig.skin);
   SetupStore("Theme",          femonConfig.theme);

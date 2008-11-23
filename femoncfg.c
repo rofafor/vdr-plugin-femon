@@ -13,7 +13,6 @@ cFemonConfig femonConfig;
 cFemonConfig::cFemonConfig(void)
 {
   hidemenu       = 0;
-  usesinglearea  = 0;
   displaymode    = 0;
   skin           = 0;
   theme          = 0;
