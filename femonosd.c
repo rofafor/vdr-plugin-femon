@@ -36,11 +36,11 @@
            x -= bm->Width() + spacing; \
            y = (OSDROWHEIGHT - bm->Height()) / 2; \
            if (y < 0) y = 0; \
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset + y), *bm, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground); \
+           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset) + y, *bm, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground); \
            }
 
 #define OSDDRAWSTATUSFRONTEND(column, bitmap, status) \
-        m_Osd->DrawBitmap(OSDSTATUSWIN_XSYMBOL(column, x), OSDSTATUSWIN_Y(offset + y), bitmap, (m_FrontendStatus & status) ? femonTheme[femonConfig.theme].clrActiveText : femonTheme[femonConfig.theme].clrRed, femonTheme[femonConfig.theme].clrBackground)
+        m_Osd->DrawBitmap(OSDSTATUSWIN_XSYMBOL(column, x), OSDSTATUSWIN_Y(offset) + y, bitmap, (m_FrontendStatus & status) ? femonTheme[femonConfig.theme].clrActiveText : femonTheme[femonConfig.theme].clrRed, femonTheme[femonConfig.theme].clrBackground)
 
 #define OSDDRAWSTATUSVALUES(label1, label2, label3, label4, label5, label6, label7) \
         m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), label1, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
@@ -54,27 +54,30 @@
 #define OSDDRAWSTATUSBAR(value) \
         if (value > 0) { \
            value = OSDBARWIDTH(value); \
-           m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset + 3), min(OSDBARWIDTH(femonConfig.redlimit), value), OSDSTATUSWIN_Y(offset + OSDROWHEIGHT - 3), femonTheme[femonConfig.theme].clrRed); \
+           m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + 3, min(OSDBARWIDTH(femonConfig.redlimit), value), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrRed); \
            if (value > OSDBARWIDTH(femonConfig.redlimit)) \
-              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.redlimit), OSDSTATUSWIN_Y(offset + 3), min((OSDWIDTH * femonConfig.greenlimit / 100), value), OSDSTATUSWIN_Y(offset + OSDROWHEIGHT - 3), femonTheme[femonConfig.theme].clrYellow); \
+              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.redlimit), OSDSTATUSWIN_Y(offset) + 3, min((OSDWIDTH * femonConfig.greenlimit / 100), value), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrYellow); \
            if (value > OSDBARWIDTH(femonConfig.greenlimit)) \
-              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.greenlimit), OSDSTATUSWIN_Y(offset + 3), value, OSDSTATUSWIN_Y(offset + OSDROWHEIGHT - 3), femonTheme[femonConfig.theme].clrGreen); \
+              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.greenlimit), OSDSTATUSWIN_Y(offset) + 3, value, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrGreen); \
            }
 
 #define OSDDRAWSTATUSTITLEBAR(title) \
-        m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), femonTheme[femonConfig.theme].clrBackground); \
-        m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset+OSDROWHEIGHT-1), femonTheme[femonConfig.theme].clrTitleBackground); \
+        m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 1, femonTheme[femonConfig.theme].clrTitleBackground); \
         m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), title, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font); \
         if (IS_OSDROUNDING) { \
            m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDROUNDING, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -2); \
-           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -1); \
-           }
+           m_Osd->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -1); \
+           } \
+        m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDSTATUSHEIGHT - 1, femonTheme[femonConfig.theme].clrBackground)
 
 #define OSDDRAWSTATUSBOTTOMBAR() \
         if (IS_OSDROUNDING) { \
-           m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT - OSDROUNDING), OSDROUNDING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -3); \
-           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDSTATUSWIN_Y(OSDSTATUSHEIGHT - OSDROUNDING), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -4); \
+           m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - OSDROUNDING, OSDROUNDING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -3); \
+           m_Osd->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - OSDROUNDING, OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -4); \
            }
+
+#define OSDCLEARSTATUS() \
+        m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - 1, clrTransparent)
 
 #define OSDDRAWINFOLEFT(label, value) \
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
@@ -96,22 +99,22 @@
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font)
 
 #define OSDDRAWINFOTITLEBAR(title) \
-        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), femonTheme[femonConfig.theme].clrBackground); \
-        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset + OSDROWHEIGHT - 1), femonTheme[femonConfig.theme].clrTitleBackground); \
+        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset) + OSDROWHEIGHT - 1, femonTheme[femonConfig.theme].clrTitleBackground); \
         m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), title, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font); \
         if (IS_OSDROUNDING) { \
            m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDROUNDING, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -2); \
-           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -1); \
-           }
+           m_Osd->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -1); \
+           } \
+        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDINFOWIN_Y(offset) + OSDINFOHEIGHT - 1, femonTheme[femonConfig.theme].clrBackground)
 
 #define OSDDRAWINFOBOTTOMBAR() \
         if (IS_OSDROUNDING) { \
-           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT - OSDROUNDING), OSDROUNDING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3); \
-           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDINFOWIN_Y(OSDINFOHEIGHT - OSDROUNDING), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4); \
+           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT) - OSDROUNDING, OSDROUNDING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3); \
+           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDINFOWIN_Y(OSDINFOHEIGHT) - OSDROUNDING, OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4); \
            }
 
 #define OSDCLEARINFO() \
-        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent)
+        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT) - 1, clrTransparent)
 
 cFemonOsd *cFemonOsd::pInstance = NULL;
 
@@ -265,7 +268,7 @@ void cFemonOsd::DrawStatusWindow(void)
      OSDDRAWSTATUSBAR(snr);
      offset += OSDROWHEIGHT;
      OSDDRAWSTATUSVALUES("STR:", *cString::sprintf("%04x", m_Signal), *cString::sprintf("(%2d%%)", m_Signal / 655), "BER:", *cString::sprintf("%08x", m_BER),
-                         *cString::sprintf("%s:", tr("Video")),  *getBitrateMbits(m_Receiver ? m_Receiver->VideoBitrate() : (m_SvdrpFrontend >= 0 ? m_SvdrpVideoBitrate : -1.0)));
+                         *cString::sprintf("%s:", tr("Video")), *getBitrateMbits(m_Receiver ? m_Receiver->VideoBitrate() : (m_SvdrpFrontend >= 0 ? m_SvdrpVideoBitrate : -1.0)));
      offset += OSDROWHEIGHT;
      OSDDRAWSTATUSVALUES("SNR:", *cString::sprintf("%04x", m_SNR), *cString::sprintf("(%2d%%)", m_SNR / 655), "UNC:", *cString::sprintf("%08x", m_UNC),
                          *cString::sprintf("%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio")),
@@ -513,18 +516,18 @@ void cFemonOsd::Show(void)
 
   m_Osd = cOsdProvider::NewOsd(((cOsd::OsdWidth() - OSDWIDTH) / 2) + cOsd::OsdLeft() + femonConfig.osdoffset, ((cOsd::OsdHeight() - OSDHEIGHT) / 2) + cOsd::OsdTop());
   if (m_Osd) {
-     // try to use single 8bpp area
-     tArea Areas1[] = { { 0, 0, OSDWIDTH, OSDHEIGHT, 8 } };
+     tArea Areas1[] = { { 0, 0, OSDWIDTH - 1, OSDHEIGHT - 1, 8 } };
      if (Setup.AntiAlias && m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
         m_Osd->SetAreas(Areas1, sizeof(Areas1) / sizeof(tArea));
         }
      else {
-        tArea Areas2[] = { { 0, OSDSTATUSWIN_Y(0),          (OSDWIDTH - 1), OSDSTATUSWIN_Y(OSDSTATUSHEIGHT - 1), femonTheme[femonConfig.theme].bpp },
-                           { 0, OSDINFOWIN_Y(0),            (OSDWIDTH - 1), OSDINFOWIN_Y(OSDROWHEIGHT - 1),      femonTheme[femonConfig.theme].bpp },
-                           { 0, OSDINFOWIN_Y(OSDROWHEIGHT), (OSDWIDTH - 1), OSDINFOWIN_Y(OSDINFOHEIGHT - 1),     2 } };
+        tArea Areas2[] = { { 0, OSDSTATUSWIN_Y(0),          OSDWIDTH - 1, OSDSTATUSWIN_Y(0) + OSDSTATUSHEIGHT - 1, femonTheme[femonConfig.theme].bpp },
+                           { 0, OSDINFOWIN_Y(0),            OSDWIDTH - 1, OSDINFOWIN_Y(0)   + OSDROWHEIGHT    - 1, femonTheme[femonConfig.theme].bpp },
+                           { 0, OSDINFOWIN_Y(OSDROWHEIGHT), OSDWIDTH - 1, OSDINFOWIN_Y(0)   + OSDINFOHEIGHT   - 1, 2                                 } };
         m_Osd->SetAreas(Areas2, sizeof(Areas2) / sizeof(tArea));
         }
-     m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent);
+     OSDCLEARSTATUS();
+     OSDCLEARINFO();
      m_Osd->Flush();
      if (m_Receiver)
         delete m_Receiver;
