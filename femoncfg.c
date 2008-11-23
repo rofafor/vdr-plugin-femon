@@ -23,11 +23,7 @@ cFemonConfig::cFemonConfig(void)
   analyzestream  = 1;
   calcinterval   = 20;
   showcasystem   = 0;
-#ifdef NTSC
-  osdheight      = 420;
-#else
   osdheight      = 480;
-#endif
   osdoffset      = 0;
   usesvdrp       = 0;
   svdrpport      = 2001;

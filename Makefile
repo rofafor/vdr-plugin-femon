@@ -5,9 +5,6 @@
 # Debugging on/off 
 #FEMON_DEBUG = 1
 
-# NTSC on/off 
-#FEMON_NTSC = 1
-
 # Strip debug symbols?  Set eg. to /bin/true if not
 STRIP = strip
 
@@ -52,10 +49,6 @@ PACKAGE = vdr-$(ARCHIVE)
 INCLUDES += -I$(VDRDIR)/include
 
 DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
-
-ifdef FEMON_NTSC
-DEFINES += -DNTSC
-endif
 
 ifdef FEMON_DEBUG
 DEFINES += -DDEBUG
