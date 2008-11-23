@@ -319,3 +319,4 @@ VDR Plugin 'femon' Revision History
 - Added a check for the minimum OSD height.
 - Replaced "Use single area (8bpp)" option with VDR's "Setup/OSD/Anti-alias".
 - Removed the FEMON_NTSC option.
+- Fixed a deadlock in cFemonReceiver.

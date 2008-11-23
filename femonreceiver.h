@@ -17,6 +17,7 @@
 class cFemonReceiver : public cReceiver, public cThread {
 private:
   cCondWait     m_Sleep;
+  bool          m_Active;
 
   int           m_VideoPid;
   int           m_VideoPacketCount;
@@ -54,6 +55,7 @@ protected:
 public:
   cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[], int Dpid[]);
   virtual ~cFemonReceiver();
+  void Deactivate(void);
 
   bool   VideoValid(void)           { return m_VideoValid; };                  // boolean
   double VideoBitrate(void)         { return m_VideoBitrate; };                // bit/s

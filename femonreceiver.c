@@ -23,6 +23,8 @@
 cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[], int Dpid[])
 : cReceiver(ChannelID, -1, Vpid, Apid, Dpid, NULL),
   cThread("femon receiver"),
+  m_Sleep(),
+  m_Active(false),
   m_VideoPid(Vpid),
   m_VideoPacketCount(0),
   m_VideoBitrate(0.0),
@@ -75,10 +77,19 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[
 cFemonReceiver::~cFemonReceiver(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  m_Sleep.Signal();
-  if (Running())
-     Cancel(3);
-  Detach();
+  Deactivate();
+}
+
+void cFemonReceiver::Deactivate(void)
+{
+  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  if (m_Active) {
+     m_Active = false;
+     m_Sleep.Signal();
+     if (Running())
+        Cancel(3);
+     Detach();
+     }
 }
 
 void cFemonReceiver::GetVideoInfo(uint8_t *buf, int len)
@@ -165,7 +176,7 @@ void cFemonReceiver::Activate(bool On)
   if (On)
      Start();
   else
-     Cancel();
+     Deactivate();
 }
 
 void cFemonReceiver::Receive(uchar *Data, int Length)
@@ -214,7 +225,8 @@ void cFemonReceiver::Action(void)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   cTimeMs t;
-  while (Running()) {
+  m_Active = true;
+  while (Running() && m_Active) {
         t.Set(0);
         // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
         m_VideoBitrate = (10.0 * 8.0 * 184.0 * m_VideoPacketCount) / femonConfig.calcinterval;

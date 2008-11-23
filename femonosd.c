@@ -173,10 +173,12 @@ cFemonOsd::~cFemonOsd(void)
      if (m_SvdrpPlugin)
         m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection);
      }
-  if (m_Receiver)
-     delete m_Receiver;
+  if (m_Receiver) {
+     m_Receiver->Deactivate();
+     DELETENULL(m_Receiver);
+     }
   if (m_Osd)
-     delete m_Osd;
+     DELETENULL(m_Osd);
   pInstance = NULL;
 }
 
@@ -529,8 +531,10 @@ void cFemonOsd::Show(void)
      OSDCLEARSTATUS();
      OSDCLEARINFO();
      m_Osd->Flush();
-     if (m_Receiver)
-        delete m_Receiver;
+     if (m_Receiver) {
+        m_Receiver->Deactivate();
+        DELETENULL(m_Receiver);
+        }
      if (femonConfig.analyzestream) {
         cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
         if (channel) {
@@ -572,8 +576,10 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
      return;
      }
 
-  if (m_Receiver)
-     delete m_Receiver;
+  if (m_Receiver) {
+     m_Receiver->Deactivate();
+     DELETENULL(m_Receiver);
+     }
   if (femonConfig.analyzestream) {
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      if (channel) {
@@ -591,8 +597,10 @@ void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
   int apid[2] = {0, 0};
   int dpid[2] = {0, 0};
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  if (m_Receiver)
-     delete m_Receiver;
+  if (m_Receiver) {
+     m_Receiver->Deactivate();
+     DELETENULL(m_Receiver);
+     }
   if (femonConfig.analyzestream) {
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      if (channel) {
