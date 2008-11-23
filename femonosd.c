@@ -147,8 +147,6 @@ cFemonOsd::cFemonOsd()
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   m_SvdrpConnection.handle = -1;
-  if (femonConfig.osdheight < (OSDSTATUSHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT))
-     femonConfig.osdheight = (OSDSTATUSHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT);
   if (Setup.UseSmallFont == 0) {
      // Dirty hack to force the small fonts...
      Setup.UseSmallFont = 1;
@@ -157,6 +155,8 @@ cFemonOsd::cFemonOsd()
      }
   else
      m_Font = cFont::GetFont(fontSml);
+  if (OSDHEIGHT < (OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT))
+     OSDHEIGHT = (OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT);
 }
 
 cFemonOsd::~cFemonOsd(void)
