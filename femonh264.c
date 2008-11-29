@@ -85,7 +85,6 @@ typedef struct {
 #define br_skip_ue_golomb(br) br_skip_golomb(br)
 #define br_skip_se_golomb(br) br_skip_golomb(br)
 
-
 static inline void br_init(br_state *br, const uint8_t *data, int bytes)
 {
   br->data  = data;
@@ -235,11 +234,11 @@ static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
            br_skip_bit(&br);           // sar_width
            br_skip_bit(&br);           // sar_height
            sps->aspect_ratio = VIDEO_ASPECT_RATIO_EXTENDED;
-           //Dprintf("H.264 SPS: -> sar %dx%d", sar_width, sar_height);
+           //Dprintf("H.264 SPS: aspect ratio extended");
            }
         else if (aspect_ratio_idc < sizeof(aspect_ratios) / sizeof(aspect_ratios[0])) {
            sps->aspect_ratio = aspect_ratios[aspect_ratio_idc];
-           //Dprintf("H.264 SPS: -> aspect ratio %d", sps->aspect);
+           //Dprintf("H.264 SPS: -> aspect ratio %d", sps->aspect_ratio);
            }
         }
      if (br_get_bit(&br))            // overscan_info_present_flag
@@ -253,7 +252,7 @@ static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
         }
      }
 
-  //Dprintf("H.264 SPS: -> video size %dx%d, aspect %d", sps->width, sps->height, sps->aspect);
+  //Dprintf("H.264 SPS: -> video size %dx%d, aspect %d", sps->width, sps->height, sps->aspect_ratio);
 
   if (BR_EOF(&br)) {
      //Dprintf("H.264 SPS: not enough data ?");
@@ -263,76 +262,75 @@ static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
   return true;
 }
 
-#if 0
 static bool h264_parse_sei(const uint8_t *buf, int len, h264_sei_data_t *sei)
 {
+  int num_referenced_subseqs, i;
   br_state br = BR_INIT(buf, len);
 
-  while (!BR_EOF(&br)) {
-      { // sei_message
-        int lastByte, payloadSize = 0, payloadType = 0;
-        // last_payload_type_byte
-        do {
-          lastByte = br_get_u8(&br);
-          payloadType += lastByte;
-        } while (lastByte != 0xFF);
+  while (!BR_EOF(&br)) { // sei_message
+    int lastByte, payloadSize = 0, payloadType = 0;
 
-        // last_payload_size_byte
-        do {
-          lastByte = br_get_u8(&br);
-          payloadSize += lastByte;
-        } while (lastByte != 0xFF);
+    // last_payload_type_byte
+    do {
+       lastByte = br_get_u8(&br) & 0xFF;
+       payloadType += lastByte;
+    } while (lastByte == 0xFF);
 
-        { // sei_payload
-          switch (payloadType) {
-            //case 1:                                          // pic_timing
-            //     ...
-            //     switch (br_get_bits(&br, 2)) {              // ct_type
-            //       case 0:
-            //            sei->scan = VIDEO_SCAN_PROGRESSIVE;
-            //            break;
+    // last_payload_size_byte
+    do {
+       lastByte = br_get_u8(&br) & 0xFF;
+       payloadSize += lastByte;
+    } while (lastByte == 0xFF);
 
-            //       case 1:
-            //            sei->scan = VIDEO_SCAN_INTERLACED;
-            //            break;
+    switch (payloadType) {                             // sei_payload
+      //case 1:                                        // pic_timing
+      //     ...
+      //     switch (br_get_bits(&br, 2)) {            // ct_type
+      //       case 0:
+      //            sei->scan = VIDEO_SCAN_PROGRESSIVE;
+      //            break;
+      //       case 1:
+      //            sei->scan = VIDEO_SCAN_INTERLACED;
+      //            break;
+      //       case 2:
+      //            sei->scan = VIDEO_SCAN_UNKNOWN;
+      //            break;
+      //       default:
+      //            sei->scan = VIDEO_SCAN_RESERVED;
+      //            break;
+      //       }
+      //     break;
 
-            //       case 2:
-            //            sei->scan = VIDEO_SCAN_UNKNOWN;
-            //            break;
+      case 12:                                         // sub_seq_characteristics
+           br_skip_ue_golomb(&br);                     // sub_seq_layer_num
+           br_skip_ue_golomb(&br);                     // sub_seq_id
+           if (br_get_bit(&br))                        // duration_flag
+              br_skip_bits(&br, 32);                   // sub_seq_duration
+           if (br_get_bit(&br)) {                      // average_rate_flag
+              br_skip_bit(&br);                        // accurate_statistics_flag
+              sei->bitrate = br_get_u16(&br);          // average_bit_rate
+              sei->frame_rate = br_get_u16(&br);       // average_frame_rate
+              //Dprintf("H.264 SEI: -> stream bitrate %.1f, frame rate %.1f", sei->bitrate, sei->frame_rate);
+              }
+           num_referenced_subseqs = br_get_ue_golomb(&br); // num_referenced_subseqs
+           for (i = 0; i < num_referenced_subseqs; ++i) {
+               br_skip_ue_golomb(&br);                 // ref_sub_seq_layer_num
+               br_skip_ue_golomb(&br);                 // ref_sub_seq_id
+               br_get_bit(&br);                        // ref_sub_seq_direction
+               }
+           break;
 
-            //       default:
-            //            sei->scan = VIDEO_SCAN_RESERVED;
-            //            break;
-            //       }
-            //     break;
+      default:
+           br_skip_bits(&br, payloadSize);
+           break;
+      }
 
-            case 12:                                         // sub_seq_characteristics
-                 br_skip_ue_golomb(&br);                     // sub_seq_layer_num
-                 br_skip_ue_golomb(&br);                     // sub_seq_id
-                 if (br_get_bit(&br)) {                      // duration_flag
-                   br_skip_bits(&br, 32);                    // sub_seq_duration
-                   if (br_get_bit(&br)) {                    // average_rate_flag
-                      br_skip_bit(&br);                      // accurate_statistics_flag
-                      sei->bitrate = br_get_u16(&br);        // average_bit_rate
-                      sei->frame_rate = br_get_u16(&br);     // average_frame_rate
-                      //Dprintf("H.264 SEI: -> stream bitrate %d, frame rate %d", sei->bitrate, sei->frame_rate);
-                      }
-                   }
-                 break;
-
-            default:
-                 br_skip_bits(&br, payloadSize);
-                 break;
-            }            
-          // force byte align
-          br_byte_align(&br);
-        } // sei_payload
-      }   // sei_message
-    };
+    // force byte align
+    br_byte_align(&br);
+    }
 
   return true;
 }
-#endif
 
 static int h264_nal_unescape(uint8_t *dst, const uint8_t *src, int len)
 {
@@ -374,6 +372,8 @@ static int h264_get_picture_type(const uint8_t *buf, int len)
 
 bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
 {
+  bool sps_found = false, sei_found = true; // sei currently disabled
+
   // H.264 detection, search for NAL AUD
   if (!IS_NAL_AUD(buf))
      return false;
@@ -387,7 +387,7 @@ bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
   // Scan video packet ...
   for (int i = 5; i < len - 4; i++) {
       // ... for sequence parameter set
-      if ((buf[i] == 0x00) && (buf[i + 1] == 0x00) && (buf[i + 2] == 0x01) && (buf[i + 3] & 0x1f) == NAL_SPS) {
+      if (!sps_found && (buf[i] == 0x00) && (buf[i + 1] == 0x00) && (buf[i + 2] == 0x01) && (buf[i + 3] & 0x1f) == NAL_SPS) {
          uint8_t nal_data[len];
          int nal_len;
          //Dprintf("H.264: Found NAL SPS at offset %d/%d", i, len);
@@ -398,13 +398,12 @@ bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
                info->width = sps.width;
                info->height = sps.height;
                info->aspectRatio = sps.aspect_ratio;
-               return true;
+               sps_found = true;
                }
             }
          }
-#if 0
       // ... for supplemental enhancement information
-      else if ((buf[i] == 0x00) && (buf[i + 1] == 0x00) && (buf[i + 2] == 0x01) && (buf[i + 3] & 0x1f) == NAL_SEI) {
+      if (!sei_found && (buf[i] == 0x00) && (buf[i + 1] == 0x00) && (buf[i + 2] == 0x01) && (buf[i + 3] & 0x1f) == NAL_SEI) {
          uint8_t nal_data[len];
          int nal_len;
          //Dprintf("H.264: Found NAL SEI at offset %d/%d", i, len);
@@ -414,11 +413,12 @@ bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
                info->frameRate = sei.frame_rate;
                info->bitrate = sei.bitrate;
                info->scan = sei.scan;
-               return true;
+               sei_found = true;
                }
             }
          }
-#endif
+      if (sps_found && sei_found)
+         break;
       }
 
   return true;

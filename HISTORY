@@ -311,7 +311,7 @@ VDR Plugin 'femon' Revision History
 - Fixed detection of false positives in audio/video streams.
 - Refactored source code.
 
-2008-xx-xx: Version 1.6.4
+2008-11-29: Version 1.6.4
 
 - Added getVideoStream()/getAudioStream()/getAC3Stream() functions.
 - Updated Italian translation (Thanks to Diego Pierotto).
@@ -319,4 +319,4 @@ VDR Plugin 'femon' Revision History
 - Added a check for the minimum OSD height.
 - Replaced "Use single area (8bpp)" option with VDR's "Setup/OSD/Anti-alias".
 - Removed the FEMON_NTSC option.
-- Fixed a deadlock in cFemonReceiver.
+- Fixed a deadlock in cFemonReceiver (Thanks to Antti Seppälä for reporting this one).
