@@ -311,9 +311,9 @@ VDR Plugin 'femon' Revision History
 - Fixed detection of false positives in audio/video streams.
 - Refactored source code.
 
-2008-11-29: Version 1.6.4
+2008-11-30: Version 1.6.4
 
-- Added getVideoStream()/getAudioStream()/getAC3Stream() functions.
+- Added new helper functions.
 - Updated Italian translation (Thanks to Diego Pierotto).
 - Fixed a memory leak.
 - Added a check for the minimum OSD height.
