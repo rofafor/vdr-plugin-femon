@@ -42,7 +42,7 @@ cString getFrontendInfo(int cardIndex)
      info = cString::sprintf("%s\nVIBR:%.0f\nAUBR:%.0f\nDDBR:%.0f", *info, cFemonOsd::Instance()->GetVideoBitrate(), cFemonOsd::Instance()->GetAudioBitrate(), cFemonOsd::Instance()->GetDolbyBitrate());
 
   if (channel)
-     info  = cString::sprintf("%s\nCHAN:%s", *info, *channel->ToText());
+     info = cString::sprintf("%s\nCHAN:%s", *info, *channel->ToText());
 
   return info;
 }

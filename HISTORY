@@ -320,3 +320,8 @@ VDR Plugin 'femon' Revision History
 - Replaced "Use single area (8bpp)" option with VDR's "Setup/OSD/Anti-alias".
 - Removed the FEMON_NTSC option.
 - Fixed a deadlock in cFemonReceiver (Thanks to Antti Seppälä for reporting this one).
+
+200x-xx-xx: Version 1.6.5
+
+- Added whitespace cleanups.
+- Changed info window to use the channel source instead of the frontend type.

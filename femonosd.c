@@ -317,8 +317,8 @@ void cFemonOsd::DrawInfoWindow(void)
             offset += OSDROWHEIGHT;
             OSDDRAWINFOLEFT( trVDR("CA"),   *getCAids(channel, femonConfig.showcasystem));
             offset += OSDROWHEIGHT;
-            switch (m_FrontendInfo.type) {
-              case FE_QPSK:
+            switch (channel->Source() & cSource::st_Mask) {
+              case cSource::stSat:
                    OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", tr("Satellite Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
@@ -334,7 +334,7 @@ void cFemonOsd::DrawInfoWindow(void)
                    //OSDDRAWINFORIGHT(trVDR("RollOff"),    *getRollOff(channel->RollOff()));
                    break;
 
-             case FE_QAM:
+              case cSource::stCable:
                    OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", tr("Cable Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
@@ -347,7 +347,7 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(channel->CoderateH()));
                    break;
 
-              case FE_OFDM:
+              case cSource::stTerr:
                    OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", tr("Terrestrial Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
@@ -461,27 +461,27 @@ void cFemonOsd::Action(void)
        m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
        if (cmd.responseCode == 900) {
           for (cLine *line = cmd.reply.First(); line; line = cmd.reply.Next(line)) {
-             const char *s = line->Text();
-	      if (strncasecmp(s, "CARD:", 5) == 0)
-                m_SvdrpFrontend = strtol(s + 5, NULL, 10);
-             else if (strncasecmp(s, "TYPE:", 5) == 0)
-                m_FrontendInfo.type = (fe_type_t) strtol(s + 5, NULL, 10);
-             else if (strncasecmp(s, "NAME:", 5) == 0)
-                strn0cpy(m_FrontendInfo.name, s + 5, sizeof(m_FrontendInfo.name));
-             else if (strncasecmp(s, "STAT:", 5) == 0)
-                m_FrontendStatus = (fe_status_t) strtol(s + 5, NULL, 16);
-             else if (strncasecmp(s, "SGNL:", 5) == 0)
-                m_Signal = strtol(s + 5, NULL, 16);
-             else if (strncasecmp(s, "SNRA:", 5) == 0)
-                m_SNR = strtol(s + 5, NULL, 16);
-             else if (strncasecmp(s, "BERA:", 5) == 0)
-                m_BER = strtol(s + 5, NULL, 16);
-             else if (strncasecmp(s, "UNCB:", 5) == 0)
-                m_UNC = strtol(s + 5, NULL, 16);
-             else if (strncasecmp(s, "VIBR:", 5) == 0)
-                m_SvdrpVideoBitrate = strtol(s + 5, NULL, 10);
-             else if (strncasecmp(s, "AUBR:", 5) == 0)
-                m_SvdrpAudioBitrate = strtol(s + 5, NULL, 10);
+              const char *s = line->Text();
+	      if (!strncasecmp(s, "CARD:", 5))
+                 m_SvdrpFrontend = strtol(s + 5, NULL, 10);
+              else if (!strncasecmp(s, "TYPE:", 5))
+                 m_FrontendInfo.type = (fe_type_t) strtol(s + 5, NULL, 10);
+              else if (!strncasecmp(s, "NAME:", 5))
+                 strn0cpy(m_FrontendInfo.name, s + 5, sizeof(m_FrontendInfo.name));
+              else if (!strncasecmp(s, "STAT:", 5))
+                 m_FrontendStatus = (fe_status_t) strtol(s + 5, NULL, 16);
+              else if (!strncasecmp(s, "SGNL:", 5))
+                 m_Signal = strtol(s + 5, NULL, 16);
+              else if (!strncasecmp(s, "SNRA:", 5))
+                 m_SNR = strtol(s + 5, NULL, 16);
+              else if (!strncasecmp(s, "BERA:", 5))
+                 m_BER = strtol(s + 5, NULL, 16);
+              else if (!strncasecmp(s, "UNCB:", 5))
+                 m_UNC = strtol(s + 5, NULL, 16);
+              else if (!strncasecmp(s, "VIBR:", 5))
+                 m_SvdrpVideoBitrate = strtol(s + 5, NULL, 10);
+              else if (!strncasecmp(s, "AUBR:", 5))
+                 m_SvdrpAudioBitrate = strtol(s + 5, NULL, 10);
              }
           }
        DrawInfoWindow();
