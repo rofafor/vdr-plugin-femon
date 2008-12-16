@@ -13,6 +13,52 @@
 #include "femonosd.h"
 #include "femontools.h"
 
+static cString getCA(int value)
+{
+  // http://www.dvb.org/index.php?id=174
+  // http://en.wikipedia.org/wiki/Conditional_access_system
+  switch (value) {
+    case 0x0000:            return cString::sprintf("%s (%X)", trVDR("Free To Air"), value);  // Reserved
+    case 0x0001 ... 0x009F:
+    case 0x00A2 ... 0x00FF: return cString::sprintf("%s (%X)", tr("Fixed"),          value); // Standardized systems
+    case 0x00A0 ... 0x00A1: return cString::sprintf("%s (%X)", tr("Analog"),         value); // Analog signals
+    case 0x0100 ... 0x01FF: return cString::sprintf("%s (%X)", "SECA Mediaguard",    value); // Canal Plus
+    case 0x0464:            return cString::sprintf("%s (%X)", "EuroDec",            value); // EuroDec
+    case 0x0500 ... 0x05FF: return cString::sprintf("%s (%X)", "Viaccess",           value); // France Telecom
+    case 0x0600 ... 0x06FF: return cString::sprintf("%s (%X)", "Irdeto",             value); // Irdeto
+    case 0x0900 ... 0x09FF: return cString::sprintf("%s (%X)", "NDS Videoguard",     value); // News Datacom
+    case 0x0B00 ... 0x0BFF: return cString::sprintf("%s (%X)", "Conax",              value); // Norwegian Telekom
+    case 0x0D00 ... 0x0DFF: return cString::sprintf("%s (%X)", "CryptoWorks",        value); // Philips
+    case 0x0E00 ... 0x0EFF: return cString::sprintf("%s (%X)", "PowerVu",            value); // Scientific Atlanta
+    case 0x1000:            return cString::sprintf("%s (%X)", "RAS",                value); // Tandberg Television
+    case 0x1200 ... 0x12FF: return cString::sprintf("%s (%X)", "NagraVision",        value); // BellVu Express
+    case 0x1700 ... 0x17FF: return cString::sprintf("%s (%X)", "BetaCrypt",          value); // BetaTechnik
+    case 0x1800 ... 0x18FF: return cString::sprintf("%s (%X)", "NagraVision",        value); // Kudelski SA
+    case 0x22F0:            return cString::sprintf("%s (%X)", "Codicrypt",          value); // Scopus Network Technologies
+    case 0x2600:            return cString::sprintf("%s (%X)", "BISS",               value); // European Broadcasting Union
+    case 0x4347:            return cString::sprintf("%s (%X)", "CryptOn",            value); // CryptOn
+    case 0x4800:            return cString::sprintf("%s (%X)", "Accessgate",         value); // Telemann
+    case 0x4900:            return cString::sprintf("%s (%X)", "China Crypt",        value); // CryptoWorks
+    case 0x4A10:            return cString::sprintf("%s (%X)", "EasyCas",            value); // EasyCas
+    case 0x4A20:            return cString::sprintf("%s (%X)", "AlphaCrypt",         value); // AlphaCrypt
+    case 0x4A70:            return cString::sprintf("%s (%X)", "DreamCrypt",         value); // Dream Multimedia
+    case 0x4A60:            return cString::sprintf("%s (%X)", "SkyCrypt",           value); // @Sky
+    case 0x4A61:            return cString::sprintf("%s (%X)", "Neotioncrypt",       value); // Neotion
+    case 0x4A62:            return cString::sprintf("%s (%X)", "SkyCrypt",           value); // @Sky
+    case 0x4A63:            return cString::sprintf("%s (%X)", "Neotion SHL",        value); // Neotion
+    case 0x4A64 ... 0x4A6F: return cString::sprintf("%s (%X)", "SkyCrypt",           value); // @Sky
+    case 0x4A80:            return cString::sprintf("%s (%X)", "ThalesCrypt",        value); // TPS
+    case 0x4AA1:            return cString::sprintf("%s (%X)", "KeyFly",             value); // SIDSA
+    case 0x4ABF:            return cString::sprintf("%s (%X)", "DG-Crypt",           value); // Beijing Compunicate Technology Inc.
+    case 0x4AD0 ... 0x4AD1: return cString::sprintf("%s (%X)", "X-Crypt",            value); // XCrypt Inc.
+    case 0x4AD4:            return cString::sprintf("%s (%X)", "OmniCrypt",          value); // Widevine Technologies, Inc.
+    case 0x4AE0:            return cString::sprintf("%s (%X)", "RossCrypt",          value); // Digi Raum Electronics Co. Ltd.
+    case 0x5500:            return cString::sprintf("%s (%X)", "Z-Crypt",            value); // Digi Raum Electronics Co. Ltd.
+    case 0x5501:            return cString::sprintf("%s (%X)", "Griffin",            value); // Griffin
+    }
+  return cString::sprintf("%X", value);
+}
+
 cString getFrontendInfo(int cardIndex)
 {
   cString info;
@@ -42,7 +88,7 @@ cString getFrontendInfo(int cardIndex)
      info = cString::sprintf("%s\nVIBR:%.0f\nAUBR:%.0f\nDDBR:%.0f", *info, cFemonOsd::Instance()->GetVideoBitrate(), cFemonOsd::Instance()->GetAudioBitrate(), cFemonOsd::Instance()->GetDolbyBitrate());
 
   if (channel)
-     info  = cString::sprintf("%s\nCHAN:%s", *info, *channel->ToText());
+     info = cString::sprintf("%s\nCHAN:%s", *info, *channel->ToText());
 
   return info;
 }
@@ -158,45 +204,13 @@ cString getSpids(const cChannel *channel)
   return spids;
 }
 
-cString getCAids(const cChannel *channel, bool identify)
+cString getCAids(const cChannel *channel)
 {
-  cString caids;
   int value = 0;
-
-  if (identify) {
-     caids = cString::sprintf("%s", *getCA(channel->Ca(value)));
-     while (channel->Ca(++value) && (value < MAXCAIDS))
-       caids = cString::sprintf("%s, %s", *caids, *getCA(channel->Ca(value)));
-     }
-  else {
-     caids = cString::sprintf("%04x", channel->Ca(value));
-     while (channel->Ca(++value) && (value < MAXCAIDS))
-       caids = cString::sprintf("%s, %04x", *caids, channel->Ca(value));
-     }
+  cString caids = cString::sprintf("%s", *getCA(channel->Ca(value)));
+  while (channel->Ca(++value) && (value < MAXCAIDS))
+    caids = cString::sprintf("%s, %s", *caids, *getCA(channel->Ca(value)));
   return caids;
-}
-
-cString getCA(int value)
-{
-  /* http://www.dvb.org/index.php?id=174 */
-  switch (value) {
-    case 0x0000:            return cString::sprintf("%s", trVDR("Free To Air"));  // Reserved
-    case 0x0001 ... 0x009F:
-    case 0x00A2 ... 0x00FF: return cString::sprintf("%s", tr("Fixed"));           // Standardized systems
-    case 0x00A0 ... 0x00A1: return cString::sprintf("%s", tr("Analog"));          // Analog signals
-    case 0x0100 ... 0x01FF: return cString::sprintf("%s", tr("SECA/Mediaguard")); // Canal Plus
-    case 0x0500 ... 0x05FF: return cString::sprintf("%s", tr("Viaccess"));        // France Telecom
-    case 0x0600 ... 0x06FF: return cString::sprintf("%s", tr("Irdeto"));          // Irdeto
-    case 0x0900 ... 0x09FF: return cString::sprintf("%s", tr("NDS/Videoguard"));  // News Datacom
-    case 0x0B00 ... 0x0BFF: return cString::sprintf("%s", tr("Conax"));           // Norwegian Telekom
-    case 0x0D00 ... 0x0DFF: return cString::sprintf("%s", tr("CryptoWorks"));     // Philips
-    case 0x0E00 ... 0x0EFF: return cString::sprintf("%s", tr("PowerVu"));         // Scientific Atlanta
-    case 0x1200 ... 0x12FF: return cString::sprintf("%s", tr("NagraVision"));     // BellVu Express
-    case 0x1700 ... 0x17FF: return cString::sprintf("%s", tr("BetaCrypt"));       // BetaTechnik
-    case 0x1800 ... 0x18FF: return cString::sprintf("%s", tr("NagraVision"));     // Kudelski SA
-    case 0x4A60 ... 0x4A6F: return cString::sprintf("%s", tr("SkyCrypt"));        // @Sky
-    }
-  return cString::sprintf("%X", value);
 }
 
 cString getVideoStream(int value)
@@ -271,7 +285,7 @@ cString getAudioChannelMode(int value)
 cString getCoderate(int value)
 {
   switch (value) {
-    case FEC_NONE: return cString::sprintf("%s", tr("none"));
+    case FEC_NONE: return cString::sprintf("%s", trVDR("none"));
     case FEC_1_2:  return cString::sprintf("1/2");
     case FEC_2_3:  return cString::sprintf("2/3");
     case FEC_3_4:  return cString::sprintf("3/4");
@@ -280,7 +294,7 @@ cString getCoderate(int value)
     case FEC_6_7:  return cString::sprintf("6/7");
     case FEC_7_8:  return cString::sprintf("7/8");
     case FEC_8_9:  return cString::sprintf("8/9");
-    case FEC_AUTO: return cString::sprintf("%s", tr("auto"));
+    case FEC_AUTO: return cString::sprintf("%s", trVDR("auto"));
     }
   return cString::sprintf("---");
 }
@@ -290,7 +304,7 @@ cString getTransmission(int value)
   switch (value) {
     case TRANSMISSION_MODE_2K:   return cString::sprintf("2K");
     case TRANSMISSION_MODE_8K:   return cString::sprintf("8K");
-    case TRANSMISSION_MODE_AUTO: return cString::sprintf("%s", tr("auto"));
+    case TRANSMISSION_MODE_AUTO: return cString::sprintf("%s", trVDR("auto"));
     }
   return cString::sprintf("---");
 }
@@ -301,7 +315,7 @@ cString getBandwidth(int value)
     case BANDWIDTH_8_MHZ: return cString::sprintf("8 %s", tr("MHz"));
     case BANDWIDTH_7_MHZ: return cString::sprintf("7 %s", tr("MHz"));
     case BANDWIDTH_6_MHZ: return cString::sprintf("6 %s", tr("MHz"));
-    case BANDWIDTH_AUTO:  return cString::sprintf("%s", tr("auto"));
+    case BANDWIDTH_AUTO:  return cString::sprintf("%s", trVDR("auto"));
     }
   return cString::sprintf("---");
 }
@@ -311,7 +325,7 @@ cString getInversion(int value)
   switch (value) {
     case INVERSION_OFF:  return cString::sprintf("%s", tr("off"));
     case INVERSION_ON:   return cString::sprintf("%s", tr("on"));
-    case INVERSION_AUTO: return cString::sprintf("%s", tr("auto"));
+    case INVERSION_AUTO: return cString::sprintf("%s", trVDR("auto"));
     }
   return cString::sprintf("---");
 }
@@ -319,11 +333,11 @@ cString getInversion(int value)
 cString getHierarchy(int value)
 {
   switch (value) {
-    case HIERARCHY_NONE: return cString::sprintf("%s", tr("none"));
+    case HIERARCHY_NONE: return cString::sprintf("%s", trVDR("none"));
     case HIERARCHY_1:    return cString::sprintf("1");
     case HIERARCHY_2:    return cString::sprintf("2");
     case HIERARCHY_4:    return cString::sprintf("4");
-    case HIERARCHY_AUTO: cString::sprintf("%s", tr("auto"));
+    case HIERARCHY_AUTO: return cString::sprintf("%s", trVDR("auto"));
     }
   return cString::sprintf("---");
 }
@@ -335,7 +349,7 @@ cString getGuard(int value)
     case GUARD_INTERVAL_1_16: return cString::sprintf("1/16");
     case GUARD_INTERVAL_1_8:  return cString::sprintf("1/8");
     case GUARD_INTERVAL_1_4:  return cString::sprintf("1/4");
-    case GUARD_INTERVAL_AUTO: cString::sprintf("%s", tr("auto"));
+    case GUARD_INTERVAL_AUTO: return cString::sprintf("%s", trVDR("auto"));
     }
   return cString::sprintf("---");
 }
@@ -349,28 +363,8 @@ cString getModulation(int value)
     case QAM_64:   return cString::sprintf("QAM 64");
     case QAM_128:  return cString::sprintf("QAM 128");
     case QAM_256:  return cString::sprintf("QAM 256");
-    case QAM_AUTO: return cString::sprintf("QAM %s", tr("auto"));
+    case QAM_AUTO: return cString::sprintf("QAM %s", trVDR("auto"));
     }
-  return cString::sprintf("---");
-}
-
-cString getAlpha(int value)
-{
-  return cString::sprintf("---");
-}
-
-cString getPriority(int value)
-{
-  return cString::sprintf("---");
-}
-
-cString getSystem(int value)
-{
-  return cString::sprintf("---");
-}
-
-cString getRollOff(int value)
-{
   return cString::sprintf("---");
 }
 

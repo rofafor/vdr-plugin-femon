@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.4\n"
+"Project-Id-Version: femon 1.6.5\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-11-09 13:31+0200\n"
+"POT-Creation-Date: 2008-12-16 12:08+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Arthur Konovalov\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -96,12 +96,6 @@ msgstr "Horisontaalne nihe"
 msgid "Define the horizontal offset of OSD."
 msgstr ""
 
-msgid "Show CA system"
-msgstr "Näita CA süsteemi"
-
-msgid "Define whether the CA system is shown as text."
-msgstr ""
-
 msgid "Red limit [%]"
 msgstr "Punase limiit [%]"
 
@@ -180,15 +174,6 @@ msgstr "Tid"
 msgid "Rid"
 msgstr "Rid"
 
-msgid "Satellite Card"
-msgstr "Satelliidikaart"
-
-msgid "Cable Card"
-msgstr "Kaablikaart"
-
-msgid "Terrestrial Card"
-msgstr "Terrestiaalkaart"
-
 msgid "Coderate"
 msgstr "Coderate"
 
@@ -261,36 +246,6 @@ msgstr "Fikseeritud"
 msgid "Analog"
 msgstr ""
 
-msgid "SECA/Mediaguard"
-msgstr "SECA/Mediaguard"
-
-msgid "Viaccess"
-msgstr "Viaccess"
-
-msgid "Irdeto"
-msgstr "Irdeto"
-
-msgid "NDS/Videoguard"
-msgstr "NDS/Videoguard"
-
-msgid "Conax"
-msgstr "Conax"
-
-msgid "CryptoWorks"
-msgstr "CryptoWorks"
-
-msgid "PowerVu"
-msgstr "PowerVu"
-
-msgid "NagraVision"
-msgstr "NagraVision"
-
-msgid "BetaCrypt"
-msgstr "BetaCrypt"
-
-msgid "SkyCrypt"
-msgstr "SkyCrypt"
-
 msgid "MPEG-2"
 msgstr ""
 
@@ -329,12 +284,6 @@ msgstr ""
 
 msgid "mono"
 msgstr ""
-
-msgid "none"
-msgstr "ei"
-
-msgid "auto"
-msgstr "auto"
 
 msgid "MHz"
 msgstr "MHz"

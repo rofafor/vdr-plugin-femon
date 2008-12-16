@@ -320,3 +320,14 @@ VDR Plugin 'femon' Revision History
 - Replaced "Use single area (8bpp)" option with VDR's "Setup/OSD/Anti-alias".
 - Removed the FEMON_NTSC option.
 - Fixed a deadlock in cFemonReceiver (Thanks to Antti Seppälä for reporting this one).
+
+2008-12-16: Version 1.6.5
+
+- Backported from 1.7.0.
+
+2008-12-16: Version 1.7.0
+
+- Updated for vdr-1.7.2.
+- Added whitespace cleanups.
+- Changed info window to use the channel source instead of the frontend type.
+- Removed the "Show CA system" setup option.

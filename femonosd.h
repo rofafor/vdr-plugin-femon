@@ -34,7 +34,7 @@ private:
   double            m_SvdrpAudioBitrate;
   SvdrpConnection_v1_0 m_SvdrpConnection;
   cPlugin          *m_SvdrpPlugin;
-  struct dvb_frontend_info m_FrontendInfo;
+  dvb_frontend_info m_FrontendInfo;
   int               m_Number;
   int               m_OldNumber;
   uint16_t          m_SNR;
