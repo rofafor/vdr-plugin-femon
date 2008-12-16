@@ -315,11 +315,11 @@ void cFemonOsd::DrawInfoWindow(void)
             OSDDRAWINFOLEFT(    tr("Tid"),  *cString::sprintf("%d", channel->Tid()));
             OSDDRAWINFORIGHT(   tr("Rid"),  *cString::sprintf("%d", channel->Rid()));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOLEFT( trVDR("CA"),   *getCAids(channel, femonConfig.showcasystem));
+            OSDDRAWINFOLEFT( trVDR("CA"),   *getCAids(channel));
             offset += OSDROWHEIGHT;
             switch (channel->Source() & cSource::st_Mask) {
               case cSource::stSat:
-                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", tr("Satellite Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
+                   OSDDRAWINFOLINE(*cString::sprintf("DVB-S%s #%d - %s", (m_FrontendInfo.caps & 0x10000000) ? "2" : "", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
@@ -329,13 +329,13 @@ void cFemonOsd::DrawInfoWindow(void)
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(channel->Inversion()));
                    OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(channel->CoderateH()));
-                   //offset += OSDROWHEIGHT;
-                   //OSDDRAWINFOLEFT( trVDR("System"),     *getSystem(channel->System()));
-                   //OSDDRAWINFORIGHT(trVDR("RollOff"),    *getRollOff(channel->RollOff()));
+                   offset += OSDROWHEIGHT;
+                   OSDDRAWINFOLEFT( trVDR("System"),       *getSystem(channel->System()));
+                   OSDDRAWINFORIGHT(trVDR("RollOff"),      *getRollOff(channel->RollOff()));
                    break;
 
               case cSource::stCable:
-                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", tr("Cable Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
+                   OSDDRAWINFOLINE(*cString::sprintf("DVB-C #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
@@ -348,7 +348,7 @@ void cFemonOsd::DrawInfoWindow(void)
                    break;
 
               case cSource::stTerr:
-                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", tr("Terrestrial Card"), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
+                   OSDDRAWINFOLINE(*cString::sprintf("DVB-T #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Transmission"), *getTransmission(channel->Transmission()));
@@ -361,9 +361,6 @@ void cFemonOsd::DrawInfoWindow(void)
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Hierarchy"),    *getHierarchy(channel->Hierarchy()));
                    OSDDRAWINFORIGHT(trVDR("Guard"),        *getGuard(channel->Guard()));
-                   //offset += OSDROWHEIGHT;
-                   //OSDDRAWINFOLEFT( trVDR("Alpha"),      *getAlpha(channel->Alpha()));
-                   //OSDDRAWINFORIGHT(trVDR("Priority"),   *getPriority(channel->Priority()));
                    break;
 
               default:

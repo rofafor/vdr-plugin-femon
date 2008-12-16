@@ -33,7 +33,6 @@ public:
   int updateinterval;
   int analyzestream;
   int calcinterval;
-  int showcasystem;
   int osdheight;
   int osdoffset;
   int usesvdrp;

@@ -14,11 +14,11 @@
 #include "femonservice.h"
 #include "femontools.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 10600
-#error "VDR-1.6.0 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 10700
+#error "VDR-1.7.0 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.6.5";
+static const char VERSION[]       = "1.7.0";
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -114,7 +114,6 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
   else if (!strcasecmp(Name, "OSDOffset"))      femonConfig.osdoffset      = atoi(Value);
   else if (!strcasecmp(Name, "Skin"))           femonConfig.skin           = atoi(Value);
   else if (!strcasecmp(Name, "Theme"))          femonConfig.theme          = atoi(Value);
-  else if (!strcasecmp(Name, "ShowCASystem"))   femonConfig.showcasystem   = atoi(Value);
   else if (!strcasecmp(Name, "RedLimit"))       femonConfig.redlimit       = atoi(Value);
   else if (!strcasecmp(Name, "GreenLimit"))     femonConfig.greenlimit     = atoi(Value);
   else if (!strcasecmp(Name, "UpdateInterval")) femonConfig.updateinterval = atoi(Value);
@@ -328,9 +327,6 @@ void cMenuFemonSetup::Setup(void)
   Add(new cMenuEditIntItem(tr("Horizontal offset"), &data.osdoffset, -50, 50));
   help.Append(tr("Define the horizontal offset of OSD."));
 
-  Add(new cMenuEditBoolItem(tr("Show CA system"), &data.showcasystem));
-  help.Append(tr("Define whether the CA system is shown as text."));
-
   Add(new cMenuEditIntItem(tr("Red limit [%]"), &data.redlimit, 1, 50));
   help.Append(tr("Define a limit for red bar, which is used to indicate a bad signal."));
 
@@ -374,7 +370,6 @@ void cMenuFemonSetup::Store(void)
   SetupStore("Position",       femonConfig.position);
   SetupStore("OSDHeight",      femonConfig.osdheight);
   SetupStore("OSDOffset",      femonConfig.osdoffset);
-  SetupStore("ShowCASystem",   femonConfig.showcasystem);
   SetupStore("RedLimit",       femonConfig.redlimit);
   SetupStore("GreenLimit",     femonConfig.greenlimit);
   SetupStore("UpdateInterval", femonConfig.updateinterval);

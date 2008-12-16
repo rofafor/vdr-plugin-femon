@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.4\n"
+"Project-Id-Version: femon 1.7.0\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-11-09 13:31+0200\n"
+"POT-Creation-Date: 2008-12-16 12:08+0200\n"
 "PO-Revision-Date: 2008-01-26 09:59+0100\n"
 "Last-Translator: NIVAL Michaël <mnival@club-internet.fr>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -96,12 +96,6 @@ msgstr "Déplacement horizontal"
 msgid "Define the horizontal offset of OSD."
 msgstr "Définit le déplacement horizontal de l'OSD."
 
-msgid "Show CA system"
-msgstr "Afficher système CA"
-
-msgid "Define whether the CA system is shown as text."
-msgstr "Définit si le système CA doit être affiché."
-
 msgid "Red limit [%]"
 msgstr "Limite du rouge (%)"
 
@@ -180,15 +174,6 @@ msgstr "Tid"
 msgid "Rid"
 msgstr "Rid"
 
-msgid "Satellite Card"
-msgstr "Carte Satellite"
-
-msgid "Cable Card"
-msgstr "Carte Câble"
-
-msgid "Terrestrial Card"
-msgstr "Carte TNT"
-
 msgid "Coderate"
 msgstr "Coderate"
 
@@ -261,36 +246,6 @@ msgstr "Fixe"
 msgid "Analog"
 msgstr "Analogique"
 
-msgid "SECA/Mediaguard"
-msgstr "SECA/Mediaguard"
-
-msgid "Viaccess"
-msgstr "Viaccess"
-
-msgid "Irdeto"
-msgstr "Irdeto"
-
-msgid "NDS/Videoguard"
-msgstr "NDS/Videoguard"
-
-msgid "Conax"
-msgstr "Conax"
-
-msgid "CryptoWorks"
-msgstr "CryptoWorks"
-
-msgid "PowerVu"
-msgstr "PowerVu"
-
-msgid "NagraVision"
-msgstr "NagraVision"
-
-msgid "BetaCrypt"
-msgstr "BetaCrypt"
-
-msgid "SkyCrypt"
-msgstr "SkyCrypt"
-
 msgid "MPEG-2"
 msgstr ""
 
@@ -329,15 +284,6 @@ msgstr ""
 
 msgid "mono"
 msgstr ""
-
-msgid "none"
-msgstr "Aucun"
-
-msgid "auto"
-msgstr "Auto"
-
-msgid "MHz"
-msgstr "MHz"
 
 msgid "interlaced"
 msgstr ""
@@ -428,6 +374,9 @@ msgstr "dB"
 
 msgid "not indicated"
 msgstr "non indiqué"
+
+msgid "MHz"
+msgstr "MHz"
 
 msgid "free"
 msgstr "libre"

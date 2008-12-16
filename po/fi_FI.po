@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.6.4\n"
+"Project-Id-Version: femon 1.7.0\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-11-09 13:31+0200\n"
+"POT-Creation-Date: 2008-12-16 12:08+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -96,12 +96,6 @@ msgstr "Vaakakeskitys"
 msgid "Define the horizontal offset of OSD."
 msgstr "Määrittele näytön vaakakeskitys."
 
-msgid "Show CA system"
-msgstr "Näytä salausjärjestelmä"
-
-msgid "Define whether the CA system is shown as text."
-msgstr "Määrittele, näytetään salausjärjestelmä tekstinä."
-
 msgid "Red limit [%]"
 msgstr "Punaisen taso [%]"
 
@@ -180,15 +174,6 @@ msgstr "Lähete-ID"
 msgid "Rid"
 msgstr "Radio-ID"
 
-msgid "Satellite Card"
-msgstr "Satelliittikortti"
-
-msgid "Cable Card"
-msgstr "Kaapelikortti"
-
-msgid "Terrestrial Card"
-msgstr "Terrestriaalikortti"
-
 msgid "Coderate"
 msgstr "Suojaustaso"
 
@@ -261,36 +246,6 @@ msgstr "kiinteä"
 msgid "Analog"
 msgstr "analoginen"
 
-msgid "SECA/Mediaguard"
-msgstr "SECA/Mediaguard"
-
-msgid "Viaccess"
-msgstr "Viaccess"
-
-msgid "Irdeto"
-msgstr "Irdeto"
-
-msgid "NDS/Videoguard"
-msgstr "NDS/Videoguard"
-
-msgid "Conax"
-msgstr "Conax"
-
-msgid "CryptoWorks"
-msgstr "CryptoWorks"
-
-msgid "PowerVu"
-msgstr "PowerVu"
-
-msgid "NagraVision"
-msgstr "NagraVision"
-
-msgid "BetaCrypt"
-msgstr "BetaCrypt"
-
-msgid "SkyCrypt"
-msgstr "SkyCrypt"
-
 msgid "MPEG-2"
 msgstr "MPEG-2"
 
@@ -329,15 +284,6 @@ msgstr "kaksikanavainen"
 
 msgid "mono"
 msgstr "mono"
-
-msgid "none"
-msgstr "ei"
-
-msgid "auto"
-msgstr "auto"
-
-msgid "MHz"
-msgstr "MHz"
 
 msgid "interlaced"
 msgstr "lomiteltu"
@@ -428,6 +374,9 @@ msgstr "dB"
 
 msgid "not indicated"
 msgstr "ei ilmaistu"
+
+msgid "MHz"
+msgstr "MHz"
 
 msgid "free"
 msgstr "vapaa"

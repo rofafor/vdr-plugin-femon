@@ -22,7 +22,6 @@ cFemonConfig::cFemonConfig(void)
   updateinterval = 5;
   analyzestream  = 1;
   calcinterval   = 20;
-  showcasystem   = 0;
   osdheight      = 480;
   osdoffset      = 0;
   usesvdrp       = 0;
