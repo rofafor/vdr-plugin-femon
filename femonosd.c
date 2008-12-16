@@ -479,7 +479,7 @@ void cFemonOsd::Action(void)
                  m_SvdrpVideoBitrate = strtol(s + 5, NULL, 10);
               else if (!strncasecmp(s, "AUBR:", 5))
                  m_SvdrpAudioBitrate = strtol(s + 5, NULL, 10);
-             }
+              }
           }
        DrawInfoWindow();
        DrawStatusWindow();
