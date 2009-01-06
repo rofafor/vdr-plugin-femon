@@ -121,7 +121,7 @@ cFemonOsd *cFemonOsd::pInstance = NULL;
 cFemonOsd *cFemonOsd::Instance(bool create)
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
-  if (pInstance == NULL && create)
+  if ((pInstance == NULL) && create)
   {
      pInstance = new cFemonOsd();
   }
@@ -179,6 +179,10 @@ cFemonOsd::~cFemonOsd(void)
      }
   if (m_Osd)
      DELETENULL(m_Osd);
+  if (m_Frontend >= 0) {
+     close(m_Frontend);
+     m_Frontend = -1;
+     }
   pInstance = NULL;
 }
 
@@ -844,6 +848,6 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
             break;
        }
      state = osContinue;
-  }
+     }
   return state;
 }
