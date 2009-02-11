@@ -13,7 +13,7 @@
 #define NAL_SEI     0x06 // Supplemental Enhancement Information
 #define NAL_SPS     0x07 // Sequence Parameter Set
 #define NAL_AUD     0x09 // Access Unit Delimiter
-#define NAL_END_SEQ 0x10 // End of Sequence
+#define NAL_END_SEQ 0x0A // End of Sequence
 
 #define IS_NAL_SEI(buf)     (((buf)[0] == 0x00) && ((buf)[1] == 0x00) && ((buf)[2] == 0x01) && ((buf)[3] == NAL_SEI))
 #define IS_NAL_SPS(buf)     (((buf)[0] == 0x00) && ((buf)[1] == 0x00) && ((buf)[2] == 0x01) && ((buf)[3] == NAL_SPS))
