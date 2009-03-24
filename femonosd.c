@@ -472,9 +472,9 @@ void cFemonOsd::Action(void)
               else if (!strncasecmp(s, "STAT:", 5))
                  m_FrontendStatus = (fe_status_t) strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "SGNL:", 5))
-                 m_Signal = strtol(s + 5, NULL, 16);
+                 m_Signal = (uint16_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "SNRA:", 5))
-                 m_SNR = strtol(s + 5, NULL, 16);
+                 m_SNR = (uint16_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "BERA:", 5))
                  m_BER = strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "UNCB:", 5))
@@ -653,7 +653,7 @@ bool cFemonOsd::SvdrpConnect(void)
       m_SvdrpPlugin = cPluginManager::GetPlugin(SVDRPPLUGIN);
       if (m_SvdrpPlugin) {
          m_SvdrpConnection.serverIp = femonConfig.svdrpip;
-         m_SvdrpConnection.serverPort = femonConfig.svdrpport;
+         m_SvdrpConnection.serverPort = (unsigned short)femonConfig.svdrpport;
          m_SvdrpConnection.shared = true;
          m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection);
          if (m_SvdrpConnection.handle >= 0) {

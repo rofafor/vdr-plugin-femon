@@ -355,3 +355,7 @@ VDR Plugin 'femon' Revision History
 
 - Fixed closing of frontend file handles (Thanks to Brendon Higgins for
   reporting this one).
+
+2009-xx-xx: Version 1.7.2
+
+- Cleaned up compilation warnings.

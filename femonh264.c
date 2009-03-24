@@ -358,7 +358,7 @@ static int h264_get_picture_type(const uint8_t *buf, int len)
 {
   for (int i = 0; i < (len - 5); ++i) {
       if (buf[i] == 0 && buf[i + 1] == 0 && buf[i + 2] == 1 && buf[i + 3] == NAL_AUD) {
-         uint8_t type = (buf[i + 4] >> 5);
+         uint8_t type = (uint8_t)(buf[i + 4] >> 5);
          switch (type) {
            case 0: case 3: case 5: return I_FRAME;
            case 1: case 4: case 6: return P_FRAME;
@@ -392,7 +392,7 @@ bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
          int nal_len;
          //Dprintf("H.264: Found NAL SPS at offset %d/%d", i, len);
          if (0 < (nal_len = h264_nal_unescape(nal_data, buf + i + 4, len - i - 4))) {
-            h264_sps_data_t sps = { 0 };
+            h264_sps_data_t sps = { 0, 0, VIDEO_ASPECT_RATIO_INVALID, VIDEO_FORMAT_INVALID };
             if (h264_parse_sps(nal_data, nal_len, &sps)) {
                info->format = sps.format;
                info->width = sps.width;
@@ -408,7 +408,7 @@ bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
          int nal_len;
          //Dprintf("H.264: Found NAL SEI at offset %d/%d", i, len);
          if (0 < (nal_len = h264_nal_unescape(nal_data, buf + i + 4, len - i - 4))) {
-            h264_sei_data_t sei = { 0 };
+            h264_sei_data_t sei = { 0, 0, VIDEO_SCAN_INVALID };
             if (h264_parse_sei(nal_data, nal_len, &sei)) {
                info->frameRate = sei.frame_rate;
                info->bitrate = sei.bitrate;

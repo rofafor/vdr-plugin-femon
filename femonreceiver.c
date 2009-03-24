@@ -199,7 +199,7 @@ void cFemonReceiver::Receive(uchar *Data, int Length)
         }
      uint8_t off = 0;
      if (Data[3] & ADAPT_FIELD) {
-        off = Data[4] + 1;
+        off = (uint8_t)(Data[4] + 1);
         }
      if (Data[1] & PAY_START) {
         uint8_t *sb = Data + 4 + off;
