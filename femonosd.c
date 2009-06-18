@@ -116,6 +116,14 @@
 #define OSDCLEARINFO() \
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT) - 1, clrTransparent)
 
+class cFemonDummyFont : public cFont {
+public:
+  virtual int Width(uint c) const { return 10; }
+  virtual int Width(const char *s) const { return 50; }
+  virtual int Height(void) const { return 20; }
+  virtual void DrawText(cBitmap *Bitmap, int x, int y, const char *s, tColor ColorFg, tColor ColorBg, int Width) const {}
+};
+
 cFemonOsd *cFemonOsd::pInstance = NULL;
 
 cFemonOsd *cFemonOsd::Instance(bool create)
@@ -150,14 +158,11 @@ cFemonOsd::cFemonOsd()
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   m_SvdrpConnection.handle = -1;
-  if (Setup.UseSmallFont == 0) {
-     // Dirty hack to force the small fonts...
-     Setup.UseSmallFont = 1;
-     m_Font = cFont::GetFont(fontSml);
-     Setup.UseSmallFont = 0;
+  m_Font = cFont::CreateFont(Setup.FontSml, min(max(Setup.FontSmlSize, MINFONTSIZE), MAXFONTSIZE));
+  if (!m_Font || !m_Font->Height()) {
+     m_Font = new cFemonDummyFont;
+     esyslog("ERROR: cFemonOsd::cFemonOsd() cannot create required font.");
      }
-  else
-     m_Font = cFont::GetFont(fontSml);
   if (OSDHEIGHT < (OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT))
      OSDHEIGHT = (OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT);
 }
@@ -179,6 +184,8 @@ cFemonOsd::~cFemonOsd(void)
      }
   if (m_Osd)
      DELETENULL(m_Osd);
+  if (m_Font)
+     DELETENULL(m_Font);
   if (m_Frontend >= 0) {
      close(m_Frontend);
      m_Frontend = -1;

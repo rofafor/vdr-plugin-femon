@@ -339,6 +339,10 @@ VDR Plugin 'femon' Revision History
 
 - Backported from 1.7.1.
 
+2009-06-18: Version 1.6.7
+
+- Backported from 1.7.2.
+
 ===================================
 VDR Plugin 'femon' Revision History
 ===================================
@@ -356,6 +360,7 @@ VDR Plugin 'femon' Revision History
 - Fixed closing of frontend file handles (Thanks to Brendon Higgins for
   reporting this one).
 
-2009-xx-xx: Version 1.7.2
+2009-06-18: Version 1.7.2
 
 - Cleaned up compilation warnings.
+- Fixed font handling to be thread-safe.

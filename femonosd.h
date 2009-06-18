@@ -43,7 +43,7 @@ private:
   uint32_t          m_UNC;
   fe_status_t       m_FrontendStatus;
   int               m_DisplayMode;
-  const cFont      *m_Font;
+  cFont            *m_Font;
   cTimeMs           m_InputTime;
   cCondWait         m_Sleep;
   cMutex            m_Mutex;
