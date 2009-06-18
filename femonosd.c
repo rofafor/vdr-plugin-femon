@@ -116,6 +116,14 @@
 #define OSDCLEARINFO() \
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT) - 1, clrTransparent)
 
+#ifndef MINFONTSIZE
+#define MINFONTSIZE 10
+#endif
+
+#ifndef MAXFONTSIZE
+#define MAXFONTSIZE 64
+#endif
+
 class cFemonDummyFont : public cFont {
 public:
   virtual int Width(uint c) const { return 10; }
@@ -158,7 +166,7 @@ cFemonOsd::cFemonOsd()
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   m_SvdrpConnection.handle = -1;
-  m_Font = cFont::CreateFont(Setup.FontSml, min(max(Setup.FontSmlSize, 10), 64));
+  m_Font = cFont::CreateFont(Setup.FontSml, min(max(Setup.FontSmlSize, MINFONTSIZE), MAXFONTSIZE));
   if (!m_Font || !m_Font->Height()) {
      m_Font = new cFemonDummyFont;
      esyslog("ERROR: cFemonOsd::cFemonOsd() cannot create required font.");
