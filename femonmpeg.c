@@ -178,7 +178,7 @@ bool getMPEGVideoInfo(uint8_t *buf, int len, video_info_t *info)
       info->format      = VIDEO_FORMAT_UNKNOWN;
       break;
     }
-  info->bitrate = 400.0 * (((data[4] << 10) & 0x0003FC00UL) | ((data[5] << 2) & 0x000003FCUL) | (((data[6] & 0xC0) >> 6) & 0x00000003UL));
+  info->bitrate = 400.0 * (double)(((data[4] << 10) & 0x0003FC00UL) | ((data[5] << 2) & 0x000003FCUL) | (((data[6] & 0xC0) >> 6) & 0x00000003UL));
 
   return true;
 }
