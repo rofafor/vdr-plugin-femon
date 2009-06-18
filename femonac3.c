@@ -34,7 +34,7 @@ bool getAC3AudioInfo(uint8_t *buf, int len, ac3_info_t *info)
      return false;
 
   uint8_t *data = buf + 2;
-  uint8_t frame = (data[2] & 0x3f);
+  uint8_t frame = (uint8_t)(data[2] & 0x3f);
   info->bitrate = 1000 * ac3_bitrates[frame >> 1];
   uint8_t fr = (data[2] & 0xc0 ) >> 6;
   //uint8_t sz = ac3_frames[fr][frame >> 1];
