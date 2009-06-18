@@ -116,6 +116,14 @@
 #define OSDCLEARINFO() \
         m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT) - 1, clrTransparent)
 
+#ifndef MINFONTSIZE
+#define MINFONTSIZE 10
+#endif
+
+#ifndef MAXFONTSIZE
+#define MAXFONTSIZE 64
+#endif
+
 class cFemonDummyFont : public cFont {
 public:
   virtual int Width(uint c) const { return 10; }
