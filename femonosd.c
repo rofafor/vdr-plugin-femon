@@ -468,25 +468,25 @@ void cFemonOsd::Action(void)
           for (cLine *line = cmd.reply.First(); line; line = cmd.reply.Next(line)) {
               const char *s = line->Text();
 	      if (!strncasecmp(s, "CARD:", 5))
-                 m_SvdrpFrontend = strtol(s + 5, NULL, 10);
+                 m_SvdrpFrontend = (int)strtol(s + 5, NULL, 10);
               else if (!strncasecmp(s, "TYPE:", 5))
-                 m_FrontendInfo.type = (fe_type_t) strtol(s + 5, NULL, 10);
+                 m_FrontendInfo.type = (fe_type_t)strtol(s + 5, NULL, 10);
               else if (!strncasecmp(s, "NAME:", 5))
                  strn0cpy(m_FrontendInfo.name, s + 5, sizeof(m_FrontendInfo.name));
               else if (!strncasecmp(s, "STAT:", 5))
-                 m_FrontendStatus = (fe_status_t) strtol(s + 5, NULL, 16);
+                 m_FrontendStatus = (fe_status_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "SGNL:", 5))
                  m_Signal = (uint16_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "SNRA:", 5))
                  m_SNR = (uint16_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "BERA:", 5))
-                 m_BER = strtol(s + 5, NULL, 16);
+                 m_BER = (uint32_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "UNCB:", 5))
-                 m_UNC = strtol(s + 5, NULL, 16);
+                 m_UNC = (uint32_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "VIBR:", 5))
-                 m_SvdrpVideoBitrate = strtol(s + 5, NULL, 10);
+                 m_SvdrpVideoBitrate = (double)strtol(s + 5, NULL, 10);
               else if (!strncasecmp(s, "AUBR:", 5))
-                 m_SvdrpAudioBitrate = strtol(s + 5, NULL, 10);
+                 m_SvdrpAudioBitrate = (double)strtol(s + 5, NULL, 10);
               }
           }
        DrawInfoWindow();
