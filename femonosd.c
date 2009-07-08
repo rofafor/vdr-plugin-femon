@@ -6,6 +6,7 @@
  */
 
 #include <ctype.h>
+#include <math.h>
 #include "femoncfg.h"
 #include "femonreceiver.h"
 #include "femontools.h"
@@ -15,19 +16,27 @@
 #define CHANNELINPUT_TIMEOUT      1000
 #define SVDRPPLUGIN               "svdrpservice"
 
-#define OSDHEIGHT                 femonConfig.osdheight   // in pixels
-#define OSDWIDTH                  600                     // in pixels
+#define OSDWIDTH                  m_OsdWidth              // in pixels
+#define OSDHEIGHT                 m_OsdHeight             // in pixels
 #define OSDROWHEIGHT              m_Font->Height()        // in pixels
 #define OSDINFOHEIGHT             (OSDROWHEIGHT * 13)     // in pixels (13 rows)
 #define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 6)      // in pixels (6 rows)
 #define OSDSPACING                5
 #define OSDROUNDING               10
 #define IS_OSDROUNDING            (femonConfig.skin == eFemonSkinElchi)
-
 #define OSDINFOWIN_Y(offset)      (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
-#define OSDINFOWIN_X(col)         ((col == 4) ? 455 : (col == 3) ? 305 : (col == 2) ? 155 : 15)
+#define OSDINFOWIN_X(col)         ((col == 4) ? int(round(OSDWIDTH * 0.76)) : \
+                                   (col == 3) ? int(round(OSDWIDTH * 0.51)) : \
+                                   (col == 2) ? int(round(OSDWIDTH * 0.26)) : \
+                                                int(round(OSDWIDTH * 0.025)))
 #define OSDSTATUSWIN_Y(offset)    (femonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
-#define OSDSTATUSWIN_X(col)       ((col == 7) ? 475 : (col == 6) ? 410 : (col == 5) ? 275 : (col == 4) ? 220 : (col == 3) ? 125 : (col == 2) ? 70 : 15)
+#define OSDSTATUSWIN_X(col)       ((col == 7) ? int(round(OSDWIDTH * 0.79)) : \
+                                   (col == 6) ? int(round(OSDWIDTH * 0.68)) : \
+                                   (col == 5) ? int(round(OSDWIDTH * 0.46)) : \
+                                   (col == 4) ? int(round(OSDWIDTH * 0.37)) : \
+                                   (col == 3) ? int(round(OSDWIDTH * 0.21)) : \
+                                   (col == 2) ? int(round(OSDWIDTH * 0.12)) : \
+                                                int(round(OSDWIDTH * 0.025)))
 #define OSDSTATUSWIN_XSYMBOL(c,w) (c * ((OSDWIDTH - (5 * w)) / 6) + ((c - 1) * w))
 #define OSDBARWIDTH(x)            (OSDWIDTH * x / 100)
 
@@ -160,10 +169,13 @@ cFemonOsd::cFemonOsd()
   m_BER(0),
   m_UNC(0),
   m_DisplayMode(femonConfig.displaymode),
+  m_OsdWidth(cOsd::OsdWidth()),
+  m_OsdHeight(cOsd::OsdHeight()),
   m_InputTime(0),
   m_Sleep(),
   m_Mutex()
 {
+  int tmp;
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
   m_SvdrpConnection.handle = -1;
   m_Font = cFont::CreateFont(Setup.FontSml, min(max(Setup.FontSmlSize, MINFONTSIZE), MAXFONTSIZE));
@@ -171,8 +183,16 @@ cFemonOsd::cFemonOsd()
      m_Font = new cFemonDummyFont;
      esyslog("ERROR: cFemonOsd::cFemonOsd() cannot create required font.");
      }
-  if (OSDHEIGHT < (OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT))
-     OSDHEIGHT = (OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT);
+  tmp = 5 * bmSymbol[SYMBOL_LOCK].Width() + 6 * OSDSPACING;
+  if (OSDWIDTH < tmp) {
+     esyslog("ERROR: cFemonOsd::cFemonOsd() OSD width (%d) smaller than required (%d).", OSDWIDTH, tmp);
+     OSDWIDTH = tmp;
+     }
+  tmp = OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT;
+  if (OSDHEIGHT < tmp) {
+     esyslog("ERROR: cFemonOsd::cFemonOsd() OSD height (%d) smaller than required (%d).", OSDHEIGHT, tmp);
+     OSDHEIGHT = tmp;
+     }
 }
 
 cFemonOsd::~cFemonOsd(void)
@@ -532,7 +552,7 @@ void cFemonOsd::Show(void)
      return;
      }
 
-  m_Osd = cOsdProvider::NewOsd(((cOsd::OsdWidth() - OSDWIDTH) / 2) + cOsd::OsdLeft() + femonConfig.osdoffset, ((cOsd::OsdHeight() - OSDHEIGHT) / 2) + cOsd::OsdTop());
+  m_Osd = cOsdProvider::NewOsd(cOsd::OsdLeft(), cOsd::OsdTop());
   if (m_Osd) {
      tArea Areas1[] = { { 0, 0, OSDWIDTH - 1, OSDHEIGHT - 1, 8 } };
      if (Setup.AntiAlias && m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {

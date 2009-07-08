@@ -43,6 +43,8 @@ private:
   uint32_t          m_UNC;
   fe_status_t       m_FrontendStatus;
   int               m_DisplayMode;
+  int               m_OsdWidth;
+  int               m_OsdHeight;
   cFont            *m_Font;
   cTimeMs           m_InputTime;
   cCondWait         m_Sleep;

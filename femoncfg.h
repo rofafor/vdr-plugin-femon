@@ -33,8 +33,6 @@ public:
   int updateinterval;
   int analyzestream;
   int calcinterval;
-  int osdheight;
-  int osdoffset;
   int usesvdrp;
   int svdrpport;
   char svdrpip[MaxSvdrpIp + 1]; // must end with additional null

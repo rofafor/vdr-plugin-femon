@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: femon 1.7.0\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2008-12-16 12:08+0200\n"
+"POT-Creation-Date: 2009-07-08 02:42+0300\n"
 "PO-Revision-Date: 2008-01-26 09:59+0100\n"
 "Last-Translator: NIVAL Michaël <mnival@club-internet.fr>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -86,15 +86,6 @@ msgstr "Position"
 
 msgid "Define the position of OSD."
 msgstr "Définit la position de l'OSD."
-
-msgid "Define the height of OSD."
-msgstr "Définit l'hauteur de l'OSD."
-
-msgid "Horizontal offset"
-msgstr "Déplacement horizontal"
-
-msgid "Define the horizontal offset of OSD."
-msgstr "Définit le déplacement horizontal de l'OSD."
 
 msgid "Red limit [%]"
 msgstr "Limite du rouge (%)"

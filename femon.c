@@ -18,7 +18,7 @@
 #error "VDR-1.7.0 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.7.2";
+static const char VERSION[]       = "1.7.3";
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -110,8 +110,6 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
   if      (!strcasecmp(Name, "HideMenu"))       femonConfig.hidemenu       = atoi(Value);
   else if (!strcasecmp(Name, "DisplayMode"))    femonConfig.displaymode    = atoi(Value);
   else if (!strcasecmp(Name, "Position"))       femonConfig.position       = atoi(Value);
-  else if (!strcasecmp(Name, "OSDHeight"))      femonConfig.osdheight      = atoi(Value);
-  else if (!strcasecmp(Name, "OSDOffset"))      femonConfig.osdoffset      = atoi(Value);
   else if (!strcasecmp(Name, "Skin"))           femonConfig.skin           = atoi(Value);
   else if (!strcasecmp(Name, "Theme"))          femonConfig.theme          = atoi(Value);
   else if (!strcasecmp(Name, "RedLimit"))       femonConfig.redlimit       = atoi(Value);
@@ -321,12 +319,6 @@ void cMenuFemonSetup::Setup(void)
   Add(new cMenuEditBoolItem(tr("Position"), &data.position, trVDR("bottom"), trVDR("top")));
   help.Append(tr("Define the position of OSD."));
 
-  Add(new cMenuEditIntItem(trVDR("Setup.OSD$Height"), &data.osdheight, 400, 500));
-  help.Append(tr("Define the height of OSD."));
-
-  Add(new cMenuEditIntItem(tr("Horizontal offset"), &data.osdoffset, -50, 50));
-  help.Append(tr("Define the horizontal offset of OSD."));
-
   Add(new cMenuEditIntItem(tr("Red limit [%]"), &data.redlimit, 1, 50));
   help.Append(tr("Define a limit for red bar, which is used to indicate a bad signal."));
 
@@ -368,8 +360,6 @@ void cMenuFemonSetup::Store(void)
   SetupStore("Skin",           femonConfig.skin);
   SetupStore("Theme",          femonConfig.theme);
   SetupStore("Position",       femonConfig.position);
-  SetupStore("OSDHeight",      femonConfig.osdheight);
-  SetupStore("OSDOffset",      femonConfig.osdoffset);
   SetupStore("RedLimit",       femonConfig.redlimit);
   SetupStore("GreenLimit",     femonConfig.greenlimit);
   SetupStore("UpdateInterval", femonConfig.updateinterval);

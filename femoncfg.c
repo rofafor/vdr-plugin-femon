@@ -22,8 +22,6 @@ cFemonConfig::cFemonConfig(void)
   updateinterval = 5;
   analyzestream  = 1;
   calcinterval   = 20;
-  osdheight      = 480;
-  osdoffset      = 0;
   usesvdrp       = 0;
   svdrpport      = 2001;
   strncpy(svdrpip, "0.0.0.0", sizeof(svdrpip));

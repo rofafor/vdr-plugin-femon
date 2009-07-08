@@ -110,9 +110,8 @@ Notes:
   specifications those values cannot be calculated into any real units.
 
 - If the OSD isn't visible, you've configured the OSD height too big or too
-  small. Please, try to adjust the variable on the setup page before writing
-  any bug reports. NTSC users should use a shrinked default OSD height by
-  modifying VDR's setup.conf: femon.OSDHeight = 420
+  small. Please, try to adjust the variable on the OSD setup page before
+  writing any bug reports.
 
 - If the SVDRP service is used: femon won't notice if the server is tuned
   to a different channel and tuning the channel on the server might annoy
