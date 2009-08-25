@@ -10,15 +10,25 @@
 
 #define IS_HEAAC_AUDIO(buf) (((buf)[0] == 0xFF) && (((buf)[1] & 0xF6) == 0xF0))
 
-static unsigned int samplerates[16] =
+unsigned int cFemonAAC::s_Samplerates[16] =
 {
   96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, -1, -1, -1, -1
 };
 
-bool getAACAudioInfo(uint8_t *buf, int len, audio_info_t *info)
+cFemonAAC::cFemonAAC(cFemonAudioIf *audiohandler)
+: m_AudioHandler(audiohandler)
 {
-  // HE-AAC audio detection, search for syncword with layer set to 0
-  if ((len < 4) || !IS_HEAAC_AUDIO(buf))
+}
+
+cFemonAAC::~cFemonAAC()
+{
+}
+
+bool cFemonAAC::processAudio(const uint8_t *buf, int len)
+{
+  cBitStream bs(buf, len * 8);
+
+  if (!m_AudioHandler)
      return false;
 
   /* ADTS Fixed Header:
@@ -35,41 +45,59 @@ bool getAACAudioInfo(uint8_t *buf, int len, audio_info_t *info)
    * emphasis                  2b only if ID == 0 (ie MPEG-4)
    */
 
-  int sampling_frequency_index = (buf[2] & 0x03C) >> 2;
-  int channel_configuration = ((buf[2] & 0x01) << 2) | ((buf[3] & 0xC0) >> 6);
+  // skip PES header
+  if (!PesLongEnough(len))
+      return false;
+  bs.skipBits(8 * PesPayloadOffset(buf));
 
-  info->codec = AUDIO_CODEC_HEAAC;
-  info->bitrate = AUDIO_BITRATE_RESERVED;
+  // HE-AAC audio detection
+  if (bs.getBits(12) != 0xFFF)                  // syncword
+     return false;
+
+  bs.skipBit();                                 // id
+
+  // layer must be 0
+  if (bs.getBits(2))                            // layer
+      return false;
+
+  bs.skipBit();                                 // protection_absent
+  bs.skipBits(2);                               // profile
+  int sampling_frequency_index = bs.getBits(4); // sampling_frequency_index
+  bs.skipBit();                                 // private pid
+  int channel_configuration = bs.getBits(3);    // channel_configuration
+
+  m_AudioHandler->SetAudioCodec(AUDIO_CODEC_HEAAC);
+  m_AudioHandler->SetAudioBitrate(AUDIO_BITRATE_RESERVED);
 
   switch (channel_configuration) {
     case 0:
-         info->channelMode = AUDIO_CHANNEL_MODE_STEREO;
+         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_STEREO);
          break;
 
     case 1:
-         info->channelMode = AUDIO_CHANNEL_MODE_JOINT_STEREO;
+         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_JOINT_STEREO);
          break;
 
     case 2:
-         info->channelMode = AUDIO_CHANNEL_MODE_DUAL;
+         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_DUAL);
          break;
 
     case 3:
-         info->channelMode = AUDIO_CHANNEL_MODE_SINGLE;
+         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_SINGLE);
          break;
 
     default:
-         info->channelMode = AUDIO_CHANNEL_MODE_INVALID;
+         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_INVALID);
          break;
   }
 
   switch (sampling_frequency_index) {
     case 0xC ... 0xF:
-         info->samplingFrequency = AUDIO_SAMPLING_FREQUENCY_RESERVED;
+         m_AudioHandler->SetAudioSamplingFrequency(AUDIO_SAMPLING_FREQUENCY_RESERVED);
          break;
 
     default:
-         info->samplingFrequency = samplerates[sampling_frequency_index];
+         m_AudioHandler->SetAudioSamplingFrequency(s_Samplerates[sampling_frequency_index]);
          break;
   }
 

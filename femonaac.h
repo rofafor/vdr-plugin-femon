@@ -10,6 +10,17 @@
 
 #include "femonaudio.h"
 
-bool getAACAudioInfo(uint8_t *buf, int len, audio_info_t *info);
+class cFemonAAC {
+private:
+  cFemonAudioIf *m_AudioHandler;
+
+  static unsigned int s_Samplerates[16];
+
+public:
+  cFemonAAC(cFemonAudioIf *audiohandler);
+  virtual ~cFemonAAC();
+
+  bool processAudio(const uint8_t *buf, int len);
+  };
 
 #endif //__FEMONAAC_H

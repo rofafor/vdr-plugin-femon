@@ -10,6 +10,15 @@
 
 #include "femonvideo.h"
 
-bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info);
+class cFemonH264 {
+private:
+  cFemonVideoIf *m_VideoHandler;
+
+public:
+  cFemonH264(cFemonVideoIf *videohandler);
+  virtual ~cFemonH264();
+
+  bool processVideo(const uint8_t *buf, int len);
+  };
 
 #endif //__FEMONH264_H

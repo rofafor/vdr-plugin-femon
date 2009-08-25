@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <vdr/channels.h>
+#include <vdr/remux.h>
 #include <vdr/tools.h>
 
 #ifdef DEBUG
@@ -67,5 +68,33 @@ cString getAudioBitrate(double value, double stream);
 cString getVideoBitrate(double value, double stream);
 cString getBitrateMbits(double value);
 cString getBitrateKbits(double value);
+
+class cBitStream {
+private:
+  const uint8_t *data;
+  int            count; // in bits
+  int            index; // in bits
+
+public:
+  cBitStream(const uint8_t *buf, const int len);
+  ~cBitStream();
+
+  int      getBit();
+  uint32_t getBits(uint32_t n);
+  void     skipBits(uint32_t n);
+  uint32_t getUeGolomb();
+  int32_t  getSeGolomb();
+  void     skipGolomb();
+  void     skipUeGolomb();
+  void     skipSeGolomb();
+  void     byteAlign();
+  void     skipBit()      { skipBits(1); }
+  uint32_t getU8()        { return getBits(8); }
+  uint32_t getU16()       { return ((getBits(8) << 8) | getBits(8)); }
+  uint32_t getU24()       { return ((getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
+  uint32_t getU32()       { return ((getBits(8) << 24) | (getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
+  bool     isEOF()        { return (index >= count); }
+  void     reset()        { index = 0; }
+};
 
 #endif // __FEMONTOOLS_H

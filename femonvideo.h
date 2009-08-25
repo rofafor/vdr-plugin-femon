@@ -69,4 +69,25 @@ typedef struct video_info {
   double            bitrate;     // Mbit/s
 } video_info_t;
 
+class cFemonVideoIf {
+public:
+  cFemonVideoIf() {}
+  virtual ~cFemonVideoIf() {}
+
+  // eVideoCodec
+  virtual void SetVideoCodec(eVideoCodec codec) = 0;
+  // eVideoFormat
+  virtual void SetVideoFormat(eVideoFormat format) = 0;
+  // eVideoScan
+  virtual void SetVideoScan(eVideoScan scan) = 0;
+  // eVideoAspectRatio
+  virtual void SetVideoAspectRatio(eVideoAspectRatio aspectratio) = 0;
+  // pixels
+  virtual void SetVideoSize(int width, int height) = 0;
+  // Hz
+  virtual void SetVideoFramerate(double framerate) = 0;
+  // Mbit/s
+  virtual void SetVideoBitrate(double bitrate) = 0;
+  };
+
 #endif //__FEMONVIDEO_H

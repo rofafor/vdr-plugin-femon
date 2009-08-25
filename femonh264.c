@@ -4,7 +4,7 @@
  * See the README file for copyright information and how to reach the author.
  *
  * The original NAL SPS parsing and bitstream functions are taken from
- * vdr-xineliboutput plugin by Petri Hintukainen. 
+ * vdr-xineliboutput plugin by Petri Hintukainen.
  */
 
 #include "femontools.h"
@@ -71,105 +71,32 @@ typedef struct {
    eVideoScan scan;
 } h264_sei_data_t;
 
-typedef struct {
-  const uint8_t *data;
-  int            count; // bits
-  int            index; // bits
-} br_state;
-
-#define BR_INIT(data, bytes)  { (data), 8 * (bytes), 0 }
-#define BR_EOF(br)            ((br)->index >= (br)->count)
-#define br_skip_bit(br)       br_skip_bits(br,1)
-#define br_get_u8(br)         br_get_bits(br, 8)
-#define br_get_u16(br)        ((br_get_bits(br, 8) << 8) | br_get_bits(br, 8))
-#define br_skip_ue_golomb(br) br_skip_golomb(br)
-#define br_skip_se_golomb(br) br_skip_golomb(br)
-
-static inline void br_init(br_state *br, const uint8_t *data, int bytes)
-{
-  br->data  = data;
-  br->count = 8 * bytes;
-  br->index = 0;
-}
-
-static inline int br_get_bit(br_state *br)
-{
-  if (br->index >= br->count)
-    return 1; // -> no infinite colomb's ...
-
-  int r = (br->data[br->index >> 3] >> (7 - (br->index & 7))) & 1;
-  br->index++;
-  return r;
-}
-
-static inline uint32_t br_get_bits(br_state *br, uint32_t n)
-{
-  uint32_t r = 0;
-  while (n--)
-    r = r | (br_get_bit(br) << n);
-  return r;
-}
-
-static inline void br_skip_bits(br_state *br, int n)
-{
-  br->index += n;
-}
-
-static inline uint32_t br_get_ue_golomb(br_state *br)
-{
-  int n = 0;
-  while (!br_get_bit(br) && (n < 32))
-    n++;
-  return n ? ((1 << n) - 1) + br_get_bits(br, n) : 0;
-}
-
-static inline int32_t br_get_se_golomb(br_state *br)
-{
-  uint32_t r = br_get_ue_golomb(br) + 1;
-  return (r & 1) ? -(r >> 1) : (r >> 1);
-}
-
-static inline void br_skip_golomb(br_state *br)
-{
-  int n = 0;
-  while (!br_get_bit(br) && (n < 32))
-    n++;
-  br_skip_bits(br, n);
-}
-
-static inline void br_byte_align(br_state *br)
-{
-  int n = br->index % 8;
-  if (n > 0)
-     br_skip_bits(br, 8 - n);
-}
-
 static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
 {
-  br_state br = BR_INIT(buf, len);
   int profile_idc, pic_order_cnt_type;
   int frame_mbs_only;
   int i, j;
+  cBitStream bs(buf, len);
 
-  profile_idc = br_get_u8(&br);
-  
+  profile_idc = bs.getU8();
+
   //Dprintf("H.264 SPS: profile_idc %d", profile_idc);
-  
-  br_skip_bits(&br, 16);
-  br_skip_ue_golomb(&br);            // seq_parameter_set_id
+
+  bs.skipBits(16);
+  bs.skipUeGolomb();                        // seq_parameter_set_id
   if (profile_idc >= 100) {
-     if (br_get_ue_golomb(&br) == 3) // chroma_format_idc
-        br_skip_bit(&br);            // residual_colour_transform_flag
-     br_skip_ue_golomb(&br);         // bit_depth_luma - 8
-     br_skip_ue_golomb(&br);         // bit_depth_chroma - 8
-     br_skip_bit(&br);               // transform_bypass
-     if (br_get_bit(&br)) {          // seq_scaling_matrix_present
-        for (i = 0; i < 8; i++) {  
-            if (br_get_bit(&br)) {   // seq_scaling_list_present
+     if (bs.getUeGolomb() == 3)             // chroma_format_idc
+        bs.skipBit();                       // residual_colour_transform_flag
+     bs.skipUeGolomb();                     // bit_depth_luma - 8
+     bs.skipUeGolomb();                     // bit_depth_chroma - 8
+     bs.skipBit();                          // transform_bypass
+     if (bs.getBit()) {                     // seq_scaling_matrix_present
+        for (i = 0; i < 8; i++) {
+            if (bs.getBit()) {              // seq_scaling_list_present
                int last = 8, next = 8, size = (i < 6) ? 16 : 64;
                for (j = 0; j < size; j++) {
                    if (next)
-                      next = (last + br_get_se_golomb(&br)) & 0xff;
+                      next = (last + bs.getSeGolomb()) & 0xff;
                    last = next ?: last;
                    }
                }
@@ -177,23 +104,23 @@ static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
         }
      }
 
-  br_skip_ue_golomb(&br);            // log2_max_frame_num - 4
-  pic_order_cnt_type = br_get_ue_golomb(&br);
+  bs.skipUeGolomb();                        // log2_max_frame_num - 4
+  pic_order_cnt_type = bs.getUeGolomb();
   if (pic_order_cnt_type == 0)
-     br_skip_ue_golomb(&br);         // log2_max_poc_lsb - 4
+     bs.skipUeGolomb();                     // log2_max_poc_lsb - 4
   else if (pic_order_cnt_type == 1) {
-     br_skip_bit(&br);               // delta_pic_order_always_zero
-     br_skip_se_golomb(&br);         // offset_for_non_ref_pic
-     br_skip_se_golomb(&br);         // offset_for_top_to_bottom_field
-     j = br_get_ue_golomb(&br);      // num_ref_frames_in_pic_order_cnt_cycle
+     bs.skipBit();                          // delta_pic_order_always_zero
+     bs.skipSeGolomb();                     // offset_for_non_ref_pic
+     bs.skipSeGolomb();                     // offset_for_top_to_bottom_field
+     j = bs.getUeGolomb();                  // num_ref_frames_in_pic_order_cnt_cycle
      for (i = 0; i < j; i++)
-         br_skip_se_golomb(&br);     // offset_for_ref_frame[i]
+         bs.skipSeGolomb();                 // offset_for_ref_frame[i]
      }
-  br_skip_ue_golomb(&br);            // ref_frames
-  br_skip_bit(&br);                  // gaps_in_frame_num_allowed
-  sps->width      = br_get_ue_golomb(&br) + 1; // mbs
-  sps->height     = br_get_ue_golomb(&br) + 1; // mbs
-  frame_mbs_only  = br_get_bit(&br);
+  bs.skipUeGolomb();                        // ref_frames
+  bs.skipBit();                             // gaps_in_frame_num_allowed
+  sps->width      = bs.getUeGolomb() + 1;   // mbs
+  sps->height     = bs.getUeGolomb() + 1;   // mbs
+  frame_mbs_only  = bs.getBit();
 
   //Dprintf("H.264 SPS: pic_width:  %u mbs", (unsigned int)sps->width);
   //Dprintf("H.264 SPS: pic_height: %u mbs", (unsigned int)sps->height);
@@ -203,22 +130,22 @@ static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
   sps->height *= 16 * (2 - frame_mbs_only);
 
   if (!frame_mbs_only) {
-    if (br_get_bit(&br)) {           // mb_adaptive_frame_field_flag
+    if (bs.getBit()) {                      // mb_adaptive_frame_field_flag
        //Dprintf("H.264 SPS: MBAFF");
        }
     }
 
-  br_skip_bit(&br);                  // direct_8x8_inference_flag
-  if (br_get_bit(&br)) {             // frame_cropping_flag
-    uint32_t crop_left   = br_get_ue_golomb(&br);
-    uint32_t crop_right  = br_get_ue_golomb(&br);
-    uint32_t crop_top    = br_get_ue_golomb(&br);
-    uint32_t crop_bottom = br_get_ue_golomb(&br);
+  bs.skipBit();                             // direct_8x8_inference_flag
+  if (bs.getBit()) {                        // frame_cropping_flag
+    uint32_t crop_left   = bs.getUeGolomb();
+    uint32_t crop_right  = bs.getUeGolomb();
+    uint32_t crop_top    = bs.getUeGolomb();
+    uint32_t crop_bottom = bs.getUeGolomb();
     //Dprintf("H.264 SPS: cropping %d %d %d %d", crop_left, crop_top, crop_right, crop_bottom);
 
     sps->width -= 2 * (crop_left + crop_right);
     if (frame_mbs_only)
-       sps->height -= 2 * (crop_top + crop_bottom); 
+       sps->height -= 2 * (crop_top + crop_bottom);
     else
        sps->height -= 4 * (crop_top + crop_bottom);
     }
@@ -226,13 +153,13 @@ static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
   // VUI parameters
   sps->aspect_ratio = VIDEO_ASPECT_RATIO_INVALID;
   sps->format = VIDEO_FORMAT_INVALID;
-  if (br_get_bit(&br)) {             // vui_parameters_present_flag
-     if (br_get_bit(&br)) {          // aspect_ratio_info_present
-        uint32_t aspect_ratio_idc = br_get_u8(&br);
+  if (bs.getBit()) {                        // vui_parameters_present_flag
+     if (bs.getBit()) {                     // aspect_ratio_info_present
+        uint32_t aspect_ratio_idc = bs.getU8();
         //Dprintf("H.264 SPS: aspect_ratio_idc %d", aspect_ratio_idc);
-        if (aspect_ratio_idc == 255) { // extended sar
-           br_skip_bit(&br);           // sar_width
-           br_skip_bit(&br);           // sar_height
+        if (aspect_ratio_idc == 255) {      // extended sar
+           bs.skipBit();                    // sar_width
+           bs.skipBit();                    // sar_height
            sps->aspect_ratio = VIDEO_ASPECT_RATIO_EXTENDED;
            //Dprintf("H.264 SPS: aspect ratio extended");
            }
@@ -241,10 +168,10 @@ static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
            //Dprintf("H.264 SPS: -> aspect ratio %d", sps->aspect_ratio);
            }
         }
-     if (br_get_bit(&br))            // overscan_info_present_flag
-        br_skip_bit(&br);            // overscan_approriate_flag
-     if (br_get_bit(&br)) {          // video_signal_type_present_flag
-        uint32_t video_format = br_get_bits(&br, 3);
+     if (bs.getBit())                       // overscan_info_present_flag
+        bs.skipBit();                       // overscan_approriate_flag
+     if (bs.getBit()) {                     // video_signal_type_present_flag
+        uint32_t video_format = bs.getBits(3);
         if (video_format < sizeof(video_formats) / sizeof(video_formats[0])) {
            sps->format = video_formats[video_format];
            //Dprintf("H.264 SPS: -> video format %d", sps->format);
@@ -254,38 +181,38 @@ static bool h264_parse_sps(const uint8_t *buf, int len, h264_sps_data_t *sps)
 
   //Dprintf("H.264 SPS: -> video size %dx%d, aspect %d", sps->width, sps->height, sps->aspect_ratio);
 
-  if (BR_EOF(&br)) {
+  if (bs.isEOF()) {
      //Dprintf("H.264 SPS: not enough data ?");
      return false;
      }
-  
+
   return true;
 }
 
 static bool h264_parse_sei(const uint8_t *buf, int len, h264_sei_data_t *sei)
 {
   int num_referenced_subseqs, i;
-  br_state br = BR_INIT(buf, len);
+  cBitStream bs(buf, len);
 
-  while (!BR_EOF(&br)) { // sei_message
+  while (!bs.isEOF()) { // sei_message
     int lastByte, payloadSize = 0, payloadType = 0;
 
     // last_payload_type_byte
     do {
-       lastByte = br_get_u8(&br) & 0xFF;
+       lastByte = bs.getU8() & 0xFF;
        payloadType += lastByte;
     } while (lastByte == 0xFF);
 
     // last_payload_size_byte
     do {
-       lastByte = br_get_u8(&br) & 0xFF;
+       lastByte = bs.getU8() & 0xFF;
        payloadSize += lastByte;
     } while (lastByte == 0xFF);
 
     switch (payloadType) {                             // sei_payload
       //case 1:                                        // pic_timing
       //     ...
-      //     switch (br_get_bits(&br, 2)) {            // ct_type
+      //     switch (bs.getBits(2)) {                    // ct_type
       //       case 0:
       //            sei->scan = VIDEO_SCAN_PROGRESSIVE;
       //            break;
@@ -301,32 +228,32 @@ static bool h264_parse_sei(const uint8_t *buf, int len, h264_sei_data_t *sei)
       //       }
       //     break;
 
-      case 12:                                         // sub_seq_characteristics
-           br_skip_ue_golomb(&br);                     // sub_seq_layer_num
-           br_skip_ue_golomb(&br);                     // sub_seq_id
-           if (br_get_bit(&br))                        // duration_flag
-              br_skip_bits(&br, 32);                   // sub_seq_duration
-           if (br_get_bit(&br)) {                      // average_rate_flag
-              br_skip_bit(&br);                        // accurate_statistics_flag
-              sei->bitrate = br_get_u16(&br);          // average_bit_rate
-              sei->frame_rate = br_get_u16(&br);       // average_frame_rate
+      case 12:                                          // sub_seq_characteristics
+           bs.skipUeGolomb();                           // sub_seq_layer_num
+           bs.skipUeGolomb();                           // sub_seq_id
+           if (bs.getBit())                             // duration_flag
+              bs.skipBits(32);                          // sub_seq_duration
+           if (bs.getBit()) {                           // average_rate_flag
+              bs.skipBit();                             // accurate_statistics_flag
+              sei->bitrate = bs.getU16();               // average_bit_rate
+              sei->frame_rate = bs.getU16();            // average_frame_rate
               //Dprintf("H.264 SEI: -> stream bitrate %.1f, frame rate %.1f", sei->bitrate, sei->frame_rate);
               }
-           num_referenced_subseqs = br_get_ue_golomb(&br); // num_referenced_subseqs
+           num_referenced_subseqs = bs.getUeGolomb();   // num_referenced_subseqs
            for (i = 0; i < num_referenced_subseqs; ++i) {
-               br_skip_ue_golomb(&br);                 // ref_sub_seq_layer_num
-               br_skip_ue_golomb(&br);                 // ref_sub_seq_id
-               br_get_bit(&br);                        // ref_sub_seq_direction
+               bs.skipUeGolomb();                       // ref_sub_seq_layer_num
+               bs.skipUeGolomb();                       // ref_sub_seq_id
+               bs.getBit();                             // ref_sub_seq_direction
                }
            break;
 
       default:
-           br_skip_bits(&br, payloadSize);
+           bs.skipBits(payloadSize);
            break;
       }
 
     // force byte align
-    br_byte_align(&br);
+    bs.byteAlign();
     }
 
   return true;
@@ -350,7 +277,7 @@ static int h264_nal_unescape(uint8_t *dst, const uint8_t *src, int len)
        }
     dst[d++] = src[s++];
     }
-    
+
   return d;
 }
 
@@ -370,9 +297,26 @@ static int h264_get_picture_type(const uint8_t *buf, int len)
   return NO_PICTURE;
 }
 
-bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
+cFemonH264::cFemonH264(cFemonVideoIf *videohandler)
+: m_VideoHandler(videohandler)
+{
+}
+
+cFemonH264::~cFemonH264()
+{
+}
+
+bool cFemonH264::processVideo(const uint8_t *buf, int len)
 {
   bool sps_found = false, sei_found = true; // sei currently disabled
+
+  if (!m_VideoHandler)
+     return false;
+
+  // skip PES header
+  if (!PesLongEnough(len))
+      return false;
+  buf += PesPayloadOffset(buf);
 
   // H.264 detection, search for NAL AUD
   if (!IS_NAL_AUD(buf))
@@ -382,7 +326,7 @@ bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
   if (h264_get_picture_type(buf, len) != I_FRAME)
      return false;
 
-  info->codec = VIDEO_CODEC_H264;
+  m_VideoHandler->SetVideoCodec(VIDEO_CODEC_H264);
 
   // Scan video packet ...
   for (int i = 5; i < len - 4; i++) {
@@ -394,10 +338,9 @@ bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
          if (0 < (nal_len = h264_nal_unescape(nal_data, buf + i + 4, len - i - 4))) {
             h264_sps_data_t sps = { 0, 0, VIDEO_ASPECT_RATIO_INVALID, VIDEO_FORMAT_INVALID };
             if (h264_parse_sps(nal_data, nal_len, &sps)) {
-               info->format = sps.format;
-               info->width = sps.width;
-               info->height = sps.height;
-               info->aspectRatio = sps.aspect_ratio;
+               m_VideoHandler->SetVideoFormat(sps.format);
+               m_VideoHandler->SetVideoSize(sps.width, sps.height);
+               m_VideoHandler->SetVideoAspectRatio(sps.aspect_ratio);
                sps_found = true;
                }
             }
@@ -410,9 +353,9 @@ bool getH264VideoInfo(uint8_t *buf, int len, video_info_t *info)
          if (0 < (nal_len = h264_nal_unescape(nal_data, buf + i + 4, len - i - 4))) {
             h264_sei_data_t sei = { 0, 0, VIDEO_SCAN_INVALID };
             if (h264_parse_sei(nal_data, nal_len, &sei)) {
-               info->frameRate = sei.frame_rate;
-               info->bitrate = sei.bitrate;
-               info->scan = sei.scan;
+               m_VideoHandler->SetVideoFramerate(sei.frame_rate);
+               m_VideoHandler->SetVideoBitrate(sei.bitrate);
+               m_VideoHandler->SetVideoScan(sei.scan);
                sei_found = true;
                }
             }

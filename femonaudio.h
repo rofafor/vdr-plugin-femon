@@ -106,4 +106,44 @@ typedef struct ac3_info {
   bool        lfe;               // boolean
 } ac3_info_t;
 
+class cFemonAudioIf {
+public:
+  cFemonAudioIf() {}
+  virtual ~cFemonAudioIf() {}
+
+  // enum
+  virtual void SetAudioCodec(eAudioCodec codec) = 0;
+  // kbit/s or eAudioBitrate
+  virtual void SetAudioBitrate(double bitrate) = 0;
+  // Hz or eAudioSamplingFrequency
+  virtual void SetAudioSamplingFrequency(int sampling) = 0;
+  // eAudioChannelMode
+  virtual void SetAudioChannel(eAudioChannelMode mode) = 0;
+  };
+
+class cFemonAC3If {
+public:
+  cFemonAC3If() {}
+  virtual ~cFemonAC3If() {}
+
+  // bit/s or eAudioBitrate
+  virtual void SetAC3Bitrate(int bitrate) = 0;
+  // Hz or eAudioSamplingFrequency
+  virtual void SetAC3SamplingFrequency(int sampling) = 0;
+  // 0..7 or eAudioBitstreamMode
+  virtual void SetAC3Bitstream(int mode) = 0;
+  // 0..7 or eAudioCodingMode
+  virtual void SetAC3AudioCoding(int mode) = 0;
+  // eAudioDolbySurroundMode
+  virtual void SetAC3DolbySurround(int mode) = 0;
+  // eAudioCenterMixLevel
+  virtual void SetAC3CenterMix(int level) = 0;
+  // eAudioSurroundMixLevel
+  virtual void SetAC3SurroundMix(int level) = 0;
+  // -dB
+  virtual void SetAC3Dialog(int level) = 0;
+  // boolean
+  virtual void SetAC3LFE(bool onoff) = 0;
+  };
+
 #endif //__FEMONAUDIO_H

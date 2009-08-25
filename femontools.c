@@ -306,7 +306,7 @@ cString getTransmission(int value)
 {
   return cString::sprintf("%s", getUserString(value, TransmissionValues));
 }
- 
+
 cString getBandwidth(int value)
 {
   return cString::sprintf("%s", getUserString(value, BandwidthValues));
@@ -522,7 +522,89 @@ cString getBitrateMbits(double value)
 
 cString getBitrateKbits(double value)
 {
-  if (value > 0) 
+  if (value > 0)
      return cString::sprintf("%.0f %s", value / 1000.0, tr("kbit/s"));
   return cString::sprintf("---");
+}
+
+cBitStream::cBitStream(const uint8_t *buf, const int len)
+: data(buf),
+  count(len),
+  index(0)
+{
+}
+
+cBitStream::~cBitStream()
+{
+}
+
+int cBitStream::getBit()
+{
+  if (index >= count)
+     return (1); // -> no infinite colomb's ...
+
+  int r = (data[index >> 3] >> (7 - (index & 7))) & 1;
+  ++index;
+
+  return (r);
+}
+
+uint32_t cBitStream::getBits(uint32_t n)
+{
+  uint32_t r = 0;
+
+  while (n--)
+    r = (r | (getBit() << n));
+
+  return (r);
+}
+
+void cBitStream::skipBits(uint32_t n)
+{
+  index += n;
+}
+
+uint32_t cBitStream::getUeGolomb()
+{
+  int n = 0;
+
+  while (!getBit() && (n < 32))
+    n++;
+
+  return (n ? ((1 << n) - 1) + getBits(n) : 0);
+}
+
+int32_t cBitStream::getSeGolomb()
+{
+  uint32_t r = getUeGolomb() + 1;
+
+  return ((r & 1) ? -(r >> 1) : (r >> 1));
+}
+
+void cBitStream::skipGolomb()
+{
+  int n = 0;
+
+  while (!getBit() && (n < 32))
+    n++;
+
+  skipBits(n);
+}
+
+void cBitStream::skipUeGolomb()
+{
+  skipGolomb();
+}
+
+void cBitStream::skipSeGolomb()
+{
+  skipGolomb();
+}
+
+void cBitStream::byteAlign()
+{
+  int n = index % 8;
+
+  if (n > 0)
+     skipBits(8 - n);
 }

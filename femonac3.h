@@ -10,6 +10,19 @@
 
 #include "femonaudio.h"
 
-bool getAC3AudioInfo(uint8_t *buf, int len, ac3_info_t *info);
+class cFemonAC3 {
+private:
+  cFemonAC3If *m_AudioHandler;
+
+  static unsigned int s_Bitrates[32];
+  static unsigned int s_Frequencies[4];
+  static unsigned int s_Frames[3][32];
+
+public:
+  cFemonAC3(cFemonAC3If *audiohandler);
+  virtual ~cFemonAC3();
+
+  bool processAudio(const uint8_t *buf, int len);
+  };
 
 #endif //__FEMONAC3_H
