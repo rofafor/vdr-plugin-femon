@@ -95,6 +95,7 @@ public:
   uint32_t getU32()       { return ((getBits(8) << 24) | (getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
   bool     isEOF()        { return (index >= count); }
   void     reset()        { index = 0; }
+  int      getIndex()     { return (isEOF() ? count : index);}
 };
 
 #endif // __FEMONTOOLS_H
