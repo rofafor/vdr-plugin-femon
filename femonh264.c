@@ -95,7 +95,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
         case NAL_SPS:
              if (!sps_found) {
                //Dprintf("H.264: Found NAL SPS at offset %d/%d", buf - start, len);
-               int nal_len = nalUnescape(nal_data, buf + 4, end - buf - 4);
+               int nal_len = nalUnescape(nal_data, buf + 4, int(end - buf - 4));
                consumed = parseSPS(nal_data, nal_len);
                if (consumed > 0)
                   sps_found = true;
@@ -105,7 +105,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
         case NAL_SEI:
              if (!sei_found) {
                //Dprintf("H.264: Found NAL SEI at offset %d/%d", buf - start, len);
-               int nal_len = nalUnescape(nal_data, buf + 4, end - buf - 4);
+               int nal_len = nalUnescape(nal_data, buf + 4, int(end - buf - 4));
                consumed = parseSEI(nal_data, nal_len);
                if (consumed > 0)
                   sei_found = true;

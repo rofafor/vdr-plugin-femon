@@ -37,6 +37,10 @@ cFemonAC3::~cFemonAC3()
 
 bool cFemonAC3::processAudio(const uint8_t *buf, int len)
 {
+  int fscod, frmsizcod, bsmod, acmod;
+  int centermixlevel = AUDIO_CENTER_MIX_LEVEL_INVALID;
+  int surroundmixlevel = AUDIO_SURROUND_MIX_LEVEL_INVALID;
+  int dolbysurroundmode = AUDIO_DOLBY_SURROUND_MODE_INVALID;
   cBitStream bs(buf, len * 8);
 
   if (!m_AudioHandler)
@@ -55,25 +59,32 @@ bool cFemonAC3::processAudio(const uint8_t *buf, int len)
 
   bs.skipBits(16);                  // CRC1
 
-  uint8_t fscod = bs.getBits(2);    // sampling rate values
-  uint8_t frmsizcod = bs.getBits(6);// frame size code
+  fscod = bs.getBits(2);            // sampling rate values
+  frmsizcod = bs.getBits(6);        // frame size code
+
+  bs.skipBits(5);                   // bitstream id
+  bsmod = bs.getBits(3);            // bitstream mode
+  acmod = bs.getBits(3);            // audio coding mode
+
+  // 3 front channels
+  if ((acmod & 0x01) && (acmod != 0x01))
+     centermixlevel = bs.getBits(2);
+
+  // if a surround channel exists
+  if (acmod & 0x04)
+     surroundmixlevel = bs.getBits(2);
+
+  // if in 2/0 mode
+  if (acmod == 0x02)
+      dolbysurroundmode = bs.getBits(2);
 
   m_AudioHandler->SetAC3Bitrate(1000 * s_Bitrates[frmsizcod >> 1]);
   m_AudioHandler->SetAC3SamplingFrequency(100 * s_Frequencies[fscod]);
-
-  bs.skipBits(5);                   // bitstream id
-  int bsmod = bs.getBits(3);        // bitstream mode
-  int acmod = bs.getBits(3);        // audio coding mode
-
   m_AudioHandler->SetAC3Bitstream(bsmod);
   m_AudioHandler->SetAC3AudioCoding(acmod);
-
-  // 3 front channels
-  m_AudioHandler->SetAC3CenterMix(((acmod & 0x01) && (acmod != 0x01)) ? bs.getBits(2) : AUDIO_CENTER_MIX_LEVEL_INVALID);
-  // if a surround channel exists
-  m_AudioHandler->SetAC3SurroundMix((acmod & 0x04) ? bs.getBits(2) : AUDIO_SURROUND_MIX_LEVEL_INVALID);
-  // if in 2/0 mode
-  m_AudioHandler->SetAC3DolbySurround((acmod == 0x02) ? bs.getBits(2) : AUDIO_DOLBY_SURROUND_MODE_INVALID);
+  m_AudioHandler->SetAC3CenterMix(centermixlevel);
+  m_AudioHandler->SetAC3SurroundMix(surroundmixlevel);
+  m_AudioHandler->SetAC3DolbySurround(dolbysurroundmode);
 
   m_AudioHandler->SetAC3LFE(bs.getBit());       // low frequency effects on
   m_AudioHandler->SetAC3Dialog(bs.getBits(5));  // dialog normalization
