@@ -79,23 +79,25 @@ public:
   cBitStream(const uint8_t *buf, const int len);
   ~cBitStream();
 
-  int      getBit();
-  uint32_t getBits(uint32_t n);
-  void     skipBits(uint32_t n);
-  uint32_t getUeGolomb();
-  int32_t  getSeGolomb();
-  void     skipGolomb();
-  void     skipUeGolomb();
-  void     skipSeGolomb();
-  void     byteAlign();
-  void     skipBit()      { skipBits(1); }
-  uint32_t getU8()        { return getBits(8); }
-  uint32_t getU16()       { return ((getBits(8) << 8) | getBits(8)); }
-  uint32_t getU24()       { return ((getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
-  uint32_t getU32()       { return ((getBits(8) << 24) | (getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
-  bool     isEOF()        { return (index >= count); }
-  void     reset()        { index = 0; }
-  int      getIndex()     { return (isEOF() ? count : index);}
+  int            getBit();
+  uint32_t       getBits(uint32_t n);
+  void           skipBits(uint32_t n);
+  uint32_t       getUeGolomb();
+  int32_t        getSeGolomb();
+  void           skipGolomb();
+  void           skipUeGolomb();
+  void           skipSeGolomb();
+  void           byteAlign();
+
+  void           skipBit()  { skipBits(1); }
+  uint32_t       getU8()    { return getBits(8); }
+  uint32_t       getU16()   { return ((getBits(8) << 8) | getBits(8)); }
+  uint32_t       getU24()   { return ((getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
+  uint32_t       getU32()   { return ((getBits(8) << 24) | (getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
+  bool           isEOF()    { return (index >= count); }
+  void           reset()    { index = 0; }
+  int            getIndex() { return (isEOF() ? count : index); }
+  const uint8_t *getData()  { return (isEOF() ? NULL : data + (index / 8)); }
 };
 
 #endif // __FEMONTOOLS_H

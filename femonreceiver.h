@@ -30,6 +30,7 @@ private:
   cFemonAC3     m_DetectAC3;
 
   cTsToPes      m_VideoAssembler;
+  int           m_VideoType;
   int           m_VideoPid;
   int           m_VideoPacketCount;
   double        m_VideoBitrate;
@@ -81,7 +82,7 @@ public:
   virtual void SetAC3LFE(bool onoff)                 { m_AC3Info.lfe = onoff; }
 
 public:
-  cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[], int Dpid[]);
+  cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid, int Apid[], int Dpid[]);
   virtual ~cFemonReceiver();
   void Deactivate(void);
 

@@ -42,9 +42,23 @@ const eVideoFormat cFemonH264::s_VideoFormats[] =
   VIDEO_FORMAT_RESERVED
 };
 
+const uint8_t cFemonH264::s_SeiNumClockTsTable[9] =
+{
+  1, 1, 1, 2, 2, 3, 3, 2, 3
+};
 
 cFemonH264::cFemonH264(cFemonVideoIf *videohandler)
-: m_VideoHandler(videohandler)
+: m_VideoHandler(videohandler),
+  m_Width(0),
+  m_Height(0),
+  m_AspectRatio(VIDEO_ASPECT_RATIO_INVALID),
+  m_Format(VIDEO_FORMAT_INVALID),
+  m_FrameRate(0),
+  m_BitRate(0),
+  m_Scan(VIDEO_SCAN_INVALID),
+  m_CpbDpbDelaysPresentFlag(false),
+  m_PicStructPresentFlag(false),
+  m_TimeOffsetLength(0)
 {
 }
 
@@ -54,7 +68,10 @@ cFemonH264::~cFemonH264()
 
 bool cFemonH264::processVideo(const uint8_t *buf, int len)
 {
-  bool aud_found = false, sps_found = false, sei_found = true; // sei currently disabled
+  uint8_t nal_data[len];
+  bool aud_found = false, sps_found = false, sei_found = false;
+  const uint8_t *start = buf;
+  const uint8_t *end = start + len;
 
   if (!m_VideoHandler)
      return false;
@@ -63,10 +80,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
   if (!PesLongEnough(len))
       return false;
   buf += PesPayloadOffset(buf);
-
-  const uint8_t *start = buf;
-  const uint8_t *end = start + len;
-  uint8_t nal_data[len];
+  start = buf;
 
   for (;;) {
       int consumed = 0;
@@ -81,7 +95,6 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
                  switch (buf[4] >> 5) {
                    case 0: case 3: case 5: // I_FRAME
                        //Dprintf("H.264: Found NAL AUD at offset %d/%d", buf - start, len);
-                       m_VideoHandler->SetVideoCodec(VIDEO_CODEC_H264);
                        aud_found = true;
                        break;
                    case 1: case 4: case 6: // P_FRAME;
@@ -101,7 +114,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
                   sps_found = true;
              }
              break;
-
+#if 0
         case NAL_SEI:
              if (!sei_found) {
                //Dprintf("H.264: Found NAL SEI at offset %d/%d", buf - start, len);
@@ -111,7 +124,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
                   sei_found = true;
              }
              break;
-
+#endif
         default:
              break;
         }
@@ -121,6 +134,22 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
 
       buf += consumed + 4;
       }
+
+  if (aud_found) {
+     m_VideoHandler->SetVideoCodec(VIDEO_CODEC_H264);
+     if (sps_found) {
+        //Dprintf("H.264 SPS: -> video size %dx%d, aspect %d format %d", m_Width, m_Height, m_AspectRatio, m_Format);
+        m_VideoHandler->SetVideoFormat(m_Format);
+        m_VideoHandler->SetVideoSize(m_Width, m_Height);
+        m_VideoHandler->SetVideoAspectRatio(m_AspectRatio);
+        }
+     if (sei_found) {
+        //Dprintf("H.264 SEI: -> stream bitrate %.1f, frame rate %.1f scan %d", m_BitRate, m_FrameRate, m_Scan);
+        m_VideoHandler->SetVideoFramerate(m_FrameRate);
+        m_VideoHandler->SetVideoBitrate(m_BitRate);
+        m_VideoHandler->SetVideoScan(m_Scan);
+        }
+  }
 
   return aud_found;
 }
@@ -159,10 +188,15 @@ int cFemonH264::nalUnescape(uint8_t *dst, const uint8_t *src, int len)
 int cFemonH264::parseSPS(const uint8_t *buf, int len)
 {
   int profile_idc, pic_order_cnt_type, frame_mbs_only, i, j;
-  unsigned int width = 0, height = 0;
-  eVideoAspectRatio aspect_ratio = VIDEO_ASPECT_RATIO_INVALID;
-  eVideoFormat format = VIDEO_FORMAT_INVALID;
   cBitStream bs(buf, len);
+
+  unsigned int width = m_Width;
+  unsigned int height = m_Height;
+  eVideoAspectRatio aspect_ratio = m_AspectRatio;
+  eVideoFormat format = m_Format;
+  bool cpb_dpb_delays_present_flag = m_CpbDpbDelaysPresentFlag;
+  bool pic_struct_present_flag = m_PicStructPresentFlag;
+  unsigned int time_offset_length = m_TimeOffsetLength;
 
   profile_idc = bs.getU8();
 
@@ -255,21 +289,83 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
      if (bs.getBit())                       // overscan_info_present_flag
         bs.skipBit();                       // overscan_approriate_flag
      if (bs.getBit()) {                     // video_signal_type_present_flag
-        uint32_t video_format = bs.getBits(3);
+        uint32_t video_format;
+        video_format = bs.getBits(3);       // video_format
         if (video_format < sizeof(s_VideoFormats) / sizeof(s_VideoFormats[0])) {
            format = s_VideoFormats[video_format];
            //Dprintf("H.264 SPS: -> video format %d", format);
            }
+        bs.skipBit();                       // video_full_range_flag
+        bs.skipBit();                       // video_full_range_flag
+        if (bs.getBit()) {                  // colour_description_present_flag
+           bs.skipBits(8);                  // colour_primaries
+           bs.skipBits(8);                  // transfer_characteristics
+           bs.skipBits(8);                  // matrix_coefficients
+           }
+        }
+     if (bs.getBit()) {                     // chroma_loc_info_present_flag
+        bs.skipUeGolomb();                  // chroma_sample_loc_type_top_field
+        bs.skipUeGolomb();                  // chroma_sample_loc_type_bottom_field
+        }
+     if (bs.getBit()) {                     // timing_info_present_flag
+        bs.skipBits(32);                    // num_units_in_tick
+        bs.skipBits(32);                    // time_scale
+        bs.skipBit();                       // fixed_frame_rate_flag
+        }
+     int nal_hrd_parameters_present_flag = bs.getBit(); // nal_hrd_parameters_present_flag
+     if (nal_hrd_parameters_present_flag) {
+        int cpb_cnt_minus1;
+        cpb_cnt_minus1 = bs.getUeGolomb();  // cpb_cnt_minus1
+        bs.skipBits(4);                     // bit_rate_scale
+        bs.skipBits(4);                     // cpb_size_scale
+        for (int i = 0; i < cpb_cnt_minus1; ++i) {
+            bs.skipUeGolomb();              // bit_rate_value_minus1[i]
+            bs.skipUeGolomb();              // cpb_size_value_minus1[i]
+            bs.skipBit();                   // cbr_flag[i]
+            }
+        bs.skipBits(5);                     // initial_cpb_removal_delay_length_minus1
+        bs.skipBits(5);                     // cpb_removal_delay_length_minus1
+        bs.skipBits(5);                     // dpb_output_delay_length_minus1
+        time_offset_length = bs.getBits(5); // time_offset_length
+        }
+     int vlc_hrd_parameters_present_flag = bs.getBit(); // vlc_hrd_parameters_present_flag
+     if (vlc_hrd_parameters_present_flag) {
+         int cpb_cnt_minus1;
+         cpb_cnt_minus1 = bs.getUeGolomb();  // cpb_cnt_minus1
+         bs.skipBits(4);                     // bit_rate_scale
+         bs.skipBits(4);                     // cpb_size_scale
+         for (int i = 0; i < cpb_cnt_minus1; ++i) {
+             bs.skipUeGolomb();              // bit_rate_value_minus1[i]
+             bs.skipUeGolomb();              // cpb_size_value_minus1[i]
+             bs.skipBit();                   // cbr_flag[i]
+             }
+         bs.skipBits(5);                     // initial_cpb_removal_delay_length_minus1
+         bs.skipBits(5);                     // cpb_removal_delay_length_minus1
+         bs.skipBits(5);                     // dpb_output_delay_length_minus1
+         time_offset_length = bs.getBits(5); // time_offset_length
+        }
+     cpb_dpb_delays_present_flag = (nal_hrd_parameters_present_flag | vlc_hrd_parameters_present_flag);
+     if (cpb_dpb_delays_present_flag)
+        bs.skipBit();                       // low_delay_hrd_flag
+     pic_struct_present_flag = bs.getBit(); // pic_struct_present_flag
+     if (bs.getBit()) {                     // bitstream_restriction_flag
+        bs.skipBit();                       // motion_vectors_over_pic_boundaries_flag
+        bs.skipUeGolomb();                  // max_bytes_per_pic_denom
+        bs.skipUeGolomb();                  // max_bits_per_mb_denom
+        bs.skipUeGolomb();                  // log2_max_mv_length_horizontal
+        bs.skipUeGolomb();                  // log2_max_mv_length_vertical
+        bs.skipUeGolomb();                  // num_reorder_frames
+        bs.skipUeGolomb();                  // max_dec_frame_buffering
         }
      }
 
-  //Dprintf("H.264 SPS: -> video size %dx%d, aspect %d", width, height, aspect_ratio);
-
-  if (m_VideoHandler) {
-     m_VideoHandler->SetVideoFormat(format);
-     m_VideoHandler->SetVideoSize(width, height);
-     m_VideoHandler->SetVideoAspectRatio(aspect_ratio);
-     }
+  m_Width = width;
+  m_Height = height;
+  m_AspectRatio = aspect_ratio;
+  m_Format = format;
+  m_CpbDpbDelaysPresentFlag = cpb_dpb_delays_present_flag;
+  m_PicStructPresentFlag = pic_struct_present_flag;
+  m_TimeOffsetLength = time_offset_length;
 
   return (bs.getIndex() / 8);
 }
@@ -277,9 +373,11 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
 int cFemonH264::parseSEI(const uint8_t *buf, int len)
 {
   int num_referenced_subseqs, i;
-  double frame_rate = 0, bit_rate = 0;
-  eVideoScan scan = VIDEO_SCAN_INVALID;
   cBitStream bs(buf, len);
+
+  double frame_rate = m_FrameRate;
+  double bit_rate = m_BitRate;
+  eVideoScan scan = m_Scan;
 
   while ((bs.getIndex() * 8 + 16) < len) {               // sei_message
     int lastByte, payloadSize = 0, payloadType = 0;
@@ -297,23 +395,60 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
     } while (lastByte == 0xFF);
 
     switch (payloadType) {                               // sei_payload
-      //case 1:                                          // pic_timing
-      //     ...
-      //     switch (bs.getBits(2)) {                    // ct_type
-      //       case 0:
-      //            scan = VIDEO_SCAN_PROGRESSIVE;
-      //            break;
-      //       case 1:
-      //            scan = VIDEO_SCAN_INTERLACED;
-      //            break;
-      //       case 2:
-      //            scan = VIDEO_SCAN_UNKNOWN;
-      //            break;
-      //       default:
-      //            scan = VIDEO_SCAN_RESERVED;
-      //            break;
-      //       }
-      //     break;
+      case 1:                                            // pic_timing
+           if (m_CpbDpbDelaysPresentFlag) {              // cpb_dpb_delays_present_flag
+              bs.skipUeGolomb();                         // cpb_removal_delay
+              bs.skipUeGolomb();                         // dpb_output_delay
+              }
+           if (m_PicStructPresentFlag) {                // pic_struct_present_flag
+              unsigned int pic_struct = bs.getBits(4);  // pic_struct
+              if (pic_struct >= (sizeof(s_SeiNumClockTsTable) ) / sizeof(s_SeiNumClockTsTable[0]))
+                 return 0;
+              for (int i = 0; i < s_SeiNumClockTsTable[pic_struct]; ++i) {
+                  if (bs.getBit()) {                     // clock_timestamp_flag[i]
+                     int full_timestamp_flag;
+                     switch (bs.getBits(2)) {            // ct_type
+                       case 0:
+                            scan = VIDEO_SCAN_PROGRESSIVE;
+                            break;
+                       case 1:
+                            scan = VIDEO_SCAN_INTERLACED;
+                            break;
+                       case 2:
+                            scan = VIDEO_SCAN_UNKNOWN;
+                            break;
+                       default:
+                            scan = VIDEO_SCAN_RESERVED;
+                            break;
+                       }
+                     //Dprintf("\nH.264 SEI: -> scan type %d", bit_rate, scan);
+                     bs.skipBit();                       // nuit_field_based_flag
+                     bs.skipBits(5);                     // counting_type
+                     full_timestamp_flag = bs.getBit();  // full_timestamp_flag
+                     bs.skipBit();                       // discontinuity_flag
+                     bs.skipBit();                       // cnt_dropped_flag
+                     bs.skipBits(8);                     // n_frames
+                     if (full_timestamp_flag) {
+                        bs.skipBits(6);                  // seconds_value
+                        bs.skipBits(6);                  // minutes_value
+                        bs.skipBits(5);                  // hours_value
+                        }
+                     else {
+                        if (bs.getBit()) {               // seconds_flag
+                           bs.skipBits(6);               // seconds_value
+                           if (bs.getBit()) {            // minutes_flag
+                              bs.skipBits(6);            // minutes_value
+                              if (bs.getBit())           // hours_flag
+                                  bs.skipBits(5);        // hours_value
+                              }
+                           }
+                        }
+                     if (m_TimeOffsetLength > 0)
+                        bs.skipBits(m_TimeOffsetLength); // time_offset
+                     }
+                  }
+              }
+           break;
 
       case 12:                                          // sub_seq_characteristics
            bs.skipUeGolomb();                           // sub_seq_layer_num
@@ -322,9 +457,9 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
               bs.skipBits(32);                          // sub_seq_duration
            if (bs.getBit()) {                           // average_rate_flag
               bs.skipBit();                             // accurate_statistics_flag
-              bit_rate   = bs.getU16();                 // average_bit_rate
-              frame_rate = bs.getU16();                 // average_frame_rate
-              //Dprintf("H.264 SEI: -> stream bitrate %.1f, frame rate %.1f", sei->bitrate, sei->frame_rate);
+              bit_rate   = bs.getU16() / 1048.51;       // average_bit_rate (1000 bit/s -> Mbit/s)
+              frame_rate = bs.getU16() / 256.0;         // average_frame_rate (frames/256s)
+              //Dprintf("\nH.264 SEI: -> stream bitrate %.1f, frame rate %.1f", bit_rate, frame_rate);
               }
            num_referenced_subseqs = bs.getUeGolomb();   // num_referenced_subseqs
            for (i = 0; i < num_referenced_subseqs; ++i) {
@@ -343,11 +478,9 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
     bs.byteAlign();
     }
 
-  if (m_VideoHandler) {
-     m_VideoHandler->SetVideoFramerate(frame_rate);
-     m_VideoHandler->SetVideoBitrate(bit_rate);
-     m_VideoHandler->SetVideoScan(scan);
-     }
+  m_FrameRate = frame_rate;
+  m_BitRate = bit_rate;
+  m_Scan = scan;
 
   return (bs.getIndex() / 8);
 }

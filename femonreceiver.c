@@ -10,7 +10,7 @@
 #include "femoncfg.h"
 #include "femonreceiver.h"
 
-cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[], int Dpid[])
+cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid, int Apid[], int Dpid[])
 : cReceiver(ChannelID, -1, Vpid, Apid, Dpid, NULL),
   cThread("femon receiver"),
   m_Sleep(),
@@ -19,6 +19,7 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[
   m_DetectMPEG(this, this),
   m_DetectAAC(this),
   m_DetectAC3(this),
+  m_VideoType(Vtype),
   m_VideoPid(Vpid),
   m_VideoPacketCount(0),
   m_VideoBitrate(0.0),
@@ -28,7 +29,7 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vpid, int Apid[
   m_AudioBitrate(0.0),
   m_AudioValid(false),
   m_AC3Pid(Dpid[0]),
-  m_AC3PacketCount(0), 
+  m_AC3PacketCount(0),
   m_AC3Bitrate(0),
   m_AC3Valid(false)
 {
@@ -93,10 +94,18 @@ void cFemonReceiver::Receive(uchar *Data, int Length)
         m_VideoPacketCount++;
         if (TsPayloadStart(Data)) {
            while (const uint8_t *p = m_VideoAssembler.GetPes(len)) {
-             if (m_DetectMPEG.processVideo(p, len) || m_DetectH264.processVideo(p, len)) {
-                m_VideoValid = true;
-                break;
-                }
+               if (m_VideoType == 0x1B) { // MPEG4
+                  if (m_DetectH264.processVideo(p, len)) {
+                     m_VideoValid = true;
+                     break;
+                     }
+                  }
+               else {
+                  if (m_DetectMPEG.processVideo(p, len)) {
+                     m_VideoValid = true;
+                     break;
+                     }
+                  }
              }
            m_VideoAssembler.Reset();
          }

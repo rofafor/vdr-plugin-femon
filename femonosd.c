@@ -493,7 +493,7 @@ void cFemonOsd::Action(void)
        DrawStatusWindow();
        }
     else if (m_SvdrpConnection.handle >= 0) {
-       cmd.handle = m_SvdrpConnection.handle; 
+       cmd.handle = m_SvdrpConnection.handle;
        m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
        if (cmd.responseCode == 900) {
           for (cLine *line = cmd.reply.First(); line; line = cmd.reply.Next(line)) {
@@ -576,7 +576,7 @@ void cFemonOsd::Show(void)
         if (channel) {
            IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
            IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-           m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
+           m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vtype(), channel->Vpid(), apid, dpid);
            cDevice::ActualDevice()->AttachReceiver(m_Receiver);
            }
         }
@@ -621,7 +621,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
      if (channel) {
         IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
         IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-        m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
+        m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vtype(), channel->Vpid(), apid, dpid);
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      }
@@ -642,7 +642,7 @@ void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
      if (channel) {
         IS_AUDIO_TRACK(track) ? apid[0] = channel->Apid(int(track - ttAudioFirst)) : apid[0] = channel->Apid(0);
         IS_DOLBY_TRACK(track) ? dpid[0] = channel->Dpid(int(track - ttDolbyFirst)) : dpid[0] = channel->Dpid(0);
-        m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vpid(), apid, dpid);
+        m_Receiver = new cFemonReceiver(channel->GetChannelID(), channel->Ca(), channel->Vtype(), channel->Vpid(), apid, dpid);
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      }
@@ -693,7 +693,7 @@ bool cFemonOsd::SvdrpConnect(void)
          m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection);
          if (m_SvdrpConnection.handle >= 0) {
             SvdrpCommand_v1_0 cmd;
-            cmd.handle = m_SvdrpConnection.handle; 
+            cmd.handle = m_SvdrpConnection.handle;
             cmd.command = cString::sprintf("PLUG %s\r\n", PLUGIN_NAME_I18N);
             m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
             if (cmd.responseCode != 214) {
@@ -716,7 +716,7 @@ bool cFemonOsd::SvdrpTune(void)
       cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
       if (channel) {
          SvdrpCommand_v1_0 cmd;
-         cmd.handle = m_SvdrpConnection.handle; 
+         cmd.handle = m_SvdrpConnection.handle;
          cmd.command = cString::sprintf("CHAN %s\r\n", *channel->GetChannelID().ToString());
          m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
          if (cmd.responseCode == 250)
@@ -765,7 +765,7 @@ double cFemonOsd::GetDolbyBitrate(void)
 }
 
 eOSState cFemonOsd::ProcessKey(eKeys Key)
-{ 
+{
   eOSState state = cOsdObject::ProcessKey(Key);
   if (state == osUnknown) {
      switch (Key) {
