@@ -457,7 +457,7 @@ void cFemonOsd::DrawInfoWindow(void)
                offset += OSDROWHEIGHT;
                OSDDRAWINFOINACTIVE(tr("Dolby Surround Mode"),    *getAC3DolbySurroundMode(m_Receiver->AC3DolbySurroundMode()));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Low Frequency Effects"),  *cString::sprintf("%s", m_Receiver->AC3Lfe() ? tr("on") : tr("off")));
+               OSDDRAWINFOINACTIVE(tr("Low Frequency Effects"),  *cString::sprintf("%s", m_Receiver->AC3Lfe() ? trVDR("on") : trVDR("off")));
                offset += OSDROWHEIGHT;
                OSDDRAWINFOINACTIVE(tr("Dialogue Normalization"), *getAC3DialogLevel(m_Receiver->AC3DialogLevel()));
                }

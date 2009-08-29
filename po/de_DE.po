@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.7.0\n"
+"Project-Id-Version: femon 1.7.3\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2009-07-08 02:42+0300\n"
+"POT-Creation-Date: 2009-08-29 20:57+0300\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Christian Wieninger\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -223,12 +223,6 @@ msgstr "Dolby Surround Modus"
 
 msgid "Low Frequency Effects"
 msgstr "Tieftöner Effekte"
-
-msgid "on"
-msgstr "Ein"
-
-msgid "off"
-msgstr "Aus"
 
 msgid "Dialogue Normalization"
 msgstr "Dialog Normalisierung"

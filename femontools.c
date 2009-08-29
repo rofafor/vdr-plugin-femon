@@ -65,7 +65,7 @@ static const char *getUserString(int Value, const tChannelParameterMap *Map)
   const tChannelParameterMap *map = Map;
   while (map && map->userValue != -1) {
         if (map->driverValue == Value)
-           return map->userString ? tr(map->userString) : "---";
+           return map->userString ? trVDR(map->userString) : "---";
         map++;
         }
   return "---";

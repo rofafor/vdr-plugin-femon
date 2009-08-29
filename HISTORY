@@ -365,7 +365,7 @@ VDR Plugin 'femon' Revision History
 - Cleaned up compilation warnings.
 - Fixed font handling to be thread-safe.
 
-2009-08-28: Version 1.7.3
+2009-08-29: Version 1.7.3
 
 - Removed OSD offset and height options.
 - Added PES assembler.
