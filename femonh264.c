@@ -60,6 +60,7 @@ cFemonH264::cFemonH264(cFemonVideoIf *videohandler)
   m_PicStructPresentFlag(false),
   m_TimeOffsetLength(0)
 {
+  reset();
 }
 
 cFemonH264::~cFemonH264()
@@ -81,6 +82,8 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
       return false;
   buf += PesPayloadOffset(buf);
   start = buf;
+
+  reset();
 
   for (;;) {
       int consumed = 0;
@@ -154,6 +157,13 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
   return aud_found;
 }
 
+void cFemonH264::reset()
+{
+  m_CpbDpbDelaysPresentFlag = false;
+  m_PicStructPresentFlag = false;
+  m_TimeOffsetLength = 0;
+}
+
 const uint8_t *cFemonH264::nextStartCode(const uint8_t *start, const uint8_t *end)
 {
   for (end -= 3; start < end; ++start) {
@@ -187,7 +197,7 @@ int cFemonH264::nalUnescape(uint8_t *dst, const uint8_t *src, int len)
 
 int cFemonH264::parseSPS(const uint8_t *buf, int len)
 {
-  int profile_idc, pic_order_cnt_type, frame_mbs_only, i, j;
+  int profile_idc, pic_order_cnt_type, frame_mbs_only_flag, i, j;
   cBitStream bs(buf, len);
 
   unsigned int width = m_Width;
@@ -198,23 +208,26 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   bool pic_struct_present_flag = m_PicStructPresentFlag;
   unsigned int time_offset_length = m_TimeOffsetLength;
 
-  profile_idc = bs.getU8();
-
+  profile_idc = bs.getU8();                 // profile_idc
   //Dprintf("H.264 SPS: profile_idc %d", profile_idc);
-
-  bs.skipBits(16);
+  bs.skipBit();                             // constraint_set0_flag
+  bs.skipBit();                             // constraint_set1_flag
+  bs.skipBit();                             // constraint_set2_flag
+  bs.skipBit();                             // constraint_set3_flag
+  bs.skipBits(4);                           // reserved_zero_4bits
+  bs.skipBits(8);                           // level_idc
   bs.skipUeGolomb();                        // seq_parameter_set_id
-  if (profile_idc >= 100) {
+  if ((profile_idc == 100) || (profile_idc == 110) || (profile_idc == 122) || (profile_idc == 144)) {
      if (bs.getUeGolomb() == 3)             // chroma_format_idc
         bs.skipBit();                       // residual_colour_transform_flag
-     bs.skipUeGolomb();                     // bit_depth_luma - 8
-     bs.skipUeGolomb();                     // bit_depth_chroma - 8
-     bs.skipBit();                          // transform_bypass
-     if (bs.getBit()) {                     // seq_scaling_matrix_present
-        for (i = 0; i < 8; i++) {
-            if (bs.getBit()) {              // seq_scaling_list_present
+     bs.skipUeGolomb();                     // bit_depth_luma_minus8
+     bs.skipUeGolomb();                     // bit_depth_chroma_minus8
+     bs.skipBit();                          // qpprime_y_zero_transform_bypass_flag
+     if (bs.getBit()) {                     // seq_scaling_matrix_present_flag
+        for (i = 0; i < 8; ++i) {
+            if (bs.getBit()) {              // seq_scaling_list_present_flag[i]
                int last = 8, next = 8, size = (i < 6) ? 16 : 64;
-               for (j = 0; j < size; j++) {
+               for (j = 0; j < size; ++j) {
                    if (next)
                       next = (last + bs.getSeGolomb()) & 0xff;
                    last = next ?: last;
@@ -223,61 +236,53 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
             }
         }
      }
-
-  bs.skipUeGolomb();                        // log2_max_frame_num - 4
-  pic_order_cnt_type = bs.getUeGolomb();
+  bs.skipUeGolomb();                        // log2_max_frame_num_minus4
+  pic_order_cnt_type = bs.getUeGolomb();    // pic_order_cnt_type
   if (pic_order_cnt_type == 0)
-     bs.skipUeGolomb();                     // log2_max_poc_lsb - 4
+     bs.skipUeGolomb();                     // log2_max_pic_order_cnt_lsb_minus4
   else if (pic_order_cnt_type == 1) {
      bs.skipBit();                          // delta_pic_order_always_zero
      bs.skipSeGolomb();                     // offset_for_non_ref_pic
      bs.skipSeGolomb();                     // offset_for_top_to_bottom_field
      j = bs.getUeGolomb();                  // num_ref_frames_in_pic_order_cnt_cycle
-     for (i = 0; i < j; i++)
+     for (i = 0; i < j; ++i)
          bs.skipSeGolomb();                 // offset_for_ref_frame[i]
      }
-  bs.skipUeGolomb();                        // ref_frames
-  bs.skipBit();                             // gaps_in_frame_num_allowed
-  width          = bs.getUeGolomb() + 1;    // mbs
-  height         = bs.getUeGolomb() + 1;    // mbs
-  frame_mbs_only = bs.getBit();
-
+  bs.skipUeGolomb();                        // num_ref_frames
+  bs.skipBit();                             // gaps_in_frame_num_value_allowed_flag
+  width  = bs.getUeGolomb() + 1;            // pic_width_in_mbs_minus1
+  height = bs.getUeGolomb() + 1;            // pic_height_in_mbs_minus1
+  frame_mbs_only_flag = bs.getBit();        // frame_mbs_only_flag
   //Dprintf("H.264 SPS: pic_width:  %u mbs", width);
   //Dprintf("H.264 SPS: pic_height: %u mbs", height);
-  //Dprintf("H.264 SPS: frame only flag: %d", frame_mbs_only);
-
+  //Dprintf("H.264 SPS: frame only flag: %d", frame_mbs_only_flag);
   width  *= 16;
-  height *= 16 * (2 - frame_mbs_only);
-
-  if (!frame_mbs_only) {
-    if (bs.getBit()) {                      // mb_adaptive_frame_field_flag
-       //Dprintf("H.264 SPS: MBAFF");
-       }
-    }
-
+  height *= 16 * (2 - frame_mbs_only_flag);
+  if (!frame_mbs_only_flag)
+     bs.skipBit();                          // mb_adaptive_frame_field_flag
   bs.skipBit();                             // direct_8x8_inference_flag
   if (bs.getBit()) {                        // frame_cropping_flag
-    uint32_t crop_left   = bs.getUeGolomb();
-    uint32_t crop_right  = bs.getUeGolomb();
-    uint32_t crop_top    = bs.getUeGolomb();
-    uint32_t crop_bottom = bs.getUeGolomb();
-    //Dprintf("H.264 SPS: cropping %d %d %d %d", crop_left, crop_top, crop_right, crop_bottom);
-
-    width -= 2 * (crop_left + crop_right);
-    if (frame_mbs_only)
-       height -= 2 * (crop_top + crop_bottom);
-    else
-       height -= 4 * (crop_top + crop_bottom);
-    }
-
+     uint32_t crop_left, crop_right, crop_top, crop_bottom;
+     crop_left   = bs.getUeGolomb();        // frame_crop_left_offset
+     crop_right  = bs.getUeGolomb();        // frame_crop_rigth_offset
+     crop_top    = bs.getUeGolomb();        // frame_crop_top_offset
+     crop_bottom = bs.getUeGolomb();        // frame_crop_bottom_offset
+     //Dprintf("H.264 SPS: cropping %d %d %d %d", crop_left, crop_top, crop_right, crop_bottom);
+     width -= 2 * (crop_left + crop_right);
+     if (frame_mbs_only_flag)
+        height -= 2 * (crop_top + crop_bottom);
+     else
+        height -= 4 * (crop_top + crop_bottom);
+     }
   // VUI parameters
   if (bs.getBit()) {                        // vui_parameters_present_flag
      if (bs.getBit()) {                     // aspect_ratio_info_present
-        uint32_t aspect_ratio_idc = bs.getU8();
+        uint32_t aspect_ratio_idc;
+        aspect_ratio_idc = bs.getU8();      // aspect_ratio_idc
         //Dprintf("H.264 SPS: aspect_ratio_idc %d", aspect_ratio_idc);
         if (aspect_ratio_idc == 255) {      // extended sar
-           bs.skipBit();                    // sar_width
-           bs.skipBit();                    // sar_height
+           bs.skipBits(16);                 // sar_width
+           bs.skipBits(16);                 // sar_height
            aspect_ratio = VIDEO_ASPECT_RATIO_EXTENDED;
            //Dprintf("H.264 SPS: aspect ratio extended");
            }
@@ -296,7 +301,6 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
            //Dprintf("H.264 SPS: -> video format %d", format);
            }
         bs.skipBit();                       // video_full_range_flag
-        bs.skipBit();                       // video_full_range_flag
         if (bs.getBit()) {                  // colour_description_present_flag
            bs.skipBits(8);                  // colour_primaries
            bs.skipBits(8);                  // transfer_characteristics
@@ -308,8 +312,10 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
         bs.skipUeGolomb();                  // chroma_sample_loc_type_bottom_field
         }
      if (bs.getBit()) {                     // timing_info_present_flag
-        bs.skipBits(32);                    // num_units_in_tick
-        bs.skipBits(32);                    // time_scale
+        uint32_t num_units_in_tick, time_scale;
+        num_units_in_tick = bs.getU32();    // num_units_in_tick
+        time_scale        = bs.getU32();    // time_scale
+        //Dprintf("H.264 SPS: -> num_units_in_tick %d, time_scale %d", num_units_in_tick, time_scale);
         bs.skipBit();                       // fixed_frame_rate_flag
         }
      int nal_hrd_parameters_present_flag = bs.getBit(); // nal_hrd_parameters_present_flag
@@ -401,8 +407,8 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
               bs.skipUeGolomb();                         // dpb_output_delay
               }
            if (m_PicStructPresentFlag) {                // pic_struct_present_flag
-              unsigned int pic_struct = bs.getBits(4);  // pic_struct
-              if (pic_struct >= (sizeof(s_SeiNumClockTsTable) ) / sizeof(s_SeiNumClockTsTable[0]))
+              uint32_t pic_struct = bs.getBits(4);      // pic_struct
+              if (pic_struct >= (sizeof(s_SeiNumClockTsTable)) / sizeof(s_SeiNumClockTsTable[0]))
                  return 0;
               for (int i = 0; i < s_SeiNumClockTsTable[pic_struct]; ++i) {
                   if (bs.getBit()) {                     // clock_timestamp_flag[i]
@@ -421,7 +427,7 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                             scan = VIDEO_SCAN_RESERVED;
                             break;
                        }
-                     //Dprintf("\nH.264 SEI: -> scan type %d", bit_rate, scan);
+                     //Dprintf("\nH.264 SEI: -> scan type %d", scan);
                      bs.skipBit();                       // nuit_field_based_flag
                      bs.skipBits(5);                     // counting_type
                      full_timestamp_flag = bs.getBit();  // full_timestamp_flag
