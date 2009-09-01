@@ -370,3 +370,8 @@ VDR Plugin 'femon' Revision History
 - Removed OSD offset and height options.
 - Added PES assembler.
 - Added bitstream parsers for all codecs.
+
+2009-xx-xx: Version 1.7.4
+
+- Fixed H.264 bitstream parser.
+- Added a mutex to receiver class.

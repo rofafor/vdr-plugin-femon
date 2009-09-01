@@ -20,8 +20,8 @@ private:
   };
 
   cFemonVideoIf *m_VideoHandler;
-  unsigned int m_Width;
-  unsigned int m_Height;
+  uint32_t m_Width;
+  uint32_t m_Height;
   eVideoAspectRatio m_AspectRatio;
   eVideoFormat m_Format;
   double m_FrameRate;
@@ -29,7 +29,9 @@ private:
   eVideoScan m_Scan;
   bool m_CpbDpbDelaysPresentFlag;
   bool m_PicStructPresentFlag;
-  unsigned int m_TimeOffsetLength;
+  bool m_FrameMbsOnlyFlag;
+  bool m_MbAdaptiveFrameFieldFlag;
+  uint32_t m_TimeOffsetLength;
 
   void reset();
   const uint8_t *nextStartCode(const uint8_t *start, const uint8_t *end);

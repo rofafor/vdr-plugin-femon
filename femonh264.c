@@ -58,6 +58,8 @@ cFemonH264::cFemonH264(cFemonVideoIf *videohandler)
   m_Scan(VIDEO_SCAN_INVALID),
   m_CpbDpbDelaysPresentFlag(false),
   m_PicStructPresentFlag(false),
+  m_FrameMbsOnlyFlag(false),
+  m_MbAdaptiveFrameFieldFlag(false),
   m_TimeOffsetLength(0)
 {
   reset();
@@ -117,7 +119,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
                   sps_found = true;
              }
              break;
-#if 0
+
         case NAL_SEI:
              if (!sei_found) {
                //Dprintf("H.264: Found NAL SEI at offset %d/%d", buf - start, len);
@@ -127,7 +129,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
                   sei_found = true;
              }
              break;
-#endif
+
         default:
              break;
         }
@@ -141,15 +143,15 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
   if (aud_found) {
      m_VideoHandler->SetVideoCodec(VIDEO_CODEC_H264);
      if (sps_found) {
-        //Dprintf("H.264 SPS: -> video size %dx%d, aspect %d format %d", m_Width, m_Height, m_AspectRatio, m_Format);
+        //Dprintf("H.264 SPS: size %dx%d, aspect %d format %d framerate %.2f bitrate %.3f", m_Width, m_Height, m_AspectRatio, m_Format, m_FrameRate, m_BitRate);
         m_VideoHandler->SetVideoFormat(m_Format);
         m_VideoHandler->SetVideoSize(m_Width, m_Height);
         m_VideoHandler->SetVideoAspectRatio(m_AspectRatio);
-        }
-     if (sei_found) {
-        //Dprintf("H.264 SEI: -> stream bitrate %.1f, frame rate %.1f scan %d", m_BitRate, m_FrameRate, m_Scan);
         m_VideoHandler->SetVideoFramerate(m_FrameRate);
         m_VideoHandler->SetVideoBitrate(m_BitRate);
+        }
+     if (sei_found) {
+        //Dprintf("H.264 SEI: scan %d", m_Scan);
         m_VideoHandler->SetVideoScan(m_Scan);
         }
   }
@@ -161,6 +163,8 @@ void cFemonH264::reset()
 {
   m_CpbDpbDelaysPresentFlag = false;
   m_PicStructPresentFlag = false;
+  m_FrameMbsOnlyFlag = false;
+  m_MbAdaptiveFrameFieldFlag = false;
   m_TimeOffsetLength = 0;
 }
 
@@ -197,26 +201,241 @@ int cFemonH264::nalUnescape(uint8_t *dst, const uint8_t *src, int len)
 
 int cFemonH264::parseSPS(const uint8_t *buf, int len)
 {
-  int profile_idc, pic_order_cnt_type, frame_mbs_only_flag, i, j;
+  int profile_idc, level_idc, constraint_set3_flag, pic_order_cnt_type, i, j;
   cBitStream bs(buf, len);
 
-  unsigned int width = m_Width;
-  unsigned int height = m_Height;
+  uint32_t width = m_Width;
+  uint32_t height = m_Height;
   eVideoAspectRatio aspect_ratio = m_AspectRatio;
   eVideoFormat format = m_Format;
+  double frame_rate = m_FrameRate;
+  double bit_rate = m_BitRate;
   bool cpb_dpb_delays_present_flag = m_CpbDpbDelaysPresentFlag;
   bool pic_struct_present_flag = m_PicStructPresentFlag;
-  unsigned int time_offset_length = m_TimeOffsetLength;
+  bool frame_mbs_only_flag = m_FrameMbsOnlyFlag;
+  bool mb_adaptive_frame_field_flag = m_MbAdaptiveFrameFieldFlag;
+  uint32_t time_offset_length = m_TimeOffsetLength;
 
   profile_idc = bs.getU8();                 // profile_idc
-  //Dprintf("H.264 SPS: profile_idc %d", profile_idc);
   bs.skipBit();                             // constraint_set0_flag
   bs.skipBit();                             // constraint_set1_flag
   bs.skipBit();                             // constraint_set2_flag
-  bs.skipBit();                             // constraint_set3_flag
+  constraint_set3_flag = bs.getBit();       // constraint_set3_flag
   bs.skipBits(4);                           // reserved_zero_4bits
-  bs.skipBits(8);                           // level_idc
+  level_idc = bs.getU8();                   // level_idc
   bs.skipUeGolomb();                        // seq_parameter_set_id
+  //Dprintf("H.264 SPS: profile_idc %d level_idc %d", profile_idc, level_idc);
+  switch (profile_idc) {
+    case 66:                                // baseline profile
+    case 77:                                // main profile
+    case 88:                                // extended profile
+         switch (level_idc) {
+           case 10:                         // level 1.0
+                bit_rate = 0.064;
+                break;
+           case 11:                         // level 1b / 1.1
+                bit_rate = constraint_set3_flag ? 0.128 : 0.192;
+                break;
+           case 12:                         // level 1.2
+                bit_rate = 0.384;
+                break;
+           case 13:                         // level 1.3
+                bit_rate = 0.768;
+                break;
+           case 20:                         // level 2.0
+                bit_rate = 2;
+                break;
+           case 21:                         // level 2.1
+                bit_rate = 4;
+                break;
+           case 22:                         // level 2.2
+                bit_rate = 4;
+                break;
+           case 30:                         // level 3.0
+                bit_rate = 10;
+                break;
+           case 31:                         // level 3.1
+                bit_rate = 14;
+                break;
+           case 32:                         // level 3.2
+                bit_rate = 20;
+                break;
+           case 40:                         // level 4.0
+                bit_rate = 20;
+                break;
+           case 41:                         // level 4.1
+                bit_rate = 50;
+                break;
+           case 42:                         // level 4.2
+                bit_rate = 50;
+                break;
+           case 50:                         // level 5.0
+                bit_rate = 135;
+                break;
+           case 51:                         // level 5.1
+                bit_rate = 240;
+                break;
+           default:
+                break;
+         }
+         break;
+    case 100:                               // high profile
+         switch (level_idc) {
+           case 10:                         // level 1.0
+                bit_rate = 0.080;
+                break;
+           case 11:                         // level 1b / 1.1
+                bit_rate = constraint_set3_flag ? 0.160 : 0.240;
+                break;
+           case 12:                         // level 1.2
+                bit_rate = 0.480;
+                break;
+           case 13:                         // level 1.3
+                bit_rate = 0.960;
+                break;
+           case 20:                         // level 2.0
+                bit_rate = 2.5;
+                break;
+           case 21:                         // level 2.1
+                bit_rate = 5;
+                break;
+           case 22:                         // level 2.2
+                bit_rate = 5;
+                break;
+           case 30:                         // level 3.0
+                bit_rate = 12.5;
+                break;
+           case 31:                         // level 3.1
+                bit_rate = 17.5;
+                break;
+           case 32:                         // level 3.2
+                bit_rate = 25;
+                break;
+           case 40:                         // level 4.0
+                bit_rate = 25;
+                break;
+           case 41:                         // level 4.1
+                bit_rate = 62.5;
+                break;
+           case 42:                         // level 4.2
+                bit_rate = 62.5;
+                break;
+           case 50:                         // level 5.0
+                bit_rate = 168.75;
+                break;
+           case 51:                         // level 5.1
+                bit_rate = 300;
+                break;
+           default:
+                break;
+         }
+         break;
+    case 110:                               // high 10 profile
+         switch (level_idc) {
+           case 10:                         // level 1.0
+                bit_rate = 0.192;
+                break;
+           case 11:                         // level 1b / 1.1
+                bit_rate = constraint_set3_flag ? 0.384 : 0.576;
+                break;
+           case 12:                         // level 1.2
+                bit_rate = 0.1152;
+                break;
+           case 13:                         // level 1.3
+                bit_rate = 2.304;
+                break;
+           case 20:                         // level 2.0
+                bit_rate = 6;
+                break;
+           case 21:                         // level 2.1
+                bit_rate = 12;
+                break;
+           case 22:                         // level 2.2
+                bit_rate = 12;
+                break;
+           case 30:                         // level 3.0
+                bit_rate = 30;
+                break;
+           case 31:                         // level 3.1
+                bit_rate = 42;
+                break;
+           case 32:                         // level 3.2
+                bit_rate = 60;
+                break;
+           case 40:                         // level 4.0
+                bit_rate = 60;
+                break;
+           case 41:                         // level 4.1
+                bit_rate = 150;
+                break;
+           case 42:                         // level 4.2
+                bit_rate = 150;
+                break;
+           case 50:                         // level 5.0
+                bit_rate = 405;
+                break;
+           case 51:                         // level 5.1
+                bit_rate = 720;
+                break;
+           default:
+                break;
+         }
+         break;
+    case 122:                               // high 4:2:2 profile
+    case 144:                               // high 4:4:4 profile
+         switch (level_idc) {
+           case 10:                         // level 1.0
+                bit_rate = 0.256;
+                break;
+           case 11:                         // level 1b / 1.1
+                bit_rate = constraint_set3_flag ? 0.512 : 0.768;
+                break;
+           case 12:                         // level 1.2
+                bit_rate = 1.536;
+                break;
+           case 13:                         // level 1.3
+                bit_rate = 3.072;
+                break;
+           case 20:                         // level 2.0
+                bit_rate = 8;
+                break;
+           case 21:                         // level 2.1
+                bit_rate = 16;
+                break;
+           case 22:                         // level 2.2
+                bit_rate = 16;
+                break;
+           case 30:                         // level 3.0
+                bit_rate = 40;
+                break;
+           case 31:                         // level 3.1
+                bit_rate = 56;
+                break;
+           case 32:                         // level 3.2
+                bit_rate = 80;
+                break;
+           case 40:                         // level 4.0
+                bit_rate = 80;
+                break;
+           case 41:                         // level 4.1
+                bit_rate = 200;
+                break;
+           case 42:                         // level 4.2
+                bit_rate = 200;
+                break;
+           case 50:                         // level 5.0
+                bit_rate = 540;
+                break;
+           case 51:                         // level 5.1
+                bit_rate = 960;
+                break;
+           default:
+                break;
+         }
+         break;
+    default:
+         break;
+  }
   if ((profile_idc == 100) || (profile_idc == 110) || (profile_idc == 122) || (profile_idc == 144)) {
      if (bs.getUeGolomb() == 3)             // chroma_format_idc
         bs.skipBit();                       // residual_colour_transform_flag
@@ -257,9 +476,9 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   //Dprintf("H.264 SPS: pic_height: %u mbs", height);
   //Dprintf("H.264 SPS: frame only flag: %d", frame_mbs_only_flag);
   width  *= 16;
-  height *= 16 * (2 - frame_mbs_only_flag);
+  height *= 16 * (frame_mbs_only_flag ? 1 : 2);
   if (!frame_mbs_only_flag)
-     bs.skipBit();                          // mb_adaptive_frame_field_flag
+     mb_adaptive_frame_field_flag = bs.getBit(); // mb_adaptive_frame_field_flag
   bs.skipBit();                             // direct_8x8_inference_flag
   if (bs.getBit()) {                        // frame_cropping_flag
      uint32_t crop_left, crop_right, crop_top, crop_bottom;
@@ -288,7 +507,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
            }
         else if (aspect_ratio_idc < sizeof(s_AspectRatios) / sizeof(s_AspectRatios[0])) {
            aspect_ratio = s_AspectRatios[aspect_ratio_idc];
-           //Dprintf("H.264 SPS: -> aspect ratio %d", aspect_ratio);
+           //Dprintf("H.264 SPS: aspect ratio %d", aspect_ratio);
            }
         }
      if (bs.getBit())                       // overscan_info_present_flag
@@ -298,7 +517,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
         video_format = bs.getBits(3);       // video_format
         if (video_format < sizeof(s_VideoFormats) / sizeof(s_VideoFormats[0])) {
            format = s_VideoFormats[video_format];
-           //Dprintf("H.264 SPS: -> video format %d", format);
+           //Dprintf("H.264 SPS: video format %d", format);
            }
         bs.skipBit();                       // video_full_range_flag
         if (bs.getBit()) {                  // colour_description_present_flag
@@ -315,7 +534,8 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
         uint32_t num_units_in_tick, time_scale;
         num_units_in_tick = bs.getU32();    // num_units_in_tick
         time_scale        = bs.getU32();    // time_scale
-        //Dprintf("H.264 SPS: -> num_units_in_tick %d, time_scale %d", num_units_in_tick, time_scale);
+        if (num_units_in_tick > 0)
+           frame_rate = time_scale / num_units_in_tick;
         bs.skipBit();                       // fixed_frame_rate_flag
         }
      int nal_hrd_parameters_present_flag = bs.getBit(); // nal_hrd_parameters_present_flag
@@ -337,18 +557,18 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
      int vlc_hrd_parameters_present_flag = bs.getBit(); // vlc_hrd_parameters_present_flag
      if (vlc_hrd_parameters_present_flag) {
          int cpb_cnt_minus1;
-         cpb_cnt_minus1 = bs.getUeGolomb();  // cpb_cnt_minus1
-         bs.skipBits(4);                     // bit_rate_scale
-         bs.skipBits(4);                     // cpb_size_scale
+         cpb_cnt_minus1 = bs.getUeGolomb(); // cpb_cnt_minus1
+         bs.skipBits(4);                    // bit_rate_scale
+         bs.skipBits(4);                    // cpb_size_scale
          for (int i = 0; i < cpb_cnt_minus1; ++i) {
-             bs.skipUeGolomb();              // bit_rate_value_minus1[i]
-             bs.skipUeGolomb();              // cpb_size_value_minus1[i]
-             bs.skipBit();                   // cbr_flag[i]
+             bs.skipUeGolomb();             // bit_rate_value_minus1[i]
+             bs.skipUeGolomb();             // cpb_size_value_minus1[i]
+             bs.skipBit();                  // cbr_flag[i]
              }
-         bs.skipBits(5);                     // initial_cpb_removal_delay_length_minus1
-         bs.skipBits(5);                     // cpb_removal_delay_length_minus1
-         bs.skipBits(5);                     // dpb_output_delay_length_minus1
-         time_offset_length = bs.getBits(5); // time_offset_length
+         bs.skipBits(5);                    // initial_cpb_removal_delay_length_minus1
+         bs.skipBits(5);                    // cpb_removal_delay_length_minus1
+         bs.skipBits(5);                    // dpb_output_delay_length_minus1
+         time_offset_length = bs.getBits(5);// time_offset_length
         }
      cpb_dpb_delays_present_flag = (nal_hrd_parameters_present_flag | vlc_hrd_parameters_present_flag);
      if (cpb_dpb_delays_present_flag)
@@ -369,8 +589,12 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   m_Height = height;
   m_AspectRatio = aspect_ratio;
   m_Format = format;
+  m_FrameRate = frame_rate;
+  m_BitRate = bit_rate;
   m_CpbDpbDelaysPresentFlag = cpb_dpb_delays_present_flag;
   m_PicStructPresentFlag = pic_struct_present_flag;
+  m_FrameMbsOnlyFlag = frame_mbs_only_flag;
+  m_MbAdaptiveFrameFieldFlag = mb_adaptive_frame_field_flag;
   m_TimeOffsetLength = time_offset_length;
 
   return (bs.getIndex() / 8);
@@ -381,24 +605,20 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
   int num_referenced_subseqs, i;
   cBitStream bs(buf, len);
 
-  double frame_rate = m_FrameRate;
-  double bit_rate = m_BitRate;
   eVideoScan scan = m_Scan;
 
   while ((bs.getIndex() * 8 + 16) < len) {               // sei_message
     int lastByte, payloadSize = 0, payloadType = 0;
 
-    // last_payload_type_byte
     do {
        lastByte = bs.getU8() & 0xFF;
        payloadType += lastByte;
-    } while (lastByte == 0xFF);
+    } while (lastByte == 0xFF);                          // last_payload_type_byte
 
-    // last_payload_size_byte
     do {
        lastByte = bs.getU8() & 0xFF;
        payloadSize += lastByte;
-    } while (lastByte == 0xFF);
+    } while (lastByte == 0xFF);                          // last_payload_size_byte
 
     switch (payloadType) {                               // sei_payload
       case 1:                                            // pic_timing
@@ -406,10 +626,34 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
               bs.skipUeGolomb();                         // cpb_removal_delay
               bs.skipUeGolomb();                         // dpb_output_delay
               }
-           if (m_PicStructPresentFlag) {                // pic_struct_present_flag
-              uint32_t pic_struct = bs.getBits(4);      // pic_struct
+           if (m_PicStructPresentFlag) {                 // pic_struct_present_flag
+              uint32_t pic_struct;
+              pic_struct = bs.getBits(4);                // pic_struct
               if (pic_struct >= (sizeof(s_SeiNumClockTsTable)) / sizeof(s_SeiNumClockTsTable[0]))
                  return 0;
+              if (m_FrameMbsOnlyFlag && !m_MbAdaptiveFrameFieldFlag)
+                 scan = VIDEO_SCAN_PROGRESSIVE;
+              else {
+                 switch (pic_struct) {
+                   case 0:                               // frame
+                   case 7:                               // frame doubling
+                   case 8:                               // frame tripling
+                        scan = VIDEO_SCAN_PROGRESSIVE;
+                        break;
+                   case 1:                               // top
+                   case 2:                               // bottom
+                   case 3:                               // top bottom
+                   case 4:                               // bottom top
+                   case 5:                               // top bottom top
+                   case 6:                               // bottom top bottom
+                        scan = VIDEO_SCAN_INTERLACED;
+                        break;
+                   default:
+                        scan = VIDEO_SCAN_RESERVED;
+                        break;
+                   }
+                }
+              //Dprintf("H.264 SEI: pic struct %d scan type %d", pic_struct, scan);
               for (int i = 0; i < s_SeiNumClockTsTable[pic_struct]; ++i) {
                   if (bs.getBit()) {                     // clock_timestamp_flag[i]
                      int full_timestamp_flag;
@@ -427,7 +671,7 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                             scan = VIDEO_SCAN_RESERVED;
                             break;
                        }
-                     //Dprintf("\nH.264 SEI: -> scan type %d", scan);
+                     //Dprintf("H.264 SEI: scan type %d", scan);
                      bs.skipBit();                       // nuit_field_based_flag
                      bs.skipBits(5);                     // counting_type
                      full_timestamp_flag = bs.getBit();  // full_timestamp_flag
@@ -456,22 +700,21 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
               }
            break;
 
-      case 12:                                          // sub_seq_characteristics
-           bs.skipUeGolomb();                           // sub_seq_layer_num
-           bs.skipUeGolomb();                           // sub_seq_id
-           if (bs.getBit())                             // duration_flag
-              bs.skipBits(32);                          // sub_seq_duration
-           if (bs.getBit()) {                           // average_rate_flag
-              bs.skipBit();                             // accurate_statistics_flag
-              bit_rate   = bs.getU16() / 1048.51;       // average_bit_rate (1000 bit/s -> Mbit/s)
-              frame_rate = bs.getU16() / 256.0;         // average_frame_rate (frames/256s)
-              //Dprintf("\nH.264 SEI: -> stream bitrate %.1f, frame rate %.1f", bit_rate, frame_rate);
+      case 12:                                           // sub_seq_characteristics
+           bs.skipUeGolomb();                            // sub_seq_layer_num
+           bs.skipUeGolomb();                            // sub_seq_id
+           if (bs.getBit())                              // duration_flag
+              bs.skipBits(32);                           // sub_seq_duration
+           if (bs.getBit()) {                            // average_rate_flag
+              bs.skipBit();                              // accurate_statistics_flag
+              bs.skipBits(16);                           // average_bit_rate (1000 bit/s)
+              bs.skipBits(16);                           // average_frame_rate (frames per 256s)
               }
-           num_referenced_subseqs = bs.getUeGolomb();   // num_referenced_subseqs
+           num_referenced_subseqs = bs.getUeGolomb();    // num_referenced_subseqs
            for (i = 0; i < num_referenced_subseqs; ++i) {
-               bs.skipUeGolomb();                       // ref_sub_seq_layer_num
-               bs.skipUeGolomb();                       // ref_sub_seq_id
-               bs.getBit();                             // ref_sub_seq_direction
+               bs.skipUeGolomb();                        // ref_sub_seq_layer_num
+               bs.skipUeGolomb();                        // ref_sub_seq_id
+               bs.getBit();                              // ref_sub_seq_direction
                }
            break;
 
@@ -484,8 +727,6 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
     bs.byteAlign();
     }
 
-  m_FrameRate = frame_rate;
-  m_BitRate = bit_rate;
   m_Scan = scan;
 
   return (bs.getIndex() / 8);

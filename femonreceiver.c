@@ -13,6 +13,7 @@
 cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid, int Apid[], int Dpid[])
 : cReceiver(ChannelID, -1, Vpid, Apid, Dpid, NULL),
   cThread("femon receiver"),
+  m_Mutex(),
   m_Sleep(),
   m_Active(false),
   m_DetectH264(this),
