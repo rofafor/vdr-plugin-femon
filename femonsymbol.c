@@ -37,6 +37,11 @@
 #include "symbols/five.xpm"
 #include "symbols/six.xpm"
 #include "symbols/seven.xpm"
+#include "symbols/eight.xpm"
+#include "symbols/format1080.xpm"
+#include "symbols/format720.xpm"
+#include "symbols/format576.xpm"
+#include "symbols/format480.xpm"
 
 cBitmap bmSymbol[SYMBOL_MAX_COUNT] =
 {
@@ -69,5 +74,10 @@ cBitmap bmSymbol[SYMBOL_MAX_COUNT] =
   cBitmap(four_xpm),           // SYMBOL_FOUR
   cBitmap(five_xpm),           // SYMBOL_FIVE
   cBitmap(six_xpm),            // SYMBOL_SIX
-  cBitmap(seven_xpm)           // SYMBOL_SEVEN
+  cBitmap(seven_xpm),          // SYMBOL_SEVEN
+  cBitmap(eight_xpm),          // SYMBOL_EIGHT
+  cBitmap(format1080_xpm),     // SYMBOL_FORMAT_1080
+  cBitmap(format720_xpm),      // SYMBOL_FORMAT_720
+  cBitmap(format576_xpm),      // SYMBOL_FORMAT_576
+  cBitmap(format480_xpm)       // SYMBOL_FORMAT_480
 };

@@ -247,6 +247,7 @@ void cFemonOsd::DrawStatusWindow(void)
        case 5:  bm = &bmSymbol[SYMBOL_FIVE];  break;
        case 6:  bm = &bmSymbol[SYMBOL_SIX];   break;
        case 7:  bm = &bmSymbol[SYMBOL_SEVEN]; break;
+       case 8:  bm = &bmSymbol[SYMBOL_EIGHT]; break;
        default: bm = &bmSymbol[SYMBOL_ZERO];  break;
        }
      OSDDRAWSTATUSBM(OSDSPACING);
@@ -261,6 +262,7 @@ void cFemonOsd::DrawStatusWindow(void)
            case 5:  bm = &bmSymbol[SYMBOL_FIVE];  break;
            case 6:  bm = &bmSymbol[SYMBOL_SIX];   break;
            case 7:  bm = &bmSymbol[SYMBOL_SEVEN]; break;
+           case 8:  bm = &bmSymbol[SYMBOL_EIGHT]; break;
            default: bm = &bmSymbol[SYMBOL_ZERO];  break;
            }
         OSDDRAWSTATUSBM(OSDSPACING);
@@ -278,6 +280,14 @@ void cFemonOsd::DrawStatusWindow(void)
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      if (m_Receiver) {
+       switch (m_Receiver->VideoVerticalSize()) {
+           case 1080: bm = &bmSymbol[SYMBOL_FORMAT_1080]; break;
+           case 720:  bm = &bmSymbol[SYMBOL_FORMAT_720];  break;
+           case 576:  bm = &bmSymbol[SYMBOL_FORMAT_576];  break;
+           case 480:  bm = &bmSymbol[SYMBOL_FORMAT_480];  break;
+           default:   bm = NULL;                          break;
+           }
+        OSDDRAWSTATUSBM(OSDSPACING);
         switch (m_Receiver->VideoCodec()) {
            case VIDEO_CODEC_MPEG2: bm = &bmSymbol[SYMBOL_MPEG2]; break;
            case VIDEO_CODEC_H264:  bm = &bmSymbol[SYMBOL_H264];  break;

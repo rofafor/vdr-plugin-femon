@@ -375,3 +375,4 @@ VDR Plugin 'femon' Revision History
 
 - Fixed H.264 bitstream parser.
 - Added a mutex to receiver class.
+- Added 1080/720/576/480 format symbols into status window.
