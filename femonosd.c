@@ -280,13 +280,16 @@ void cFemonOsd::DrawStatusWindow(void)
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      if (m_Receiver) {
-       switch (m_Receiver->VideoVerticalSize()) {
-           case 1080: bm = &bmSymbol[SYMBOL_FORMAT_1080]; break;
-           case 720:  bm = &bmSymbol[SYMBOL_FORMAT_720];  break;
-           case 576:  bm = &bmSymbol[SYMBOL_FORMAT_576];  break;
-           case 480:  bm = &bmSymbol[SYMBOL_FORMAT_480];  break;
-           default:   bm = NULL;                          break;
-           }
+        if (abs(m_Receiver->VideoVerticalSize() - 1080) < 20)
+           bm = &bmSymbol[SYMBOL_FORMAT_1080];
+        else if (abs(m_Receiver->VideoVerticalSize() - 720) < 20)
+           bm = &bmSymbol[SYMBOL_FORMAT_720];
+        else if (abs(m_Receiver->VideoVerticalSize() - 576) < 20)
+           bm = &bmSymbol[SYMBOL_FORMAT_576];
+        else if (abs(m_Receiver->VideoVerticalSize() - 480) < 20)
+           bm = &bmSymbol[SYMBOL_FORMAT_480];
+        else
+           bm = NULL;
         OSDDRAWSTATUSBM(OSDSPACING);
         switch (m_Receiver->VideoCodec()) {
            case VIDEO_CODEC_MPEG2: bm = &bmSymbol[SYMBOL_MPEG2]; break;
