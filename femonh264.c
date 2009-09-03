@@ -3,8 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * The original NAL SPS parsing and bitstream functions are taken from
- * vdr-xineliboutput plugin by Petri Hintukainen.
  */
 
 #include "femontools.h"
