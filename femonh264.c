@@ -70,7 +70,7 @@ cFemonH264::~cFemonH264()
 bool cFemonH264::processVideo(const uint8_t *buf, int len)
 {
   uint8_t nal_data[len];
-  bool aud_found = false, sps_found = false, sei_found = false;
+  bool aud_found = false, sps_found = false, sei_found = true; // SEI temporarily disabled!
   const uint8_t *start = buf;
   const uint8_t *end = start + len;
 
