@@ -141,7 +141,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
   if (aud_found) {
      m_VideoHandler->SetVideoCodec(VIDEO_CODEC_H264);
      if (sps_found) {
-        //Dprintf("H.264 SPS: size %dx%d, aspect %d format %d framerate %.2f bitrate %.3f", m_Width, m_Height, m_AspectRatio, m_Format, m_FrameRate, m_BitRate);
+        //Dprintf("H.264 SPS: size %dx%d, aspect %d format %d framerate %.2f bitrate %.0f", m_Width, m_Height, m_AspectRatio, m_Format, m_FrameRate, m_BitRate);
         m_VideoHandler->SetVideoFormat(m_Format);
         m_VideoHandler->SetVideoSize(m_Width, m_Height);
         m_VideoHandler->SetVideoAspectRatio(m_AspectRatio);
