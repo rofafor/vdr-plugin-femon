@@ -19,29 +19,29 @@ private:
     NAL_END_SEQ = 0x0A  // End of Sequence
   };
 
-  cFemonVideoIf *m_VideoHandler;
-  uint32_t m_Width;
-  uint32_t m_Height;
+  cFemonVideoIf    *m_VideoHandler;
+  uint32_t          m_Width;
+  uint32_t          m_Height;
   eVideoAspectRatio m_AspectRatio;
-  eVideoFormat m_Format;
-  double m_FrameRate;
-  double m_BitRate;
-  eVideoScan m_Scan;
-  bool m_CpbDpbDelaysPresentFlag;
-  bool m_PicStructPresentFlag;
-  bool m_FrameMbsOnlyFlag;
-  bool m_MbAdaptiveFrameFieldFlag;
-  uint32_t m_TimeOffsetLength;
+  eVideoFormat      m_Format;
+  double            m_FrameRate;
+  double            m_BitRate;
+  eVideoScan        m_Scan;
+  bool              m_CpbDpbDelaysPresentFlag;
+  bool              m_PicStructPresentFlag;
+  bool              m_FrameMbsOnlyFlag;
+  bool              m_MbAdaptiveFrameFieldFlag;
+  uint32_t          m_TimeOffsetLength;
 
-  void reset();
+  void           reset();
   const uint8_t *nextStartCode(const uint8_t *start, const uint8_t *end);
-  int nalUnescape(uint8_t *dst, const uint8_t *src, int len);
-  int parseSPS(const uint8_t *buf, int len);
-  int parseSEI(const uint8_t *buf, int len);
+  int            nalUnescape(uint8_t *dst, const uint8_t *src, int len);
+  int            parseSPS(const uint8_t *buf, int len);
+  int            parseSEI(const uint8_t *buf, int len);
 
   static const eVideoAspectRatio s_AspectRatios[];
-  static const eVideoFormat s_VideoFormats[];
-  static const uint8_t s_SeiNumClockTsTable[9];
+  static const eVideoFormat      s_VideoFormats[];
+  static const uint8_t           s_SeiNumClockTsTable[9];
 
 public:
   cFemonH264(cFemonVideoIf *videohandler);

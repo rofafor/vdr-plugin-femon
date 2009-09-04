@@ -229,49 +229,49 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
     case 88:                                // extended profile
          switch (level_idc) {
            case 10:                         // level 1.0
-                bit_rate = 0.064;
+                bit_rate = 64000;
                 break;
            case 11:                         // level 1b / 1.1
-                bit_rate = constraint_set3_flag ? 0.128 : 0.192;
+                bit_rate = constraint_set3_flag ? 128000 : 192000;
                 break;
            case 12:                         // level 1.2
-                bit_rate = 0.384;
+                bit_rate = 384000;
                 break;
            case 13:                         // level 1.3
-                bit_rate = 0.768;
+                bit_rate = 768000;
                 break;
            case 20:                         // level 2.0
-                bit_rate = 2;
+                bit_rate = 2000000;
                 break;
            case 21:                         // level 2.1
-                bit_rate = 4;
+                bit_rate = 4000000;
                 break;
            case 22:                         // level 2.2
-                bit_rate = 4;
+                bit_rate = 4000000;
                 break;
            case 30:                         // level 3.0
-                bit_rate = 10;
+                bit_rate = 10000000;
                 break;
            case 31:                         // level 3.1
-                bit_rate = 14;
+                bit_rate = 14000000;
                 break;
            case 32:                         // level 3.2
-                bit_rate = 20;
+                bit_rate = 20000000;
                 break;
            case 40:                         // level 4.0
-                bit_rate = 20;
+                bit_rate = 20000000;
                 break;
            case 41:                         // level 4.1
-                bit_rate = 50;
+                bit_rate = 50000000;
                 break;
            case 42:                         // level 4.2
-                bit_rate = 50;
+                bit_rate = 50000000;
                 break;
            case 50:                         // level 5.0
-                bit_rate = 135;
+                bit_rate = 135000000;
                 break;
            case 51:                         // level 5.1
-                bit_rate = 240;
+                bit_rate = 240000000;
                 break;
            default:
                 break;
@@ -280,49 +280,49 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
     case 100:                               // high profile
          switch (level_idc) {
            case 10:                         // level 1.0
-                bit_rate = 0.080;
+                bit_rate = 80000;
                 break;
            case 11:                         // level 1b / 1.1
-                bit_rate = constraint_set3_flag ? 0.160 : 0.240;
+                bit_rate = constraint_set3_flag ? 160000 : 240000;
                 break;
            case 12:                         // level 1.2
-                bit_rate = 0.480;
+                bit_rate = 480000;
                 break;
            case 13:                         // level 1.3
-                bit_rate = 0.960;
+                bit_rate = 960000;
                 break;
            case 20:                         // level 2.0
-                bit_rate = 2.5;
+                bit_rate = 2500000;
                 break;
            case 21:                         // level 2.1
-                bit_rate = 5;
+                bit_rate = 5000000;
                 break;
            case 22:                         // level 2.2
-                bit_rate = 5;
+                bit_rate = 5000000;
                 break;
            case 30:                         // level 3.0
-                bit_rate = 12.5;
+                bit_rate = 12500000;
                 break;
            case 31:                         // level 3.1
-                bit_rate = 17.5;
+                bit_rate = 17500000;
                 break;
            case 32:                         // level 3.2
-                bit_rate = 25;
+                bit_rate = 25000000;
                 break;
            case 40:                         // level 4.0
-                bit_rate = 25;
+                bit_rate = 25000000;
                 break;
            case 41:                         // level 4.1
-                bit_rate = 62.5;
+                bit_rate = 62500000;
                 break;
            case 42:                         // level 4.2
-                bit_rate = 62.5;
+                bit_rate = 62500000;
                 break;
            case 50:                         // level 5.0
-                bit_rate = 168.75;
+                bit_rate = 168750000;
                 break;
            case 51:                         // level 5.1
-                bit_rate = 300;
+                bit_rate = 300000000;
                 break;
            default:
                 break;
@@ -331,49 +331,49 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
     case 110:                               // high 10 profile
          switch (level_idc) {
            case 10:                         // level 1.0
-                bit_rate = 0.192;
+                bit_rate = 192000;
                 break;
            case 11:                         // level 1b / 1.1
-                bit_rate = constraint_set3_flag ? 0.384 : 0.576;
+                bit_rate = constraint_set3_flag ? 384000 : 576000;
                 break;
            case 12:                         // level 1.2
-                bit_rate = 0.1152;
+                bit_rate = 115200;
                 break;
            case 13:                         // level 1.3
-                bit_rate = 2.304;
+                bit_rate = 2304000;
                 break;
            case 20:                         // level 2.0
-                bit_rate = 6;
+                bit_rate = 6000000;
                 break;
            case 21:                         // level 2.1
-                bit_rate = 12;
+                bit_rate = 12000000;
                 break;
            case 22:                         // level 2.2
-                bit_rate = 12;
+                bit_rate = 12000000;
                 break;
            case 30:                         // level 3.0
-                bit_rate = 30;
+                bit_rate = 30000000;
                 break;
            case 31:                         // level 3.1
-                bit_rate = 42;
+                bit_rate = 42000000;
                 break;
            case 32:                         // level 3.2
-                bit_rate = 60;
+                bit_rate = 60000000;
                 break;
            case 40:                         // level 4.0
-                bit_rate = 60;
+                bit_rate = 60000000;
                 break;
            case 41:                         // level 4.1
-                bit_rate = 150;
+                bit_rate = 150000000;
                 break;
            case 42:                         // level 4.2
-                bit_rate = 150;
+                bit_rate = 150000000;
                 break;
            case 50:                         // level 5.0
-                bit_rate = 405;
+                bit_rate = 405000000;
                 break;
            case 51:                         // level 5.1
-                bit_rate = 720;
+                bit_rate = 720000000;
                 break;
            default:
                 break;
@@ -383,49 +383,49 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
     case 144:                               // high 4:4:4 profile
          switch (level_idc) {
            case 10:                         // level 1.0
-                bit_rate = 0.256;
+                bit_rate = 256000;
                 break;
            case 11:                         // level 1b / 1.1
-                bit_rate = constraint_set3_flag ? 0.512 : 0.768;
+                bit_rate = constraint_set3_flag ? 512000 : 768000;
                 break;
            case 12:                         // level 1.2
-                bit_rate = 1.536;
+                bit_rate = 1536000;
                 break;
            case 13:                         // level 1.3
-                bit_rate = 3.072;
+                bit_rate = 3072000;
                 break;
            case 20:                         // level 2.0
-                bit_rate = 8;
+                bit_rate = 8000000;
                 break;
            case 21:                         // level 2.1
-                bit_rate = 16;
+                bit_rate = 16000000;
                 break;
            case 22:                         // level 2.2
-                bit_rate = 16;
+                bit_rate = 16000000;
                 break;
            case 30:                         // level 3.0
-                bit_rate = 40;
+                bit_rate = 40000000;
                 break;
            case 31:                         // level 3.1
-                bit_rate = 56;
+                bit_rate = 56000000;
                 break;
            case 32:                         // level 3.2
-                bit_rate = 80;
+                bit_rate = 80000000;
                 break;
            case 40:                         // level 4.0
-                bit_rate = 80;
+                bit_rate = 80000000;
                 break;
            case 41:                         // level 4.1
-                bit_rate = 200;
+                bit_rate = 200000000;
                 break;
            case 42:                         // level 4.2
-                bit_rate = 200;
+                bit_rate = 200000000;
                 break;
            case 50:                         // level 5.0
-                bit_rate = 540;
+                bit_rate = 540000000;
                 break;
            case 51:                         // level 5.1
-                bit_rate = 960;
+                bit_rate = 960000000;
                 break;
            default:
                 break;

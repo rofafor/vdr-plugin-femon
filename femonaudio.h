@@ -89,7 +89,7 @@ enum eAudioCodingMode {
 
 typedef struct audio_info {
   eAudioCodec codec;             // enum
-  double      bitrate;           // kbit/s or eAudioBitrate
+  double      bitrate;           // bit/s or eAudioBitrate
   int         samplingFrequency; // Hz or eAudioSamplingFrequency
   int         channelMode;       // eAudioChannelMode
 } audio_info_t;

@@ -66,7 +66,7 @@ typedef struct video_info {
   int               width;       // pixels
   int               height;      // pixels
   double            frameRate;   // Hz
-  double            bitrate;     // Mbit/s
+  double            bitrate;     // bit/s
 } video_info_t;
 
 class cFemonVideoIf {
