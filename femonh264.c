@@ -8,25 +8,47 @@
 #include "femontools.h"
 #include "femonh264.h"
 
-const eVideoAspectRatio cFemonH264::s_AspectRatios[] =
+const cFemonH264::t_DAR cFemonH264::s_DAR[] =
 {
-  VIDEO_ASPECT_RATIO_INVALID,
-  VIDEO_ASPECT_RATIO_1_1,
-  VIDEO_ASPECT_RATIO_12_11,
-  VIDEO_ASPECT_RATIO_10_11,
-  VIDEO_ASPECT_RATIO_16_11,
-  VIDEO_ASPECT_RATIO_40_33,
-  VIDEO_ASPECT_RATIO_24_11,
-  VIDEO_ASPECT_RATIO_20_11,
-  VIDEO_ASPECT_RATIO_32_11,
-  VIDEO_ASPECT_RATIO_80_33,
-  VIDEO_ASPECT_RATIO_18_11,
-  VIDEO_ASPECT_RATIO_15_11,
-  VIDEO_ASPECT_RATIO_64_33,
-  VIDEO_ASPECT_RATIO_160_99,
-  VIDEO_ASPECT_RATIO_4_3,
-  VIDEO_ASPECT_RATIO_3_2,
-  VIDEO_ASPECT_RATIO_2_1
+  {  VIDEO_ASPECT_RATIO_1_1,      100  },
+  {  VIDEO_ASPECT_RATIO_4_3,      133  },
+  {  VIDEO_ASPECT_RATIO_16_9,     177  },
+  {  VIDEO_ASPECT_RATIO_2_21_1,   221  },
+  {  VIDEO_ASPECT_RATIO_12_11,    109  },
+  {  VIDEO_ASPECT_RATIO_10_11,    90   },
+  {  VIDEO_ASPECT_RATIO_16_11,    145  },
+  {  VIDEO_ASPECT_RATIO_40_33,    121  },
+  {  VIDEO_ASPECT_RATIO_24_11,    218  },
+  {  VIDEO_ASPECT_RATIO_20_11,    181  },
+  {  VIDEO_ASPECT_RATIO_32_11,    290  },
+  {  VIDEO_ASPECT_RATIO_80_33,    242  },
+  {  VIDEO_ASPECT_RATIO_18_11,    163  },
+  {  VIDEO_ASPECT_RATIO_15_11,    136  },
+  {  VIDEO_ASPECT_RATIO_64_33,    193  },
+  {  VIDEO_ASPECT_RATIO_160_99,   161  },
+  {  VIDEO_ASPECT_RATIO_3_2,      150  },
+  {  VIDEO_ASPECT_RATIO_2_1,      200  }
+};
+
+const cFemonH264::t_SAR cFemonH264::s_SAR[] =
+{
+  { 0,   0  }, // VIDEO_ASPECT_RATIO_INVALID
+  { 1,   1  }, // VIDEO_ASPECT_RATIO_1_1
+  { 12,  11 }, // VIDEO_ASPECT_RATIO_12_11
+  { 10,  11 }, // VIDEO_ASPECT_RATIO_10_11
+  { 16,  11 }, // VIDEO_ASPECT_RATIO_16_11
+  { 40,  33 }, // VIDEO_ASPECT_RATIO_40_33
+  { 24,  11 }, // VIDEO_ASPECT_RATIO_24_11
+  { 20,  11 }, // VIDEO_ASPECT_RATIO_20_11
+  { 32,  11 }, // VIDEO_ASPECT_RATIO_32_11
+  { 80,  33 }, // VIDEO_ASPECT_RATIO_80_33
+  { 18,  11 }, // VIDEO_ASPECT_RATIO_18_11
+  { 15,  11 }, // VIDEO_ASPECT_RATIO_15_11
+  { 64,  33 }, // VIDEO_ASPECT_RATIO_64_33
+  { 160, 99 }, // VIDEO_ASPECT_RATIO_160_99
+  { 4,   3  }, // VIDEO_ASPECT_RATIO_4_3
+  { 3,   2  }, // VIDEO_ASPECT_RATIO_3_2
+  { 2,   1  }  // VIDEO_ASPECT_RATIO_2_1
 };
 
 const eVideoFormat cFemonH264::s_VideoFormats[] =
@@ -494,18 +516,34 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   // VUI parameters
   if (bs.getBit()) {                        // vui_parameters_present_flag
      if (bs.getBit()) {                     // aspect_ratio_info_present
-        uint32_t aspect_ratio_idc;
+        uint32_t aspect_ratio_idc, sar_width = 0, sar_height = 0;
         aspect_ratio_idc = bs.getU8();      // aspect_ratio_idc
         //Dprintf("H.264 SPS: aspect_ratio_idc %d", aspect_ratio_idc);
         if (aspect_ratio_idc == 255) {      // extended sar
-           bs.skipBits(16);                 // sar_width
-           bs.skipBits(16);                 // sar_height
-           aspect_ratio = VIDEO_ASPECT_RATIO_EXTENDED;
-           //Dprintf("H.264 SPS: aspect ratio extended");
+           sar_width  = bs.getU16();        // sar_width
+           sar_height = bs.getU16();        // sar_height
            }
-        else if (aspect_ratio_idc < sizeof(s_AspectRatios) / sizeof(s_AspectRatios[0])) {
-           aspect_ratio = s_AspectRatios[aspect_ratio_idc];
-           //Dprintf("H.264 SPS: aspect ratio %d", aspect_ratio);
+        else if (aspect_ratio_idc < ELEMENTS(s_SAR)) {
+           sar_width  = s_SAR[aspect_ratio_idc].w;
+           sar_height = s_SAR[aspect_ratio_idc].h;
+           }
+        if (sar_width && sar_height) {
+           int index = -1, ratio = 100.0L * sar_width * width / sar_height / height;
+           for (unsigned int i = 0; i < ELEMENTS(s_DAR); ++i) {
+               if (s_DAR[i].ratio == ratio) {
+                  index = i;
+                  break;
+                  }
+               }
+           if (index < 0) {
+              if (aspect_ratio_idc == 255)
+                 aspect_ratio = VIDEO_ASPECT_RATIO_EXTENDED;
+              else
+                 aspect_ratio = VIDEO_ASPECT_RATIO_INVALID;
+              }
+           else
+              aspect_ratio = s_DAR[index].dar;
+           //Dprintf("H.264 SPS: DAR %dx%d (%d)", sar_width, sar_height, aspect_ratio);
            }
         }
      if (bs.getBit())                       // overscan_info_present_flag

@@ -19,6 +19,16 @@ private:
     NAL_END_SEQ = 0x0A  // End of Sequence
   };
 
+  typedef struct DAR {
+    eVideoAspectRatio dar;
+    int               ratio;
+  } t_DAR;
+
+  typedef struct SAR {
+    int               w;
+    int               h;
+  } t_SAR;
+
   cFemonVideoIf    *m_VideoHandler;
   uint32_t          m_Width;
   uint32_t          m_Height;
@@ -39,7 +49,8 @@ private:
   int            parseSPS(const uint8_t *buf, int len);
   int            parseSEI(const uint8_t *buf, int len);
 
-  static const eVideoAspectRatio s_AspectRatios[];
+  static const t_SAR             s_SAR[];
+  static const t_DAR             s_DAR[];
   static const eVideoFormat      s_VideoFormats[];
   static const uint8_t           s_SeiNumClockTsTable[9];
 
