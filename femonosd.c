@@ -62,12 +62,12 @@
 
 #define OSDDRAWSTATUSBAR(value) \
         if (value > 0) { \
-           value = OSDBARWIDTH(value); \
-           m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + 3, min(OSDBARWIDTH(femonConfig.redlimit), value), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrRed); \
-           if (value > OSDBARWIDTH(femonConfig.redlimit)) \
-              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.redlimit), OSDSTATUSWIN_Y(offset) + 3, min((OSDWIDTH * femonConfig.greenlimit / 100), value), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrYellow); \
-           if (value > OSDBARWIDTH(femonConfig.greenlimit)) \
-              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.greenlimit), OSDSTATUSWIN_Y(offset) + 3, value, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrGreen); \
+           int32_t barvalue = OSDBARWIDTH(value); \
+           m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + 3, min(OSDBARWIDTH(femonConfig.redlimit), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrRed); \
+           if (barvalue > OSDBARWIDTH(femonConfig.redlimit)) \
+              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.redlimit), OSDSTATUSWIN_Y(offset) + 3, min((OSDWIDTH * femonConfig.greenlimit / 100), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrYellow); \
+           if (barvalue > OSDBARWIDTH(femonConfig.greenlimit)) \
+              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.greenlimit), OSDSTATUSWIN_Y(offset) + 3, barvalue, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrGreen); \
            }
 
 #define OSDDRAWSTATUSTITLEBAR(title) \
@@ -164,10 +164,10 @@ cFemonOsd::cFemonOsd()
   m_SvdrpPlugin(NULL),
   m_Number(0),
   m_OldNumber(0),
-  m_SNR(0),
-  m_Signal(0),
-  m_BER(0),
-  m_UNC(0),
+  m_SNR(-1),
+  m_Signal(-1),
+  m_BER(-1),
+  m_UNC(-1),
   m_DisplayMode(femonConfig.displaymode),
   m_OsdWidth(cOsd::OsdWidth()),
   m_OsdHeight(cOsd::OsdHeight()),
@@ -177,6 +177,8 @@ cFemonOsd::cFemonOsd()
 {
   int tmp;
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+  memset(&m_FrontendStatus, 0, sizeof(m_FrontendStatus));
   m_SvdrpConnection.handle = -1;
   m_Font = cFont::CreateFont(Setup.FontSml, min(max(Setup.FontSmlSize, MINFONTSIZE), MAXFONTSIZE));
   if (!m_Font || !m_Font->Height()) {
@@ -225,8 +227,6 @@ void cFemonOsd::DrawStatusWindow(void)
 {
   cMutexLock lock(&m_Mutex);
   cBitmap *bm = NULL;
-  int snr = m_SNR / 655;
-  int signal = m_Signal / 655;
   int offset = 0;
   int x = OSDWIDTH - OSDROUNDING;
   int y = 0;
@@ -317,14 +317,18 @@ void cFemonOsd::DrawStatusWindow(void)
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSBAR(signal);
+     if (m_Signal >= 0)
+        OSDDRAWSTATUSBAR(m_Signal / 655);
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSBAR(snr);
+     if (m_SNR >= 0)
+        OSDDRAWSTATUSBAR(m_SNR / 655);
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES("STR:", *cString::sprintf("%04x", m_Signal), *cString::sprintf("(%2d%%)", m_Signal / 655), "BER:", *cString::sprintf("%08x", m_BER),
-                         *cString::sprintf("%s:", tr("Video")), *getBitrateMbits(m_Receiver ? m_Receiver->VideoBitrate() : (m_SvdrpFrontend >= 0 ? m_SvdrpVideoBitrate : -1.0)));
+     OSDDRAWSTATUSVALUES("STR:", (m_Signal >= 0) ? *cString::sprintf("%04x", m_Signal) : "---", (m_Signal >= 0) ? *cString::sprintf("(%2d%%)", m_Signal / 655) : "",
+                         "BER:", (m_BER >= 0) ? *cString::sprintf("%08lx", m_BER) : "---", *cString::sprintf("%s:", tr("Video")),
+                         *getBitrateMbits(m_Receiver ? m_Receiver->VideoBitrate() : (m_SvdrpFrontend >= 0 ? m_SvdrpVideoBitrate : -1.0)));
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES("SNR:", *cString::sprintf("%04x", m_SNR), *cString::sprintf("(%2d%%)", m_SNR / 655), "UNC:", *cString::sprintf("%08x", m_UNC),
+     OSDDRAWSTATUSVALUES("SNR:", (m_SNR >= 0) ? *cString::sprintf("%04x", m_SNR) : "---", (m_SNR >= 0) ? *cString::sprintf("(%2d%%)", m_SNR / 655) : "",
+                         "UNC:", (m_UNC >= 0) ? *cString::sprintf("%08lx", m_UNC) : "---",
                          *cString::sprintf("%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio")),
                          *getBitrateKbits(m_Receiver ? ((m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate()) : (m_SvdrpFrontend >= 0 ? m_SvdrpAudioBitrate : -1.0)));
      offset += OSDROWHEIGHT;
@@ -497,11 +501,16 @@ void cFemonOsd::Action(void)
     m_SvdrpVideoBitrate = -1.0;
     m_SvdrpAudioBitrate = -1.0;
     if (m_Frontend != -1) {
-       CHECK(ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus));
-       CHECK(ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal));
-       CHECK(ioctl(m_Frontend, FE_READ_SNR, &m_SNR));
-       CHECK(ioctl(m_Frontend, FE_READ_BER, &m_BER));
-       CHECK(ioctl(m_Frontend, FE_READ_UNCORRECTED_BLOCKS, &m_UNC));
+       if (ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus) < 0)
+          memset(&m_FrontendStatus, 0, sizeof(m_FrontendStatus));
+       if (ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal) < 0)
+          m_Signal = -1;
+       if (ioctl(m_Frontend, FE_READ_SNR, &m_SNR) < 0)
+          m_SNR = -1;
+       if (ioctl(m_Frontend, FE_READ_BER, &m_BER) < 0)
+          m_BER = -1;
+       if (ioctl(m_Frontend, FE_READ_UNCORRECTED_BLOCKS, &m_UNC) < 0)
+          m_UNC = -1;
        DrawInfoWindow();
        DrawStatusWindow();
        }
@@ -520,13 +529,13 @@ void cFemonOsd::Action(void)
               else if (!strncasecmp(s, "STAT:", 5))
                  m_FrontendStatus = (fe_status_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "SGNL:", 5))
-                 m_Signal = (uint16_t)strtol(s + 5, NULL, 16);
+                 m_Signal = (int32_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "SNRA:", 5))
-                 m_SNR = (uint16_t)strtol(s + 5, NULL, 16);
+                 m_SNR = (int32_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "BERA:", 5))
-                 m_BER = (uint32_t)strtol(s + 5, NULL, 16);
+                 m_BER = (int64_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "UNCB:", 5))
-                 m_UNC = (uint32_t)strtol(s + 5, NULL, 16);
+                 m_UNC = (int64_t)strtol(s + 5, NULL, 16);
               else if (!strncasecmp(s, "VIBR:", 5))
                  m_SvdrpVideoBitrate = (double)strtol(s + 5, NULL, 10);
               else if (!strncasecmp(s, "AUBR:", 5))
@@ -550,9 +559,11 @@ void cFemonOsd::Show(void)
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
   if (m_Frontend >= 0) {
      if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-        esyslog("ERROR: cFemonOsd::Show() cannot read frontend info.");
+        if (!femonConfig.usesvdrp)
+           esyslog("ERROR: cFemonOsd::Show() cannot read frontend info.");
         close(m_Frontend);
         m_Frontend = -1;
+        memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
         return;
         }
      }
@@ -610,9 +621,11 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
   if (m_Frontend >= 0) {
      if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-        esyslog("ERROR: cFemonOsd::ChannelSwitch() cannot read frontend info.");
+        if (!femonConfig.usesvdrp)
+           esyslog("ERROR: cFemonOsd::ChannelSwitch() cannot read frontend info.");
         close(m_Frontend);
         m_Frontend = -1;
+        memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
         return;
         }
      }

@@ -380,3 +380,4 @@ VDR Plugin 'femon' Revision History
 2009-xx-xx: Version 1.7.5
 
 - Changed H.264 parser to show display aspect ratio.
+- Removed error logging from unimplemented ioctl functions.

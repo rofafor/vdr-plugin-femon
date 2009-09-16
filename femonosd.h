@@ -37,10 +37,10 @@ private:
   dvb_frontend_info m_FrontendInfo;
   int               m_Number;
   int               m_OldNumber;
-  uint16_t          m_SNR;
-  uint16_t          m_Signal;
-  uint32_t          m_BER;
-  uint32_t          m_UNC;
+  int32_t           m_SNR;
+  int32_t           m_Signal;
+  int64_t           m_BER;
+  int64_t           m_UNC;
   fe_status_t       m_FrontendStatus;
   int               m_DisplayMode;
   int               m_OsdWidth;

@@ -86,15 +86,22 @@ cString getFrontendInfo(int cardIndex)
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return NULL;
-  CHECK(ioctl(fe, FE_GET_INFO, &value));
-  CHECK(ioctl(fe, FE_READ_STATUS, &status));
-  CHECK(ioctl(fe, FE_READ_SIGNAL_STRENGTH, &signal));
-  CHECK(ioctl(fe, FE_READ_SNR, &snr));
-  CHECK(ioctl(fe, FE_READ_BER, &ber));
-  CHECK(ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &unc));
-  close(fe);
 
-  info = cString::sprintf("CARD:%d\nTYPE:%d\nNAME:%s\nSTAT:%02X\nSGNL:%04X\nSNRA:%04X\nBERA:%08X\nUNCB:%08X", cardIndex, value.type, value.name, status, signal, snr, ber, unc);
+  info = cString::sprintf("CARD:%d", cardIndex);
+
+  if (ioctl(fe, FE_GET_INFO, &value) >= 0)
+     info = cString::sprintf("%s\nTYPE:%d\nNAME:%s", *info, value.type, value.name);
+  if (ioctl(fe, FE_READ_STATUS, &status) >= 0)
+     info = cString::sprintf("%s\nSTAT:%02X", *info, status);
+  if (ioctl(fe, FE_READ_SIGNAL_STRENGTH, &signal) >= 0)
+     info = cString::sprintf("%s\nSGNL:%04X", *info, signal);
+  if (ioctl(fe, FE_READ_SNR, &snr) >= 0)
+     info = cString::sprintf("%s\nSNRA:%04X", *info, snr);
+  if (ioctl(fe, FE_READ_BER, &ber) >= 0)
+     info = cString::sprintf("%s\nBERA:%08X", *info, ber);
+  if (ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &unc) >= 0)
+     info = cString::sprintf("%s\nUNCB:%08X", *info, unc);
+  close(fe);
 
   if (cFemonOsd::Instance())
      info = cString::sprintf("%s\nVIBR:%.0f\nAUBR:%.0f\nDDBR:%.0f", *info, cFemonOsd::Instance()->GetVideoBitrate(), cFemonOsd::Instance()->GetAudioBitrate(), cFemonOsd::Instance()->GetDolbyBitrate());
