@@ -5,6 +5,11 @@
  *
  */
 
+#ifndef __STDC_FORMAT_MACROS
+#define __STDC_FORMAT_MACROS
+#endif
+
+#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
@@ -94,13 +99,13 @@ cString getFrontendInfo(int cardIndex)
   if (ioctl(fe, FE_READ_STATUS, &status) >= 0)
      info = cString::sprintf("%s\nSTAT:%02X", *info, status);
   if (ioctl(fe, FE_READ_SIGNAL_STRENGTH, &signal) >= 0)
-     info = cString::sprintf("%s\nSGNL:%04X", *info, signal);
+     info = cString::sprintf("%s\nSGNL:%04" PRIX16, *info, signal);
   if (ioctl(fe, FE_READ_SNR, &snr) >= 0)
-     info = cString::sprintf("%s\nSNRA:%04X", *info, snr);
+     info = cString::sprintf("%s\nSNRA:%04" PRIX16, *info, snr);
   if (ioctl(fe, FE_READ_BER, &ber) >= 0)
-     info = cString::sprintf("%s\nBERA:%08X", *info, ber);
+     info = cString::sprintf("%s\nBERA:%08" PRIX32, *info, ber);
   if (ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &unc) >= 0)
-     info = cString::sprintf("%s\nUNCB:%08X", *info, unc);
+     info = cString::sprintf("%s\nUNCB:%08" PRIX32, *info, unc);
   close(fe);
 
   if (cFemonOsd::Instance())
@@ -120,7 +125,8 @@ cString getFrontendName(int cardIndex)
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return NULL;
-  CHECK(ioctl(fe, FE_GET_INFO, &value));
+  memset(&value, 0, sizeof(value));
+  ioctl(fe, FE_GET_INFO, &value);
   close(fe);
 
   return (cString::sprintf("%s on device #%d", value.name, cardIndex));
@@ -134,7 +140,8 @@ cString getFrontendStatus(int cardIndex)
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return NULL;
-  CHECK(ioctl(fe, FE_READ_STATUS, &value));
+  memset(&value, 0, sizeof(value));
+  ioctl(fe, FE_READ_STATUS, &value);
   close(fe);
 
   return (cString::sprintf("Status %s:%s:%s:%s:%s on device #%d", (value & FE_HAS_LOCK) ? "LOCKED" : "-", (value & FE_HAS_SIGNAL) ? "SIGNAL" : "-", (value & FE_HAS_CARRIER) ? "CARRIER" : "-", (value & FE_HAS_VITERBI) ? "VITERBI" : "-", (value & FE_HAS_SYNC) ? "SYNC" : "-", cardIndex));
@@ -148,7 +155,7 @@ uint16_t getSignal(int cardIndex)
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
-  CHECK(ioctl(fe, FE_READ_SIGNAL_STRENGTH, &value));
+  ioctl(fe, FE_READ_SIGNAL_STRENGTH, &value);
   close(fe);
 
   return (value);
@@ -162,7 +169,7 @@ uint16_t getSNR(int cardIndex)
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
-  CHECK(ioctl(fe, FE_READ_SNR, &value));
+  ioctl(fe, FE_READ_SNR, &value);
   close(fe);
 
   return (value);
@@ -176,7 +183,7 @@ uint32_t getBER(int cardIndex)
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
-  CHECK(ioctl(fe, FE_READ_BER, &value));
+  ioctl(fe, FE_READ_BER, &value);
   close(fe);
 
   return (value);
@@ -190,7 +197,7 @@ uint32_t getUNC(int cardIndex)
   int fe = open(dev, O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
-  CHECK(ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &value));
+  ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &value);
   close(fe);
 
   return (value);

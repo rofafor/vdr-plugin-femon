@@ -5,6 +5,10 @@
  *
  */
 
+#ifndef __STDC_FORMAT_MACROS
+#define __STDC_FORMAT_MACROS    
+#endif
+
 #include <ctype.h>
 #include <math.h>
 #include "femoncfg.h"
@@ -323,12 +327,12 @@ void cFemonOsd::DrawStatusWindow(void)
      if (m_SNR >= 0)
         OSDDRAWSTATUSBAR(m_SNR / 655);
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES("STR:", (m_Signal >= 0) ? *cString::sprintf("%04x", m_Signal) : "---", (m_Signal >= 0) ? *cString::sprintf("(%2d%%)", m_Signal / 655) : "",
-                         "BER:", (m_BER >= 0) ? *cString::sprintf("%08lx", m_BER) : "---", *cString::sprintf("%s:", tr("Video")),
+     OSDDRAWSTATUSVALUES("STR:", (m_Signal >= 0) ? *cString::sprintf("%04" PRIu32, m_Signal) : "---", (m_Signal >= 0) ? *cString::sprintf("(%2d%%)", m_Signal / 655) : "",
+                         "BER:", (m_BER >= 0) ? *cString::sprintf("%08" PRIx64, m_BER) : "---", *cString::sprintf("%s:", tr("Video")),
                          *getBitrateMbits(m_Receiver ? m_Receiver->VideoBitrate() : (m_SvdrpFrontend >= 0 ? m_SvdrpVideoBitrate : -1.0)));
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES("SNR:", (m_SNR >= 0) ? *cString::sprintf("%04x", m_SNR) : "---", (m_SNR >= 0) ? *cString::sprintf("(%2d%%)", m_SNR / 655) : "",
-                         "UNC:", (m_UNC >= 0) ? *cString::sprintf("%08lx", m_UNC) : "---",
+     OSDDRAWSTATUSVALUES("SNR:", (m_SNR >= 0) ? *cString::sprintf("%04" PRIu32, m_SNR) : "---", (m_SNR >= 0) ? *cString::sprintf("(%2d%%)", m_SNR / 655) : "",
+                         "UNC:", (m_UNC >= 0) ? *cString::sprintf("%08" PRIx64, m_UNC) : "---",
                          *cString::sprintf("%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio")),
                          *getBitrateKbits(m_Receiver ? ((m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate()) : (m_SvdrpFrontend >= 0 ? m_SvdrpAudioBitrate : -1.0)));
      offset += OSDROWHEIGHT;
