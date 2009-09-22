@@ -99,13 +99,13 @@ cString getFrontendInfo(int cardIndex)
   if (ioctl(fe, FE_READ_STATUS, &status) >= 0)
      info = cString::sprintf("%s\nSTAT:%02X", *info, status);
   if (ioctl(fe, FE_READ_SIGNAL_STRENGTH, &signal) >= 0)
-     info = cString::sprintf("%s\nSGNL:%04" PRIX16, *info, signal);
+     info = cString::sprintf("%s\nSGNL:%04X", *info, signal);
   if (ioctl(fe, FE_READ_SNR, &snr) >= 0)
-     info = cString::sprintf("%s\nSNRA:%04" PRIX16, *info, snr);
+     info = cString::sprintf("%s\nSNRA:%04X", *info, snr);
   if (ioctl(fe, FE_READ_BER, &ber) >= 0)
-     info = cString::sprintf("%s\nBERA:%08" PRIX32, *info, ber);
+     info = cString::sprintf("%s\nBERA:%08X", *info, ber);
   if (ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &unc) >= 0)
-     info = cString::sprintf("%s\nUNCB:%08" PRIX32, *info, unc);
+     info = cString::sprintf("%s\nUNCB:%08X", *info, unc);
   close(fe);
 
   if (cFemonOsd::Instance())

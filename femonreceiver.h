@@ -21,36 +21,39 @@
 
 class cFemonReceiver : public cReceiver, public cThread, public cFemonVideoIf, public cFemonAudioIf, public cFemonAC3If {
 private:
-  cMutex        m_Mutex;
-  cCondWait     m_Sleep;
-  bool          m_Active;
+  cMutex            m_Mutex;
+  cCondWait         m_Sleep;
+  bool              m_Active;
 
-  cFemonH264    m_DetectH264;
-  cFemonMPEG    m_DetectMPEG;
-  cFemonAAC     m_DetectAAC;
-  cFemonAC3     m_DetectAC3;
+  cFemonH264        m_DetectH264;
+  cFemonMPEG        m_DetectMPEG;
+  cFemonAAC         m_DetectAAC;
+  cFemonAC3         m_DetectAC3;
 
-  cTsToPes      m_VideoAssembler;
-  int           m_VideoType;
-  int           m_VideoPid;
-  int           m_VideoPacketCount;
-  double        m_VideoBitrate;
-  bool          m_VideoValid;
-  video_info_t  m_VideoInfo;
+  cRingBufferLinear m_VideoBuffer;
+  cTsToPes          m_VideoAssembler;
+  int               m_VideoType;
+  int               m_VideoPid;
+  int               m_VideoPacketCount;
+  double            m_VideoBitrate;
+  bool              m_VideoValid;
+  video_info_t      m_VideoInfo;
 
-  cTsToPes      m_AudioAssembler;
-  int           m_AudioPid;
-  int           m_AudioPacketCount;
-  double        m_AudioBitrate;
-  bool          m_AudioValid;
-  audio_info_t  m_AudioInfo;
+  cRingBufferLinear m_AudioBuffer;
+  cTsToPes          m_AudioAssembler;
+  int               m_AudioPid;
+  int               m_AudioPacketCount;
+  double            m_AudioBitrate;
+  bool              m_AudioValid;
+  audio_info_t      m_AudioInfo;
 
-  cTsToPes      m_AC3Assembler;
-  int           m_AC3Pid;
-  int           m_AC3PacketCount;
-  double        m_AC3Bitrate;
-  bool          m_AC3Valid;
-  ac3_info_t    m_AC3Info;
+  cRingBufferLinear m_AC3Buffer;
+  cTsToPes          m_AC3Assembler;
+  int               m_AC3Pid;
+  int               m_AC3PacketCount;
+  double            m_AC3Bitrate;
+  bool              m_AC3Valid;
+  ac3_info_t        m_AC3Info;
 
 protected:
   virtual void Activate(bool On);
