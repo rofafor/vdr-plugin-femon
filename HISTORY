@@ -382,3 +382,4 @@ VDR Plugin 'femon' Revision History
 - Changed H.264 parser to show display aspect ratio.
 - Removed error logging from unimplemented ioctl functions.
 - Removed bitstream parsing from Receive() method.
+- Added Chinese translation (Thanks to NanFeng).
