@@ -119,7 +119,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
              if (!aud_found) {
                  switch (buf[4] >> 5) {
                    case 0: case 3: case 5: // I_FRAME
-                       //Dprintf("H.264: Found NAL AUD at offset %d/%d", buf - start, len);
+                       //Dprintf("H.264: Found NAL AUD at offset %d/%d\n", buf - start, len);
                        aud_found = true;
                        break;
                    case 1: case 4: case 6: // P_FRAME;
@@ -132,7 +132,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
 
         case NAL_SPS:
              if (!sps_found) {
-               //Dprintf("H.264: Found NAL SPS at offset %d/%d", buf - start, len);
+               //Dprintf("H.264: Found NAL SPS at offset %d/%d\n", buf - start, len);
                int nal_len = nalUnescape(nal_data, buf + 4, int(end - buf - 4));
                consumed = parseSPS(nal_data, nal_len);
                if (consumed > 0)
@@ -142,7 +142,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
 
         case NAL_SEI:
              if (!sei_found) {
-               //Dprintf("H.264: Found NAL SEI at offset %d/%d", buf - start, len);
+               //Dprintf("H.264: Found NAL SEI at offset %d/%d\n", buf - start, len);
                int nal_len = nalUnescape(nal_data, buf + 4, int(end - buf - 4));
                consumed = parseSEI(nal_data, nal_len);
                if (consumed > 0)
@@ -163,7 +163,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
   if (aud_found) {
      m_VideoHandler->SetVideoCodec(VIDEO_CODEC_H264);
      if (sps_found) {
-        //Dprintf("H.264 SPS: size %dx%d, aspect %d format %d framerate %.2f bitrate %.0f", m_Width, m_Height, m_AspectRatio, m_Format, m_FrameRate, m_BitRate);
+        //Dprintf("H.264 SPS: size %dx%d, aspect %d format %d framerate %.2f bitrate %.0f\n", m_Width, m_Height, m_AspectRatio, m_Format, m_FrameRate, m_BitRate);
         m_VideoHandler->SetVideoFormat(m_Format);
         m_VideoHandler->SetVideoSize(m_Width, m_Height);
         m_VideoHandler->SetVideoAspectRatio(m_AspectRatio);
@@ -171,7 +171,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
         m_VideoHandler->SetVideoBitrate(m_BitRate);
         }
      if (sei_found) {
-        //Dprintf("H.264 SEI: scan %d", m_Scan);
+        //Dprintf("H.264 SEI: scan %d\n", m_Scan);
         m_VideoHandler->SetVideoScan(m_Scan);
         }
   }
@@ -244,7 +244,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   bs.skipBits(4);                           // reserved_zero_4bits
   level_idc = bs.getU8();                   // level_idc
   bs.skipUeGolomb();                        // seq_parameter_set_id
-  //Dprintf("H.264 SPS: profile_idc %d level_idc %d", profile_idc, level_idc);
+  //Dprintf("H.264 SPS: profile_idc %d level_idc %d\n", profile_idc, level_idc);
   switch (profile_idc) {
     case 66:                                // baseline profile
     case 77:                                // main profile
@@ -492,9 +492,9 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   width  = bs.getUeGolomb() + 1;            // pic_width_in_mbs_minus1
   height = bs.getUeGolomb() + 1;            // pic_height_in_mbs_minus1
   frame_mbs_only_flag = bs.getBit();        // frame_mbs_only_flag
-  //Dprintf("H.264 SPS: pic_width:  %u mbs", width);
-  //Dprintf("H.264 SPS: pic_height: %u mbs", height);
-  //Dprintf("H.264 SPS: frame only flag: %d", frame_mbs_only_flag);
+  //Dprintf("H.264 SPS: pic_width:  %u mbs\n", width);
+  //Dprintf("H.264 SPS: pic_height: %u mbs\n", height);
+  //Dprintf("H.264 SPS: frame only flag: %d\n", frame_mbs_only_flag);
   width  *= 16;
   height *= 16 * (frame_mbs_only_flag ? 1 : 2);
   if (!frame_mbs_only_flag)
@@ -506,7 +506,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
      crop_right  = bs.getUeGolomb();        // frame_crop_rigth_offset
      crop_top    = bs.getUeGolomb();        // frame_crop_top_offset
      crop_bottom = bs.getUeGolomb();        // frame_crop_bottom_offset
-     //Dprintf("H.264 SPS: cropping %d %d %d %d", crop_left, crop_top, crop_right, crop_bottom);
+     //Dprintf("H.264 SPS: cropping %d %d %d %d\n", crop_left, crop_top, crop_right, crop_bottom);
      width -= 2 * (crop_left + crop_right);
      if (frame_mbs_only_flag)
         height -= 2 * (crop_top + crop_bottom);
@@ -518,7 +518,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
      if (bs.getBit()) {                     // aspect_ratio_info_present
         uint32_t aspect_ratio_idc, sar_width = 0, sar_height = 0;
         aspect_ratio_idc = bs.getU8();      // aspect_ratio_idc
-        //Dprintf("H.264 SPS: aspect_ratio_idc %d", aspect_ratio_idc);
+        //Dprintf("H.264 SPS: aspect_ratio_idc %d\n", aspect_ratio_idc);
         if (aspect_ratio_idc == 255) {      // extended sar
            sar_width  = bs.getU16();        // sar_width
            sar_height = bs.getU16();        // sar_height
@@ -543,7 +543,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
               }
            else
               aspect_ratio = s_DAR[index].dar;
-           //Dprintf("H.264 SPS: DAR %dx%d (%d)", sar_width, sar_height, aspect_ratio);
+           //Dprintf("H.264 SPS: DAR %dx%d (%d)\n", sar_width, sar_height, aspect_ratio);
            }
         }
      if (bs.getBit())                       // overscan_info_present_flag
@@ -553,7 +553,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
         video_format = bs.getBits(3);       // video_format
         if (video_format < sizeof(s_VideoFormats) / sizeof(s_VideoFormats[0])) {
            format = s_VideoFormats[video_format];
-           //Dprintf("H.264 SPS: video format %d", format);
+           //Dprintf("H.264 SPS: video format %d\n", format);
            }
         bs.skipBit();                       // video_full_range_flag
         if (bs.getBit()) {                  // colour_description_present_flag
@@ -689,7 +689,7 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                         break;
                    }
                 }
-              //Dprintf("H.264 SEI: pic struct %d scan type %d", pic_struct, scan);
+              //Dprintf("H.264 SEI: pic struct %d scan type %d\n", pic_struct, scan);
               for (int i = 0; i < s_SeiNumClockTsTable[pic_struct]; ++i) {
                   if (bs.getBit()) {                     // clock_timestamp_flag[i]
                      int full_timestamp_flag;
@@ -707,7 +707,7 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                             scan = VIDEO_SCAN_RESERVED;
                             break;
                        }
-                     //Dprintf("H.264 SEI: scan type %d", scan);
+                     //Dprintf("H.264 SEI: scan type %d\n", scan);
                      bs.skipBit();                       // nuit_field_based_flag
                      bs.skipBits(5);                     // counting_type
                      full_timestamp_flag = bs.getBit();  // full_timestamp_flag
