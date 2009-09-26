@@ -2,387 +2,372 @@
 # Copyright (C) 2007 Rolf Ahrenberg 
 # This file is distributed under the same license as the femon package. 
 # Nan Feng VDR <nfgx@21cn.com>, 2009.2 
-# 
-msgid "" 
-msgstr "" 
-"Project-Id-Version: femon 1.7.3\n" 
-"Report-Msgid-Bugs-To: Rolf Ahrenberg\n" 
-"POT-Creation-Date: 2009-03-01 13:41+0800\n" 
-"PO-Revision-Date: 2009-09-21 21:36+0800\n" 
-"Last-Translator: NanFeng <nfgx@21cn.com>\n" 
-"Language-Team: <vdr@linuxtv.org>\n" 
-"MIME-Version: 1.0\n" 
-"Content-Type: text/plain; charset=utf-8\n" 
-"Content-Transfer-Encoding: 8bit\n" 
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: femon 1.7.3\n"
+"Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
+"POT-Creation-Date: 2009-08-29 20:57+0300\n"
+"PO-Revision-Date: 2009-09-21 21:36+0800\n"
+"Last-Translator: NanFeng <nfgx@21cn.com>\n"
+"Language-Team: <vdr@linuxtv.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-msgid "DVB Signal Information Monitor (OSD)" 
-msgstr "衛星信號信息顯示(OSD)" 
+msgid "DVB Signal Information Monitor (OSD)"
+msgstr "衛星信號信息顯示(OSD)"
 
-msgid "Signal Information" 
-msgstr "頻道信息瀏覽" 
+msgid "Signal Information"
+msgstr "頻道信息瀏覽"
 
-msgid "Femon not available" 
-msgstr "Femon插件無法使用" 
+msgid "Femon not available"
+msgstr "Femon插件無法使用"
 
-msgid "basic" 
-msgstr "基本" 
+msgid "basic"
+msgstr "基本"
 
-msgid "transponder" 
-msgstr "轉發器" 
+msgid "transponder"
+msgstr "轉發器"
 
-msgid "stream" 
-msgstr "數據流" 
+msgid "stream"
+msgstr "數據流"
 
-msgid "AC-3" 
-msgstr "AC-3" 
+msgid "AC-3"
+msgstr "AC-3"
 
-msgid "Classic" 
-msgstr "經典" 
+msgid "Classic"
+msgstr "經典"
 
-msgid "Elchi" 
-msgstr "Elchi" 
+msgid "Elchi"
+msgstr "Elchi"
 
-msgid "ST:TNG" 
-msgstr "ST:TNG" 
+msgid "ST:TNG"
+msgstr "ST:TNG"
 
-msgid "DeepBlue" 
-msgstr "DeepBlue" 
+msgid "DeepBlue"
+msgstr "DeepBlue"
 
-msgid "Moronimo" 
-msgstr "Moronimo" 
+msgid "Moronimo"
+msgstr "Moronimo"
 
-msgid "Enigma" 
-msgstr "Enigma" 
+msgid "Enigma"
+msgstr "Enigma"
 
-msgid "EgalsTry" 
-msgstr "EgalsTry" 
+msgid "EgalsTry"
+msgstr "EgalsTry"
 
-msgid "Duotone" 
-msgstr "雙色調" 
+msgid "Duotone"
+msgstr "雙色調"
 
-msgid "SilverGreen" 
-msgstr "銀綠" 
+msgid "SilverGreen"
+msgstr "銀綠"
 
-msgid "Hide main menu entry" 
-msgstr "隱藏主菜單條目." 
+msgid "Hide main menu entry"
+msgstr "隱藏主菜單條目."
 
-msgid "Define whether the main menu entry is hidden." 
-msgstr "確定是否進入主菜單是隱藏的." 
+msgid "Define whether the main menu entry is hidden."
+msgstr "確定是否進入主菜單是隱藏的."
 
-msgid "Default display mode" 
-msgstr "默認啟動時顯示模式." 
+msgid "Default display mode"
+msgstr "默認啟動時顯示模式."
 
-msgid "Define the default display mode at startup." 
-msgstr "定義默認啟動時顯示模式." 
+msgid "Define the default display mode at startup."
+msgstr "定義默認啟動時顯示模式."
 
-msgid "Define the used OSD skin." 
-msgstr "確定使用的菜單皮膚." 
+msgid "Define the used OSD skin."
+msgstr "確定使用的菜單皮膚."
 
-msgid "Define the used OSD theme." 
-msgstr "確定使用的菜單主題." 
+msgid "Define the used OSD theme."
+msgstr "確定使用的菜單主題."
 
-msgid "Position" 
-msgstr "位置" 
+msgid "Position"
+msgstr "位置"
 
-msgid "Define the position of OSD." 
-msgstr "確定菜單的位置." 
+msgid "Define the position of OSD."
+msgstr "確定菜單的位置."
 
-msgid "Define the height of OSD." 
-msgstr "確定菜單的高度." 
+msgid "Red limit [%]"
+msgstr "紅限制[ ％ ]"
 
-msgid "Horizontal offset" 
-msgstr "水平偏移" 
+msgid "Define a limit for red bar, which is used to indicate a bad signal."
+msgstr "定義一個限制紅鍵，這是用來表示一個壞的信號."
 
-msgid "Define the horizontal offset of OSD." 
-msgstr "確定菜單的水平偏移." 
+msgid "Green limit [%]"
+msgstr "綠限制[ ％ ]"
 
-msgid "Red limit [%]" 
-msgstr "紅限制[ ％ ]" 
+msgid "Define a limit for green bar, which is used to indicate a good signal."
+msgstr "定義一個限制的綠色鍵，這是用來表示一個良好的信號."
 
-msgid "Define a limit for red bar, which is used to indicate a bad signal." 
-msgstr "定義一個限制紅鍵，這是用來表示一個壞的信號." 
+msgid "OSD update interval [0.1s]"
+msgstr "菜單更新間隔時間[0.1s]"
 
-msgid "Green limit [%]" 
-msgstr "綠限制[ ％ ]" 
+msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
+msgstr "確定一個OSD的更新時間間隔.較小的間隔產生較高的CPU負載."
 
-msgid "Define a limit for green bar, which is used to indicate a good signal." 
-msgstr "定義一個限制的綠色鍵，這是用來表示一個良好的信號." 
+msgid "Analyze stream"
+msgstr "分析流"
 
-msgid "OSD update interval [0.1s]" 
-msgstr "菜單更新間隔時間[0.1s]" 
+msgid "Define whether the DVB stream is analyzed and bitrates calculated."
+msgstr "確定是否DVB流分析和比特率計算."
 
-msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load." 
-msgstr "確定一個OSD的更新時間間隔.較小的間隔產生較高的CPU負載." 
+msgid "Calculation interval [0.1s]"
+msgstr "計算時間間隔[0.1s]"
 
-msgid "Analyze stream" 
-msgstr "分析流" 
+msgid "Define an interval for calculation. The bigger interval generates more stable values."
+msgstr "定義一個時間間隔來計算.更大的時間價格產生將更穩定."
 
-msgid "Define whether the DVB stream is analyzed and bitrates calculated." 
-msgstr "確定是否DVB流分析和比特率計算." 
+msgid "Use SVDRP service"
+msgstr "使用SVDRP服務"
 
-msgid "Calculation interval [0.1s]" 
-msgstr "計算時間間隔[0.1s]" 
+msgid "Define whether the SVDRP service is used in client/server setups."
+msgstr "定義是否SVDRP服務是用來在客戶機/服務器的設置."
 
-msgid "Define an interval for calculation. The bigger interval generates more stable values." 
-msgstr "定義一個時間間隔來計算.更大的時間價格產生將更穩定." 
+msgid "SVDRP service port"
+msgstr "SVDRP服務端口"
 
-msgid "Use SVDRP service" 
-msgstr "使用SVDRP服務" 
+msgid "Define the port number of SVDRP service."
+msgstr "定義SVDRP服務的端口號."
 
-msgid "Define whether the SVDRP service is used in client/server setups." 
-msgstr "定義是否SVDRP服務是用來在客戶機/服務器的設置." 
+msgid "SVDRP service IP"
+msgstr "SVDRP服務的IP地址"
 
-msgid "SVDRP service port" 
-msgstr "SVDRP服務端口" 
+msgid "Define the IP address of SVDRP service."
+msgstr "定義SVDRP服務的IP地址."
 
-msgid "Define the port number of SVDRP service." 
-msgstr "定義SVDRP服務的端口號." 
+msgid "Help"
+msgstr "幫助"
 
-msgid "SVDRP service IP" 
-msgstr "SVDRP服務的IP地址" 
+msgid "Video"
+msgstr "視頻"
 
-msgid "Define the IP address of SVDRP service." 
-msgstr "定義SVDRP服務的IP地址." 
+msgid "Audio"
+msgstr "音頻"
 
-msgid "Help" 
-msgstr "幫助" 
+msgid "Transponder Information"
+msgstr "轉發器信息"
 
-msgid "Video" 
-msgstr "視頻" 
+msgid "Apid"
+msgstr "Apid"
 
-msgid "Audio" 
-msgstr "音頻" 
+msgid "Dpid"
+msgstr "Dpid"
 
-msgid "Transponder Information" 
-msgstr "轉發器信息" 
+msgid "Spid"
+msgstr "Spid"
 
-msgid "Apid" 
-msgstr "Apid" 
+msgid "Nid"
+msgstr "Nid"
 
-msgid "Dpid" 
-msgstr "Dpid" 
+msgid "Tid"
+msgstr "Tid"
 
-msgid "Spid" 
-msgstr "Spid" 
+msgid "Rid"
+msgstr "Rid"
 
-msgid "Nid" 
-msgstr "Nid" 
+msgid "Coderate"
+msgstr "碼速率"
 
-msgid "Tid" 
-msgstr "Tid" 
+msgid "Stream Information"
+msgstr "流信息"
 
-msgid "Rid" 
-msgstr "Rid" 
+msgid "Video Stream"
+msgstr "視頻流"
 
-msgid "Coderate" 
-msgstr "碼速率" 
+msgid "Codec"
+msgstr "解碼模式"
 
-msgid "Stream Information" 
-msgstr "流信息" 
+msgid "Bitrate"
+msgstr "比特率"
 
-msgid "Video Stream" 
-msgstr "視頻流" 
+msgid "Aspect Ratio"
+msgstr "縱橫比"
 
-msgid "Codec" 
-msgstr "解碼模式" 
+msgid "Frame Rate"
+msgstr "幀速率"
 
-msgid "Bitrate" 
-msgstr "比特率" 
+msgid "Video Format"
+msgstr "視頻制式"
 
-msgid "Aspect Ratio" 
-msgstr "縱橫比" 
+msgid "Resolution"
+msgstr "分辨率"
 
-msgid "Frame Rate" 
-msgstr "幀速率" 
+msgid "Audio Stream"
+msgstr "音頻流"
 
-msgid "Video Format" 
-msgstr "視頻制式" 
+msgid "Channel Mode"
+msgstr "聲道模式"
 
-msgid "Resolution" 
-msgstr "分辨率" 
+msgid "Sampling Frequency"
+msgstr "採樣頻率"
 
-msgid "Audio Stream" 
-msgstr "音頻流" 
+msgid "AC-3 Stream"
+msgstr "AC-3流"
 
-msgid "Channel Mode" 
-msgstr "聲道模式" 
+msgid "Bit Stream Mode"
+msgstr "比特流模式"
 
-msgid "Sampling Frequency" 
-msgstr "採樣頻率" 
+msgid "Audio Coding Mode"
+msgstr "音頻編碼模式"
 
-msgid "AC-3 Stream" 
-msgstr "AC-3流" 
+msgid "Center Mix Level"
+msgstr "中心混合級別"
 
-msgid "Bit Stream Mode" 
-msgstr "比特流模式" 
+msgid "Surround Mix Level"
+msgstr "環繞混合級別"
 
-msgid "Audio Coding Mode" 
-msgstr "音頻編碼模式" 
+msgid "Dolby Surround Mode"
+msgstr "杜比環繞聲模式"
 
-msgid "Center Mix Level" 
-msgstr "中心混合級別" 
+msgid "Low Frequency Effects"
+msgstr "低頻效果"
 
-msgid "Surround Mix Level" 
-msgstr "環繞混合級別" 
+msgid "Dialogue Normalization"
+msgstr "對話正常化"
 
-msgid "Dolby Surround Mode" 
-msgstr "杜比環繞聲模式" 
+msgid "Fixed"
+msgstr "固定"
 
-msgid "Low Frequency Effects" 
-msgstr "低頻效果" 
+msgid "Analog"
+msgstr "模擬"
 
-msgid "on" 
-msgstr "開" 
+msgid "MPEG-2"
+msgstr "MPEG-2"
 
-msgid "off" 
-msgstr "關" 
+msgid "H.264"
+msgstr "H.264"
 
-msgid "Dialogue Normalization" 
-msgstr "對話正常化" 
+msgid "MPEG-1 Layer I"
+msgstr "MPEG-1 Layer I"
 
-msgid "Fixed" 
-msgstr "固定" 
+msgid "MPEG-1 Layer II"
+msgstr "MPEG-1 Layer II"
 
-msgid "Analog" 
-msgstr "模擬" 
+msgid "MPEG-1 Layer III"
+msgstr "MPEG-1 Layer III"
 
-msgid "MPEG-2" 
-msgstr "MPEG-2" 
+msgid "MPEG-2 Layer I"
+msgstr "MPEG-2 Layer I"
 
-msgid "H.264" 
-msgstr "H.264" 
+msgid "MPEG-2 Layer II"
+msgstr "MPEG-2 Layer II"
 
-msgid "MPEG-1 Layer I" 
-msgstr "MPEG-1 Layer I" 
+msgid "MPEG-2 Layer III"
+msgstr "MPEG-2 Layer III"
 
-msgid "MPEG-1 Layer II" 
-msgstr "MPEG-1 Layer II" 
+msgid "HE-AAC"
+msgstr "HE-AAC"
 
-msgid "MPEG-1 Layer III" 
-msgstr "MPEG-1 Layer III" 
+msgid "stereo"
+msgstr "立體聲"
 
-msgid "MPEG-2 Layer I" 
-msgstr "MPEG-2 Layer I" 
+msgid "joint Stereo"
+msgstr "聯合立體聲"
 
-msgid "MPEG-2 Layer II" 
-msgstr "MPEG-2 Layer II" 
+msgid "dual"
+msgstr "雙重"
 
-msgid "MPEG-2 Layer III" 
-msgstr "MPEG-2 Layer III" 
+msgid "mono"
+msgstr "單聲道"
 
-msgid "HE-AAC" 
-msgstr "HE-AAC" 
+msgid "interlaced"
+msgstr "隔行掃描"
 
-msgid "stereo" 
-msgstr "立體聲" 
+msgid "progressive"
+msgstr "進步"
 
-msgid "joint Stereo" 
-msgstr "聯合立體聲" 
+msgid "reserved"
+msgstr "保留"
 
-msgid "dual" 
-msgstr "雙重" 
+msgid "extended"
+msgstr "擴展"
 
-msgid "mono" 
-msgstr "單聲道" 
+msgid "unknown"
+msgstr "未知"
 
-msgid "interlaced" 
-msgstr "隔行掃描" 
+msgid "component"
+msgstr "組件"
 
-msgid "progressive" 
-msgstr "進步" 
+msgid "PAL"
+msgstr "PAL"
 
-msgid "reserved" 
-msgstr "保留" 
+msgid "NTSC"
+msgstr "NTSC"
 
-msgid "extended" 
-msgstr "擴展" 
+msgid "SECAM"
+msgstr "SECAM"
 
-msgid "unknown" 
-msgstr "未知" 
+msgid "MAC"
+msgstr "MAC"
 
-msgid "component" 
-msgstr "組件" 
+msgid "Hz"
+msgstr "赫茲"
 
-msgid "PAL" 
-msgstr "PAL" 
+msgid "Complete Main (CM)"
+msgstr "完成主要(CM)"
 
-msgid "NTSC" 
-msgstr "NTSC" 
+msgid "Music and Effects (ME)"
+msgstr "音樂和效果(ME)"
 
-msgid "SECAM" 
-msgstr "SECAM" 
+msgid "Visually Impaired (VI)"
+msgstr "視障(VI)"
 
-msgid "MAC" 
-msgstr "MAC" 
+msgid "Hearing Impaired (HI)"
+msgstr "聽障(HI)"
 
-msgid "Hz" 
-msgstr "赫茲" 
+msgid "Dialogue (D)"
+msgstr "對話(D)"
 
-msgid "Complete Main (CM)" 
-msgstr "完成主要(CM)" 
+msgid "Commentary (C)"
+msgstr "評論(C)"
 
-msgid "Music and Effects (ME)" 
-msgstr "音樂和效果(ME)" 
+msgid "Emergency (E)"
+msgstr "緊急(E)"
 
-msgid "Visually Impaired (VI)" 
-msgstr "視障(VI)" 
+msgid "Voice Over (VO)"
+msgstr "旁白(VO)"
 
-msgid "Hearing Impaired (HI)" 
-msgstr "聽障(HI)" 
+msgid "Karaoke"
+msgstr "卡拉OK"
 
-msgid "Dialogue (D)" 
-msgstr "對話(D)" 
+msgid "Ch1"
+msgstr "Ch1"
 
-msgid "Commentary (C)" 
-msgstr "評論(C)" 
+msgid "Ch2"
+msgstr "Ch2"
 
-msgid "Emergency (E)" 
-msgstr "緊急(E)" 
+msgid "C"
+msgstr "C"
 
-msgid "Voice Over (VO)" 
-msgstr "旁白(VO)" 
+msgid "L"
+msgstr "L"
 
-msgid "Karaoke" 
-msgstr "卡拉OK" 
+msgid "R"
+msgstr "R"
 
-msgid "Ch1" 
-msgstr "Ch1" 
+msgid "S"
+msgstr "S"
 
-msgid "Ch2" 
-msgstr "Ch2" 
+msgid "SL"
+msgstr "SL"
 
-msgid "C" 
-msgstr "C" 
+msgid "SR"
+msgstr "SR"
 
-msgid "L" 
-msgstr "L" 
+msgid "dB"
+msgstr "dB"
 
-msgid "R" 
-msgstr "R" 
+msgid "not indicated"
+msgstr "沒有說明"
 
-msgid "S" 
-msgstr "S" 
+msgid "MHz"
+msgstr "兆赫茲"
 
-msgid "SL" 
-msgstr "SL" 
+msgid "free"
+msgstr "免費"
 
-msgid "SR" 
-msgstr "SR" 
+msgid "Mbit/s"
+msgstr "兆位/秒"
 
-msgid "dB" 
-msgstr "dB" 
-
-msgid "not indicated" 
-msgstr "沒有說明" 
-
-msgid "MHz" 
-msgstr "兆赫茲" 
-
-msgid "free" 
-msgstr "免費" 
-
-msgid "Mbit/s" 
-msgstr "兆位/秒" 
-
-msgid "kbit/s" 
-msgstr "千字節/秒" 
+msgid "kbit/s"
+msgstr "千字節/秒"
