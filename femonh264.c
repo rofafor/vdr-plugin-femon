@@ -528,7 +528,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
            sar_height = s_SAR[aspect_ratio_idc].h;
            }
         if (sar_width && sar_height) {
-           int index = -1, ratio = 100.0L * sar_width * width / sar_height / height;
+           int index = -1, ratio = int(100.0L * sar_width * width / sar_height / height);
            for (unsigned int i = 0; i < ELEMENTS(s_DAR); ++i) {
                if (s_DAR[i].ratio == ratio) {
                   index = i;
