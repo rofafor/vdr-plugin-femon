@@ -20,7 +20,7 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid
   m_DetectMPEG(this, this),
   m_DetectAAC(this),
   m_DetectAC3(this),
-  m_VideoBuffer(KILOBYTE(256), TS_SIZE, false, "Femon video"),
+  m_VideoBuffer(KILOBYTE(512), TS_SIZE, false, "Femon video"),
   m_VideoType(Vtype),
   m_VideoPid(Vpid),
   m_VideoPacketCount(0),
@@ -39,9 +39,9 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid
 {
   Dprintf("%s()\n", __PRETTY_FUNCTION__);
 
-  m_VideoBuffer.SetTimeouts(0, 0);
-  m_AudioBuffer.SetTimeouts(0, 0);
-  m_AC3Buffer.SetTimeouts(0, 0);
+  m_VideoBuffer.SetTimeouts(0, 100);
+  m_AudioBuffer.SetTimeouts(0, 100);
+  m_AC3Buffer.SetTimeouts(0, 100);
 
   m_VideoInfo.codec = VIDEO_CODEC_INVALID;
   m_VideoInfo.format = VIDEO_FORMAT_INVALID;
@@ -96,7 +96,7 @@ void cFemonReceiver::Activate(bool On)
 void cFemonReceiver::Receive(uchar *Data, int Length)
 {
   // TS packet length: TS_SIZE
-  if ((*Data == TS_SYNC_BYTE) || (Length == TS_SIZE)) {
+  if (Running() && (*Data == TS_SYNC_BYTE) && (Length == TS_SIZE)) {
      int len, pid = TsPid(Data);
      if (pid == m_VideoPid) {
         ++m_VideoPacketCount;
@@ -221,13 +221,14 @@ void cFemonReceiver::Action(void)
          m_AC3Assembler.Reset();
          }
       m_AC3Assembler.PutTs(Data, Length);
-      m_AudioBuffer.Del(Length);
+      m_AC3Buffer.Del(Length);
       }
 
     // calculate bitrates
     timeout = double(calcPeriod.Elapsed());
     if (m_Active && (timeout >= (100.0 * femonConfig.calcinterval))) {
        // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
+       // PES headers should be compensated!
        m_VideoBitrate     = (1000.0 * 8.0 * 184.0 * m_VideoPacketCount) / timeout;
        m_VideoPacketCount = 0;
        m_AudioBitrate     = (1000.0 * 8.0 * 184.0 * m_AudioPacketCount) / timeout;
