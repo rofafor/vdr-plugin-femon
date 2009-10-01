@@ -37,7 +37,7 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid
   m_AC3Bitrate(0),
   m_AC3Valid(false)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
 
   m_VideoBuffer.SetTimeouts(0, 100);
   m_AudioBuffer.SetTimeouts(0, 100);
@@ -68,13 +68,13 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid
 
 cFemonReceiver::~cFemonReceiver(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   Deactivate();
 }
 
 void cFemonReceiver::Deactivate(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   if (m_Active) {
      m_Active = false;
      m_Sleep.Signal();
@@ -86,7 +86,7 @@ void cFemonReceiver::Deactivate(void)
 
 void cFemonReceiver::Activate(bool On)
 {
-  Dprintf("%s(%d)\n", __PRETTY_FUNCTION__, On);
+  debug("%s(%d)\n", __PRETTY_FUNCTION__, On);
   if (On)
      Start();
   else
@@ -127,7 +127,7 @@ void cFemonReceiver::Receive(uchar *Data, int Length)
 
 void cFemonReceiver::Action(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   cTimeMs calcPeriod(0);
   m_Active = true;
 

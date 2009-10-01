@@ -14,9 +14,11 @@
 #include <vdr/tools.h>
 
 #ifdef DEBUG
-#define Dprintf(x...) printf(x);
+#define debug(x...) dsyslog("FEMON: " x);
+#define error(x...) esyslog("ERROR: " x);
 #else
-#define Dprintf(x...) ;
+#define debug(x...) ;
+#define error(x...) esyslog("ERROR: " x);
 #endif
 
 #define ELEMENTS(x) (sizeof(x) / sizeof(x[0]))

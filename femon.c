@@ -50,13 +50,13 @@ cPluginFemon::cPluginFemon()
   // Initialize any member variables here.
   // DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
   // VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
 }
 
 cPluginFemon::~cPluginFemon()
 {
   // Clean up after yourself!
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
 }
 
 const char *cPluginFemon::CommandLineHelp(void)
@@ -96,7 +96,7 @@ void cPluginFemon::Housekeeping(void)
 cOsdObject *cPluginFemon::MainMenuAction(void)
 {
   // Perform the action when selected from the main VDR menu.
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   if (cReplayControl::NowReplaying() || (Channels.Count() <= 0))
      Skins.Message(mtInfo, tr("Femon not available"));
   else
@@ -274,7 +274,7 @@ public:
 
 cMenuFemonSetup::cMenuFemonSetup(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   dispmodes[eFemonModeBasic]       = tr("basic");
   dispmodes[eFemonModeTransponder] = tr("transponder");
   dispmodes[eFemonModeStream]      = tr("stream");
@@ -353,7 +353,7 @@ void cMenuFemonSetup::Setup(void)
 
 void cMenuFemonSetup::Store(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   femonConfig = data;
   SetupStore("HideMenu",       femonConfig.hidemenu);
   SetupStore("DisplayMode",    femonConfig.displaymode);

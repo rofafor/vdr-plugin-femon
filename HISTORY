@@ -377,7 +377,7 @@ VDR Plugin 'femon' Revision History
 - Added a mutex to receiver class.
 - Added 1080/720/576/480 format symbols into status window.
 
-2009-09-26: Version 1.7.5
+2009-10-01: Version 1.7.5
 
 - Changed H.264 parser to show display aspect ratio.
 - Removed error logging from unimplemented ioctl functions.

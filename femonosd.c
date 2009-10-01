@@ -150,7 +150,7 @@ cFemonOsd *cFemonOsd::pInstance = NULL;
 
 cFemonOsd *cFemonOsd::Instance(bool create)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   if ((pInstance == NULL) && create)
   {
      pInstance = new cFemonOsd();
@@ -186,30 +186,30 @@ cFemonOsd::cFemonOsd()
   m_Mutex()
 {
   int tmp;
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   memset(&m_FrontendStatus, 0, sizeof(m_FrontendStatus));
   memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
   m_SvdrpConnection.handle = -1;
   m_Font = cFont::CreateFont(Setup.FontSml, min(max(Setup.FontSmlSize, MINFONTSIZE), MAXFONTSIZE));
   if (!m_Font || !m_Font->Height()) {
      m_Font = new cFemonDummyFont;
-     esyslog("ERROR: cFemonOsd::cFemonOsd() cannot create required font.");
+     error("cFemonOsd::cFemonOsd() cannot create required font.");
      }
   tmp = 5 * bmSymbol[SYMBOL_LOCK].Width() + 6 * OSDSPACING;
   if (OSDWIDTH < tmp) {
-     esyslog("ERROR: cFemonOsd::cFemonOsd() OSD width (%d) smaller than required (%d).", OSDWIDTH, tmp);
+     error("cFemonOsd::cFemonOsd() OSD width (%d) smaller than required (%d).", OSDWIDTH, tmp);
      OSDWIDTH = tmp;
      }
   tmp = OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT;
   if (OSDHEIGHT < tmp) {
-     esyslog("ERROR: cFemonOsd::cFemonOsd() OSD height (%d) smaller than required (%d).", OSDHEIGHT, tmp);
+     error("cFemonOsd::cFemonOsd() OSD height (%d) smaller than required (%d).", OSDHEIGHT, tmp);
      OSDHEIGHT = tmp;
      }
 }
 
 cFemonOsd::~cFemonOsd(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   m_Sleep.Signal();
   if (Running())
      Cancel(3);
@@ -503,7 +503,7 @@ void cFemonOsd::DrawInfoWindow(void)
 
 void cFemonOsd::Action(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   cTimeMs t;
   SvdrpCommand_v1_0 cmd;
   cmd.command = cString::sprintf("PLUG %s INFO\r\n", PLUGIN_NAME_I18N);
@@ -574,7 +574,7 @@ void cFemonOsd::Action(void)
 
 void cFemonOsd::Show(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   int apid[2] = {0, 0};
   int dpid[2] = {0, 0};
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
@@ -583,7 +583,7 @@ void cFemonOsd::Show(void)
   if (m_Frontend >= 0) {
      if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
         if (!femonConfig.usesvdrp)
-           esyslog("ERROR: cFemonOsd::Show() cannot read frontend info.");
+           error("cFemonOsd::Show() cannot read frontend info.");
         close(m_Frontend);
         m_Frontend = -1;
         memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
@@ -595,7 +595,7 @@ void cFemonOsd::Show(void)
         return;
      }
   else {
-     esyslog("ERROR: cFemonOsd::Show() cannot open frontend device.");
+     error("cFemonOsd::Show() cannot open frontend device.");
      return;
      }
 
@@ -633,7 +633,7 @@ void cFemonOsd::Show(void)
 
 void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 {
-  Dprintf("%s(%d,%d)\n", __PRETTY_FUNCTION__, device->DeviceNumber(), channelNumber);
+  debug("%s(%d,%d)\n", __PRETTY_FUNCTION__, device->DeviceNumber(), channelNumber);
   int apid[2] = {0, 0};
   int dpid[2] = {0, 0};
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
@@ -645,7 +645,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   if (m_Frontend >= 0) {
      if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
         if (!femonConfig.usesvdrp)
-           esyslog("ERROR: cFemonOsd::ChannelSwitch() cannot read frontend info.");
+           error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
         close(m_Frontend);
         m_Frontend = -1;
         memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
@@ -657,7 +657,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
         return;
      }
   else {
-     esyslog("ERROR: cFemonOsd::ChannelSwitch() cannot open frontend device.");
+     error("cFemonOsd::ChannelSwitch() cannot open frontend device.");
      return;
      }
 
@@ -678,7 +678,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 
 void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   int apid[2] = {0, 0};
   int dpid[2] = {0, 0};
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
@@ -699,7 +699,7 @@ void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
 
 bool cFemonOsd::DeviceSwitch(int direction)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   int device = cDevice::ActualDevice()->DeviceNumber();
   direction = sgn(direction);
   if (device >= 0) {
@@ -715,7 +715,7 @@ bool cFemonOsd::DeviceSwitch(int direction)
                  device = cDevice::NumDevices() - 1;
               }
            if (cDevice::GetDevice(device)->ProvidesChannel(channel, 0)) {
-              Dprintf("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
+              debug("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
               cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
               cControl::Shutdown();
               cDevice::GetDevice(device)->SwitchChannel(channel, true);
@@ -747,14 +747,14 @@ bool cFemonOsd::SvdrpConnect(void)
             m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
             if (cmd.responseCode != 214) {
                m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection); // close connection
-               esyslog("ERROR: cFemonOsd::SvdrpConnect() cannot find plugin '%s' on server %s.", PLUGIN_NAME_I18N, *m_SvdrpConnection.serverIp);
+               error("cFemonOsd::SvdrpConnect() cannot find plugin '%s' on server %s.", PLUGIN_NAME_I18N, *m_SvdrpConnection.serverIp);
                }
             }
          else
-            esyslog("ERROR: cFemonOsd::SvdrpConnect() cannot connect to SVDRP server.");
+            error("cFemonOsd::SvdrpConnect() cannot connect to SVDRP server.");
          }
       else
-         esyslog("ERROR: cFemonOsd::SvdrpConnect() cannot find plugin '%s'.", SVDRPPLUGIN);
+         error("cFemonOsd::SvdrpConnect() cannot find plugin '%s'.", SVDRPPLUGIN);
       }
    return m_SvdrpConnection.handle >= 0;
 }
@@ -770,19 +770,19 @@ bool cFemonOsd::SvdrpTune(void)
          m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
          if (cmd.responseCode == 250)
             return true;
-         esyslog("ERROR: cFemonOsd::SvdrpTune() cannot tune server channel.");
+         error("cFemonOsd::SvdrpTune() cannot tune server channel.");
          }
       else
-         esyslog("ERROR: cFemonOsd::SvdrpTune() invalid channel.");
+         error("cFemonOsd::SvdrpTune() invalid channel.");
       }
    else
-      esyslog("ERROR: cFemonOsd::SvdrpTune() unexpected connection state.");
+      error("cFemonOsd::SvdrpTune() unexpected connection state.");
    return false;
 }
 
 double cFemonOsd::GetVideoBitrate(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   double value = 0.0;
 
   if (m_Receiver)
@@ -793,7 +793,7 @@ double cFemonOsd::GetVideoBitrate(void)
 
 double cFemonOsd::GetAudioBitrate(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   double value = 0.0;
 
   if (m_Receiver)
@@ -804,7 +804,7 @@ double cFemonOsd::GetAudioBitrate(void)
 
 double cFemonOsd::GetDolbyBitrate(void)
 {
-  Dprintf("%s()\n", __PRETTY_FUNCTION__);
+  debug("%s()\n", __PRETTY_FUNCTION__);
   double value = 0.0;
 
   if (m_Receiver)
