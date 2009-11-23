@@ -383,3 +383,7 @@ VDR Plugin 'femon' Revision History
 - Removed error logging from unimplemented ioctl functions.
 - Removed bitstream parsing from Receive() method.
 - Added Chinese translation (Thanks to NanFeng).
+
+2009-xx-xx: Version 1.7.6
+
+- Updated Estonian translation (Thanks to Arthur Konovalov).

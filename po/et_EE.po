@@ -22,7 +22,7 @@ msgid "Signal Information"
 msgstr "Signaaliinfo"
 
 msgid "Femon not available"
-msgstr ""
+msgstr "Femon ei ole k‰ttesaadav"
 
 msgid "basic"
 msgstr "standard"
@@ -37,7 +37,7 @@ msgid "AC-3"
 msgstr "AC-3"
 
 msgid "Classic"
-msgstr "Klassikaline"
+msgstr "Classic"
 
 msgid "Elchi"
 msgstr "Elchi"
@@ -64,79 +64,79 @@ msgid "SilverGreen"
 msgstr "SilverGreen"
 
 msgid "Hide main menu entry"
-msgstr "Peida valik peamen¸¸s"
+msgstr "Peita valik peamen¸¸s"
 
 msgid "Define whether the main menu entry is hidden."
-msgstr ""
+msgstr "Valiku peamen¸¸s peitmise m‰‰ritlemine."
 
 msgid "Default display mode"
-msgstr "Vaikimisi displei moodus"
+msgstr "Vaikemoodus"
 
 msgid "Define the default display mode at startup."
-msgstr ""
+msgstr "K‰ivitamisel vaikemooduse m‰‰ritlemine."
 
 msgid "Define the used OSD skin."
-msgstr ""
+msgstr "Kasutatava ekraanikesta m‰‰ritlemine."
 
 msgid "Define the used OSD theme."
-msgstr ""
+msgstr "Kasutatava teema m‰‰ritlemine."
 
 msgid "Position"
 msgstr "Positsioon"
 
 msgid "Define the position of OSD."
-msgstr ""
+msgstr "Ekraaniinfo positsiooni m‰‰ritlemine."
 
 msgid "Red limit [%]"
 msgstr "Punase limiit [%]"
 
 msgid "Define a limit for red bar, which is used to indicate a bad signal."
-msgstr ""
+msgstr "Seaded punasele limiidile. Iseloomustab kehva signaali."
 
 msgid "Green limit [%]"
 msgstr "Rohelise limiit [%]"
 
 msgid "Define a limit for green bar, which is used to indicate a good signal."
-msgstr ""
+msgstr "Seaded rohelisele limiidile. Iseloomustab head signaali."
 
 msgid "OSD update interval [0.1s]"
 msgstr "Uuendusintervall [0,1s]"
 
 msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
-msgstr ""
+msgstr "Ekraaniinfo uuendamise intervalli m‰‰ritlemine. V‰iksem intervall- suurem CPU koormus."
 
 msgid "Analyze stream"
 msgstr "Voo anal¸¸s"
 
 msgid "Define whether the DVB stream is analyzed and bitrates calculated."
-msgstr ""
+msgstr "DVB voo bitikiiruse rehkendamise m‰‰ritlemine."
 
 msgid "Calculation interval [0.1s]"
-msgstr "Kalkulatsiooni intervall [0,1s]"
+msgstr "Arvutamise intervall [0,1s]"
 
 msgid "Define an interval for calculation. The bigger interval generates more stable values."
-msgstr ""
+msgstr "Arvutamise intervalli m‰‰ritlemine. Suurem intervall annab stabiilsemaid tulemusi."
 
 msgid "Use SVDRP service"
-msgstr ""
+msgstr "SVDRP teenus"
 
 msgid "Define whether the SVDRP service is used in client/server setups."
-msgstr ""
+msgstr "SVDRP teenuse klient/server seadete m‰‰ritlemine."
 
 msgid "SVDRP service port"
-msgstr ""
+msgstr "SVDRP port"
 
 msgid "Define the port number of SVDRP service."
-msgstr ""
+msgstr "SVDRP teenuse pordi m‰‰ritlemine."
 
 msgid "SVDRP service IP"
-msgstr ""
+msgstr "SVDRP IP"
 
 msgid "Define the IP address of SVDRP service."
-msgstr ""
+msgstr "SVDRP teenuse IP aadressi m‰‰ritlemine."
 
 msgid "Help"
-msgstr ""
+msgstr "Abi"
 
 msgid "Video"
 msgstr "Video"
@@ -169,13 +169,13 @@ msgid "Coderate"
 msgstr "Coderate"
 
 msgid "Stream Information"
-msgstr "Voo info"
+msgstr "Vooinfo"
 
 msgid "Video Stream"
 msgstr "Videovoog"
 
 msgid "Codec"
-msgstr ""
+msgstr "Koodek"
 
 msgid "Bitrate"
 msgstr "Bitikiirus"
@@ -196,7 +196,7 @@ msgid "Audio Stream"
 msgstr "Audiovoog"
 
 msgid "Channel Mode"
-msgstr ""
+msgstr "Kanalimoodus"
 
 msgid "Sampling Frequency"
 msgstr "S‰mplimissagedus"
@@ -229,64 +229,64 @@ msgid "Fixed"
 msgstr "Fikseeritud"
 
 msgid "Analog"
-msgstr ""
+msgstr "Analoog"
 
 msgid "MPEG-2"
-msgstr ""
+msgstr "MPEG-2"
 
 msgid "H.264"
-msgstr ""
+msgstr "H.264"
 
 msgid "MPEG-1 Layer I"
-msgstr ""
+msgstr "MPEG-1 Layet I"
 
 msgid "MPEG-1 Layer II"
-msgstr ""
+msgstr "MPE-1 Layer II"
 
 msgid "MPEG-1 Layer III"
-msgstr ""
+msgstr "MPEG-1 Layer III"
 
 msgid "MPEG-2 Layer I"
-msgstr ""
+msgstr "MPEG-2 Layer I"
 
 msgid "MPEG-2 Layer II"
-msgstr ""
+msgstr "MPEG-2 Layer II"
 
 msgid "MPEG-2 Layer III"
-msgstr ""
+msgstr "MPEG-2 Layer III"
 
 msgid "HE-AAC"
-msgstr ""
+msgstr "HE-AAC"
 
 msgid "stereo"
-msgstr ""
+msgstr "stereo"
 
 msgid "joint Stereo"
-msgstr ""
+msgstr "joint stereo"
 
 msgid "dual"
-msgstr ""
+msgstr "duaalne"
 
 msgid "mono"
-msgstr ""
+msgstr "mono"
 
 msgid "interlaced"
-msgstr ""
+msgstr "¸lerealaotus"
 
 msgid "progressive"
-msgstr ""
+msgstr "progressiivne"
 
 msgid "reserved"
-msgstr "reserveeritud"
+msgstr "reserv."
 
 msgid "extended"
-msgstr ""
+msgstr "laiendatud"
 
 msgid "unknown"
 msgstr "tundmatu"
 
 msgid "component"
-msgstr ""
+msgstr "komponentne"
 
 msgid "PAL"
 msgstr "PAL"
@@ -295,10 +295,10 @@ msgid "NTSC"
 msgstr "NTSC"
 
 msgid "SECAM"
-msgstr ""
+msgstr "SECAM"
 
 msgid "MAC"
-msgstr ""
+msgstr "MAC"
 
 msgid "Hz"
 msgstr "Hz"
@@ -331,10 +331,10 @@ msgid "Karaoke"
 msgstr "Karaoke"
 
 msgid "Ch1"
-msgstr "Kan. 1"
+msgstr "Kan.1"
 
 msgid "Ch2"
-msgstr "Kan. 2"
+msgstr "Kan.2"
 
 msgid "C"
 msgstr "C"
