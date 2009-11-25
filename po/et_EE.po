@@ -241,7 +241,7 @@ msgid "MPEG-1 Layer I"
 msgstr "MPEG-1 Layet I"
 
 msgid "MPEG-1 Layer II"
-msgstr "MPE-1 Layer II"
+msgstr "MPEG-1 Layer II"
 
 msgid "MPEG-1 Layer III"
 msgstr "MPEG-1 Layer III"
