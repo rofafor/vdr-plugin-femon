@@ -10,9 +10,8 @@
 #include "femoncfg.h"
 #include "femonreceiver.h"
 
-cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid, int Apid[], int Dpid[])
-: cReceiver(ChannelID, -1, Vpid, Apid, Dpid, NULL),
-  cThread("femon receiver"),
+cFemonReceiver::cFemonReceiver(int Vtype, int Vpid, int Apid, int Dpid)
+: cThread("femon receiver"),
   m_Mutex(),
   m_Sleep(),
   m_Active(false),
@@ -27,17 +26,21 @@ cFemonReceiver::cFemonReceiver(tChannelID ChannelID, int Ca, int Vtype, int Vpid
   m_VideoBitrate(0.0),
   m_VideoValid(false),
   m_AudioBuffer(KILOBYTE(256), TS_SIZE, false, "Femon audio"),
-  m_AudioPid(Apid[0]),
+  m_AudioPid(Apid),
   m_AudioPacketCount(0),
   m_AudioBitrate(0.0),
   m_AudioValid(false),
   m_AC3Buffer(KILOBYTE(256), TS_SIZE, false, "Femon AC3"),
-  m_AC3Pid(Dpid[0]),
+  m_AC3Pid(Dpid),
   m_AC3PacketCount(0),
   m_AC3Bitrate(0),
   m_AC3Valid(false)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
+
+  AddPid(m_VideoPid);
+  AddPid(m_AudioPid);
+  AddPid(m_AC3Pid);
 
   m_VideoBuffer.SetTimeouts(0, 100);
   m_AudioBuffer.SetTimeouts(0, 100);

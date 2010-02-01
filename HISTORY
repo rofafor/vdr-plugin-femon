@@ -384,7 +384,8 @@ VDR Plugin 'femon' Revision History
 - Removed bitstream parsing from Receive() method.
 - Added Chinese translation (Thanks to NanFeng).
 
-2009-xx-xx: Version 1.7.6
+2010-02-01: Version 1.7.6
 
+- Updated for vdr-1.7.12.
 - Updated Estonian translation (Thanks to Arthur Konovalov).
 - Added Lithuanian translation (Thanks to Valdemaras Pipiras).
