@@ -18,7 +18,7 @@
 #error "VDR-1.7.12 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.7.6";
+static const char VERSION[]       = "1.7.7";
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -319,6 +319,9 @@ void cMenuFemonSetup::Setup(void)
   Add(new cMenuEditBoolItem(tr("Position"), &data.position, trVDR("bottom"), trVDR("top")));
   help.Append(tr("Define the position of OSD."));
 
+  Add(new cMenuEditIntItem(tr("Downscale OSD size [%]"), &data.downscale, 0, 20));
+  help.Append(tr("Define the downscale ratio for OSD size."));
+
   Add(new cMenuEditIntItem(tr("Red limit [%]"), &data.redlimit, 1, 50));
   help.Append(tr("Define a limit for red bar, which is used to indicate a bad signal."));
 
@@ -360,6 +363,7 @@ void cMenuFemonSetup::Store(void)
   SetupStore("Skin",           femonConfig.skin);
   SetupStore("Theme",          femonConfig.theme);
   SetupStore("Position",       femonConfig.position);
+  SetupStore("Downscale",      femonConfig.downscale);
   SetupStore("RedLimit",       femonConfig.redlimit);
   SetupStore("GreenLimit",     femonConfig.greenlimit);
   SetupStore("UpdateInterval", femonConfig.updateinterval);

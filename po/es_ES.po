@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.7.3\n"
+"Project-Id-Version: femon 1.7.7\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2009-08-29 20:57+0300\n"
+"POT-Creation-Date: 2010-02-25 20:31+0200\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Luis Palacios\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -85,6 +85,12 @@ msgid "Position"
 msgstr "Posición"
 
 msgid "Define the position of OSD."
+msgstr ""
+
+msgid "Downscale OSD size [%]"
+msgstr ""
+
+msgid "Define the downscale ratio for OSD size."
 msgstr ""
 
 msgid "Red limit [%]"

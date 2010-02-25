@@ -50,6 +50,8 @@ private:
   int               m_DisplayMode;
   int               m_OsdWidth;
   int               m_OsdHeight;
+  int               m_OsdLeft;
+  int               m_OsdTop;
   cFont            *m_Font;
   cTimeMs           m_InputTime;
   cCondWait         m_Sleep;

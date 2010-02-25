@@ -28,6 +28,7 @@ public:
   int skin;
   int theme;
   int position;
+  int downscale;
   int redlimit;
   int greenlimit;
   int updateinterval;

@@ -17,6 +17,7 @@ cFemonConfig::cFemonConfig(void)
   skin           = 0;
   theme          = 0;
   position       = 1;
+  downscale      = 0;
   redlimit       = 33;
   greenlimit     = 66;
   updateinterval = 5;

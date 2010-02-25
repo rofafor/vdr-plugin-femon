@@ -179,8 +179,10 @@ cFemonOsd::cFemonOsd()
   m_UNCValid(false),
   m_FrontendStatusValid(false),
   m_DisplayMode(femonConfig.displaymode),
-  m_OsdWidth(cOsd::OsdWidth()),
-  m_OsdHeight(cOsd::OsdHeight()),
+  m_OsdWidth(cOsd::OsdWidth() * (100 - femonConfig.downscale) / 100),
+  m_OsdHeight(cOsd::OsdHeight() * (100 - femonConfig.downscale) / 100),
+  m_OsdLeft(cOsd::OsdLeft() + (cOsd::OsdWidth() * femonConfig.downscale / 200)),
+  m_OsdTop(cOsd::OsdTop() + (cOsd::OsdHeight() * femonConfig.downscale / 200)),
   m_InputTime(0),
   m_Sleep(),
   m_Mutex()
@@ -597,7 +599,7 @@ void cFemonOsd::Show(void)
      return;
      }
 
-  m_Osd = cOsdProvider::NewOsd(cOsd::OsdLeft(), cOsd::OsdTop());
+  m_Osd = cOsdProvider::NewOsd(m_OsdLeft, m_OsdTop);
   if (m_Osd) {
      tArea Areas1[] = { { 0, 0, OSDWIDTH - 1, OSDHEIGHT - 1, 8 } };
      if (Setup.AntiAlias && m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
