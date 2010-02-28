@@ -65,9 +65,9 @@ static cString getCA(int value)
   return cString::sprintf("%X", value);
 }
 
-static const char *getUserString(int Value, const tChannelParameterMap *Map)
+static const char *getUserString(int Value, const tDvbParameterMap *Map)
 {
-  const tChannelParameterMap *map = Map;
+  const tDvbParameterMap *map = Map;
   while (map && map->userValue != -1) {
         if (map->driverValue == Value)
            return map->userString ? trVDR(map->userString) : "---";

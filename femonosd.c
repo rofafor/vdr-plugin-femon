@@ -366,6 +366,7 @@ void cFemonOsd::DrawInfoWindow(void)
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
 
   if (m_Osd && channel) {
+     cDvbTransponderParameters dtp(channel->Parameters());
      switch (m_DisplayMode) {
        case eFemonModeTransponder:
             OSDDRAWINFOTITLEBAR(tr("Transponder Information"));
@@ -395,13 +396,13 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Srate"),        *cString::sprintf("%d", channel->Srate()));
-                   OSDDRAWINFORIGHT(trVDR("Polarization"), *cString::sprintf("%c", toupper(channel->Polarization())));
+                   OSDDRAWINFORIGHT(trVDR("Polarization"), *cString::sprintf("%c", toupper(dtp.Polarization())));
                    offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(channel->Inversion()));
-                   OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(channel->CoderateH()));
+                   OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(dtp.Inversion()));
+                   OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(dtp.CoderateH()));
                    offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("System"),       *getSystem(channel->System()));
-                   OSDDRAWINFORIGHT(trVDR("RollOff"),      *getRollOff(channel->RollOff()));
+                   OSDDRAWINFOLEFT( trVDR("System"),       *getSystem(dtp.System()));
+                   OSDDRAWINFORIGHT(trVDR("RollOff"),      *getRollOff(dtp.RollOff()));
                    break;
 
               case cSource::stCable:
@@ -411,26 +412,26 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Srate"),        *cString::sprintf("%d", channel->Srate()));
-                   OSDDRAWINFORIGHT(trVDR("Modulation"),   *getModulation(channel->Modulation()));
+                   OSDDRAWINFORIGHT(trVDR("Modulation"),   *getModulation(dtp.Modulation()));
                    offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(channel->Inversion()));
-                   OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(channel->CoderateH()));
+                   OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(dtp.Inversion()));
+                   OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(dtp.CoderateH()));
                    break;
 
               case cSource::stTerr:
                    OSDDRAWINFOLINE(*cString::sprintf("DVB-T #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
-                   OSDDRAWINFORIGHT(trVDR("Transmission"), *getTransmission(channel->Transmission()));
+                   OSDDRAWINFORIGHT(trVDR("Transmission"), *getTransmission(dtp.Transmission()));
                    offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Bandwidth"),    *getBandwidth(channel->Bandwidth()));
-                   OSDDRAWINFORIGHT(trVDR("Modulation"),   *getModulation(channel->Modulation()));
+                   OSDDRAWINFOLEFT( trVDR("Bandwidth"),    *getBandwidth(dtp.Bandwidth()));
+                   OSDDRAWINFORIGHT(trVDR("Modulation"),   *getModulation(dtp.Modulation()));
                    offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(channel->Inversion()));
-                   OSDDRAWINFORIGHT(tr   ("Coderate"),     *cString::sprintf("%s (H) %s (L)", *getCoderate(channel->CoderateH()), *getCoderate(channel->CoderateL())));
+                   OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(dtp.Inversion()));
+                   OSDDRAWINFORIGHT(tr   ("Coderate"),     *cString::sprintf("%s (H) %s (L)", *getCoderate(dtp.CoderateH()), *getCoderate(dtp.CoderateL())));
                    offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Hierarchy"),    *getHierarchy(channel->Hierarchy()));
-                   OSDDRAWINFORIGHT(trVDR("Guard"),        *getGuard(channel->Guard()));
+                   OSDDRAWINFOLEFT( trVDR("Hierarchy"),    *getHierarchy(dtp.Hierarchy()));
+                   OSDDRAWINFORIGHT(trVDR("Guard"),        *getGuard(dtp.Guard()));
                    break;
 
               default:
