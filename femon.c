@@ -112,6 +112,7 @@ bool cPluginFemon::SetupParse(const char *Name, const char *Value)
   else if (!strcasecmp(Name, "Position"))       femonConfig.position       = atoi(Value);
   else if (!strcasecmp(Name, "Skin"))           femonConfig.skin           = atoi(Value);
   else if (!strcasecmp(Name, "Theme"))          femonConfig.theme          = atoi(Value);
+  else if (!strcasecmp(Name, "Downscale"))      femonConfig.downscale      = atoi(Value);
   else if (!strcasecmp(Name, "RedLimit"))       femonConfig.redlimit       = atoi(Value);
   else if (!strcasecmp(Name, "GreenLimit"))     femonConfig.greenlimit     = atoi(Value);
   else if (!strcasecmp(Name, "UpdateInterval")) femonConfig.updateinterval = atoi(Value);
