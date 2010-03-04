@@ -88,10 +88,10 @@ msgid "Define the position of OSD."
 msgstr "Ekraaniinfo positsiooni määritlemine."
 
 msgid "Downscale OSD size [%]"
-msgstr ""
+msgstr "Ekraanimenüü vähendamine [%]"
 
 msgid "Define the downscale ratio for OSD size."
-msgstr ""
+msgstr "Ekraanimenüü suuruse vähendamise määritlemine"
 
 msgid "Red limit [%]"
 msgstr "Punase limiit [%]"

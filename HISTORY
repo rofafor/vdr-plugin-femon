@@ -390,7 +390,8 @@ VDR Plugin 'femon' Revision History
 - Updated Estonian translation (Thanks to Arthur Konovalov).
 - Added Lithuanian translation (Thanks to Valdemaras Pipiras).
 
-2010-xx-xx: Version 1.7.7
+2010-03-05: Version 1.7.7
 
 - Updated for vdr-1.7.13.
 - Added a setup option to downscale the OSD size.
+- Updated Estonian translation (Thanks to Arthur Konovalov).
