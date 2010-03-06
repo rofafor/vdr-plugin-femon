@@ -697,7 +697,7 @@ bool cFemonOsd::DeviceSwitch(int direction)
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      if (channel) {
         for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
-           if (direction) {
+           if (direction >= 0) {
               if (++device >= cDevice::NumDevices())
                  device = 0;
               }

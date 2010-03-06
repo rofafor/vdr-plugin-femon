@@ -18,7 +18,7 @@
 #error "VDR-1.7.13 API version or greater is required!"
 #endif
 
-static const char VERSION[]       = "1.7.7";
+static const char VERSION[]       = "1.7.8";
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 

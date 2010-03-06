@@ -395,3 +395,7 @@ VDR Plugin 'femon' Revision History
 - Updated for vdr-1.7.13.
 - Added a setup option to downscale the OSD size.
 - Updated Estonian translation (Thanks to Arthur Konovalov).
+
+2010-xx-xx: Version 1.7.8
+
+- Fixed device switching.
