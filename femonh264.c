@@ -142,7 +142,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
 
         case NAL_SEI:
              if (!sei_found) {
-               //debug("H.264: Found NAL SEI at offset %d/%d\n", iny(buf - start), len);
+               //debug("H.264: Found NAL SEI at offset %d/%d\n", int(buf - start), len);
                int nal_len = nalUnescape(nal_data, buf + 4, int(end - buf - 4));
                consumed = parseSEI(nal_data, nal_len);
                if (consumed > 0)
