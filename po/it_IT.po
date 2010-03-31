@@ -9,12 +9,15 @@ msgstr ""
 "Project-Id-Version: femon 1.7.7\n"
 "Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
 "POT-Creation-Date: 2010-02-25 20:31+0200\n"
-"PO-Revision-Date: 2008-11-10 23:37+0100\n"
+"PO-Revision-Date: 2010-03-29 00:24+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "DVB Signal Information Monitor (OSD)"
 msgstr "Mostra info segnale DVB (OSD)"
@@ -68,13 +71,13 @@ msgid "Hide main menu entry"
 msgstr "Nascondi voce menu principale"
 
 msgid "Define whether the main menu entry is hidden."
-msgstr "Definisci se la voce del menu principale Ë nascosta."
+msgstr "Definisci se la voce del menu principale √® nascosta."
 
 msgid "Default display mode"
-msgstr "Modalit‡ visualizz. predefinita"
+msgstr "Modalit√† visualizz. predefinita"
 
 msgid "Define the default display mode at startup."
-msgstr "Definisci la modalit‡ di visualizz. predefinita all'avvio."
+msgstr "Definisci la modalit√† di visualizz. predefinita all'avvio."
 
 msgid "Define the used OSD skin."
 msgstr "Definisci lo stile interfaccia OSD utilizzato."
@@ -89,10 +92,10 @@ msgid "Define the position of OSD."
 msgstr "Definisci la posizione dell'OSD."
 
 msgid "Downscale OSD size [%]"
-msgstr ""
+msgstr "Riduci dimensione OSD [%]"
 
 msgid "Define the downscale ratio for OSD size."
-msgstr ""
+msgstr "Definisci il rapporto di riduzione della dimensione OSD."
 
 msgid "Red limit [%]"
 msgstr "Limite rosso [%]"
@@ -110,19 +113,19 @@ msgid "OSD update interval [0.1s]"
 msgstr "Intervallo agg. OSD [0.1s]"
 
 msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
-msgstr "Definisci un intervallo per gli agg. OSD. Pi˘ piccolo Ë l'intervallo maggiore sar‡ l'uso di CPU."
+msgstr "Definisci un intervallo per gli agg. OSD. Pi√π piccolo √® l'intervallo maggiore sar√† l'uso di CPU."
 
 msgid "Analyze stream"
 msgstr "Analizza flusso"
 
 msgid "Define whether the DVB stream is analyzed and bitrates calculated."
-msgstr "Definisci se il flusso DVB Ë analizzato e i bitrate calcolati."
+msgstr "Definisci se il flusso DVB √® analizzato e i bitrate calcolati."
 
 msgid "Calculation interval [0.1s]"
 msgstr "Intervallo di calcolo [0.1s]"
 
 msgid "Define an interval for calculation. The bigger interval generates more stable values."
-msgstr "Definisci un intervallo di calcolo. L'intervallo pi˘ grande genera valori pi˘ stabili."
+msgstr "Definisci un intervallo di calcolo. L'intervallo pi√π grande genera valori pi√π stabili."
 
 msgid "Use SVDRP service"
 msgstr "Utilizza servizio SVDRP"
@@ -203,7 +206,7 @@ msgid "Audio Stream"
 msgstr "Flusso audio"
 
 msgid "Channel Mode"
-msgstr "Modalit‡ canale"
+msgstr "Modalit√† canale"
 
 msgid "Sampling Frequency"
 msgstr "Frequenza campionamento"
@@ -212,10 +215,10 @@ msgid "AC-3 Stream"
 msgstr "Flusso AC-3"
 
 msgid "Bit Stream Mode"
-msgstr "Modalit‡ bitstream"
+msgstr "Modalit√† bitstream"
 
 msgid "Audio Coding Mode"
-msgstr "Modalit‡ codifica audio"
+msgstr "Modalit√† codifica audio"
 
 msgid "Center Mix Level"
 msgstr "Livello sonoro centrale"
@@ -224,7 +227,7 @@ msgid "Surround Mix Level"
 msgstr "Livello sonoro surround"
 
 msgid "Dolby Surround Mode"
-msgstr "Modalit‡ Dolby Surround"
+msgstr "Modalit√† Dolby Surround"
 
 msgid "Low Frequency Effects"
 msgstr "Effetti bassa frequenza"
@@ -378,3 +381,4 @@ msgstr "Mbit/s"
 
 msgid "kbit/s"
 msgstr "kbit/s"
+
