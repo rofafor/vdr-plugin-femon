@@ -133,6 +133,8 @@ bool cPluginFemon::Service(const char *Id, void *Data)
   if (strcmp(Id,"FemonService-v1.0") == 0) {
      if (Data) {
         FemonService_v1_0 *data = (FemonService_v1_0*)Data;
+        if (!cDevice::ActualDevice())
+           return false; 
         int ndx = cDevice::ActualDevice()->CardIndex();
         data->fe_name = getFrontendName(ndx);
         data->fe_status = getFrontendStatus(ndx);

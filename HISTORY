@@ -400,3 +400,4 @@ VDR Plugin 'femon' Revision History
 
 - Fixed device switching.
 - Updated Italian translation (Thanks to Diego Pierotto).
+- Fixed a crash in femon service (Thanks to Wolfgang Astleitner).
