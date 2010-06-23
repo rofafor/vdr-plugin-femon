@@ -294,6 +294,7 @@ cString getAudioCodec(int value)
     case AUDIO_CODEC_MPEG2_II:  return cString::sprintf("%s", tr("MPEG-2 Layer II"));
     case AUDIO_CODEC_MPEG2_III: return cString::sprintf("%s", tr("MPEG-2 Layer III"));
     case AUDIO_CODEC_HEAAC:     return cString::sprintf("%s", tr("HE-AAC"));
+    case AUDIO_CODEC_LATM:      return cString::sprintf("%s", tr("LATM"));
     default:                    break;
     }
   return cString::sprintf("---");

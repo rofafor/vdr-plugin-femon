@@ -396,8 +396,9 @@ VDR Plugin 'femon' Revision History
 - Added a setup option to downscale the OSD size.
 - Updated Estonian translation (Thanks to Arthur Konovalov).
 
-2010-xx-xx: Version 1.7.8
+2010-06-23: Version 1.7.8
 
 - Fixed device switching.
+- Added preliminary support for LATM.
 - Updated Italian translation (Thanks to Diego Pierotto).
 - Fixed a crash in femon service (Thanks to Wolfgang Astleitner).

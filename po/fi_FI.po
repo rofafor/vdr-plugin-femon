@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: femon 1.7.7\n"
-"Report-Msgid-Bugs-To: Rolf Ahrenberg\n"
-"POT-Creation-Date: 2010-02-25 20:31+0200\n"
+"Project-Id-Version: femon 1.7.8\n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2010-06-23 12:14+0300\n"
 "PO-Revision-Date: 2007-08-12 23:22+0300\n"
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -263,6 +263,9 @@ msgstr "MPEG-2 kerros III"
 
 msgid "HE-AAC"
 msgstr "HE-AAC"
+
+msgid "LATM"
+msgstr "LATM"
 
 msgid "stereo"
 msgstr "stereo"

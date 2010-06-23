@@ -14,6 +14,7 @@
 #include "femonh264.h"
 #include "femonmpeg.h"
 #include "femonaac.h"
+#include "femonlatm.h"
 #include "femonac3.h"
 #include "femonaudio.h"
 #include "femonvideo.h"
@@ -28,6 +29,7 @@ private:
   cFemonH264        m_DetectH264;
   cFemonMPEG        m_DetectMPEG;
   cFemonAAC         m_DetectAAC;
+  cFemonLATM        m_DetectLATM;
   cFemonAC3         m_DetectAC3;
 
   cRingBufferLinear m_VideoBuffer;

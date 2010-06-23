@@ -18,6 +18,7 @@ cFemonReceiver::cFemonReceiver(int Vtype, int Vpid, int Apid, int Dpid)
   m_DetectH264(this),
   m_DetectMPEG(this, this),
   m_DetectAAC(this),
+  m_DetectLATM(this),
   m_DetectAC3(this),
   m_VideoBuffer(KILOBYTE(512), TS_SIZE, false, "Femon video"),
   m_VideoType(Vtype),
@@ -144,7 +145,7 @@ void cFemonReceiver::Action(void)
     while (Data = m_VideoBuffer.Get(Length)) {
       if (!m_Active || (Length < TS_SIZE))
          break;
-      Length = TS_SIZE;      
+      Length = TS_SIZE;
       if (*Data != TS_SYNC_BYTE) {
          for (int i = 1; i < Length; ++i) {
              if (Data[i] == TS_SYNC_BYTE) {
@@ -181,7 +182,7 @@ void cFemonReceiver::Action(void)
     while (Data = m_AudioBuffer.Get(Length)) {
       if (!m_Active || (Length < TS_SIZE))
          break;
-      Length = TS_SIZE;      
+      Length = TS_SIZE;
       if (*Data != TS_SYNC_BYTE) {
          for (int i = 1; i < Length; ++i) {
              if (Data[i] == TS_SYNC_BYTE) {
@@ -194,7 +195,7 @@ void cFemonReceiver::Action(void)
          }
       processed = true;
       if (const uint8_t *p = m_AudioAssembler.GetPes(len)) {
-         if (m_DetectAAC.processAudio(p, len) || m_DetectMPEG.processAudio(p, len))
+         if (m_DetectAAC.processAudio(p, len) || m_DetectLATM.processAudio(p, len) || m_DetectMPEG.processAudio(p, len))
             m_AudioValid = true;
          m_AudioAssembler.Reset();
          }
@@ -206,7 +207,7 @@ void cFemonReceiver::Action(void)
     while (Data = m_AC3Buffer.Get(Length)) {
       if (!m_Active || (Length < TS_SIZE))
          break;
-      Length = TS_SIZE;      
+      Length = TS_SIZE;
       if (*Data != TS_SYNC_BYTE) {
          for (int i = 1; i < Length; ++i) {
              if (Data[i] == TS_SYNC_BYTE) {

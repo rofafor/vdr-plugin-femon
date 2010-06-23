@@ -63,7 +63,7 @@ all-redirect: all
 
 ### The object files (add further files here):
 
-OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femontools.o femonmpeg.o femonac3.o femonaac.o femonh264.o femonsymbol.o
+OBJS = femon.o femonosd.o femonreceiver.o femoncfg.o femontools.o femonmpeg.o femonac3.o femonaac.o femonlatm.o femonh264.o femonsymbol.o
 
 ### The main target:
 
@@ -95,7 +95,7 @@ I18Npot   = $(PODIR)/$(PLUGIN).pot
 	msgfmt -c -o $@ $<
 
 $(I18Npot): $(wildcard *.c)
-	xgettext -C -cTRANSLATORS --no-wrap --no-location -k -ktr -ktrNOOP --msgid-bugs-address='Rolf Ahrenberg' -o $@ $^
+	xgettext -C -cTRANSLATORS --no-wrap --no-location -k -ktr -ktrNOOP --msgid-bugs-address='<see README>' -o $@ $^
 
 %.po: $(I18Npot)
 	msgmerge -U --no-wrap --no-location --backup=none -q $@ $<
