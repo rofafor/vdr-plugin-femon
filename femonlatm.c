@@ -45,8 +45,10 @@ bool cFemonLATM::processAudio(const uint8_t *buf, int len)
   if (bs.getBits(12) != 0x56E)              // syncword
      return false;
 
-  if (bs.getBit() == 1)                     // id: MPEG-1=1, extension to lower sampling frequences=0
-     return false;
+  m_AudioHandler->SetAudioCodec(AUDIO_CODEC_LATM);
+
+  if (bs.getBit() == 0)                     // id: MPEG-1=1, extension to lower sampling frequencies=0
+     return true;                           // @todo: lower sampling frequencies support
   int layer = 3 - bs.getBits(2);            // layer: I=11, II=10, III=01
   bs.skipBit();                             // protection bit
   int bit_rate_index = bs.getBits(4);       // bitrate index
@@ -54,8 +56,6 @@ bool cFemonLATM::processAudio(const uint8_t *buf, int len)
   bs.skipBit();                             // padding bit
   bs.skipBit();                             // private pid
   int mode = bs.getBits(2);                 // mode
-
-  m_AudioHandler->SetAudioCodec(AUDIO_CODEC_LATM);
 
   switch (mode) {
     case 0:
