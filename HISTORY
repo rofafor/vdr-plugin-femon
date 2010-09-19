@@ -402,3 +402,7 @@ VDR Plugin 'femon' Revision History
 - Added preliminary support for LATM.
 - Updated Italian translation (Thanks to Diego Pierotto).
 - Fixed a crash in femon service (Thanks to Wolfgang Astleitner).
+
+2010-xx-xx: Version 1.7.9
+
+- Updated for vdr-1.7.16.
