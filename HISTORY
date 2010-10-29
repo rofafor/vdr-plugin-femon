@@ -407,3 +407,4 @@ VDR Plugin 'femon' Revision History
 
 - Updated for vdr-1.7.16.
 - Added Makefile depencency for objects.
+- Fixed detection of replaying.

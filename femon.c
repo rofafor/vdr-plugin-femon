@@ -7,7 +7,7 @@
 
 #include <vdr/menu.h>
 #include <vdr/remote.h>
-#include <vdr/menu.h>
+#include <vdr/player.h>
 #include "femoncfg.h"
 #include "femonreceiver.h"
 #include "femonosd.h"
@@ -97,7 +97,7 @@ cOsdObject *cPluginFemon::MainMenuAction(void)
 {
   // Perform the action when selected from the main VDR menu.
   debug("%s()\n", __PRETTY_FUNCTION__);
-  if (cReplayControl::NowReplaying() || (Channels.Count() <= 0))
+  if (cControl::Control() || (Channels.Count() <= 0))
      Skins.Message(mtInfo, tr("Femon not available"));
   else
      return cFemonOsd::Instance(true);
@@ -196,7 +196,7 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
         return cString("Cannot open femon plugin while replaying");
         }
      if (!cFemonOsd::Instance())
-        cRemote::CallPlugin("femon");
+        cRemote::CallPlugin(Name());
      return cString("Opening femon plugin");
      }
   else if (strcasecmp(Command, "QUIT") == 0) {
