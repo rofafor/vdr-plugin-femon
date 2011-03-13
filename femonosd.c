@@ -144,6 +144,7 @@ public:
   virtual int Width(const char *s) const { return 50; }
   virtual int Height(void) const { return 20; }
   virtual void DrawText(cBitmap *Bitmap, int x, int y, const char *s, tColor ColorFg, tColor ColorBg, int Width) const {}
+  virtual void DrawText(cPixmap *Pixmap, int x, int y, const char *s, tColor ColorFg, tColor ColorBg, int Width) const {}
 };
 
 cFemonOsd *cFemonOsd::pInstance = NULL;

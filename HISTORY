@@ -409,3 +409,7 @@ VDR Plugin 'femon' Revision History
 - Added Makefile depencency for objects.
 - Fixed detection of replaying.
 - Added support for LDFLAGS.
+
+2011-03-13: Version 1.7.10
+
+- Updated for vdr-1.7.17.
