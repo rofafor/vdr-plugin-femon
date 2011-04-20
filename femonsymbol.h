@@ -8,7 +8,7 @@
 #ifndef __FEMONSYMBOL_H
 #define __FEMONSYMBOL_H
 
-#include <vector>
+#include <vdr/tools.h>
 #include <vdr/osd.h>
 
 enum eSymbols {
@@ -61,14 +61,14 @@ private:
   double xFactorM;
   double yFactorM;
   bool antiAliasM;
-  std::vector<cBitmap*> cacheM;
+  cVector<cBitmap*> cacheM;
   bool Populate(void);
   bool Flush(void);
 public:
   cFemonSymbolCache();
   ~cFemonSymbolCache();
   void Refresh();
-  cBitmap& Get(unsigned int symbolP);
+  cBitmap& Get(eSymbols symbolP);
   int GetSpacing()  { return yFactorM * DEFAULT_SPACING; }
   int GetRounding() { return yFactorM * DEFAULT_ROUNDING; }
 };
