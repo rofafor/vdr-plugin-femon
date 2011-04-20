@@ -8,6 +8,7 @@
 #ifndef __FEMONSYMBOL_H
 #define __FEMONSYMBOL_H
 
+#include <vector>
 #include <vdr/osd.h>
 
 enum eSymbols {
@@ -49,6 +50,29 @@ enum eSymbols {
   SYMBOL_MAX_COUNT
   };
 
-extern cBitmap bmSymbol[SYMBOL_MAX_COUNT];
+class cFemonSymbolCache {
+private:
+  enum {
+    DEFAULT_SPACING  = 5,
+    DEFAULT_ROUNDING = 10,
+    DEFAULT_HEIGHT   = 576,
+    DEFAULT_WIDTH    = 720
+  };
+  double xFactorM;
+  double yFactorM;
+  bool antiAliasM;
+  std::vector<cBitmap*> cacheM;
+  bool Populate(void);
+  bool Flush(void);
+public:
+  cFemonSymbolCache();
+  ~cFemonSymbolCache();
+  void Refresh();
+  cBitmap& Get(unsigned int symbolP);
+  int GetSpacing()  { return yFactorM * DEFAULT_SPACING; }
+  int GetRounding() { return yFactorM * DEFAULT_ROUNDING; }
+};
+
+extern cFemonSymbolCache femonSymbols;
 
 #endif // __FEMONSYMBOL_H

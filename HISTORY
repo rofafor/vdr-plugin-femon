@@ -410,6 +410,7 @@ VDR Plugin 'femon' Revision History
 - Fixed detection of replaying.
 - Added support for LDFLAGS.
 
-2011-03-13: Version 1.7.10
+2011-04-20: Version 1.7.10
 
-- Updated for vdr-1.7.17.
+- Updated for vdr-1.7.18.
+- Added scaling for symbols.

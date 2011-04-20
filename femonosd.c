@@ -25,8 +25,9 @@
 #define OSDROWHEIGHT              m_Font->Height()        // in pixels
 #define OSDINFOHEIGHT             (OSDROWHEIGHT * 13)     // in pixels (13 rows)
 #define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 6)      // in pixels (6 rows)
-#define OSDSPACING                5
-#define OSDROUNDING               10
+#define OSDSYMBOL(id)             femonSymbols.Get(id)
+#define OSDSPACING                femonSymbols.GetSpacing()
+#define OSDROUNDING               femonSymbols.GetRounding()
 #define IS_OSDROUNDING            (femonConfig.skin == eFemonSkinElchi)
 #define IS_OSDRESOLUTION(r1, r2)  (abs(r1 - r2) < 20)
 #define OSDINFOWIN_Y(offset)      (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
@@ -193,12 +194,13 @@ cFemonOsd::cFemonOsd()
   memset(&m_FrontendStatus, 0, sizeof(m_FrontendStatus));
   memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
   m_SvdrpConnection.handle = -1;
+  femonSymbols.Refresh();
   m_Font = cFont::CreateFont(Setup.FontSml, min(max(Setup.FontSmlSize, MINFONTSIZE), MAXFONTSIZE));
   if (!m_Font || !m_Font->Height()) {
      m_Font = new cFemonDummyFont;
      error("cFemonOsd::cFemonOsd() cannot create required font.");
      }
-  tmp = 5 * bmSymbol[SYMBOL_LOCK].Width() + 6 * OSDSPACING;
+  tmp = 5 * OSDSYMBOL(SYMBOL_LOCK).Width() + 6 * OSDSPACING;
   if (OSDWIDTH < tmp) {
      error("cFemonOsd::cFemonOsd() OSD width (%d) smaller than required (%d).", OSDWIDTH, tmp);
      OSDWIDTH = tmp;
@@ -249,84 +251,84 @@ void cFemonOsd::DrawStatusWindow(void)
   if (m_Osd && channel) {
      OSDDRAWSTATUSTITLEBAR(*cString::sprintf("%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true)));
      if (m_SvdrpFrontend >= 0) {
-        bm = &bmSymbol[SYMBOL_SVDRP];
+        bm = &OSDSYMBOL(SYMBOL_SVDRP);
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      switch (cDevice::ActualDevice()->CardIndex()) {
-       case 1:  bm = &bmSymbol[SYMBOL_ONE];   break;
-       case 2:  bm = &bmSymbol[SYMBOL_TWO];   break;
-       case 3:  bm = &bmSymbol[SYMBOL_THREE]; break;
-       case 4:  bm = &bmSymbol[SYMBOL_FOUR];  break;
-       case 5:  bm = &bmSymbol[SYMBOL_FIVE];  break;
-       case 6:  bm = &bmSymbol[SYMBOL_SIX];   break;
-       case 7:  bm = &bmSymbol[SYMBOL_SEVEN]; break;
-       case 8:  bm = &bmSymbol[SYMBOL_EIGHT]; break;
-       default: bm = &bmSymbol[SYMBOL_ZERO];  break;
+       case 1:  bm = &OSDSYMBOL(SYMBOL_ONE);   break;
+       case 2:  bm = &OSDSYMBOL(SYMBOL_TWO);   break;
+       case 3:  bm = &OSDSYMBOL(SYMBOL_THREE); break;
+       case 4:  bm = &OSDSYMBOL(SYMBOL_FOUR);  break;
+       case 5:  bm = &OSDSYMBOL(SYMBOL_FIVE);  break;
+       case 6:  bm = &OSDSYMBOL(SYMBOL_SIX);   break;
+       case 7:  bm = &OSDSYMBOL(SYMBOL_SEVEN); break;
+       case 8:  bm = &OSDSYMBOL(SYMBOL_EIGHT); break;
+       default: bm = &OSDSYMBOL(SYMBOL_ZERO);  break;
        }
      OSDDRAWSTATUSBM(OSDSPACING);
-     bm = &bmSymbol[SYMBOL_DEVICE];
+     bm = &OSDSYMBOL(SYMBOL_DEVICE);
      OSDDRAWSTATUSBM(0);
      if (IS_AUDIO_TRACK(track)) {
         switch (int(track - ttAudioFirst)) {
-           case 1:  bm = &bmSymbol[SYMBOL_ONE];   break;
-           case 2:  bm = &bmSymbol[SYMBOL_TWO];   break;
-           case 3:  bm = &bmSymbol[SYMBOL_THREE]; break;
-           case 4:  bm = &bmSymbol[SYMBOL_FOUR];  break;
-           case 5:  bm = &bmSymbol[SYMBOL_FIVE];  break;
-           case 6:  bm = &bmSymbol[SYMBOL_SIX];   break;
-           case 7:  bm = &bmSymbol[SYMBOL_SEVEN]; break;
-           case 8:  bm = &bmSymbol[SYMBOL_EIGHT]; break;
-           default: bm = &bmSymbol[SYMBOL_ZERO];  break;
+           case 1:  bm = &OSDSYMBOL(SYMBOL_ONE);   break;
+           case 2:  bm = &OSDSYMBOL(SYMBOL_TWO);   break;
+           case 3:  bm = &OSDSYMBOL(SYMBOL_THREE); break;
+           case 4:  bm = &OSDSYMBOL(SYMBOL_FOUR);  break;
+           case 5:  bm = &OSDSYMBOL(SYMBOL_FIVE);  break;
+           case 6:  bm = &OSDSYMBOL(SYMBOL_SIX);   break;
+           case 7:  bm = &OSDSYMBOL(SYMBOL_SEVEN); break;
+           case 8:  bm = &OSDSYMBOL(SYMBOL_EIGHT); break;
+           default: bm = &OSDSYMBOL(SYMBOL_ZERO);  break;
            }
         OSDDRAWSTATUSBM(OSDSPACING);
         switch (cDevice::PrimaryDevice()->GetAudioChannel()) {
-           case 1:  bm = &bmSymbol[SYMBOL_MONO_LEFT];  break;
-           case 2:  bm = &bmSymbol[SYMBOL_MONO_RIGHT]; break;
-           default: bm = &bmSymbol[SYMBOL_STEREO];     break;
+           case 1:  bm = &OSDSYMBOL(SYMBOL_MONO_LEFT);  break;
+           case 2:  bm = &OSDSYMBOL(SYMBOL_MONO_RIGHT); break;
+           default: bm = &OSDSYMBOL(SYMBOL_STEREO);     break;
            }
         OSDDRAWSTATUSBM(0);
         }
      else if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
-        if      (m_Receiver->AC3_5_1()) bm = &bmSymbol[SYMBOL_DD51];
-        else if (m_Receiver->AC3_2_0()) bm = &bmSymbol[SYMBOL_DD20];
-        else                            bm = &bmSymbol[SYMBOL_DD];
+        if      (m_Receiver->AC3_5_1()) bm = &OSDSYMBOL(SYMBOL_DD51);
+        else if (m_Receiver->AC3_2_0()) bm = &OSDSYMBOL(SYMBOL_DD20);
+        else                            bm = &OSDSYMBOL(SYMBOL_DD);
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      if (m_Receiver) {
         if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 1080))
-           bm = &bmSymbol[SYMBOL_FORMAT_1080];
+           bm = &OSDSYMBOL(SYMBOL_FORMAT_1080);
         else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 720))
-           bm = &bmSymbol[SYMBOL_FORMAT_720];
+           bm = &OSDSYMBOL(SYMBOL_FORMAT_720);
         else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 576))
-           bm = &bmSymbol[SYMBOL_FORMAT_576];
+           bm = &OSDSYMBOL(SYMBOL_FORMAT_576);
         else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 480))
-           bm = &bmSymbol[SYMBOL_FORMAT_480];
+           bm = &OSDSYMBOL(SYMBOL_FORMAT_480);
         else
            bm = NULL;
         OSDDRAWSTATUSBM(OSDSPACING);
         switch (m_Receiver->VideoCodec()) {
-           case VIDEO_CODEC_MPEG2: bm = &bmSymbol[SYMBOL_MPEG2]; break;
-           case VIDEO_CODEC_H264:  bm = &bmSymbol[SYMBOL_H264];  break;
-           default:                bm = NULL;                    break;
+           case VIDEO_CODEC_MPEG2: bm = &OSDSYMBOL(SYMBOL_MPEG2); break;
+           case VIDEO_CODEC_H264:  bm = &OSDSYMBOL(SYMBOL_H264);  break;
+           default:                bm = NULL;                     break;
            }
         OSDDRAWSTATUSBM(OSDSPACING);
         switch (m_Receiver->VideoFormat()) {
-           case VIDEO_FORMAT_PAL:  bm = &bmSymbol[SYMBOL_PAL];  break;
-           case VIDEO_FORMAT_NTSC: bm = &bmSymbol[SYMBOL_NTSC]; break;
-           default:                bm = NULL;                   break;
+           case VIDEO_FORMAT_PAL:  bm = &OSDSYMBOL(SYMBOL_PAL);  break;
+           case VIDEO_FORMAT_NTSC: bm = &OSDSYMBOL(SYMBOL_NTSC); break;
+           default:                bm = NULL;                    break;
            }
         OSDDRAWSTATUSBM(OSDSPACING);
         switch (m_Receiver->VideoAspectRatio()) {
-           case VIDEO_ASPECT_RATIO_1_1:    bm = &bmSymbol[SYMBOL_AR_1_1];    break;
-           case VIDEO_ASPECT_RATIO_4_3:    bm = &bmSymbol[SYMBOL_AR_4_3];    break;
-           case VIDEO_ASPECT_RATIO_16_9:   bm = &bmSymbol[SYMBOL_AR_16_9];   break;
-           case VIDEO_ASPECT_RATIO_2_21_1: bm = &bmSymbol[SYMBOL_AR_2_21_1]; break;
-           default:                        bm = NULL;                        break;
+           case VIDEO_ASPECT_RATIO_1_1:    bm = &OSDSYMBOL(SYMBOL_AR_1_1);    break;
+           case VIDEO_ASPECT_RATIO_4_3:    bm = &OSDSYMBOL(SYMBOL_AR_4_3);    break;
+           case VIDEO_ASPECT_RATIO_16_9:   bm = &OSDSYMBOL(SYMBOL_AR_16_9);   break;
+           case VIDEO_ASPECT_RATIO_2_21_1: bm = &OSDSYMBOL(SYMBOL_AR_2_21_1); break;
+           default:                        bm = NULL;                         break;
            }
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      if (channel->Ca() > 0xFF) {
-        bm = &bmSymbol[SYMBOL_ENCRYPTED];
+        bm = &OSDSYMBOL(SYMBOL_ENCRYPTED);
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      offset += OSDROWHEIGHT;
@@ -345,14 +347,14 @@ void cFemonOsd::DrawStatusWindow(void)
                          *cString::sprintf("%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio")),
                          *getBitrateKbits(m_Receiver ? ((m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate()) : (m_SvdrpFrontend >= 0 ? m_SvdrpAudioBitrate : -1.0)));
      offset += OSDROWHEIGHT;
-     x = bmSymbol[SYMBOL_LOCK].Width();
-     y = (OSDROWHEIGHT - bmSymbol[SYMBOL_LOCK].Height()) / 2;
+     x = OSDSYMBOL(SYMBOL_LOCK).Width();
+     y = (OSDROWHEIGHT - OSDSYMBOL(SYMBOL_LOCK).Height()) / 2;
      if (m_FrontendStatusValid) {
-        OSDDRAWSTATUSFRONTEND(1, bmSymbol[SYMBOL_LOCK],    FE_HAS_LOCK);
-        OSDDRAWSTATUSFRONTEND(2, bmSymbol[SYMBOL_SIGNAL],  FE_HAS_SIGNAL);
-        OSDDRAWSTATUSFRONTEND(3, bmSymbol[SYMBOL_CARRIER], FE_HAS_CARRIER);
-        OSDDRAWSTATUSFRONTEND(4, bmSymbol[SYMBOL_VITERBI], FE_HAS_VITERBI);
-        OSDDRAWSTATUSFRONTEND(5, bmSymbol[SYMBOL_SYNC],    FE_HAS_SYNC);
+        OSDDRAWSTATUSFRONTEND(1, OSDSYMBOL(SYMBOL_LOCK),    FE_HAS_LOCK);
+        OSDDRAWSTATUSFRONTEND(2, OSDSYMBOL(SYMBOL_SIGNAL),  FE_HAS_SIGNAL);
+        OSDDRAWSTATUSFRONTEND(3, OSDSYMBOL(SYMBOL_CARRIER), FE_HAS_CARRIER);
+        OSDDRAWSTATUSFRONTEND(4, OSDSYMBOL(SYMBOL_VITERBI), FE_HAS_VITERBI);
+        OSDDRAWSTATUSFRONTEND(5, OSDSYMBOL(SYMBOL_SYNC),    FE_HAS_SYNC);
         }
      OSDDRAWSTATUSBOTTOMBAR();
      m_Osd->Flush();

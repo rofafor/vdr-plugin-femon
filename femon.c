@@ -14,8 +14,8 @@
 #include "femonservice.h"
 #include "femontools.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 10717
-#error "VDR-1.7.17 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 10718
+#error "VDR-1.7.18 API version or greater is required!"
 #endif
 
 static const char VERSION[]       = "1.7.10";
