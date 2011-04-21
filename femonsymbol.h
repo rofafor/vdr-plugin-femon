@@ -57,7 +57,7 @@ private:
     DEFAULT_ROUNDING = 10,
     DEFAULT_HEIGHT   = 576,
     DEFAULT_WIDTH    = 720
-  };
+    };
   double xFactorM;
   double yFactorM;
   bool antiAliasM;
