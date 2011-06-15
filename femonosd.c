@@ -6,7 +6,7 @@
  */
 
 #ifndef __STDC_FORMAT_MACROS
-#define __STDC_FORMAT_MACROS    
+#define __STDC_FORMAT_MACROS
 #endif
 
 #include <ctype.h>
@@ -241,14 +241,15 @@ cFemonOsd::~cFemonOsd(void)
 void cFemonOsd::DrawStatusWindow(void)
 {
   cMutexLock lock(&m_Mutex);
-  cBitmap *bm = NULL;
-  int offset = 0;
-  int x = OSDWIDTH - OSDROUNDING;
-  int y = 0;
-  eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   if (m_Osd && channel) {
+     cBitmap *bm = NULL;
+     int offset = 0;
+     int x = OSDWIDTH - OSDROUNDING;
+     int y = 0;
+     eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
+
      OSDDRAWSTATUSTITLEBAR(*cString::sprintf("%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true)));
      if (m_SvdrpFrontend >= 0) {
         bm = &OSDSYMBOL(SYMBOL_SVDRP);
@@ -364,12 +365,13 @@ void cFemonOsd::DrawStatusWindow(void)
 void cFemonOsd::DrawInfoWindow(void)
 {
   cMutexLock lock(&m_Mutex);
-  int offset = 0;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-  eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
 
   if (m_Osd && channel) {
+     int offset = 0;
+     eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
      cDvbTransponderParameters dtp(channel->Parameters());
+
      switch (m_DisplayMode) {
        case eFemonModeTransponder:
             OSDDRAWINFOTITLEBAR(tr("Transponder Information"));

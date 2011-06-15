@@ -414,3 +414,7 @@ VDR Plugin 'femon' Revision History
 
 - Updated for vdr-1.7.18.
 - Added scaling for symbols.
+
+2011-xx-xx: Version 1.7.11
+
+- Added cppcheck target into Makefile.
