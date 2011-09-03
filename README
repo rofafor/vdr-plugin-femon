@@ -32,15 +32,15 @@ Terminology:
 
 --------------------------------------------------------------
 |## Channel Name ################### [SVDRP][AR][VF][A/DD][D]|
-|[=====Signal Strength in % ==============|=================]|
-|[=====Signal-to-Noise Ratio in % ========|=================]|
+|[=====Signal Strength ===================|=================]|
+|[=====Signal Quality ================|=====================]|
 | STR: #0000 (0%)       BER: #00000000       Video: 0 Mbit/s |
 | SNR: #0000 (0%)       UNC: #00000000       Audio: 0 kbit/s |
 | [LOCK]     [SIGNAL]     [CARRIER]     [VITERBI]     [SYNC] |
 --------------------------------------------------------------
 
-STR     - Signal strength
-SNR     - Signal-to-noise ratio
+STR     - Signal strength from driver
+SNR     - Signal-to-noise ratio from driver
 BER     - Bit error rate
 UNC     - Uncorrected blocks
 Video   - Calculated video bitrate in Mbit/s

@@ -14,8 +14,8 @@
 #include "femonservice.h"
 #include "femontools.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 10718
-#error "VDR-1.7.18 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 10719
+#error "VDR-1.7.19 API version or greater is required!"
 #endif
 
 static const char VERSION[]       = "1.7.11";
@@ -169,10 +169,14 @@ const char **cPluginFemon::SVDRPHelpPages(void)
     "    Print the current frontend name.",
     "STAT\n"
     "    Print the current frontend status.",
-    "SGNL\n"
+    "STRG\n"
     "    Print the current signal strength.",
+    "QUAL\n"
+    "    Print the current signal quality.",
+    "SGNL\n"
+    "    Print the current signal strength from driver.",
     "SNRA\n"
-    "    Print the current signal-to-noise ratio.",
+    "    Print the current signal-to-noise ratio from driver.",
     "BERA\n"
     "    Print the current bit error rate.",
     "UNCB\n"
@@ -224,6 +228,12 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
      }
   else if (strcasecmp(Command, "STAT") == 0) {
      return getFrontendStatus(cDevice::ActualDevice()->CardIndex());
+     }
+  else if (strcasecmp(Command, "STRG") == 0) {
+     return cString::sprintf("%d on device #%d", cDevice::ActualDevice()->SignalStrength(), cDevice::ActualDevice()->CardIndex());
+     }
+  else if (strcasecmp(Command, "QUAL") == 0) {
+     return cString::sprintf("%d on device #%d", cDevice::ActualDevice()->SignalQuality(), cDevice::ActualDevice()->CardIndex());
      }
   else if (strcasecmp(Command, "SGNL") == 0) {
      int value = getSignal(cDevice::ActualDevice()->CardIndex());

@@ -92,7 +92,7 @@ cString getFrontendInfo(int cardIndex)
   if (fe < 0)
      return NULL;
 
-  info = cString::sprintf("CARD:%d", cardIndex);
+  info = cString::sprintf("CARD:%d\nSTRG:%d\nQUAL:%d", cardIndex, cDevice::ActualDevice()->SignalStrength(), cDevice::ActualDevice()->SignalQuality());
 
   if (ioctl(fe, FE_GET_INFO, &value) >= 0)
      info = cString::sprintf("%s\nTYPE:%d\nNAME:%s", *info, value.type, value.name);

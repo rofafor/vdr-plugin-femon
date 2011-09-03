@@ -171,6 +171,10 @@ cFemonOsd::cFemonOsd()
   m_SvdrpPlugin(NULL),
   m_Number(0),
   m_OldNumber(0),
+  m_Quality(0),
+  m_QualityValid(false),
+  m_Strength(0),
+  m_StrengthValid(false),
   m_SNR(0),
   m_SNRValid(false),
   m_Signal(0),
@@ -333,11 +337,11 @@ void cFemonOsd::DrawStatusWindow(void)
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      offset += OSDROWHEIGHT;
-     if (m_SignalValid)
-        OSDDRAWSTATUSBAR(m_Signal / 655);
+     if (m_StrengthValid)
+        OSDDRAWSTATUSBAR(m_Strength);
      offset += OSDROWHEIGHT;
-     if (m_SNRValid)
-        OSDDRAWSTATUSBAR(m_SNR / 655);
+     if (m_QualityValid)
+        OSDDRAWSTATUSBAR(m_Quality);
      offset += OSDROWHEIGHT;
      OSDDRAWSTATUSVALUES("STR:", m_SignalValid ? *cString::sprintf("%04x", m_Signal) : "", m_SignalValid ? *cString::sprintf("(%2d%%)", m_Signal / 655) : "",
                          "BER:", m_BERValid ? *cString::sprintf("%08x", m_BER) : "", *cString::sprintf("%s:", tr("Video")),
@@ -521,6 +525,10 @@ void cFemonOsd::Action(void)
     m_SvdrpVideoBitrate = -1.0;
     m_SvdrpAudioBitrate = -1.0;
     if (m_Frontend != -1) {
+       m_Quality = cDevice::ActualDevice()->SignalQuality();
+       m_QualityValid = (m_Quality >= 0);
+       m_Strength = cDevice::ActualDevice()->SignalStrength();
+       m_StrengthValid = (m_Strength >= 0);
        m_FrontendStatusValid = (ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus) >= 0);
        m_SignalValid = (ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal) >= 0);
        m_SNRValid = (ioctl(m_Frontend, FE_READ_SNR, &m_SNR) >= 0);
@@ -533,6 +541,8 @@ void cFemonOsd::Action(void)
        cmd.handle = m_SvdrpConnection.handle;
        m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
        if (cmd.responseCode == 900) {
+          m_StrengthValid = false;
+          m_QualityValid = false;
           m_FrontendStatusValid = false;
           m_SignalValid = false;
           m_SNRValid = false;
@@ -542,6 +552,14 @@ void cFemonOsd::Action(void)
               const char *s = line->Text();
 	      if (!strncasecmp(s, "CARD:", 5))
                  m_SvdrpFrontend = (int)strtol(s + 5, NULL, 10);
+              else if (!strncasecmp(s, "STRG:", 5)) {
+                 m_Strength = (int)strtol(s + 5, NULL, 10);
+                 m_StrengthValid = (m_Strength >= 0);
+                 }
+              else if (!strncasecmp(s, "QUAL:", 5)) {
+                 m_Quality = (int)strtol(s + 5, NULL, 10);
+                 m_QualityValid = (m_Quality >= 0);
+                 }
               else if (!strncasecmp(s, "TYPE:", 5))
                  m_FrontendInfo.type = (fe_type_t)strtol(s + 5, NULL, 10);
               else if (!strncasecmp(s, "NAME:", 5)) {

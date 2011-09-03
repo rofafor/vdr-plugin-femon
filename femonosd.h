@@ -36,6 +36,10 @@ private:
   cPlugin          *m_SvdrpPlugin;
   int               m_Number;
   int               m_OldNumber;
+  int               m_Quality;
+  bool              m_QualityValid;
+  int               m_Strength;
+  bool              m_StrengthValid;
   uint16_t          m_SNR;
   bool              m_SNRValid;
   uint16_t          m_Signal;
