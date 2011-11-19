@@ -26,7 +26,7 @@ cFemonAAC::~cFemonAAC()
 
 bool cFemonAAC::processAudio(const uint8_t *buf, int len)
 {
-  cBitStream bs(buf, len * 8);
+  cFemonBitStream bs(buf, len * 8);
 
   if (!m_AudioHandler)
      return false;
@@ -48,23 +48,23 @@ bool cFemonAAC::processAudio(const uint8_t *buf, int len)
   // skip PES header
   if (!PesLongEnough(len))
       return false;
-  bs.skipBits(8 * PesPayloadOffset(buf));
+  bs.SkipBits(8 * PesPayloadOffset(buf));
 
   // HE-AAC audio detection
-  if (bs.getBits(12) != 0xFFF)                  // syncword
+  if (bs.GetBits(12) != 0xFFF)                  // syncword
      return false;
 
-  bs.skipBit();                                 // id
+  bs.SkipBit();                                 // id
 
   // layer must be 0
-  if (bs.getBits(2))                            // layer
+  if (bs.GetBits(2))                            // layer
       return false;
 
-  bs.skipBit();                                 // protection_absent
-  bs.skipBits(2);                               // profile
-  int sampling_frequency_index = bs.getBits(4); // sampling_frequency_index
-  bs.skipBit();                                 // private pid
-  int channel_configuration = bs.getBits(3);    // channel_configuration
+  bs.SkipBit();                                 // protection_absent
+  bs.SkipBits(2);                               // profile
+  int sampling_frequency_index = bs.GetBits(4); // sampling_frequency_index
+  bs.SkipBit();                                 // private pid
+  int channel_configuration = bs.GetBits(3);    // channel_configuration
 
   m_AudioHandler->SetAudioCodec(AUDIO_CODEC_HEAAC);
   m_AudioHandler->SetAudioBitrate(AUDIO_BITRATE_RESERVED);

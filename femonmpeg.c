@@ -48,7 +48,7 @@ cFemonMPEG::~cFemonMPEG()
 
 bool cFemonMPEG::processAudio(const uint8_t *buf, int len)
 {
-  cBitStream bs(buf, len * 8);
+  cFemonBitStream bs(buf, len * 8);
 
   if (!m_AudioHandler)
      return false;
@@ -56,20 +56,20 @@ bool cFemonMPEG::processAudio(const uint8_t *buf, int len)
   // skip PES header
   if (!PesLongEnough(len))
       return false;
-  bs.skipBits(8 * PesPayloadOffset(buf));
+  bs.SkipBits(8 * PesPayloadOffset(buf));
 
   // MPEG audio detection
-  if (bs.getBits(12) != 0xFFF)              // syncword
+  if (bs.GetBits(12) != 0xFFF)              // syncword
      return false;
 
-  int id = bs.getBit();                     // id: MPEG-2=0, MPEG-1=1
-  int layer = 3 - bs.getBits(2);            // layer: I=11, II=10, III=01
-  bs.skipBit();                             // protection bit
-  int bit_rate_index = bs.getBits(4);       // bitrate index
-  int sampling_frequency = bs.getBits(2);   // sampling frequency
-  bs.skipBit();                             // padding bit
-  bs.skipBit();                             // private pid
-  int mode = bs.getBits(2);                 // mode
+  int id = bs.GetBit();                     // id: MPEG-2=0, MPEG-1=1
+  int layer = 3 - bs.GetBits(2);            // layer: I=11, II=10, III=01
+  bs.SkipBit();                             // protection bit
+  int bit_rate_index = bs.GetBits(4);       // bitrate index
+  int sampling_frequency = bs.GetBits(2);   // sampling frequency
+  bs.SkipBit();                             // padding bit
+  bs.SkipBit();                             // private pid
+  int mode = bs.GetBits(2);                 // mode
 
   m_AudioHandler->SetAudioCodec(s_Formats[id][layer]);
 
@@ -124,7 +124,7 @@ bool cFemonMPEG::processAudio(const uint8_t *buf, int len)
 
 bool cFemonMPEG::processVideo(const uint8_t *buf, int len)
 {
-  cBitStream bs(buf, len * 8);
+  cFemonBitStream bs(buf, len * 8);
 
   if (!m_VideoHandler)
      return false;
@@ -132,20 +132,20 @@ bool cFemonMPEG::processVideo(const uint8_t *buf, int len)
   // skip PES header
   if (!PesLongEnough(len))
       return false;
-  bs.skipBits(8 * PesPayloadOffset(buf));
+  bs.SkipBits(8 * PesPayloadOffset(buf));
 
   // MPEG-2 video detection, search for start code
-  if (bs.getU32() != 0x000001B3)            // sequence header
+  if (bs.GetBits(32) != 0x000001B3)         // sequence header
      return false;
 
   int scan = VIDEO_SCAN_UNKNOWN;
   int format = VIDEO_FORMAT_UNKNOWN;
   int aspect = VIDEO_ASPECT_RATIO_RESERVED;
 
-  int horizontal_size = bs.getBits(12);     // horizontal size value
-  int vertical_size = bs.getBits(12);       // vertical size value
+  int horizontal_size = bs.GetBits(12);     // horizontal size value
+  int vertical_size = bs.GetBits(12);       // vertical size value
 
-  switch (bs.getBits(4)) {                  // aspect ratio information
+  switch (bs.GetBits(4)) {                  // aspect ratio information
     case 1:
          aspect = VIDEO_ASPECT_RATIO_1_1;
          break;
@@ -169,7 +169,7 @@ bool cFemonMPEG::processVideo(const uint8_t *buf, int len)
     }
 
   double frame_rate = 0;
-  switch (bs.getBits(4)) {                  // frame rate code
+  switch (bs.GetBits(4)) {                  // frame rate code
     case 1:
          frame_rate = 24000 / 1001.0;
          format = VIDEO_FORMAT_UNKNOWN;
@@ -217,34 +217,34 @@ bool cFemonMPEG::processVideo(const uint8_t *buf, int len)
          break;
     }
 
-  int bit_rate = bs.getBits(18);            // bit rate value
+  int bit_rate = bs.GetBits(18);            // bit rate value
 
-  bs.skipBit();             // marker bit
-  bs.skipBits(10);          // vbv buffer size value
-  bs.skipBit();             // constrained parameters value
-  if (bs.getBit())          // load intra quantizer matrix
-     bs.skipBits(8 * 64);   // intra quantizer matrix
-  if (bs.getBit())          // load non-intra quantizer matrix
-     bs.skipBits(8 * 64);   // non-intra quantizer matrix
+  bs.SkipBit();             // marker bit
+  bs.SkipBits(10);          // vbv buffer size value
+  bs.SkipBit();             // constrained parameters value
+  if (bs.GetBit())          // load intra quantizer matrix
+     bs.SkipBits(8 * 64);   // intra quantizer matrix
+  if (bs.GetBit())          // load non-intra quantizer matrix
+     bs.SkipBits(8 * 64);   // non-intra quantizer matrix
 
-  if (bs.getU32() != 0x000001B5) {                  // extension start
-     bs.skipBits(4);                                // extension start code identifier
-     bs.skipBits(8);                                // profile and level indicator
-     scan = bs.getBit() ? VIDEO_SCAN_PROGRESSIVE :
+  if (bs.GetBits(32) != 0x000001B5) {               // extension start
+     bs.SkipBits(4);                                // extension start code identifier
+     bs.SkipBits(8);                                // profile and level indicator
+     scan = bs.GetBit() ? VIDEO_SCAN_PROGRESSIVE :
                           VIDEO_SCAN_INTERLACED;    // progressive sequence
-     bs.skipBits(2);                                // chroma format
-     horizontal_size |= (bs.getBits(2) << 12);      // horizontal size extension
-     vertical_size |= (bs.getBits(2) << 12);        // vertical size extension
-     bit_rate |= (bs.getBits(12) << 18);            // bit rate extension
-     bs.skipBit();                                  // marker bit
-     bs.skipBits(8);                                // vpv buffer size extension
-     bs.skipBit();                                  // low delay
-     bs.skipBits(2);                                // frame rate extension n
-     bs.skipBits(5);                                // frame rate extension d
+     bs.SkipBits(2);                                // chroma format
+     horizontal_size |= (bs.GetBits(2) << 12);      // horizontal size extension
+     vertical_size |= (bs.GetBits(2) << 12);        // vertical size extension
+     bit_rate |= (bs.GetBits(12) << 18);            // bit rate extension
+     bs.SkipBit();                                  // marker bit
+     bs.SkipBits(8);                                // vpv buffer size extension
+     bs.SkipBit();                                  // low delay
+     bs.SkipBits(2);                                // frame rate extension n
+     bs.SkipBits(5);                                // frame rate extension d
 
-     if ((bs.getU32() != 0x000001B5) &&             // extension start code
-         (bs.getBits(4) == 0x0010)) {               // sequence display extension id
-        switch (bs.getBits(3)) {                    // video format
+     if ((bs.GetBits(32) != 0x000001B5) &&          // extension start code
+         (bs.GetBits(4) == 0x0010)) {               // sequence display extension id
+        switch (bs.GetBits(3)) {                    // video format
           case 0x000:
                format = VIDEO_FORMAT_COMPONENT;
                break;

@@ -542,84 +542,70 @@ cString getBitrateKbits(double value)
   return cString::sprintf("---");
 }
 
-cBitStream::cBitStream(const uint8_t *buf, const int len)
-: data(buf),
-  count(len),
-  index(0)
-{
-}
+// --- cFemonBitStream -------------------------------------------------------
 
-cBitStream::~cBitStream()
+int cFemonBitStream::GetBit(void)
 {
-}
-
-int cBitStream::getBit()
-{
-  if (index >= count)
-     return (1); // -> no infinite colomb's ...
-
+  if (index >= length)
+     return 1;
   int r = (data[index >> 3] >> (7 - (index & 7))) & 1;
   ++index;
-
-  return (r);
+  return r;
 }
 
-uint32_t cBitStream::getBits(uint32_t n)
+uint32_t cFemonBitStream::GetBits(int n)
 {
   uint32_t r = 0;
-
   while (n--)
-    r = (r | (getBit() << n));
-
-  return (r);
+        r |= GetBit() << n;
+  return r;
 }
 
-void cBitStream::skipBits(uint32_t n)
+void cFemonBitStream::ByteAlign(void)
 {
-  index += n;
+  int n = index % 8;
+  if (n > 0)
+     SkipBits(8 - n);
 }
 
-uint32_t cBitStream::getUeGolomb()
+void cFemonBitStream::WordAlign(void)
+{
+  int n = index % 16;
+  if (n > 0)
+     SkipBits(16 - n);
+}
+
+bool cFemonBitStream::SetLength(int Length)
+{
+  if (Length > length)
+     return false;
+  length = Length;
+  return true;
+}
+
+uint32_t cFemonBitStream::GetUeGolomb()
 {
   int n = 0;
 
-  while (!getBit() && (n < 32))
+  while (!GetBit() && (n < 32))
     n++;
 
-  return (n ? ((1 << n) - 1) + getBits(n) : 0);
+  return (n ? ((1 << n) - 1) + GetBits(n) : 0);
 }
 
-int32_t cBitStream::getSeGolomb()
+int32_t cFemonBitStream::GetSeGolomb()
 {
-  uint32_t r = getUeGolomb() + 1;
+  uint32_t r = GetUeGolomb() + 1;
 
   return ((r & 1) ? -(r >> 1) : (r >> 1));
 }
 
-void cBitStream::skipGolomb()
+void cFemonBitStream::SkipGolomb()
 {
   int n = 0;
 
-  while (!getBit() && (n < 32))
+  while (!GetBit() && (n < 32))
     n++;
 
-  skipBits(n);
-}
-
-void cBitStream::skipUeGolomb()
-{
-  skipGolomb();
-}
-
-void cBitStream::skipSeGolomb()
-{
-  skipGolomb();
-}
-
-void cBitStream::byteAlign()
-{
-  int n = index % 8;
-
-  if (n > 0)
-     skipBits(8 - n);
+  SkipBits(n);
 }

@@ -71,35 +71,32 @@ cString getVideoBitrate(double value, double stream);
 cString getBitrateMbits(double value);
 cString getBitrateKbits(double value);
 
-class cBitStream {
+class cFemonBitStream {
 private:
   const uint8_t *data;
-  int            count; // in bits
-  int            index; // in bits
-
+  int length; // in bits
+  int index; // in bits
 public:
-  cBitStream(const uint8_t *buf, const int len);
-  ~cBitStream();
+  cFemonBitStream(const uint8_t *Data, int Length) : data(Data), length(Length), index(0) {}
+  ~cFemonBitStream() {}
+  int GetBit(void);
+  uint32_t GetBits(int n);
+  void ByteAlign(void);
+  void WordAlign(void);
+  bool SetLength(int Length);
+  void SkipBits(int n) { index += n; }
+  void SkipBit(void) { SkipBits(1); }
+  bool IsEOF(void) const { return index >= length; }
+  void Reset(void) { index = 0; }
+  int Length(void) const { return length; }
+  int Index(void) const { return (IsEOF() ? length : index); }
+  const uint8_t *GetData(void) const { return (IsEOF() ? NULL : data + (index / 8)); }
 
-  int            getBit();
-  uint32_t       getBits(uint32_t n);
-  void           skipBits(uint32_t n);
-  uint32_t       getUeGolomb();
-  int32_t        getSeGolomb();
-  void           skipGolomb();
-  void           skipUeGolomb();
-  void           skipSeGolomb();
-  void           byteAlign();
-
-  void           skipBit()  { skipBits(1); }
-  uint32_t       getU8()    { return getBits(8); }
-  uint32_t       getU16()   { return ((getBits(8) << 8) | getBits(8)); }
-  uint32_t       getU24()   { return ((getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
-  uint32_t       getU32()   { return ((getBits(8) << 24) | (getBits(8) << 16) | (getBits(8) << 8) | getBits(8)); }
-  bool           isEOF()    { return (index >= count); }
-  void           reset()    { index = 0; }
-  int            getIndex() { return (isEOF() ? count : index); }
-  const uint8_t *getData()  { return (isEOF() ? NULL : data + (index / 8)); }
-};
+  uint32_t       GetUeGolomb();
+  int32_t        GetSeGolomb();
+  void           SkipGolomb();
+  void           SkipUeGolomb() { SkipGolomb(); }
+  void           SkipSeGolomb() { SkipGolomb(); }
+  };
 
 #endif // __FEMONTOOLS_H

@@ -222,7 +222,7 @@ int cFemonH264::nalUnescape(uint8_t *dst, const uint8_t *src, int len)
 int cFemonH264::parseSPS(const uint8_t *buf, int len)
 {
   int profile_idc, level_idc, constraint_set3_flag, pic_order_cnt_type, i, j;
-  cBitStream bs(buf, len);
+  cFemonBitStream bs(buf, len);
 
   uint32_t width = m_Width;
   uint32_t height = m_Height;
@@ -236,14 +236,14 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   bool mb_adaptive_frame_field_flag = m_MbAdaptiveFrameFieldFlag;
   uint32_t time_offset_length = m_TimeOffsetLength;
 
-  profile_idc = bs.getU8();                 // profile_idc
-  bs.skipBit();                             // constraint_set0_flag
-  bs.skipBit();                             // constraint_set1_flag
-  bs.skipBit();                             // constraint_set2_flag
-  constraint_set3_flag = bs.getBit();       // constraint_set3_flag
-  bs.skipBits(4);                           // reserved_zero_4bits
-  level_idc = bs.getU8();                   // level_idc
-  bs.skipUeGolomb();                        // seq_parameter_set_id
+  profile_idc = bs.GetBits(8);              // profile_idc
+  bs.SkipBit();                             // constraint_set0_flag
+  bs.SkipBit();                             // constraint_set1_flag
+  bs.SkipBit();                             // constraint_set2_flag
+  constraint_set3_flag = bs.GetBit();       // constraint_set3_flag
+  bs.SkipBits(4);                           // reserved_zero_4bits
+  level_idc = bs.GetBits(8);                // level_idc
+  bs.SkipUeGolomb();                        // seq_parameter_set_id
   //debug("H.264 SPS: profile_idc %d level_idc %d\n", profile_idc, level_idc);
   switch (profile_idc) {
     case 66:                                // baseline profile
@@ -457,55 +457,55 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
          break;
   }
   if ((profile_idc == 100) || (profile_idc == 110) || (profile_idc == 122) || (profile_idc == 144)) {
-     if (bs.getUeGolomb() == 3)             // chroma_format_idc
-        bs.skipBit();                       // residual_colour_transform_flag
-     bs.skipUeGolomb();                     // bit_depth_luma_minus8
-     bs.skipUeGolomb();                     // bit_depth_chroma_minus8
-     bs.skipBit();                          // qpprime_y_zero_transform_bypass_flag
-     if (bs.getBit()) {                     // seq_scaling_matrix_present_flag
+     if (bs.GetUeGolomb() == 3)             // chroma_format_idc
+        bs.SkipBit();                       // residual_colour_transform_flag
+     bs.SkipUeGolomb();                     // bit_depth_luma_minus8
+     bs.SkipUeGolomb();                     // bit_depth_chroma_minus8
+     bs.SkipBit();                          // qpprime_y_zero_transform_bypass_flag
+     if (bs.GetBit()) {                     // seq_scaling_matrix_present_flag
         for (i = 0; i < 8; ++i) {
-            if (bs.getBit()) {              // seq_scaling_list_present_flag[i]
+            if (bs.GetBit()) {              // seq_scaling_list_present_flag[i]
                int last = 8, next = 8, size = (i < 6) ? 16 : 64;
                for (j = 0; j < size; ++j) {
                    if (next)
-                      next = (last + bs.getSeGolomb()) & 0xff;
+                      next = (last + bs.GetSeGolomb()) & 0xff;
                    last = next ?: last;
                    }
                }
             }
         }
      }
-  bs.skipUeGolomb();                        // log2_max_frame_num_minus4
-  pic_order_cnt_type = bs.getUeGolomb();    // pic_order_cnt_type
+  bs.SkipUeGolomb();                        // log2_max_frame_num_minus4
+  pic_order_cnt_type = bs.GetUeGolomb();    // pic_order_cnt_type
   if (pic_order_cnt_type == 0)
-     bs.skipUeGolomb();                     // log2_max_pic_order_cnt_lsb_minus4
+     bs.SkipUeGolomb();                     // log2_max_pic_order_cnt_lsb_minus4
   else if (pic_order_cnt_type == 1) {
-     bs.skipBit();                          // delta_pic_order_always_zero
-     bs.skipSeGolomb();                     // offset_for_non_ref_pic
-     bs.skipSeGolomb();                     // offset_for_top_to_bottom_field
-     j = bs.getUeGolomb();                  // num_ref_frames_in_pic_order_cnt_cycle
+     bs.SkipBit();                          // delta_pic_order_always_zero
+     bs.SkipSeGolomb();                     // offset_for_non_ref_pic
+     bs.SkipSeGolomb();                     // offset_for_top_to_bottom_field
+     j = bs.GetUeGolomb();                  // num_ref_frames_in_pic_order_cnt_cycle
      for (i = 0; i < j; ++i)
-         bs.skipSeGolomb();                 // offset_for_ref_frame[i]
+         bs.SkipSeGolomb();                 // offset_for_ref_frame[i]
      }
-  bs.skipUeGolomb();                        // num_ref_frames
-  bs.skipBit();                             // gaps_in_frame_num_value_allowed_flag
-  width  = bs.getUeGolomb() + 1;            // pic_width_in_mbs_minus1
-  height = bs.getUeGolomb() + 1;            // pic_height_in_mbs_minus1
-  frame_mbs_only_flag = bs.getBit();        // frame_mbs_only_flag
+  bs.SkipUeGolomb();                        // num_ref_frames
+  bs.SkipBit();                             // gaps_in_frame_num_value_allowed_flag
+  width  = bs.GetUeGolomb() + 1;            // pic_width_in_mbs_minus1
+  height = bs.GetUeGolomb() + 1;            // pic_height_in_mbs_minus1
+  frame_mbs_only_flag = bs.GetBit();        // frame_mbs_only_flag
   //debug("H.264 SPS: pic_width:  %u mbs\n", width);
   //debug("H.264 SPS: pic_height: %u mbs\n", height);
   //debug("H.264 SPS: frame only flag: %d\n", frame_mbs_only_flag);
   width  *= 16;
   height *= 16 * (frame_mbs_only_flag ? 1 : 2);
   if (!frame_mbs_only_flag)
-     mb_adaptive_frame_field_flag = bs.getBit(); // mb_adaptive_frame_field_flag
-  bs.skipBit();                             // direct_8x8_inference_flag
-  if (bs.getBit()) {                        // frame_cropping_flag
+     mb_adaptive_frame_field_flag = bs.GetBit(); // mb_adaptive_frame_field_flag
+  bs.SkipBit();                             // direct_8x8_inference_flag
+  if (bs.GetBit()) {                        // frame_cropping_flag
      uint32_t crop_left, crop_right, crop_top, crop_bottom;
-     crop_left   = bs.getUeGolomb();        // frame_crop_left_offset
-     crop_right  = bs.getUeGolomb();        // frame_crop_rigth_offset
-     crop_top    = bs.getUeGolomb();        // frame_crop_top_offset
-     crop_bottom = bs.getUeGolomb();        // frame_crop_bottom_offset
+     crop_left   = bs.GetUeGolomb();        // frame_crop_left_offset
+     crop_right  = bs.GetUeGolomb();        // frame_crop_rigth_offset
+     crop_top    = bs.GetUeGolomb();        // frame_crop_top_offset
+     crop_bottom = bs.GetUeGolomb();        // frame_crop_bottom_offset
      //debug("H.264 SPS: cropping %d %d %d %d\n", crop_left, crop_top, crop_right, crop_bottom);
      width -= 2 * (crop_left + crop_right);
      if (frame_mbs_only_flag)
@@ -514,14 +514,14 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
         height -= 4 * (crop_top + crop_bottom);
      }
   // VUI parameters
-  if (bs.getBit()) {                        // vui_parameters_present_flag
-     if (bs.getBit()) {                     // aspect_ratio_info_present
+  if (bs.GetBit()) {                        // vui_parameters_present_flag
+     if (bs.GetBit()) {                     // aspect_ratio_info_present
         uint32_t aspect_ratio_idc, sar_width = 0, sar_height = 0;
-        aspect_ratio_idc = bs.getU8();      // aspect_ratio_idc
+        aspect_ratio_idc = bs.GetBits(8);   // aspect_ratio_idc
         //debug("H.264 SPS: aspect_ratio_idc %d\n", aspect_ratio_idc);
         if (aspect_ratio_idc == 255) {      // extended sar
-           sar_width  = bs.getU16();        // sar_width
-           sar_height = bs.getU16();        // sar_height
+           sar_width  = bs.GetBits(16);     // sar_width
+           sar_height = bs.GetBits(16);     // sar_height
            }
         else if (aspect_ratio_idc < ELEMENTS(s_SAR)) {
            sar_width  = s_SAR[aspect_ratio_idc].w;
@@ -546,78 +546,78 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
            //debug("H.264 SPS: DAR %dx%d (%d)\n", sar_width, sar_height, aspect_ratio);
            }
         }
-     if (bs.getBit())                       // overscan_info_present_flag
-        bs.skipBit();                       // overscan_approriate_flag
-     if (bs.getBit()) {                     // video_signal_type_present_flag
+     if (bs.GetBit())                       // overscan_info_present_flag
+        bs.SkipBit();                       // overscan_approriate_flag
+     if (bs.GetBit()) {                     // video_signal_type_present_flag
         uint32_t video_format;
-        video_format = bs.getBits(3);       // video_format
+        video_format = bs.GetBits(3);       // video_format
         if (video_format < sizeof(s_VideoFormats) / sizeof(s_VideoFormats[0])) {
            format = s_VideoFormats[video_format];
            //debug("H.264 SPS: video format %d\n", format);
            }
-        bs.skipBit();                       // video_full_range_flag
-        if (bs.getBit()) {                  // colour_description_present_flag
-           bs.skipBits(8);                  // colour_primaries
-           bs.skipBits(8);                  // transfer_characteristics
-           bs.skipBits(8);                  // matrix_coefficients
+        bs.SkipBit();                       // video_full_range_flag
+        if (bs.GetBit()) {                  // colour_description_present_flag
+           bs.SkipBits(8);                  // colour_primaries
+           bs.SkipBits(8);                  // transfer_characteristics
+           bs.SkipBits(8);                  // matrix_coefficients
            }
         }
-     if (bs.getBit()) {                     // chroma_loc_info_present_flag
-        bs.skipUeGolomb();                  // chroma_sample_loc_type_top_field
-        bs.skipUeGolomb();                  // chroma_sample_loc_type_bottom_field
+     if (bs.GetBit()) {                     // chroma_loc_info_present_flag
+        bs.SkipUeGolomb();                  // chroma_sample_loc_type_top_field
+        bs.SkipUeGolomb();                  // chroma_sample_loc_type_bottom_field
         }
-     if (bs.getBit()) {                     // timing_info_present_flag
+     if (bs.GetBit()) {                     // timing_info_present_flag
         uint32_t num_units_in_tick, time_scale;
-        num_units_in_tick = bs.getU32();    // num_units_in_tick
-        time_scale        = bs.getU32();    // time_scale
+        num_units_in_tick = bs.GetBits(32); // num_units_in_tick
+        time_scale        = bs.GetBits(32); // time_scale
         if (num_units_in_tick > 0)
            frame_rate = time_scale / num_units_in_tick;
-        bs.skipBit();                       // fixed_frame_rate_flag
+        bs.SkipBit();                       // fixed_frame_rate_flag
         }
-     int nal_hrd_parameters_present_flag = bs.getBit(); // nal_hrd_parameters_present_flag
+     int nal_hrd_parameters_present_flag = bs.GetBit(); // nal_hrd_parameters_present_flag
      if (nal_hrd_parameters_present_flag) {
         int cpb_cnt_minus1;
-        cpb_cnt_minus1 = bs.getUeGolomb();  // cpb_cnt_minus1
-        bs.skipBits(4);                     // bit_rate_scale
-        bs.skipBits(4);                     // cpb_size_scale
+        cpb_cnt_minus1 = bs.GetUeGolomb();  // cpb_cnt_minus1
+        bs.SkipBits(4);                     // bit_rate_scale
+        bs.SkipBits(4);                     // cpb_size_scale
         for (int i = 0; i < cpb_cnt_minus1; ++i) {
-            bs.skipUeGolomb();              // bit_rate_value_minus1[i]
-            bs.skipUeGolomb();              // cpb_size_value_minus1[i]
-            bs.skipBit();                   // cbr_flag[i]
+            bs.SkipUeGolomb();              // bit_rate_value_minus1[i]
+            bs.SkipUeGolomb();              // cpb_size_value_minus1[i]
+            bs.SkipBit();                   // cbr_flag[i]
             }
-        bs.skipBits(5);                     // initial_cpb_removal_delay_length_minus1
-        bs.skipBits(5);                     // cpb_removal_delay_length_minus1
-        bs.skipBits(5);                     // dpb_output_delay_length_minus1
-        time_offset_length = bs.getBits(5); // time_offset_length
+        bs.SkipBits(5);                     // initial_cpb_removal_delay_length_minus1
+        bs.SkipBits(5);                     // cpb_removal_delay_length_minus1
+        bs.SkipBits(5);                     // dpb_output_delay_length_minus1
+        time_offset_length = bs.GetBits(5); // time_offset_length
         }
-     int vlc_hrd_parameters_present_flag = bs.getBit(); // vlc_hrd_parameters_present_flag
+     int vlc_hrd_parameters_present_flag = bs.GetBit(); // vlc_hrd_parameters_present_flag
      if (vlc_hrd_parameters_present_flag) {
          int cpb_cnt_minus1;
-         cpb_cnt_minus1 = bs.getUeGolomb(); // cpb_cnt_minus1
-         bs.skipBits(4);                    // bit_rate_scale
-         bs.skipBits(4);                    // cpb_size_scale
+         cpb_cnt_minus1 = bs.GetUeGolomb(); // cpb_cnt_minus1
+         bs.SkipBits(4);                    // bit_rate_scale
+         bs.SkipBits(4);                    // cpb_size_scale
          for (int i = 0; i < cpb_cnt_minus1; ++i) {
-             bs.skipUeGolomb();             // bit_rate_value_minus1[i]
-             bs.skipUeGolomb();             // cpb_size_value_minus1[i]
-             bs.skipBit();                  // cbr_flag[i]
+             bs.SkipUeGolomb();             // bit_rate_value_minus1[i]
+             bs.SkipUeGolomb();             // cpb_size_value_minus1[i]
+             bs.SkipBit();                  // cbr_flag[i]
              }
-         bs.skipBits(5);                    // initial_cpb_removal_delay_length_minus1
-         bs.skipBits(5);                    // cpb_removal_delay_length_minus1
-         bs.skipBits(5);                    // dpb_output_delay_length_minus1
-         time_offset_length = bs.getBits(5);// time_offset_length
+         bs.SkipBits(5);                    // initial_cpb_removal_delay_length_minus1
+         bs.SkipBits(5);                    // cpb_removal_delay_length_minus1
+         bs.SkipBits(5);                    // dpb_output_delay_length_minus1
+         time_offset_length = bs.GetBits(5);// time_offset_length
         }
      cpb_dpb_delays_present_flag = (nal_hrd_parameters_present_flag | vlc_hrd_parameters_present_flag);
      if (cpb_dpb_delays_present_flag)
-        bs.skipBit();                       // low_delay_hrd_flag
-     pic_struct_present_flag = bs.getBit(); // pic_struct_present_flag
-     if (bs.getBit()) {                     // bitstream_restriction_flag
-        bs.skipBit();                       // motion_vectors_over_pic_boundaries_flag
-        bs.skipUeGolomb();                  // max_bytes_per_pic_denom
-        bs.skipUeGolomb();                  // max_bits_per_mb_denom
-        bs.skipUeGolomb();                  // log2_max_mv_length_horizontal
-        bs.skipUeGolomb();                  // log2_max_mv_length_vertical
-        bs.skipUeGolomb();                  // num_reorder_frames
-        bs.skipUeGolomb();                  // max_dec_frame_buffering
+        bs.SkipBit();                       // low_delay_hrd_flag
+     pic_struct_present_flag = bs.GetBit(); // pic_struct_present_flag
+     if (bs.GetBit()) {                     // bitstream_restriction_flag
+        bs.SkipBit();                       // motion_vectors_over_pic_boundaries_flag
+        bs.SkipUeGolomb();                  // max_bytes_per_pic_denom
+        bs.SkipUeGolomb();                  // max_bits_per_mb_denom
+        bs.SkipUeGolomb();                  // log2_max_mv_length_horizontal
+        bs.SkipUeGolomb();                  // log2_max_mv_length_vertical
+        bs.SkipUeGolomb();                  // num_reorder_frames
+        bs.SkipUeGolomb();                  // max_dec_frame_buffering
         }
      }
 
@@ -633,38 +633,38 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   m_MbAdaptiveFrameFieldFlag = mb_adaptive_frame_field_flag;
   m_TimeOffsetLength = time_offset_length;
 
-  return (bs.getIndex() / 8);
+  return (bs.Index() / 8);
 }
 
 int cFemonH264::parseSEI(const uint8_t *buf, int len)
 {
   int num_referenced_subseqs, i;
-  cBitStream bs(buf, len);
+  cFemonBitStream bs(buf, len);
 
   eVideoScan scan = m_Scan;
 
-  while ((bs.getIndex() * 8 + 16) < len) {               // sei_message
+  while ((bs.Index() * 8 + 16) < len) {               // sei_message
     int lastByte, payloadSize = 0, payloadType = 0;
 
     do {
-       lastByte = bs.getU8() & 0xFF;
+       lastByte = bs.GetBits(8) & 0xFF;
        payloadType += lastByte;
     } while (lastByte == 0xFF);                          // last_payload_type_byte
 
     do {
-       lastByte = bs.getU8() & 0xFF;
+       lastByte = bs.GetBits(8) & 0xFF;
        payloadSize += lastByte;
     } while (lastByte == 0xFF);                          // last_payload_size_byte
 
     switch (payloadType) {                               // sei_payload
       case 1:                                            // pic_timing
            if (m_CpbDpbDelaysPresentFlag) {              // cpb_dpb_delays_present_flag
-              bs.skipUeGolomb();                         // cpb_removal_delay
-              bs.skipUeGolomb();                         // dpb_output_delay
+              bs.SkipUeGolomb();                         // cpb_removal_delay
+              bs.SkipUeGolomb();                         // dpb_output_delay
               }
            if (m_PicStructPresentFlag) {                 // pic_struct_present_flag
               uint32_t pic_struct;
-              pic_struct = bs.getBits(4);                // pic_struct
+              pic_struct = bs.GetBits(4);                // pic_struct
               if (pic_struct >= (sizeof(s_SeiNumClockTsTable)) / sizeof(s_SeiNumClockTsTable[0]))
                  return 0;
               if (m_FrameMbsOnlyFlag && !m_MbAdaptiveFrameFieldFlag)
@@ -691,9 +691,9 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                 }
               //debug("H.264 SEI: pic struct %d scan type %d\n", pic_struct, scan);
               for (int i = 0; i < s_SeiNumClockTsTable[pic_struct]; ++i) {
-                  if (bs.getBit()) {                     // clock_timestamp_flag[i]
+                  if (bs.GetBit()) {                     // clock_timestamp_flag[i]
                      int full_timestamp_flag;
-                     switch (bs.getBits(2)) {            // ct_type
+                     switch (bs.GetBits(2)) {            // ct_type
                        case 0:
                             scan = VIDEO_SCAN_PROGRESSIVE;
                             break;
@@ -708,62 +708,62 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                             break;
                        }
                      //debug("H.264 SEI: scan type %d\n", scan);
-                     bs.skipBit();                       // nuit_field_based_flag
-                     bs.skipBits(5);                     // counting_type
-                     full_timestamp_flag = bs.getBit();  // full_timestamp_flag
-                     bs.skipBit();                       // discontinuity_flag
-                     bs.skipBit();                       // cnt_dropped_flag
-                     bs.skipBits(8);                     // n_frames
+                     bs.SkipBit();                       // nuit_field_based_flag
+                     bs.SkipBits(5);                     // counting_type
+                     full_timestamp_flag = bs.GetBit();  // full_timestamp_flag
+                     bs.SkipBit();                       // discontinuity_flag
+                     bs.SkipBit();                       // cnt_dropped_flag
+                     bs.SkipBits(8);                     // n_frames
                      if (full_timestamp_flag) {
-                        bs.skipBits(6);                  // seconds_value
-                        bs.skipBits(6);                  // minutes_value
-                        bs.skipBits(5);                  // hours_value
+                        bs.SkipBits(6);                  // seconds_value
+                        bs.SkipBits(6);                  // minutes_value
+                        bs.SkipBits(5);                  // hours_value
                         }
                      else {
-                        if (bs.getBit()) {               // seconds_flag
-                           bs.skipBits(6);               // seconds_value
-                           if (bs.getBit()) {            // minutes_flag
-                              bs.skipBits(6);            // minutes_value
-                              if (bs.getBit())           // hours_flag
-                                  bs.skipBits(5);        // hours_value
+                        if (bs.GetBit()) {               // seconds_flag
+                           bs.SkipBits(6);               // seconds_value
+                           if (bs.GetBit()) {            // minutes_flag
+                              bs.SkipBits(6);            // minutes_value
+                              if (bs.GetBit())           // hours_flag
+                                  bs.SkipBits(5);        // hours_value
                               }
                            }
                         }
                      if (m_TimeOffsetLength > 0)
-                        bs.skipBits(m_TimeOffsetLength); // time_offset
+                        bs.SkipBits(m_TimeOffsetLength); // time_offset
                      }
                   }
               }
            break;
 
       case 12:                                           // sub_seq_characteristics
-           bs.skipUeGolomb();                            // sub_seq_layer_num
-           bs.skipUeGolomb();                            // sub_seq_id
-           if (bs.getBit())                              // duration_flag
-              bs.skipBits(32);                           // sub_seq_duration
-           if (bs.getBit()) {                            // average_rate_flag
-              bs.skipBit();                              // accurate_statistics_flag
-              bs.skipBits(16);                           // average_bit_rate (1000 bit/s)
-              bs.skipBits(16);                           // average_frame_rate (frames per 256s)
+           bs.SkipUeGolomb();                            // sub_seq_layer_num
+           bs.SkipUeGolomb();                            // sub_seq_id
+           if (bs.GetBit())                              // duration_flag
+              bs.SkipBits(32);                           // sub_seq_duration
+           if (bs.GetBit()) {                            // average_rate_flag
+              bs.SkipBit();                              // accurate_statistics_flag
+              bs.SkipBits(16);                           // average_bit_rate (1000 bit/s)
+              bs.SkipBits(16);                           // average_frame_rate (frames per 256s)
               }
-           num_referenced_subseqs = bs.getUeGolomb();    // num_referenced_subseqs
+           num_referenced_subseqs = bs.GetUeGolomb();    // num_referenced_subseqs
            for (i = 0; i < num_referenced_subseqs; ++i) {
-               bs.skipUeGolomb();                        // ref_sub_seq_layer_num
-               bs.skipUeGolomb();                        // ref_sub_seq_id
-               bs.getBit();                              // ref_sub_seq_direction
+               bs.SkipUeGolomb();                        // ref_sub_seq_layer_num
+               bs.SkipUeGolomb();                        // ref_sub_seq_id
+               bs.GetBit();                              // ref_sub_seq_direction
                }
            break;
 
       default:
-           bs.skipBits(payloadSize * 8);
+           bs.SkipBits(payloadSize * 8);
            break;
       }
 
     // force byte align
-    bs.byteAlign();
+    bs.ByteAlign();
     }
 
   m_Scan = scan;
 
-  return (bs.getIndex() / 8);
+  return (bs.Index() / 8);
 }

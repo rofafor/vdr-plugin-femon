@@ -41,7 +41,7 @@ bool cFemonAC3::processAudio(const uint8_t *buf, int len)
   int centermixlevel = AUDIO_CENTER_MIX_LEVEL_INVALID;
   int surroundmixlevel = AUDIO_SURROUND_MIX_LEVEL_INVALID;
   int dolbysurroundmode = AUDIO_DOLBY_SURROUND_MODE_INVALID;
-  cBitStream bs(buf, len * 8);
+  cFemonBitStream bs(buf, len * 8);
 
   if (!m_AudioHandler)
      return false;
@@ -49,34 +49,34 @@ bool cFemonAC3::processAudio(const uint8_t *buf, int len)
   // skip PES header
   if (!PesLongEnough(len))
       return false;
-  bs.skipBits(8 * PesPayloadOffset(buf));
+  bs.SkipBits(8 * PesPayloadOffset(buf));
 
   // http://rmworkshop.com/dvd_info/related_info/ac3hdr.htm
 
   // AC3 audio detection
-  if (bs.getU16() != 0x0B77)        // syncword
+  if (bs.GetBits(16) != 0x0B77)     // syncword
      return false;
 
-  bs.skipBits(16);                  // CRC1
+  bs.SkipBits(16);                  // CRC1
 
-  fscod = bs.getBits(2);            // sampling rate values
-  frmsizcod = bs.getBits(6);        // frame size code
+  fscod = bs.GetBits(2);            // sampling rate values
+  frmsizcod = bs.GetBits(6);        // frame size code
 
-  bs.skipBits(5);                   // bitstream id
-  bsmod = bs.getBits(3);            // bitstream mode
-  acmod = bs.getBits(3);            // audio coding mode
+  bs.SkipBits(5);                   // bitstream id
+  bsmod = bs.GetBits(3);            // bitstream mode
+  acmod = bs.GetBits(3);            // audio coding mode
 
   // 3 front channels
   if ((acmod & 0x01) && (acmod != 0x01))
-     centermixlevel = bs.getBits(2);
+     centermixlevel = bs.GetBits(2);
 
   // if a surround channel exists
   if (acmod & 0x04)
-     surroundmixlevel = bs.getBits(2);
+     surroundmixlevel = bs.GetBits(2);
 
   // if in 2/0 mode
   if (acmod == 0x02)
-      dolbysurroundmode = bs.getBits(2);
+      dolbysurroundmode = bs.GetBits(2);
 
   m_AudioHandler->SetAC3Bitrate(1000 * s_Bitrates[frmsizcod >> 1]);
   m_AudioHandler->SetAC3SamplingFrequency(100 * s_Frequencies[fscod]);
@@ -86,8 +86,8 @@ bool cFemonAC3::processAudio(const uint8_t *buf, int len)
   m_AudioHandler->SetAC3SurroundMix(surroundmixlevel);
   m_AudioHandler->SetAC3DolbySurround(dolbysurroundmode);
 
-  m_AudioHandler->SetAC3LFE(bs.getBit());       // low frequency effects on
-  m_AudioHandler->SetAC3Dialog(bs.getBits(5));  // dialog normalization
+  m_AudioHandler->SetAC3LFE(bs.GetBit());       // low frequency effects on
+  m_AudioHandler->SetAC3Dialog(bs.GetBits(5));  // dialog normalization
 
   return true;
 }

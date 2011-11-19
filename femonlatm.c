@@ -31,7 +31,7 @@ cFemonLATM::~cFemonLATM()
 
 bool cFemonLATM::processAudio(const uint8_t *buf, int len)
 {
-  cBitStream bs(buf, len * 8);
+  cFemonBitStream bs(buf, len * 8);
 
   if (!m_AudioHandler)
      return false;
@@ -39,23 +39,23 @@ bool cFemonLATM::processAudio(const uint8_t *buf, int len)
   // skip PES header
   if (!PesLongEnough(len))
       return false;
-  bs.skipBits(8 * PesPayloadOffset(buf));
+  bs.SkipBits(8 * PesPayloadOffset(buf));
 
   // MPEG audio detection
-  if (bs.getBits(12) != 0x56E)              // syncword
+  if (bs.GetBits(12) != 0x56E)              // syncword
      return false;
 
   m_AudioHandler->SetAudioCodec(AUDIO_CODEC_LATM);
 
-  if (bs.getBit() == 0)                     // id: MPEG-1=1, extension to lower sampling frequencies=0
+  if (bs.GetBit() == 0)                     // id: MPEG-1=1, extension to lower sampling frequencies=0
      return true;                           // @todo: lower sampling frequencies support
-  int layer = 3 - bs.getBits(2);            // layer: I=11, II=10, III=01
-  bs.skipBit();                             // protection bit
-  int bit_rate_index = bs.getBits(4);       // bitrate index
-  int sampling_frequency = bs.getBits(2);   // sampling frequency
-  bs.skipBit();                             // padding bit
-  bs.skipBit();                             // private pid
-  int mode = bs.getBits(2);                 // mode
+  int layer = 3 - bs.GetBits(2);            // layer: I=11, II=10, III=01
+  bs.SkipBit();                             // protection bit
+  int bit_rate_index = bs.GetBits(4);       // bitrate index
+  int sampling_frequency = bs.GetBits(2);   // sampling frequency
+  bs.SkipBit();                             // padding bit
+  bs.SkipBit();                             // private pid
+  int mode = bs.GetBits(2);                 // mode
 
   switch (mode) {
     case 0:
