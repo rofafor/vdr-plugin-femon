@@ -167,7 +167,8 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
         m_VideoHandler->SetVideoFormat(m_Format);
         m_VideoHandler->SetVideoSize(m_Width, m_Height);
         m_VideoHandler->SetVideoAspectRatio(m_AspectRatio);
-        m_VideoHandler->SetVideoFramerate(m_FrameRate);
+        m_VideoHandler->SetVideoScan(m_Scan);
+        m_VideoHandler->SetVideoFramerate((m_Scan == VIDEO_SCAN_PROGRESSIVE) ? (m_FrameRate / 2) : m_FrameRate);
         m_VideoHandler->SetVideoBitrate(m_BitRate);
         }
      if (sei_found) {
@@ -625,6 +626,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
   m_Height = height;
   m_AspectRatio = aspect_ratio;
   m_Format = format;
+  m_Scan = frame_mbs_only_flag ? VIDEO_SCAN_PROGRESSIVE : VIDEO_SCAN_INTERLACED;
   m_FrameRate = frame_rate;
   m_BitRate = bit_rate;
   m_CpbDpbDelaysPresentFlag = cpb_dpb_delays_present_flag;
@@ -663,7 +665,7 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
               bs.SkipUeGolomb();                         // dpb_output_delay
               }
            if (m_PicStructPresentFlag) {                 // pic_struct_present_flag
-              uint32_t pic_struct;
+              uint32_t pic_struct, ct_type = 0, i = 0;
               pic_struct = bs.GetBits(4);                // pic_struct
               if (pic_struct >= (sizeof(s_SeiNumClockTsTable)) / sizeof(s_SeiNumClockTsTable[0]))
                  return 0;
@@ -690,24 +692,11 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                    }
                 }
               //debug("H.264 SEI: pic struct %d scan type %d\n", pic_struct, scan);
-              for (int i = 0; i < s_SeiNumClockTsTable[pic_struct]; ++i) {
+              for (i = 0; i < s_SeiNumClockTsTable[pic_struct]; ++i) {
                   if (bs.GetBit()) {                     // clock_timestamp_flag[i]
                      int full_timestamp_flag;
-                     switch (bs.GetBits(2)) {            // ct_type
-                       case 0:
-                            scan = VIDEO_SCAN_PROGRESSIVE;
-                            break;
-                       case 1:
-                            scan = VIDEO_SCAN_INTERLACED;
-                            break;
-                       case 2:
-                            scan = VIDEO_SCAN_UNKNOWN;
-                            break;
-                       default:
-                            scan = VIDEO_SCAN_RESERVED;
-                            break;
-                       }
-                     //debug("H.264 SEI: scan type %d\n", scan);
+                     ct_type |= (1 << bs.GetBits(2));    // ct_type
+                     //debug("H.264 SEI: ct type %04X\n", ct_type);
                      bs.SkipBit();                       // nuit_field_based_flag
                      bs.SkipBits(5);                     // counting_type
                      full_timestamp_flag = bs.GetBit();  // full_timestamp_flag
@@ -733,6 +722,8 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                         bs.SkipBits(m_TimeOffsetLength); // time_offset
                      }
                   }
+              if (i > 0)
+                 scan = (ct_type & (1 << 1)) ? VIDEO_SCAN_INTERLACED : VIDEO_SCAN_PROGRESSIVE;
               }
            break;
 
