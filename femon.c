@@ -134,7 +134,7 @@ bool cPluginFemon::Service(const char *Id, void *Data)
      if (Data) {
         FemonService_v1_0 *data = (FemonService_v1_0*)Data;
         if (!cDevice::ActualDevice())
-           return false; 
+           return false;
         int ndx = cDevice::ActualDevice()->CardIndex();
         data->fe_name = getFrontendName(ndx);
         data->fe_status = getFrontendStatus(ndx);
@@ -153,7 +153,7 @@ bool cPluginFemon::Service(const char *Id, void *Data)
 }
 
 const char **cPluginFemon::SVDRPHelpPages(void)
-{ 
+{
   static const char *HelpPages[] = {
     "OPEN\n"
     "    Open femon plugin.",
