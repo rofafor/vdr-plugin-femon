@@ -163,17 +163,16 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
   if (aud_found) {
      m_VideoHandler->SetVideoCodec(VIDEO_CODEC_H264);
      if (sps_found) {
-        //debug("H.264 SPS: size %dx%d, aspect %d format %d framerate %.2f bitrate %.0f\n", m_Width, m_Height, m_AspectRatio, m_Format, m_FrameRate, m_BitRate);
+        //debug("H.264: size %dx%d, aspect %d format %d bitrate %.0f\n", m_Width, m_Height, m_AspectRatio, m_Format, m_BitRate);
         m_VideoHandler->SetVideoFormat(m_Format);
         m_VideoHandler->SetVideoSize(m_Width, m_Height);
         m_VideoHandler->SetVideoAspectRatio(m_AspectRatio);
-        m_VideoHandler->SetVideoScan(m_Scan);
-        m_VideoHandler->SetVideoFramerate((m_Scan == VIDEO_SCAN_PROGRESSIVE) ? (m_FrameRate / 2) : m_FrameRate);
         m_VideoHandler->SetVideoBitrate(m_BitRate);
         }
-     if (sei_found) {
-        //debug("H.264 SEI: scan %d\n", m_Scan);
+     if (sps_found || sei_found) {
+        //debug("H.264: scan %d framerate %.2f\n", m_Scan, (m_Scan == VIDEO_SCAN_PROGRESSIVE) ? (m_FrameRate / 2) : m_FrameRate);
         m_VideoHandler->SetVideoScan(m_Scan);
+        m_VideoHandler->SetVideoFramerate((m_Scan == VIDEO_SCAN_PROGRESSIVE) ? (m_FrameRate / 2) : m_FrameRate);
         }
   }
 
