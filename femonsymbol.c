@@ -41,9 +41,17 @@
 #include "symbols/seven.xpm"
 #include "symbols/eight.xpm"
 #include "symbols/format1080.xpm"
+#include "symbols/format1080i.xpm"
+#include "symbols/format1080p.xpm"
 #include "symbols/format720.xpm"
+#include "symbols/format720i.xpm"
+#include "symbols/format720p.xpm"
 #include "symbols/format576.xpm"
+#include "symbols/format576i.xpm"
+#include "symbols/format576p.xpm"
 #include "symbols/format480.xpm"
+#include "symbols/format480i.xpm"
+#include "symbols/format480p.xpm"
 
 static cBitmap bmStereo(stereo_xpm);
 static cBitmap bmMonoLeft(monoleft_xpm);
@@ -77,9 +85,17 @@ static cBitmap bmSix(six_xpm);
 static cBitmap bmSeven(seven_xpm);
 static cBitmap bmEight(eight_xpm);
 static cBitmap bmFormat1080(format1080_xpm);
+static cBitmap bmFormat1080i(format1080i_xpm);
+static cBitmap bmFormat1080p(format1080p_xpm);
 static cBitmap bmFormat720(format720_xpm);
+static cBitmap bmFormat720i(format720i_xpm);
+static cBitmap bmFormat720p(format720p_xpm);
 static cBitmap bmFormat576(format576_xpm);
+static cBitmap bmFormat576i(format576i_xpm);
+static cBitmap bmFormat576p(format576p_xpm);
 static cBitmap bmFormat480(format480_xpm);
+static cBitmap bmFormat480i(format480i_xpm);
+static cBitmap bmFormat480p(format480p_xpm);
 
 cFemonSymbolCache femonSymbols;
 
@@ -150,9 +166,17 @@ bool cFemonSymbolCache::Populate(void)
      cacheM.Append(bmSeven.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_SEVEN
      cacheM.Append(bmEight.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_EIGHT
      cacheM.Append(bmFormat1080.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_1080
+     cacheM.Append(bmFormat1080i.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_1080i
+     cacheM.Append(bmFormat1080p.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_1080p
      cacheM.Append(bmFormat720.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_720
+     cacheM.Append(bmFormat720i.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_720i
+     cacheM.Append(bmFormat720p.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_720p
      cacheM.Append(bmFormat576.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_576
+     cacheM.Append(bmFormat576i.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_576i
+     cacheM.Append(bmFormat576p.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_576p
      cacheM.Append(bmFormat480.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_480
+     cacheM.Append(bmFormat480i.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_480i
+     cacheM.Append(bmFormat480p.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_FORMAT_480p
 
      return true;
      }
