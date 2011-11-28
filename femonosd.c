@@ -300,14 +300,34 @@ void cFemonOsd::DrawStatusWindow(void)
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      if (m_Receiver) {
-        if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 1080))
-           bm = &OSDSYMBOL(SYMBOL_FORMAT_1080);
-        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 720))
-           bm = &OSDSYMBOL(SYMBOL_FORMAT_720);
-        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 576))
-           bm = &OSDSYMBOL(SYMBOL_FORMAT_576);
-        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 480))
-           bm = &OSDSYMBOL(SYMBOL_FORMAT_480);
+        if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 1080)) {
+           switch (m_Receiver->VideoScan()) {
+              case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_1080i); break;
+              case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_1080p); break;
+              default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_1080);  break;
+              }
+           }
+        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 720)) {
+           switch (m_Receiver->VideoScan()) {
+              case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_720i); break;
+              case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_720p); break;
+              default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_720);  break;
+              }
+           }
+        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 576)) {
+           switch (m_Receiver->VideoScan()) {
+              case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_576i); break;
+              case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_576p); break;
+              default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_576);  break;
+              }
+           }
+        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 480)) {
+           switch (m_Receiver->VideoScan()) {
+              case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_480i); break;
+              case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_480p); break;
+              default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_480);  break;
+              }
+           }
         else
            bm = NULL;
         OSDDRAWSTATUSBM(OSDSPACING);
