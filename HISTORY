@@ -415,7 +415,7 @@ VDR Plugin 'femon' Revision History
 - Updated for vdr-1.7.18.
 - Added scaling for symbols.
 
-2011-xx-xx: Version 1.7.11
+2011-12-04: Version 1.7.11
 
 - Updated for vdr-1.7.22: New API functions for signal strength
   and quality used to provide information for the OSD.

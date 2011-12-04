@@ -544,45 +544,6 @@ cString getBitrateKbits(double value)
 
 // --- cFemonBitStream -------------------------------------------------------
 
-int cFemonBitStream::GetBit(void)
-{
-  if (index >= length)
-     return 1;
-  int r = (data[index >> 3] >> (7 - (index & 7))) & 1;
-  ++index;
-  return r;
-}
-
-uint32_t cFemonBitStream::GetBits(int n)
-{
-  uint32_t r = 0;
-  while (n--)
-        r |= GetBit() << n;
-  return r;
-}
-
-void cFemonBitStream::ByteAlign(void)
-{
-  int n = index % 8;
-  if (n > 0)
-     SkipBits(8 - n);
-}
-
-void cFemonBitStream::WordAlign(void)
-{
-  int n = index % 16;
-  if (n > 0)
-     SkipBits(16 - n);
-}
-
-bool cFemonBitStream::SetLength(int Length)
-{
-  if (Length > length)
-     return false;
-  length = Length;
-  return true;
-}
-
 uint32_t cFemonBitStream::GetUeGolomb()
 {
   int n = 0;
