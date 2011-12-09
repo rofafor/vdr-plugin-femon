@@ -851,7 +851,7 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
 {
   eOSState state = cOsdObject::ProcessKey(Key);
   if (state == osUnknown) {
-     switch (Key) {
+     switch (int(Key)) {
        case k0:
             if ((m_Number == 0) && (m_OldNumber != 0)) {
                m_Number = m_OldNumber;
