@@ -421,3 +421,7 @@ VDR Plugin 'femon' Revision History
   and quality used to provide information for the OSD.
 - Added cppcheck target into Makefile.
 - Refactored bitstream code.
+
+20XX-XX-XX: Version 1.7.12
+
+— Added Hungarian translation (Thanks to Fuley Istvan).

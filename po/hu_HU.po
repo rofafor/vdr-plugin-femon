@@ -1,44 +1,47 @@
 # VDR plugin language source file.
 # Copyright (C) 2007 Rolf Ahrenberg
 # This file is distributed under the same license as the femon package.
-# Luis Palacios
+# Füley István <ifuley at tigercomp dot ro>, 2011
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: vdr-femon 1.7.12\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2010-10-10 10:10+0300\n"
-"PO-Revision-Date: 2010-10-10 10:10+0300\n"
-"Last-Translator: Luis Palacios\n"
-"Language-Team: Spanish <vdr@linuxtv.org>\n"
-"Language: es\n"
+"POT-Creation-Date: 2010-10-10 10:10+0200\n"
+"PO-Revision-Date: 2010-10-10 10:10+0200\n"
+"Last-Translator: Füley István <ifuley at tigercomp dot ro>\n"
+"Language-Team: Hungarian <ifuley at tigercomp dot ro>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: HUNGARY\n"
+"X-Poedit-SourceCharset: iso-8859-2\n"
 
 msgid "DVB Signal Information Monitor (OSD)"
-msgstr "Monitorización de la señal DVB"
+msgstr "DVB jelszint monitor (OSD)"
 
 msgid "Signal Information"
-msgstr "Monitorización de la señal DVB"
+msgstr "Jel információ"
 
 msgid "Femon not available"
-msgstr ""
+msgstr "Femon nem elérhetõ"
 
 msgid "basic"
-msgstr "Básico"
+msgstr "alap"
 
 msgid "transponder"
-msgstr "Transpondedor"
+msgstr "transponder"
 
 msgid "stream"
-msgstr "Flujo"
+msgstr "adatfolyam (stream)"
 
 msgid "AC-3"
 msgstr "AC-3"
 
 msgid "Classic"
-msgstr "Clásico"
+msgstr "Klasszikus"
 
 msgid "Elchi"
 msgstr "Elchi"
@@ -47,7 +50,7 @@ msgid "ST:TNG"
 msgstr "ST:TNG"
 
 msgid "DeepBlue"
-msgstr "DeepBlue"
+msgstr "Sötétkék"
 
 msgid "Moronimo"
 msgstr "Moronimo"
@@ -59,91 +62,91 @@ msgid "EgalsTry"
 msgstr "EgalsTry"
 
 msgid "Duotone"
-msgstr "Duotone"
+msgstr "Kétszínû (duotone)"
 
 msgid "SilverGreen"
-msgstr "SilverGreen"
+msgstr "Ezüst-zöld"
 
 msgid "Hide main menu entry"
-msgstr "Ocultar en el menú principal"
+msgstr "Menübejegyzés elrejtése"
 
 msgid "Define whether the main menu entry is hidden."
-msgstr ""
+msgstr "Meghatározza, hogy megjelenjen-e a fõmenüben."
 
 msgid "Default display mode"
-msgstr "Modo de visualización estandar"
+msgstr "Alapértelmezett megjelenítési mód"
 
 msgid "Define the default display mode at startup."
-msgstr ""
+msgstr "Bekapcsoláskor melyik megjelenítési móddal induljon."
 
 msgid "Define the used OSD skin."
-msgstr ""
+msgstr "Az OSD bõr kiválasztása."
 
 msgid "Define the used OSD theme."
-msgstr ""
+msgstr "Az OSD téma kiválasztása."
 
 msgid "Position"
-msgstr "Posición"
+msgstr "Elhelyezés"
 
 msgid "Define the position of OSD."
-msgstr ""
+msgstr "A képernyõelhelyezés kiválasztása"
 
 msgid "Downscale OSD size [%]"
-msgstr ""
+msgstr "Az OSD leméretezése [%]"
 
 msgid "Define the downscale ratio for OSD size."
-msgstr ""
+msgstr "Az OSD méretének leméretezése százalékban."
 
 msgid "Red limit [%]"
-msgstr "Límite de rojo [%s]"
+msgstr "Piros színt határa [%]"
 
 msgid "Define a limit for red bar, which is used to indicate a bad signal."
-msgstr ""
+msgstr "A piros sáv határának beállítása, ezt használjuk a nem elégséges jelszint kijelzéséhez."
 
 msgid "Green limit [%]"
-msgstr "Límite verde [%]"
+msgstr "Zöld színt határa [%]"
 
 msgid "Define a limit for green bar, which is used to indicate a good signal."
-msgstr ""
+msgstr "A zöld sáv határának beállítása, ezt használjuk az elégséges jelszint kijelzéséhez."
 
 msgid "OSD update interval [0.1s]"
-msgstr "Intervalo de actualización (0,1)"
+msgstr "OSD frissítésének gyakorisága [0.1mp]"
 
 msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
-msgstr ""
+msgstr "Meghatározza, hogy milyen gyakran legyen frissítve az OSD. Kisebb intervallum nagyobb CPU terhelést eredményez."
 
 msgid "Analyze stream"
-msgstr "Analizar el flujo"
+msgstr "Adatfolyam (stream) elemzése."
 
 msgid "Define whether the DVB stream is analyzed and bitrates calculated."
-msgstr ""
+msgstr "Meghatározza, hogy a DVB adatfolyam elemzésre kerüljön-e, és számolódjon-e bitráta."
 
 msgid "Calculation interval [0.1s]"
-msgstr "Intervalo de cálculo (0,1s)"
+msgstr "Számítás gyakorisága [0.1mp]"
 
 msgid "Define an interval for calculation. The bigger interval generates more stable values."
-msgstr ""
+msgstr "Meghatározza, hogy milyen gyakran történjen számítás. Nagyobb intervallum pontosabb értékeket eredményez."
 
 msgid "Use SVDRP service"
-msgstr ""
+msgstr "SVDRP szolgáltatás használata."
 
 msgid "Define whether the SVDRP service is used in client/server setups."
-msgstr ""
+msgstr "Ki-bekapcsolja az SVDRP szolgáltatást, amely kliens-szerver környezetben használatos."
 
 msgid "SVDRP service port"
-msgstr ""
+msgstr "Az SVDRP szolgáltatás portja"
 
 msgid "Define the port number of SVDRP service."
-msgstr ""
+msgstr "Meghatározza, hogy melyik porton fut az SVDRP."
 
 msgid "SVDRP service IP"
-msgstr ""
+msgstr "Az SVDRP szolgáltatás IP-je"
 
 msgid "Define the IP address of SVDRP service."
-msgstr ""
+msgstr "Meghatározza, hogy milyen IP címen fut az SVDRP szolgáltatás."
 
 msgid "Help"
-msgstr "Ayuda"
+msgstr "Segítség"
 
 msgid "Video"
 msgstr "Video"
@@ -152,7 +155,7 @@ msgid "Audio"
 msgstr "Audio"
 
 msgid "Transponder Information"
-msgstr "Información del transpondedor"
+msgstr "Transponder infó"
 
 msgid "Apid"
 msgstr "Apid"
@@ -176,127 +179,127 @@ msgid "Coderate"
 msgstr "Coderate"
 
 msgid "Stream Information"
-msgstr "Información del flujo"
+msgstr "Adatfolyam infó"
 
 msgid "Video Stream"
-msgstr "Flujo de video"
+msgstr "Videó adatfolyam"
 
 msgid "Codec"
-msgstr ""
+msgstr "Kodek"
 
 msgid "Bitrate"
-msgstr "Tasa de bits"
+msgstr "Bitráta"
 
 msgid "Aspect Ratio"
-msgstr "Proporciones de la imagen"
+msgstr "Méretarány"
 
 msgid "Frame Rate"
-msgstr "Tasa de frames"
+msgstr "Képfrissítés"
 
 msgid "Video Format"
-msgstr "Formato de video"
+msgstr "Videó formátum"
 
 msgid "Resolution"
-msgstr "Resolución"
+msgstr "Felbontás"
 
 msgid "Audio Stream"
-msgstr "Flujo de audio"
+msgstr "Hang adatfolyam"
 
 msgid "Channel Mode"
-msgstr ""
+msgstr "Hangsáv mód"
 
 msgid "Sampling Frequency"
-msgstr "Frecuencia de muestreo"
+msgstr "Mintavételezési frekvencia"
 
 msgid "AC-3 Stream"
-msgstr "Flujo AC-3"
+msgstr "AC-3 adatfolyam"
 
 msgid "Bit Stream Mode"
-msgstr "Modo bitstream"
+msgstr "Bit Stream mód"
 
 msgid "Audio Coding Mode"
-msgstr "Modo de codificación de audio"
+msgstr "Hang kódolási mód"
 
 msgid "Center Mix Level"
-msgstr "Nivel sonoro central"
+msgstr "Középcsatorna keverési jelszintje"
 
 msgid "Surround Mix Level"
-msgstr "Nivel sonoro surround"
+msgstr "Térhatás csatorna keverési szintje"
 
 msgid "Dolby Surround Mode"
-msgstr "Nivel sonoro Dolby Surround"
+msgstr "Dolby Surround mód"
 
 msgid "Low Frequency Effects"
-msgstr "Efectos de baja frecuencia"
+msgstr "LFE - alacsony frekvenciás effektek"
 
 msgid "Dialogue Normalization"
-msgstr "Normalización del diálogo"
+msgstr "Párbeszéd jelszint normalizálása"
 
 msgid "Fixed"
-msgstr "Fijo"
+msgstr "Állandó"
 
 msgid "Analog"
-msgstr "Analógico"
+msgstr "analog"
 
 msgid "MPEG-2"
-msgstr ""
+msgstr "MPEG-2"
 
 msgid "H.264"
-msgstr ""
+msgstr "H.264"
 
 msgid "MPEG-1 Layer I"
-msgstr ""
+msgstr "MPEG-1 Layer I"
 
 msgid "MPEG-1 Layer II"
-msgstr ""
+msgstr "MPEG-1 Layer II"
 
 msgid "MPEG-1 Layer III"
-msgstr ""
+msgstr "MPEG-1 Layer III"
 
 msgid "MPEG-2 Layer I"
-msgstr ""
+msgstr "MPEG-2 Layer I"
 
 msgid "MPEG-2 Layer II"
-msgstr ""
+msgstr "MPEG-2 Layer II"
 
 msgid "MPEG-2 Layer III"
-msgstr ""
+msgstr "MPEG-2 Layer III"
 
 msgid "HE-AAC"
-msgstr ""
+msgstr "HE-AAC"
 
 msgid "LATM"
-msgstr ""
+msgstr "LATM"
 
 msgid "stereo"
-msgstr ""
+msgstr "sztereó"
 
 msgid "joint Stereo"
-msgstr ""
+msgstr "joint sztereó"
 
 msgid "dual"
-msgstr ""
+msgstr "duál"
 
 msgid "mono"
-msgstr "o"
+msgstr "monó"
 
 msgid "interlaced"
-msgstr ""
+msgstr "váltottsávos"
 
 msgid "progressive"
-msgstr ""
+msgstr "progresszív"
 
 msgid "reserved"
-msgstr "reservado"
+msgstr "fenntartott"
 
 msgid "extended"
-msgstr ""
+msgstr "kiterjesztett"
 
 msgid "unknown"
-msgstr "desconocido"
+msgstr "ismeretlen"
 
 msgid "component"
-msgstr ""
+msgstr "komponens"
 
 msgid "PAL"
 msgstr "PAL"
@@ -305,79 +308,80 @@ msgid "NTSC"
 msgstr "NTSC"
 
 msgid "SECAM"
-msgstr ""
+msgstr "SECAM"
 
 msgid "MAC"
-msgstr ""
+msgstr "MAC"
 
 msgid "Hz"
 msgstr "Hz"
 
 msgid "Complete Main (CM)"
-msgstr "Principal (CM)"
+msgstr "Mestercsatorna (CM)"
 
 msgid "Music and Effects (ME)"
-msgstr "Música y efectos (ME)"
+msgstr "Zene és effektek (ME)"
 
 msgid "Visually Impaired (VI)"
-msgstr "Imagen deteriorada (VI)"
+msgstr "Látáskárosultak (VI)"
 
 msgid "Hearing Impaired (HI)"
-msgstr "Hearing deteriorado"
+msgstr "Halláskárosultak (HI)"
 
 msgid "Dialogue (D)"
-msgstr "Diálogo (D)"
+msgstr "Párbeszéd (D)"
 
 msgid "Commentary (C)"
-msgstr "Comentario (C)"
+msgstr "Narráció (C)"
 
 msgid "Emergency (E)"
-msgstr "Emergencia (E)"
+msgstr "Sürgõsségi (E)"
 
 msgid "Voice Over (VO)"
-msgstr "Voz off (VO)"
+msgstr "Rábeszélés (VO)"
 
 msgid "Karaoke"
 msgstr "Karaoke"
 
 msgid "Ch1"
-msgstr "Can. 1"
+msgstr "Ch1"
 
 msgid "Ch2"
-msgstr "Can. 2"
+msgstr "Ch2"
 
 msgid "C"
-msgstr "C"
+msgstr "K"
 
 msgid "L"
-msgstr "I"
+msgstr "B"
 
 msgid "R"
-msgstr "D"
+msgstr "J"
 
 msgid "S"
 msgstr "S"
 
 msgid "SL"
-msgstr "SI"
+msgstr "BS"
 
 msgid "SR"
-msgstr "SD"
+msgstr "JS"
 
 msgid "dB"
 msgstr "dB"
 
 msgid "not indicated"
-msgstr "no indicado"
+msgstr "nincs feltüntetve"
 
 msgid "MHz"
 msgstr "MHz"
 
 msgid "free"
-msgstr "libre"
+msgstr "szabad"
 
 msgid "Mbit/s"
 msgstr "Mbit/s"
 
 msgid "kbit/s"
 msgstr "kbit/s"
+
