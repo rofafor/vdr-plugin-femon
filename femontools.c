@@ -76,7 +76,7 @@ static const char *getUserString(int Value, const tDvbParameterMap *Map)
   return "---";
 }
 
-cString getFrontendInfo(int cardIndex)
+cString getFrontendInfo(cDvbDevice *device)
 {
   cString info;
   struct dvb_frontend_info value;
@@ -86,13 +86,15 @@ cString getFrontendInfo(int cardIndex)
   uint32_t ber = 0;
   uint32_t unc = 0;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  int fe = open(dev, O_RDONLY | O_NONBLOCK);
+  if (!device)
+     return info;
+
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
-     return NULL;
+     return info;
 
-  info = cString::sprintf("CARD:%d\nSTRG:%d\nQUAL:%d", cardIndex, cDevice::ActualDevice()->SignalStrength(), cDevice::ActualDevice()->SignalQuality());
+  info = cString::sprintf("CARD:%d\nSTRG:%d\nQUAL:%d", device->CardIndex(), device->SignalStrength(), device->SignalQuality());
 
   if (ioctl(fe, FE_GET_INFO, &value) >= 0)
      info = cString::sprintf("%s\nTYPE:%d\nNAME:%s", *info, value.type, value.name);
@@ -117,42 +119,48 @@ cString getFrontendInfo(int cardIndex)
   return info;
 }
 
-cString getFrontendName(int cardIndex)
+cString getFrontendName(cDvbDevice *device)
 {
   struct dvb_frontend_info value;
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  int fe = open(dev, O_RDONLY | O_NONBLOCK);
+  if (!device)
+     return NULL;
+
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return NULL;
   memset(&value, 0, sizeof(value));
   ioctl(fe, FE_GET_INFO, &value);
   close(fe);
 
-  return (cString::sprintf("%s on device #%d", value.name, cardIndex));
+  return (cString::sprintf("%s on device #%d", value.name, device->CardIndex()));
 }
 
-cString getFrontendStatus(int cardIndex)
+cString getFrontendStatus(cDvbDevice *device)
 {
   fe_status_t value;
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  int fe = open(dev, O_RDONLY | O_NONBLOCK);
+  if (!device)
+     return NULL;
+
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return NULL;
   memset(&value, 0, sizeof(value));
   ioctl(fe, FE_READ_STATUS, &value);
   close(fe);
 
-  return (cString::sprintf("Status %s:%s:%s:%s:%s on device #%d", (value & FE_HAS_LOCK) ? "LOCKED" : "-", (value & FE_HAS_SIGNAL) ? "SIGNAL" : "-", (value & FE_HAS_CARRIER) ? "CARRIER" : "-", (value & FE_HAS_VITERBI) ? "VITERBI" : "-", (value & FE_HAS_SYNC) ? "SYNC" : "-", cardIndex));
+  return (cString::sprintf("Status %s:%s:%s:%s:%s on device #%d", (value & FE_HAS_LOCK) ? "LOCKED" : "-", (value & FE_HAS_SIGNAL) ? "SIGNAL" : "-", (value & FE_HAS_CARRIER) ? "CARRIER" : "-", (value & FE_HAS_VITERBI) ? "VITERBI" : "-", (value & FE_HAS_SYNC) ? "SYNC" : "-", device->CardIndex()));
 }
 
-uint16_t getSignal(int cardIndex)
+uint16_t getSignal(cDvbDevice *device)
 {
   uint16_t value = 0;
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  int fe = open(dev, O_RDONLY | O_NONBLOCK);
+  if (!device)
+     return (value);
+
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
   ioctl(fe, FE_READ_SIGNAL_STRENGTH, &value);
@@ -161,12 +169,14 @@ uint16_t getSignal(int cardIndex)
   return (value);
 }
 
-uint16_t getSNR(int cardIndex)
+uint16_t getSNR(cDvbDevice *device)
 {
   uint16_t value = 0;
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  int fe = open(dev, O_RDONLY | O_NONBLOCK);
+  if (!device)
+     return (value);
+
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
   ioctl(fe, FE_READ_SNR, &value);
@@ -175,12 +185,14 @@ uint16_t getSNR(int cardIndex)
   return (value);
 }
 
-uint32_t getBER(int cardIndex)
+uint32_t getBER(cDvbDevice *device)
 {
   uint32_t value = 0;
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  int fe = open(dev, O_RDONLY | O_NONBLOCK);
+  if (!device)
+     return (value);
+
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
   ioctl(fe, FE_READ_BER, &value);
@@ -189,12 +201,14 @@ uint32_t getBER(int cardIndex)
   return (value);
 }
 
-uint32_t getUNC(int cardIndex)
+uint32_t getUNC(cDvbDevice *device)
 {
   uint32_t value = 0;
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cardIndex, 0);
 
-  int fe = open(dev, O_RDONLY | O_NONBLOCK);
+  if (!device)
+     return (value);
+
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
   ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &value);
@@ -347,9 +361,14 @@ cString getModulation(int value)
   return cString::sprintf("%s", getUserString(value, ModulationValues));
 }
 
-cString getSystem(int value)
+cString getTerrestrialSystem(int value)
 {
-  return cString::sprintf("%s", getUserString(value, SystemValues));
+  return cString::sprintf("%s", getUserString(value, SystemValuesTerr));
+}
+
+cString getSatelliteSystem(int value)
+{
+  return cString::sprintf("%s", getUserString(value, SystemValuesSat));
 }
 
 cString getRollOff(int value)

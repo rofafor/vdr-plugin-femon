@@ -419,7 +419,7 @@ void cFemonOsd::DrawInfoWindow(void)
             offset += OSDROWHEIGHT;
             switch (channel->Source() & cSource::st_Mask) {
               case cSource::stSat:
-                   OSDDRAWINFOLINE(*cString::sprintf("DVB-S%s #%d - %s", (m_FrontendInfo.caps & 0x10000000) ? "2" : "", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
+                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getSatelliteSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
@@ -430,7 +430,8 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(dtp.Inversion()));
                    OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(dtp.CoderateH()));
                    offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("System"),       *getSystem(dtp.System()));
+                   OSDDRAWINFOLEFT( trVDR("System"),       *getSatelliteSystem(dtp.System()));
+                   if (dtp.System())
                    OSDDRAWINFORIGHT(trVDR("RollOff"),      *getRollOff(dtp.RollOff()));
                    break;
 
@@ -448,7 +449,7 @@ void cFemonOsd::DrawInfoWindow(void)
                    break;
 
               case cSource::stTerr:
-                   OSDDRAWINFOLINE(*cString::sprintf("DVB-T #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
+                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getTerrestrialSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Transmission"), *getTransmission(dtp.Transmission()));
@@ -461,6 +462,10 @@ void cFemonOsd::DrawInfoWindow(void)
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Hierarchy"),    *getHierarchy(dtp.Hierarchy()));
                    OSDDRAWINFORIGHT(trVDR("Guard"),        *getGuard(dtp.Guard()));
+                   offset += OSDROWHEIGHT;
+                   OSDDRAWINFOLEFT( trVDR("System"),       *getTerrestrialSystem(dtp.System()));
+                   if (dtp.System())
+                   OSDDRAWINFORIGHT(trVDR("PlpId"),        *cString::sprintf("%d", dtp.PlpId()));
                    break;
 
               default:
@@ -622,8 +627,8 @@ void cFemonOsd::Show(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
-  m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
+  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+  m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
   if (m_Frontend >= 0) {
      if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
         if (!femonConfig.usesvdrp)
@@ -680,8 +685,8 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
   if (!device->IsPrimaryDevice() || !channelNumber || cDevice::PrimaryDevice()->CurrentChannel() != channelNumber)
      return;
   close(m_Frontend);
-  cString dev = cString::sprintf(FRONTEND_DEVICE, cDevice::ActualDevice()->CardIndex(), 0);
-  m_Frontend = open(dev, O_RDONLY | O_NONBLOCK);
+  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+  m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
   if (m_Frontend >= 0) {
      if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
         if (!femonConfig.usesvdrp)

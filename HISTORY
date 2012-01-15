@@ -422,6 +422,8 @@ VDR Plugin 'femon' Revision History
 - Added cppcheck target into Makefile.
 - Refactored bitstream code.
 
-20XX-XX-XX: Version 1.7.12
+2012-01-15: Version 1.7.12
 
+- Updated for vdr-1.7.23.
+- Updated SVDRP interface.
 — Added Hungarian translation (Thanks to Fuley Istvan).

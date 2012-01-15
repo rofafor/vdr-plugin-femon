@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <vdr/channels.h>
+#include <vdr/dvbdevice.h>
 #include <vdr/remux.h>
 #include <vdr/tools.h>
 
@@ -25,15 +26,15 @@
 
 #define FRONTEND_DEVICE "/dev/dvb/adapter%d/frontend%d"
 
-cString getFrontendInfo(int cardIndex = 0);
-cString getFrontendName(int cardIndex = 0);
-cString getFrontendStatus(int cardIndex = 0);
+cString getFrontendInfo(cDvbDevice *device);
+cString getFrontendName(cDvbDevice *device);
+cString getFrontendStatus(cDvbDevice *device);
 
-uint16_t getSNR(int cardIndex = 0);
-uint16_t getSignal(int cardIndex = 0);
+uint16_t getSNR(cDvbDevice *device);
+uint16_t getSignal(cDvbDevice *device);
 
-uint32_t getBER(int cardIndex = 0);
-uint32_t getUNC(int cardIndex = 0);
+uint32_t getBER(cDvbDevice *device);
+uint32_t getUNC(cDvbDevice *device);
 
 cString getApids(const cChannel *channel);
 cString getDpids(const cChannel *channel);
@@ -51,7 +52,8 @@ cString getInversion(int value);
 cString getHierarchy(int value);
 cString getGuard(int value);
 cString getModulation(int value);
-cString getSystem(int value);
+cString getTerrestrialSystem(int value);
+cString getSatelliteSystem(int value);
 cString getRollOff(int value);
 cString getResolution(int width, int height, int scan);
 cString getAspectRatio(int value);

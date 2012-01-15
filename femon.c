@@ -14,8 +14,8 @@
 #include "femonservice.h"
 #include "femontools.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 10722
-#error "VDR-1.7.22 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 10723
+#error "VDR-1.7.23 API version or greater is required!"
 #endif
 
 static const char VERSION[]       = "1.7.12";
@@ -135,13 +135,13 @@ bool cPluginFemon::Service(const char *Id, void *Data)
         FemonService_v1_0 *data = (FemonService_v1_0*)Data;
         if (!cDevice::ActualDevice())
            return false;
-        int ndx = cDevice::ActualDevice()->CardIndex();
-        data->fe_name = getFrontendName(ndx);
-        data->fe_status = getFrontendStatus(ndx);
-        data->fe_snr = getSNR(ndx);
-        data->fe_signal = getSignal(ndx);
-        data->fe_ber = getBER(ndx);
-        data->fe_unc = getUNC(ndx);
+        cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+        data->fe_name = getFrontendName(dev);
+        data->fe_status = getFrontendStatus(dev);
+        data->fe_snr = getSNR(dev);
+        data->fe_signal = getSignal(dev);
+        data->fe_ber = getBER(dev);
+        data->fe_unc = getUNC(dev);
         data->video_bitrate = cFemonOsd::Instance() ? cFemonOsd::Instance()->GetVideoBitrate() : 0.0;
         data->audio_bitrate = cFemonOsd::Instance() ? cFemonOsd::Instance()->GetAudioBitrate() : 0.0;
         data->dolby_bitrate = cFemonOsd::Instance() ? cFemonOsd::Instance()->GetDolbyBitrate() : 0.0;
@@ -163,30 +163,30 @@ const char **cPluginFemon::SVDRPHelpPages(void)
     "    Switch to next possible device.",
     "PREV\n"
     "    Switch to previous possible device.",
-    "INFO\n"
-    "    Print the current frontend information.",
-    "NAME\n"
-    "    Print the current frontend name.",
-    "STAT\n"
-    "    Print the current frontend status.",
-    "STRG\n"
-    "    Print the current signal strength.",
-    "QUAL\n"
-    "    Print the current signal quality.",
-    "SGNL\n"
-    "    Print the current signal strength from driver.",
-    "SNRA\n"
-    "    Print the current signal-to-noise ratio from driver.",
-    "BERA\n"
-    "    Print the current bit error rate.",
-    "UNCB\n"
-    "    Print the current uncorrected blocks rate.",
+    "INFO <card index>\n"
+    "    Print the frontend information.",
+    "NAME <card index>\n"
+    "    Print the frontend name.",
+    "STAT <card index>\n"
+    "    Print the frontend status.",
+    "STRG <card index>\n"
+    "    Print the signal strength.",
+    "QUAL <card index>\n"
+    "    Print the signal quality.",
+    "SGNL <card index>\n"
+    "    Print the signal strength from driver.",
+    "SNRA <card index>\n"
+    "    Print the signal-to-noise ratio from driver.",
+    "BERA <card index>\n"
+    "    Print the bit error rate.",
+    "UNCB <card index>\n"
+    "    Print the uncorrected blocks rate.",
     "VIBR\n"
-    "    Print the actual device and current video bitrate [Mbit/s].",
+    "    Print the current video bitrate [Mbit/s].",
     "AUBR\n"
-    "    Print the actual device and current audio bitrate [kbit/s].",
+    "    Print the current audio bitrate [kbit/s].",
     "DDBR\n"
-    "    Print the actual device and current dolby bitrate [kbit/s].",
+    "    Print the current dolby bitrate [kbit/s].",
     NULL
     };
   return HelpPages;
@@ -194,6 +194,12 @@ const char **cPluginFemon::SVDRPHelpPages(void)
 
 cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
 {
+  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+  if (*Option && isnumber(Option)) {
+     cDvbDevice *dev2 = dynamic_cast<cDvbDevice*>(cDevice::GetDevice(strtol(Option, NULL, 10)));
+     if (dev2)
+        dev = dev2;
+     }
   if (strcasecmp(Command, "OPEN") == 0) {
      if (cReplayControl::NowReplaying()) {
         ReplyCode = 550; // Requested action not taken
@@ -221,33 +227,33 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
         return cString("Cannot switch device");
      }
   else if (strcasecmp(Command, "INFO") == 0) {
-     return getFrontendInfo(cDevice::ActualDevice()->CardIndex());
+     return getFrontendInfo(dev);
      }
   else if (strcasecmp(Command, "NAME") == 0) {
-     return getFrontendName(cDevice::ActualDevice()->CardIndex());
+     return getFrontendName(dev);
      }
   else if (strcasecmp(Command, "STAT") == 0) {
-     return getFrontendStatus(cDevice::ActualDevice()->CardIndex());
+     return getFrontendStatus(dev);
      }
   else if (strcasecmp(Command, "STRG") == 0) {
-     return cString::sprintf("%d on device #%d", cDevice::ActualDevice()->SignalStrength(), cDevice::ActualDevice()->CardIndex());
+     return cString::sprintf("%d on device #%d", dev->SignalStrength(), dev->CardIndex());
      }
   else if (strcasecmp(Command, "QUAL") == 0) {
-     return cString::sprintf("%d on device #%d", cDevice::ActualDevice()->SignalQuality(), cDevice::ActualDevice()->CardIndex());
+     return cString::sprintf("%d on device #%d", dev->SignalQuality(), dev->CardIndex());
      }
   else if (strcasecmp(Command, "SGNL") == 0) {
-     int value = getSignal(cDevice::ActualDevice()->CardIndex());
-     return cString::sprintf("%04X (%02d%%) on device #%d", value, value / 655, cDevice::ActualDevice()->CardIndex());
+     int value = getSignal(dev);
+     return cString::sprintf("%04X (%02d%%) on device #%d", value, value / 655, dev->CardIndex());
      }
   else if (strcasecmp(Command, "SNRA") == 0) {
-     int value = getSNR(cDevice::ActualDevice()->CardIndex());
-     return cString::sprintf("%04X (%02d%%) on device #%d", value, value / 655, cDevice::ActualDevice()->CardIndex());
+     int value = getSNR(dev);
+     return cString::sprintf("%04X (%02d%%) on device #%d", value, value / 655, dev->CardIndex());
      }
   else if (strcasecmp(Command, "BERA") == 0) {
-     return cString::sprintf("%08X on device #%d", getBER(cDevice::ActualDevice()->CardIndex()), cDevice::ActualDevice()->CardIndex());
+     return cString::sprintf("%08X on device #%d", getBER(dev), dev->CardIndex());
      }
   else if (strcasecmp(Command, "UNCB") == 0) {
-     return cString::sprintf("%08X on device #%d", getUNC(cDevice::ActualDevice()->CardIndex()), cDevice::ActualDevice()->CardIndex());
+     return cString::sprintf("%08X on device #%d", getUNC(dev), dev->CardIndex());
      }
   else if (strcasecmp(Command, "VIBR") == 0) {
      if (cFemonOsd::Instance())
