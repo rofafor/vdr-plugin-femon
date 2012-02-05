@@ -136,13 +136,13 @@ void cFemonReceiver::Action(void)
   m_Active = true;
 
   while (Running() && m_Active) {
-    uchar *Data;
+    uint8_t *Data;
     double timeout;
     int len, Length;
     bool processed = false;
 
     // process available video data
-    while (Data = m_VideoBuffer.Get(Length)) {
+    while ((Data = m_VideoBuffer.Get(Length))) {
       if (!m_Active || (Length < TS_SIZE))
          break;
       Length = TS_SIZE;
@@ -179,7 +179,7 @@ void cFemonReceiver::Action(void)
       }
 
     // process available audio data
-    while (Data = m_AudioBuffer.Get(Length)) {
+    while ((Data = m_AudioBuffer.Get(Length))) {
       if (!m_Active || (Length < TS_SIZE))
          break;
       Length = TS_SIZE;
@@ -204,7 +204,7 @@ void cFemonReceiver::Action(void)
       }
 
     // process available dolby data
-    while (Data = m_AC3Buffer.Get(Length)) {
+    while ((Data = m_AC3Buffer.Get(Length))) {
       if (!m_Active || (Length < TS_SIZE))
          break;
       Length = TS_SIZE;
