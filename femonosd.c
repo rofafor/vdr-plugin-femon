@@ -184,6 +184,7 @@ cFemonOsd::cFemonOsd()
   m_UNC(0),
   m_UNCValid(false),
   m_FrontendStatusValid(false),
+  m_DeviceSource(DEVICESOURCE_DVBAPI),
   m_DisplayMode(femonConfig.displaymode),
   m_OsdWidth(cOsd::OsdWidth() * (100 - femonConfig.downscale) / 100),
   m_OsdHeight(cOsd::OsdHeight() * (100 - femonConfig.downscale) / 100),
@@ -549,76 +550,111 @@ void cFemonOsd::Action(void)
     m_SvdrpFrontend = -1;
     m_SvdrpVideoBitrate = -1.0;
     m_SvdrpAudioBitrate = -1.0;
-    if (m_Frontend != -1) {
-       m_Quality = cDevice::ActualDevice()->SignalQuality();
-       m_QualityValid = (m_Quality >= 0);
-       m_Strength = cDevice::ActualDevice()->SignalStrength();
-       m_StrengthValid = (m_Strength >= 0);
-       m_FrontendStatusValid = (ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus) >= 0);
-       m_SignalValid = (ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal) >= 0);
-       m_SNRValid = (ioctl(m_Frontend, FE_READ_SNR, &m_SNR) >= 0);
-       m_BERValid = (ioctl(m_Frontend, FE_READ_BER, &m_BER) >= 0);
-       m_UNCValid = (ioctl(m_Frontend, FE_READ_UNCORRECTED_BLOCKS, &m_UNC) >= 0);
-       DrawInfoWindow();
-       DrawStatusWindow();
-       }
-    else if (m_SvdrpConnection.handle >= 0) {
-       cmd.handle = m_SvdrpConnection.handle;
-       m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
-       if (cmd.responseCode == 900) {
-          m_StrengthValid = false;
-          m_QualityValid = false;
-          m_FrontendStatusValid = false;
-          m_SignalValid = false;
-          m_SNRValid = false;
-          m_BERValid = false;
-          m_UNCValid = false;
-          for (cLine *line = cmd.reply.First(); line; line = cmd.reply.Next(line)) {
-              const char *s = line->Text();
-	      if (!strncasecmp(s, "CARD:", 5))
-                 m_SvdrpFrontend = (int)strtol(s + 5, NULL, 10);
-              else if (!strncasecmp(s, "STRG:", 5)) {
-                 m_Strength = (int)strtol(s + 5, NULL, 10);
-                 m_StrengthValid = (m_Strength >= 0);
-                 }
-              else if (!strncasecmp(s, "QUAL:", 5)) {
-                 m_Quality = (int)strtol(s + 5, NULL, 10);
-                 m_QualityValid = (m_Quality >= 0);
-                 }
-              else if (!strncasecmp(s, "TYPE:", 5))
-                 m_FrontendInfo.type = (fe_type_t)strtol(s + 5, NULL, 10);
-              else if (!strncasecmp(s, "NAME:", 5)) {
-                 strn0cpy(m_FrontendInfo.name, s + 5, sizeof(m_FrontendInfo.name));
-                 }
-              else if (!strncasecmp(s, "STAT:", 5)) {
-                 m_FrontendStatus = (fe_status_t)strtol(s + 5, NULL, 16);
-                 m_FrontendStatusValid = true;
-                 }
-              else if (!strncasecmp(s, "SGNL:", 5)) {
-                 m_Signal = (uint16_t)strtol(s + 5, NULL, 16);
-                 m_SignalValid = true;
-                 }
-              else if (!strncasecmp(s, "SNRA:", 5)) {
-                 m_SNR = (uint16_t)strtol(s + 5, NULL, 16);
-                 m_SNRValid = true;
-                 }
-              else if (!strncasecmp(s, "BERA:", 5)) {
-                 m_BER = (uint32_t)strtol(s + 5, NULL, 16);
-                 m_BERValid = true;
-                 }
-              else if (!strncasecmp(s, "UNCB:", 5)) {
-                 m_UNC = (uint32_t)strtol(s + 5, NULL, 16);
-                 m_UNCValid = true;
-                 }
-              else if (!strncasecmp(s, "VIBR:", 5))
-                 m_SvdrpVideoBitrate = (double)strtol(s + 5, NULL, 10);
-              else if (!strncasecmp(s, "AUBR:", 5))
-                 m_SvdrpAudioBitrate = (double)strtol(s + 5, NULL, 10);
+    switch (m_DeviceSource) {
+      case DEVICESOURCE_PVRINPUT:
+           m_Quality = cDevice::ActualDevice()->SignalStrength();
+           m_QualityValid = (m_Quality >= 0);
+           m_Strength = cDevice::ActualDevice()->SignalStrength();
+           m_StrengthValid = (m_Strength >= 0);
+           m_FrontendStatus = (fe_status_t)(m_StrengthValid ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
+           m_FrontendStatusValid = m_StrengthValid;
+           m_Signal = m_Strength * 0xFFFF / 100;
+           m_SignalValid = m_StrengthValid;
+           m_SNR = 0;
+           m_SNRValid = false;
+           m_BER = 0;
+           m_BERValid = false;
+           m_UNC = 0;
+           m_UNCValid = false;
+           break;
+      case DEVICESOURCE_IPTV:
+           m_Quality = cDevice::ActualDevice()->SignalQuality();
+           m_QualityValid = (m_Quality >= 0);
+           m_Strength = cDevice::ActualDevice()->SignalStrength();
+           m_StrengthValid = (m_Strength >= 0);
+           m_FrontendStatus = (fe_status_t)(m_StrengthValid ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
+           m_FrontendStatusValid = m_StrengthValid;
+           m_Signal = m_Strength * 0xFFFF / 100;
+           m_SignalValid = m_StrengthValid;
+           m_SNR = m_Quality * 0xFFFF / 100;
+           m_SNRValid = m_QualityValid;
+           m_BER = 0;
+           m_BERValid = false;
+           m_UNC = 0;
+           m_UNCValid = false;
+           break;
+      default:
+      case DEVICESOURCE_DVBAPI:
+           if (m_Frontend != -1) {
+              m_Quality = cDevice::ActualDevice()->SignalQuality();
+              m_QualityValid = (m_Quality >= 0);
+              m_Strength = cDevice::ActualDevice()->SignalStrength();
+              m_StrengthValid = (m_Strength >= 0);
+              m_FrontendStatusValid = (ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus) >= 0);
+              m_SignalValid = (ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal) >= 0);
+              m_SNRValid = (ioctl(m_Frontend, FE_READ_SNR, &m_SNR) >= 0);
+              m_BERValid = (ioctl(m_Frontend, FE_READ_BER, &m_BER) >= 0);
+              m_UNCValid = (ioctl(m_Frontend, FE_READ_UNCORRECTED_BLOCKS, &m_UNC) >= 0);
               }
-          }
-       DrawInfoWindow();
-       DrawStatusWindow();
-       }
+           else if (m_SvdrpConnection.handle >= 0) {
+              cmd.handle = m_SvdrpConnection.handle;
+              m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
+              if (cmd.responseCode == 900) {
+                 m_StrengthValid = false;
+                 m_QualityValid = false;
+                 m_FrontendStatusValid = false;
+                 m_SignalValid = false;
+                 m_SNRValid = false;
+                 m_BERValid = false;
+                 m_UNCValid = false;
+                 for (cLine *line = cmd.reply.First(); line; line = cmd.reply.Next(line)) {
+                     const char *s = line->Text();
+	             if (!strncasecmp(s, "CARD:", 5))
+                        m_SvdrpFrontend = (int)strtol(s + 5, NULL, 10);
+                     else if (!strncasecmp(s, "STRG:", 5)) {
+                        m_Strength = (int)strtol(s + 5, NULL, 10);
+                        m_StrengthValid = (m_Strength >= 0);
+                        }
+                     else if (!strncasecmp(s, "QUAL:", 5)) {
+                        m_Quality = (int)strtol(s + 5, NULL, 10);
+                        m_QualityValid = (m_Quality >= 0);
+                        }
+                     else if (!strncasecmp(s, "TYPE:", 5))
+                        m_FrontendInfo.type = (fe_type_t)strtol(s + 5, NULL, 10);
+                     else if (!strncasecmp(s, "NAME:", 5)) {
+                        strn0cpy(m_FrontendInfo.name, s + 5, sizeof(m_FrontendInfo.name));
+                        }
+                     else if (!strncasecmp(s, "STAT:", 5)) {
+                        m_FrontendStatus = (fe_status_t)strtol(s + 5, NULL, 16);
+                        m_FrontendStatusValid = true;
+                        }
+                     else if (!strncasecmp(s, "SGNL:", 5)) {
+                        m_Signal = (uint16_t)strtol(s + 5, NULL, 16);
+                        m_SignalValid = true;
+                        }
+                     else if (!strncasecmp(s, "SNRA:", 5)) {
+                        m_SNR = (uint16_t)strtol(s + 5, NULL, 16);
+                        m_SNRValid = true;
+                        }
+                     else if (!strncasecmp(s, "BERA:", 5)) {
+                        m_BER = (uint32_t)strtol(s + 5, NULL, 16);
+                        m_BERValid = true;
+                        }
+                     else if (!strncasecmp(s, "UNCB:", 5)) {
+                        m_UNC = (uint32_t)strtol(s + 5, NULL, 16);
+                        m_UNCValid = true;
+                        }
+                     else if (!strncasecmp(s, "VIBR:", 5))
+                        m_SvdrpVideoBitrate = (double)strtol(s + 5, NULL, 10);
+                     else if (!strncasecmp(s, "AUBR:", 5))
+                        m_SvdrpAudioBitrate = (double)strtol(s + 5, NULL, 10);
+                     }
+                 }
+              }
+           break;
+      }
+    DrawInfoWindow();
+    DrawStatusWindow();
     m_Sleep.Wait(max((int)(100 * femonConfig.updateinterval - t.Elapsed()), 3));
     }
 }
@@ -627,26 +663,40 @@ void cFemonOsd::Show(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
-  m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
-  if (m_Frontend >= 0) {
-     if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-        if (!femonConfig.usesvdrp)
-           error("cFemonOsd::Show() cannot read frontend info.");
-        close(m_Frontend);
-        m_Frontend = -1;
-        memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+
+  m_DeviceSource = DEVICESOURCE_DVBAPI;
+  if (channel) {
+     if (channel->IsSourceType('I'))
+        m_DeviceSource = DEVICESOURCE_IPTV;
+     else if (channel->IsSourceType('V'))
+        m_DeviceSource = DEVICESOURCE_PVRINPUT;
+     }
+
+  if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
+     cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+     m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
+     if (m_Frontend >= 0) {
+        if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
+           if (!femonConfig.usesvdrp)
+              error("cFemonOsd::Show() cannot read frontend info.");
+           close(m_Frontend);
+           m_Frontend = -1;
+           memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+           return;
+           }
+        }
+     else if (femonConfig.usesvdrp) {
+        if (!SvdrpConnect() || !SvdrpTune())
+           return;
+        }
+     else {
+        error("cFemonOsd::Show() cannot open frontend device.");
         return;
         }
      }
-  else if (femonConfig.usesvdrp) {
-     if (!SvdrpConnect() || !SvdrpTune())
-        return;
-     }
-  else {
-     error("cFemonOsd::Show() cannot open frontend device.");
-     return;
-     }
+  else
+     m_Frontend = -1;
 
   m_Osd = cOsdProvider::NewOsd(m_OsdLeft, m_OsdTop);
   if (m_Osd) {
@@ -667,12 +717,9 @@ void cFemonOsd::Show(void)
         m_Receiver->Deactivate();
         DELETENULL(m_Receiver);
         }
-     if (femonConfig.analyzestream) {
-        cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-        if (channel) {
-           m_Receiver = new cFemonReceiver(channel->Vtype(), channel->Vpid(), channel->Apid(IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0), channel->Dpid(IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0));
-           cDevice::ActualDevice()->AttachReceiver(m_Receiver);
-           }
+     if (femonConfig.analyzestream && channel) {
+        m_Receiver = new cFemonReceiver(channel->Vtype(), channel->Vpid(), channel->Apid(IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0), channel->Dpid(IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0));
+        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      Start();
      }
@@ -682,40 +729,54 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
 {
   debug("%s(%d,%d)\n", __PRETTY_FUNCTION__, device->DeviceNumber(), channelNumber);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  if (!device->IsPrimaryDevice() || !channelNumber || cDevice::PrimaryDevice()->CurrentChannel() != channelNumber)
+  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+
+  if (!device->IsPrimaryDevice() || !channelNumber || !channel || channel->Number() != channelNumber)
      return;
-  close(m_Frontend);
-  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
-  m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
+
+  m_DeviceSource = DEVICESOURCE_DVBAPI;
+  if (channel) {
+     if (channel->IsSourceType('I'))
+        m_DeviceSource = DEVICESOURCE_IPTV;
+     else if (channel->IsSourceType('V'))
+        m_DeviceSource = DEVICESOURCE_PVRINPUT;
+     }
+
   if (m_Frontend >= 0) {
-     if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-        if (!femonConfig.usesvdrp)
-           error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
-        close(m_Frontend);
-        m_Frontend = -1;
-        memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+     close(m_Frontend);
+     m_Frontend = -1;
+     }
+
+  if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
+     cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+     m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
+     if (m_Frontend >= 0) {
+        if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
+           if (!femonConfig.usesvdrp)
+              error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
+           close(m_Frontend);
+           m_Frontend = -1;
+           memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+           return;
+           }
+        }
+     else if (femonConfig.usesvdrp) {
+        if (!SvdrpConnect() || !SvdrpTune())
+           return;
+        }
+     else {
+        error("cFemonOsd::ChannelSwitch() cannot open frontend device.");
         return;
         }
-     }
-  else if (femonConfig.usesvdrp) {
-     if (!SvdrpConnect() || !SvdrpTune())
-        return;
-     }
-  else {
-     error("cFemonOsd::ChannelSwitch() cannot open frontend device.");
-     return;
      }
 
   if (m_Receiver) {
      m_Receiver->Deactivate();
      DELETENULL(m_Receiver);
      }
-  if (femonConfig.analyzestream) {
-     cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-     if (channel) {
-        m_Receiver = new cFemonReceiver(channel->Vtype(), channel->Vpid(), channel->Apid(IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0), channel->Dpid(IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0));
-        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
-        }
+  if (femonConfig.analyzestream && channel) {
+     m_Receiver = new cFemonReceiver(channel->Vtype(), channel->Vpid(), channel->Apid(IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0), channel->Dpid(IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0));
+     cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
 }
 

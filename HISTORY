@@ -427,3 +427,8 @@ VDR Plugin 'femon' Revision History
 - Updated for vdr-1.7.23.
 - Updated SVDRP interface.
 - Added Hungarian translation (Thanks to Fuley Istvan).
+
+2012-02-05: Version 1.7.13
+
+- Added initial support for PVRINPUT devices (Thanks to Winfried Köhler).
+- Added initial support for IPTV devices.

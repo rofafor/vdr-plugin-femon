@@ -24,6 +24,13 @@
 
 class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
+  enum eDeviceSourceType {
+    DEVICESOURCE_DVBAPI = 0,
+    DEVICESOURCE_IPTV,
+    DEVICESOURCE_PVRINPUT,
+    DEVICESOURCE_COUNT
+    };
+
   static cFemonOsd *pInstance;
 
   cOsd             *m_Osd;
@@ -51,6 +58,7 @@ private:
   fe_status_t       m_FrontendStatus;
   bool              m_FrontendStatusValid;
   dvb_frontend_info m_FrontendInfo;
+  eDeviceSourceType m_DeviceSource;
   int               m_DisplayMode;
   int               m_OsdWidth;
   int               m_OsdHeight;
