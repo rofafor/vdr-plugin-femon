@@ -136,7 +136,7 @@ void cFemonReceiver::Action(void)
   m_Active = true;
 
   while (Running() && m_Active) {
-    uint8_t *Data;
+    uchar *Data;
     double timeout;
     int len, Length;
     bool processed = false;
