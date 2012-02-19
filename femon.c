@@ -196,7 +196,7 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
 {
   cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
   if (*Option && isnumber(Option)) {
-     cDvbDevice *dev2 = dynamic_cast<cDvbDevice*>(cDevice::GetDevice(strtol(Option, NULL, 10)));
+     cDvbDevice *dev2 = dynamic_cast<cDvbDevice*>(cDevice::GetDevice(int(strtol(Option, NULL, 10))));
      if (dev2)
         dev = dev2;
      }

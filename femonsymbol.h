@@ -77,8 +77,8 @@ public:
   ~cFemonSymbolCache();
   void Refresh();
   cBitmap& Get(eSymbols symbolP);
-  int GetSpacing()  { return yFactorM * DEFAULT_SPACING; }
-  int GetRounding() { return yFactorM * DEFAULT_ROUNDING; }
+  int GetSpacing()  { return int(yFactorM * DEFAULT_SPACING);  }
+  int GetRounding() { return int(yFactorM * DEFAULT_ROUNDING); }
 };
 
 extern cFemonSymbolCache femonSymbols;

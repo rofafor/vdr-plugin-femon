@@ -558,7 +558,7 @@ void cFemonOsd::Action(void)
            m_StrengthValid = (m_Strength >= 0);
            m_FrontendStatus = (fe_status_t)(m_StrengthValid ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
            m_FrontendStatusValid = m_StrengthValid;
-           m_Signal = m_Strength * 0xFFFF / 100;
+           m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
            m_SignalValid = m_StrengthValid;
            m_SNR = 0;
            m_SNRValid = false;
@@ -574,9 +574,9 @@ void cFemonOsd::Action(void)
            m_StrengthValid = (m_Strength >= 0);
            m_FrontendStatus = (fe_status_t)(m_StrengthValid ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
            m_FrontendStatusValid = m_StrengthValid;
-           m_Signal = m_Strength * 0xFFFF / 100;
+           m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
            m_SignalValid = m_StrengthValid;
-           m_SNR = m_Quality * 0xFFFF / 100;
+           m_SNR = uint16_t(m_Quality * 0xFFFF / 100);
            m_SNRValid = m_QualityValid;
            m_BER = 0;
            m_BERValid = false;
