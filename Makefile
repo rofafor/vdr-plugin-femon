@@ -19,6 +19,7 @@ PLUGIN = femon
 ### The version number of this plugin (taken from the main source file):
 
 VERSION = $(shell grep 'static const char VERSION\[\] *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
+GITTAG  = $(shell git describe --always 2>/dev/null)
 
 ### The C++ compiler and options:
 
@@ -57,6 +58,10 @@ DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
 ifdef FEMON_DEBUG
 DEFINES += -DDEBUG
+endif
+
+ifneq ($(strip $(GITTAG)),)
+DEFINES += -DGITVERSION='"-GIT-$(GITTAG)"'
 endif
 
 .PHONY: all all-redirect
