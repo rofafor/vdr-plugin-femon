@@ -14,15 +14,15 @@
 #include "femonservice.h"
 #include "femontools.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 10723
-#error "VDR-1.7.23 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 10725
+#error "VDR-1.7.25 API version or greater is required!"
 #endif
 
 #ifndef GITVERSION
 #define GITVERSION ""
 #endif
 
-static const char VERSION[]       = "1.7.13" GITVERSION;
+static const char VERSION[]       = "1.7.14" GITVERSION;
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 

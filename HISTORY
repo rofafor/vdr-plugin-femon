@@ -432,3 +432,7 @@ VDR Plugin 'femon' Revision History
 
 - Added initial support for PVRINPUT devices (Thanks to Winfried Köhler).
 - Added initial support for IPTV devices.
+
+2012-03-03: Version 1.7.14
+
+- Updated for vdr-1.7.25.

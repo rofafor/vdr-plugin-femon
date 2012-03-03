@@ -200,7 +200,7 @@ cFemonOsd::cFemonOsd()
   memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
   m_SvdrpConnection.handle = -1;
   femonSymbols.Refresh();
-  m_Font = cFont::CreateFont(Setup.FontSml, min(max(Setup.FontSmlSize, MINFONTSIZE), MAXFONTSIZE));
+  m_Font = cFont::CreateFont(Setup.FontSml, constrain(Setup.FontSmlSize, MINFONTSIZE, MAXFONTSIZE));
   if (!m_Font || !m_Font->Height()) {
      m_Font = new cFemonDummyFont;
      error("cFemonOsd::cFemonOsd() cannot create required font.");
