@@ -6,7 +6,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: vdr-femon 1.7.13\n"
+"Project-Id-Version: vdr-femon 1.7.14\n"
 "Report-Msgid-Bugs-To: <see README>\n"
 "POT-Creation-Date: 2010-10-10 10:10+0300\n"
 "PO-Revision-Date: 2010-10-10 10:10+0300\n"
