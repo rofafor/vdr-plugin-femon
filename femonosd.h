@@ -79,7 +79,7 @@ protected:
   cFemonOsd(const cFemonOsd&);
   cFemonOsd& operator= (const cFemonOsd&);
   virtual void Action(void);
-  virtual void ChannelSwitch(const cDevice * device, int channelNumber);
+  virtual void ChannelSwitch(const cDevice *device, int channelNumber, bool liveView);
   virtual void SetAudioTrack(int Index, const char * const *Tracks);
 
 public:

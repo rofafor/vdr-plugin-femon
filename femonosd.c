@@ -725,13 +725,13 @@ void cFemonOsd::Show(void)
      }
 }
 
-void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber)
+void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool liveView)
 {
   debug("%s(%d,%d)\n", __PRETTY_FUNCTION__, device->DeviceNumber(), channelNumber);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (!device->IsPrimaryDevice() || !channelNumber || !channel || channel->Number() != channelNumber)
+  if (!liveView || !device->IsPrimaryDevice() || !channelNumber || !channel || channel->Number() != channelNumber)
      return;
 
   m_DeviceSource = DEVICESOURCE_DVBAPI;
@@ -816,13 +816,13 @@ bool cFemonOsd::DeviceSwitch(int direction)
               }
            if (cDevice::GetDevice(device)->ProvidesChannel(channel, 0)) {
               debug("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
-              cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0);
+              cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0, true);
               cControl::Shutdown();
               cDevice::GetDevice(device)->SwitchChannel(channel, true);
               if (cDevice::GetDevice(device) == cDevice::PrimaryDevice())
                  cDevice::GetDevice(device)->ForceTransferMode();
               cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel));
-              cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number());
+              cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number(), true);
               return (true);
               }
            }
