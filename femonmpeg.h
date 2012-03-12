@@ -16,9 +16,9 @@ private:
   cFemonVideoIf *m_VideoHandler;
   cFemonAudioIf *m_AudioHandler;
 
-  static unsigned int s_Bitrates[2][3][16];
-  static unsigned int s_Samplerates[2][4];
-  static eAudioCodec  s_Formats[2][4];
+  static int s_Bitrates[2][3][16];
+  static int s_Samplerates[2][4];
+  static eAudioCodec s_Formats[2][4];
 
 public:
   cFemonMPEG(cFemonVideoIf *videohandler, cFemonAudioIf *audiohandler);

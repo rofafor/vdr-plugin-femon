@@ -731,7 +731,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (!liveView || !device->IsPrimaryDevice() || !channelNumber || !channel || channel->Number() != channelNumber)
+  if (!liveView || !channelNumber || !channel || channel->Number() != channelNumber)
      return;
 
   m_DeviceSource = DEVICESOURCE_DVBAPI;

@@ -14,8 +14,8 @@ class cFemonLATM {
 private:
   cFemonAudioIf *m_AudioHandler;
 
-  static unsigned int s_Bitrates[3][16];
-  static unsigned int s_Samplerates[4];
+  static int s_Bitrates[3][16];
+  static int s_Samplerates[4];
 
 public:
   cFemonLATM(cFemonAudioIf *audiohandler);

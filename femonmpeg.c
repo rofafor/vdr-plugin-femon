@@ -10,7 +10,7 @@
 
 #define IS_EXTENSION_START(buf) (((buf)[0] == 0x00) && ((buf)[1] == 0x00) && ((buf)[2] == 0x01) && ((buf)[3] == 0xB5))
 
-unsigned int cFemonMPEG::s_Bitrates[2][3][16] =
+int cFemonMPEG::s_Bitrates[2][3][16] =
 {
   {
     {0,  32,  48,  56,  64,  80,  96, 112, 128, 144, 160, 176, 192, 224, 256, -1}, // MPEG-2 Layer I
@@ -24,7 +24,7 @@ unsigned int cFemonMPEG::s_Bitrates[2][3][16] =
   }
 };
 
-unsigned int cFemonMPEG::s_Samplerates[2][4] =
+int cFemonMPEG::s_Samplerates[2][4] =
 {
   {22050, 24000, 16000, -1}, // MPEG-2
   {44100, 48000, 32000, -1}  // MPEG-1

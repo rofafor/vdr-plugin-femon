@@ -8,14 +8,14 @@
 #include "femontools.h"
 #include "femonlatm.h"
 
-unsigned int cFemonLATM::s_Bitrates[3][16] =
+int cFemonLATM::s_Bitrates[3][16] =
 {
   {0,  32,  48,  56,  64,  80,  96, 112, 128, 144, 160, 176, 192, 224, 256, -1}, // MPEG-2 Layer I
   {0,   8,  16,  24,  32,  40,  48,  56,  64,  80,  96, 112, 128, 144, 160, -1}, // MPEG-2 Layer II/III
   {0,   8,  16,  24,  32,  40,  48,  56,  64,  80,  96, 112, 128, 144, 160, -1}  // MPEG-2 Layer II/III
 };
 
-unsigned int cFemonLATM::s_Samplerates[4] =
+int cFemonLATM::s_Samplerates[4] =
 {
   22050, 24000, 16000, -1
 };

@@ -14,7 +14,7 @@ class cFemonAAC {
 private:
   cFemonAudioIf *m_AudioHandler;
 
-  static unsigned int s_Samplerates[16];
+  static int s_Samplerates[16];
 
 public:
   cFemonAAC(cFemonAudioIf *audiohandler);

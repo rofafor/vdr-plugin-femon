@@ -64,15 +64,15 @@ enum eFemonThemes
 
 struct cFemonTheme
 {
-  int bpp;
-  int clrBackground;
-  int clrTitleBackground;
-  int clrTitleText;
-  int clrActiveText;
-  int clrInactiveText;
-  int clrRed;
-  int clrYellow;
-  int clrGreen;
+  unsigned int bpp;
+  unsigned int clrBackground;
+  unsigned int clrTitleBackground;
+  unsigned int clrTitleText;
+  unsigned int clrActiveText;
+  unsigned int clrInactiveText;
+  unsigned int clrRed;
+  unsigned int clrYellow;
+  unsigned int clrGreen;
 };
 
 extern const cFemonTheme femonTheme[eFemonThemeMaxNumber];

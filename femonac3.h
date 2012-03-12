@@ -14,9 +14,9 @@ class cFemonAC3 {
 private:
   cFemonAC3If *m_AudioHandler;
 
-  static unsigned int s_Bitrates[32];
-  static unsigned int s_Frequencies[4];
-  static unsigned int s_Frames[3][32];
+  static int s_Bitrates[32];
+  static int s_Frequencies[4];
+  static int s_Frames[3][32];
 
 public:
   cFemonAC3(cFemonAC3If *audiohandler);

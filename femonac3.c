@@ -9,17 +9,17 @@
 #include "femontools.h"
 #include "femonac3.h"
 
-unsigned int cFemonAC3::s_Bitrates[32] =
+int cFemonAC3::s_Bitrates[32] =
 {
   32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 384, 448, 512, 576, 640, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-unsigned int cFemonAC3::s_Frequencies[4] =
+int cFemonAC3::s_Frequencies[4] =
 {
   480, 441, 320, 0
 };
 
-unsigned int cFemonAC3::s_Frames[3][32] =
+int cFemonAC3::s_Frames[3][32] =
 {
   {64, 80,  96,  112, 128, 160, 192, 224, 256, 320, 384, 448, 512, 640, 768,  896,  1024, 1152, 1280, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
   {69, 87,  104, 121, 139, 174, 208, 243, 278, 348, 417, 487, 557, 696, 835,  975,  1114, 1253, 1393, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

@@ -10,7 +10,7 @@
 
 #define IS_HEAAC_AUDIO(buf) (((buf)[0] == 0xFF) && (((buf)[1] & 0xF6) == 0xF0))
 
-unsigned int cFemonAAC::s_Samplerates[16] =
+int cFemonAAC::s_Samplerates[16] =
 {
   96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, -1, -1, -1, -1
 };
