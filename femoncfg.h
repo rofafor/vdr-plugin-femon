@@ -64,7 +64,7 @@ enum eFemonThemes
 
 struct cFemonTheme
 {
-  unsigned int bpp;
+  int bpp;
   unsigned int clrBackground;
   unsigned int clrTitleBackground;
   unsigned int clrTitleText;

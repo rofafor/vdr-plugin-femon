@@ -441,3 +441,7 @@ VDR Plugin 'femon' Revision History
 
 - Cleaned up compilation warnings.
 - Fixed channel switching.
+
+2012-xx-xx: Version 1.7.16
+
+- Cleaned up compilation warnings again.
