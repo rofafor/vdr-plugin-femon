@@ -14,8 +14,8 @@
 #include "femonservice.h"
 #include "femontools.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 10726
-#error "VDR-1.7.26 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 10727
+#error "VDR-1.7.27 API version or greater is required!"
 #endif
 
 #ifndef GITVERSION

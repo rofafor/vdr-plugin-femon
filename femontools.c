@@ -97,7 +97,7 @@ cString getFrontendInfo(cDvbDevice *device)
   info = cString::sprintf("CARD:%d\nSTRG:%d\nQUAL:%d", device->CardIndex(), device->SignalStrength(), device->SignalQuality());
 
   if (ioctl(fe, FE_GET_INFO, &value) >= 0)
-     info = cString::sprintf("%s\nTYPE:%d\nNAME:%s", *info, value.type, value.name);
+     info = cString::sprintf("%s\nTYPE:%d\nNAME:%s", *info, value.type, *device->DeviceName());
   if (ioctl(fe, FE_READ_STATUS, &status) >= 0)
      info = cString::sprintf("%s\nSTAT:%02X", *info, status);
   if (ioctl(fe, FE_READ_SIGNAL_STRENGTH, &signal) >= 0)
@@ -121,19 +121,10 @@ cString getFrontendInfo(cDvbDevice *device)
 
 cString getFrontendName(cDvbDevice *device)
 {
-  struct dvb_frontend_info value;
-
   if (!device)
      return NULL;
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
-  if (fe < 0)
-     return NULL;
-  memset(&value, 0, sizeof(value));
-  ioctl(fe, FE_GET_INFO, &value);
-  close(fe);
-
-  return (cString::sprintf("%s on device #%d", value.name, device->CardIndex()));
+  return (cString::sprintf("%s on device #%d", *device->DeviceName(), device->CardIndex()));
 }
 
 cString getFrontendStatus(cDvbDevice *device)

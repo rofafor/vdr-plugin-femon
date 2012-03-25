@@ -55,6 +55,7 @@ private:
   bool              m_BERValid;
   uint32_t          m_UNC;
   bool              m_UNCValid;
+  cString           m_FrontendName;
   fe_status_t       m_FrontendStatus;
   bool              m_FrontendStatusValid;
   dvb_frontend_info m_FrontendInfo;

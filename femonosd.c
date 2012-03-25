@@ -183,6 +183,7 @@ cFemonOsd::cFemonOsd()
   m_BERValid(false),
   m_UNC(0),
   m_UNCValid(false),
+  m_FrontendName(""),
   m_FrontendStatusValid(false),
   m_DeviceSource(DEVICESOURCE_DVBAPI),
   m_DisplayMode(femonConfig.displaymode),
@@ -420,7 +421,7 @@ void cFemonOsd::DrawInfoWindow(void)
             offset += OSDROWHEIGHT;
             switch (channel->Source() & cSource::st_Mask) {
               case cSource::stSat:
-                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getSatelliteSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
+                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getSatelliteSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
@@ -437,7 +438,7 @@ void cFemonOsd::DrawInfoWindow(void)
                    break;
 
               case cSource::stCable:
-                   OSDDRAWINFOLINE(*cString::sprintf("DVB-C #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
+                   OSDDRAWINFOLINE(*cString::sprintf("DVB-C #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
@@ -450,7 +451,7 @@ void cFemonOsd::DrawInfoWindow(void)
                    break;
 
               case cSource::stTerr:
-                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getTerrestrialSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), m_FrontendInfo.name));
+                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getTerrestrialSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Transmission"), *getTransmission(dtp.Transmission()));
@@ -556,6 +557,7 @@ void cFemonOsd::Action(void)
            m_QualityValid = (m_Quality >= 0);
            m_Strength = cDevice::ActualDevice()->SignalStrength();
            m_StrengthValid = (m_Strength >= 0);
+           m_FrontendName = cDevice::ActualDevice()->DeviceName();
            m_FrontendStatus = (fe_status_t)(m_StrengthValid ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
            m_FrontendStatusValid = m_StrengthValid;
            m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
@@ -572,6 +574,7 @@ void cFemonOsd::Action(void)
            m_QualityValid = (m_Quality >= 0);
            m_Strength = cDevice::ActualDevice()->SignalStrength();
            m_StrengthValid = (m_Strength >= 0);
+           m_FrontendName = cDevice::ActualDevice()->DeviceName();
            m_FrontendStatus = (fe_status_t)(m_StrengthValid ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
            m_FrontendStatusValid = m_StrengthValid;
            m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
@@ -590,6 +593,7 @@ void cFemonOsd::Action(void)
               m_QualityValid = (m_Quality >= 0);
               m_Strength = cDevice::ActualDevice()->SignalStrength();
               m_StrengthValid = (m_Strength >= 0);
+              m_FrontendName = cDevice::ActualDevice()->DeviceName();
               m_FrontendStatusValid = (ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus) >= 0);
               m_SignalValid = (ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal) >= 0);
               m_SNRValid = (ioctl(m_Frontend, FE_READ_SNR, &m_SNR) >= 0);
@@ -622,7 +626,7 @@ void cFemonOsd::Action(void)
                      else if (!strncasecmp(s, "TYPE:", 5))
                         m_FrontendInfo.type = (fe_type_t)strtol(s + 5, NULL, 10);
                      else if (!strncasecmp(s, "NAME:", 5)) {
-                        strn0cpy(m_FrontendInfo.name, s + 5, sizeof(m_FrontendInfo.name));
+                        m_FrontendName = s + 5;
                         }
                      else if (!strncasecmp(s, "STAT:", 5)) {
                         m_FrontendStatus = (fe_status_t)strtol(s + 5, NULL, 16);
