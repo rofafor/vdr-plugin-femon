@@ -450,3 +450,4 @@ VDR Plugin 'femon' Revision History
 2012-xx-xx: Version 1.7.17
 
 - Added the dynamite compatibility patch (Thanks to Lars Hanisch).
+- Silenced error log messages when accessing pseudo devices.

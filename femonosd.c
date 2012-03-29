@@ -396,7 +396,6 @@ void cFemonOsd::DrawInfoWindow(void)
   if (m_Osd && channel) {
      int offset = 0;
      eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-     cDvbTransponderParameters dtp(channel->Parameters());
 
      switch (m_DisplayMode) {
        case eFemonModeTransponder:
@@ -420,7 +419,8 @@ void cFemonOsd::DrawInfoWindow(void)
             OSDDRAWINFOLEFT( trVDR("CA"),   *getCAids(channel));
             offset += OSDROWHEIGHT;
             switch (channel->Source() & cSource::st_Mask) {
-              case cSource::stSat:
+              case cSource::stSat: {
+                   cDvbTransponderParameters dtp(channel->Parameters());
                    OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getSatelliteSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
@@ -435,9 +435,11 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFOLEFT( trVDR("System"),       *getSatelliteSystem(dtp.System()));
                    if (dtp.System())
                    OSDDRAWINFORIGHT(trVDR("RollOff"),      *getRollOff(dtp.RollOff()));
+                   }
                    break;
 
-              case cSource::stCable:
+              case cSource::stCable: {
+                   cDvbTransponderParameters dtp(channel->Parameters());
                    OSDDRAWINFOLINE(*cString::sprintf("DVB-C #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
@@ -448,9 +450,11 @@ void cFemonOsd::DrawInfoWindow(void)
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Inversion"),    *getInversion(dtp.Inversion()));
                    OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(dtp.CoderateH()));
+                   }
                    break;
 
-              case cSource::stTerr:
+              case cSource::stTerr: {
+                   cDvbTransponderParameters dtp(channel->Parameters());
                    OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getTerrestrialSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
@@ -468,6 +472,7 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFOLEFT( trVDR("System"),       *getTerrestrialSystem(dtp.System()));
                    if (dtp.System())
                    OSDDRAWINFORIGHT(trVDR("PlpId"),        *cString::sprintf("%d", dtp.PlpId()));
+                   }
                    break;
 
               default:
