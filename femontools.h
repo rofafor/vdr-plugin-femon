@@ -26,6 +26,8 @@
 
 #define FRONTEND_DEVICE "/dev/dvb/adapter%d/frontend%d"
 
+cDvbDevice *getDvbDevice(cDevice* device);
+
 cString getFrontendInfo(cDvbDevice *device);
 cString getFrontendName(cDvbDevice *device);
 cString getFrontendStatus(cDvbDevice *device);

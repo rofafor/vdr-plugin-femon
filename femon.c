@@ -22,7 +22,7 @@
 #define GITVERSION ""
 #endif
 
-static const char VERSION[]       = "1.7.16" GITVERSION;
+static const char VERSION[]       = "1.7.17" GITVERSION;
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -139,7 +139,7 @@ bool cPluginFemon::Service(const char *Id, void *Data)
         FemonService_v1_0 *data = (FemonService_v1_0*)Data;
         if (!cDevice::ActualDevice())
            return false;
-        cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+        cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
         data->fe_name = getFrontendName(dev);
         data->fe_status = getFrontendStatus(dev);
         data->fe_snr = getSNR(dev);
@@ -198,7 +198,7 @@ const char **cPluginFemon::SVDRPHelpPages(void)
 
 cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
 {
-  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+  cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
   if (*Option && isnumber(Option)) {
      cDvbDevice *dev2 = dynamic_cast<cDvbDevice*>(cDevice::GetDevice(int(strtol(Option, NULL, 10))));
      if (dev2)

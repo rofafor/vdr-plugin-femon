@@ -678,7 +678,7 @@ void cFemonOsd::Show(void)
      }
 
   if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
-     cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+     cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
      m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
      if (m_Frontend >= 0) {
         if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
@@ -752,7 +752,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
      }
 
   if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
-     cDvbDevice *dev = dynamic_cast<cDvbDevice*>(cDevice::ActualDevice());
+     cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
      m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
      if (m_Frontend >= 0) {
         if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {

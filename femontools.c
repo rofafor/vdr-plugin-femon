@@ -76,6 +76,16 @@ static const char *getUserString(int Value, const tDvbParameterMap *Map)
   return "---";
 }
 
+cDvbDevice *getDvbDevice(cDevice* device)
+{
+  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(device);
+#ifdef __DYNAMIC_DEVICE_PROBE
+  if (!dev && device && device->HasSubDevice())
+     dev = dynamic_cast<cDvbDevice*>(device->SubDevice());
+#endif
+  return dev;
+}
+
 cString getFrontendInfo(cDvbDevice *device)
 {
   cString info;

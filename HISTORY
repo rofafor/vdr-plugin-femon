@@ -446,3 +446,7 @@ VDR Plugin 'femon' Revision History
 
 - Updated for vdr-1.7.27.
 - Cleaned up compilation warnings again.
+
+2012-xx-xx: Version 1.7.17
+
+- Added the dynamite compatibility patch (Thanks to Lars Hanisch).
