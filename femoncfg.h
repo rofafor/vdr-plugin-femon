@@ -59,6 +59,7 @@ enum eFemonThemes
   eFemonThemeEgalsTry,
   eFemonThemeDuotone,
   eFemonThemeSilverGreen,
+  eFemonThemePearlHD,
   eFemonThemeMaxNumber
 };
 

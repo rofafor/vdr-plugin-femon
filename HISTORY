@@ -451,3 +451,4 @@ VDR Plugin 'femon' Revision History
 
 - Added the dynamite compatibility patch (Thanks to Lars Hanisch).
 - Silenced error log messages when accessing pseudo devices.
+- Added a new theme: PearlHD (Thanks to Taipan @ VDRPortal).

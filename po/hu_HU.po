@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: vdr-femon 1.7.15\n"
+"Project-Id-Version: vdr-femon 1.7.17\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2010-10-10 10:10+0200\n"
+"POT-Creation-Date: 2010-10-10 10:10+0300\n"
 "PO-Revision-Date: 2010-10-10 10:10+0200\n"
 "Last-Translator: Füley István <ifuley at tigercomp dot ro>\n"
 "Language-Team: Hungarian <ifuley at tigercomp dot ro>\n"
@@ -66,6 +66,9 @@ msgstr "Kétszínû (duotone)"
 
 msgid "SilverGreen"
 msgstr "Ezüst-zöld"
+
+msgid "PearlHD"
+msgstr "PearlHD"
 
 msgid "Hide main menu entry"
 msgstr "Menübejegyzés elrejtése"
@@ -384,4 +387,3 @@ msgstr "Mbit/s"
 
 msgid "kbit/s"
 msgstr "kbit/s"
-

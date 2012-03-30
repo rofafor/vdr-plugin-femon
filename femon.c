@@ -315,6 +315,7 @@ cMenuFemonSetup::cMenuFemonSetup(void)
   themes[eFemonThemeEgalsTry]      = tr("EgalsTry");
   themes[eFemonThemeDuotone]       = tr("Duotone");
   themes[eFemonThemeSilverGreen]   = tr("SilverGreen");
+  themes[eFemonThemePearlHD]       = tr("PearlHD");
 
   data = femonConfig;
   Setup();
