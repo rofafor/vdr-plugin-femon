@@ -672,7 +672,7 @@ void cFemonOsd::Show(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   m_DeviceSource = DEVICESOURCE_DVBAPI;
   if (channel) {
@@ -727,7 +727,7 @@ void cFemonOsd::Show(void)
         DELETENULL(m_Receiver);
         }
      if (femonConfig.analyzestream && channel) {
-        m_Receiver = new cFemonReceiver(channel->Vtype(), channel->Vpid(), channel->Apid(IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0), channel->Dpid(IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0));
+        m_Receiver = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      Start();
@@ -738,7 +738,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
 {
   debug("%s(%d,%d)\n", __PRETTY_FUNCTION__, device->DeviceNumber(), channelNumber);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
   if (!liveView || !channelNumber || !channel || channel->Number() != channelNumber)
      return;
@@ -784,7 +784,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
      DELETENULL(m_Receiver);
      }
   if (femonConfig.analyzestream && channel) {
-     m_Receiver = new cFemonReceiver(channel->Vtype(), channel->Vpid(), channel->Apid(IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0), channel->Dpid(IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0));
+     m_Receiver = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
      cDevice::ActualDevice()->AttachReceiver(m_Receiver);
      }
 }
@@ -798,9 +798,9 @@ void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
      DELETENULL(m_Receiver);
      }
   if (femonConfig.analyzestream) {
-     cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+     const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      if (channel) {
-        m_Receiver = new cFemonReceiver(channel->Vtype(), channel->Vpid(), channel->Apid(IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0), channel->Dpid(IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0));
+        m_Receiver = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
         cDevice::ActualDevice()->AttachReceiver(m_Receiver);
         }
      }

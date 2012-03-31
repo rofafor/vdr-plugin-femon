@@ -108,7 +108,7 @@ public:
                                                        m_AC3Info.lfe = onoff; }
 
 public:
-  cFemonReceiver(int Vtype, int Vpid, int Apid, int Dpid);
+  cFemonReceiver(const cChannel* Channel, int ATrack, int DTrack);
   virtual ~cFemonReceiver();
   void Deactivate(void);
 

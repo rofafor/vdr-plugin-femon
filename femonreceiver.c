@@ -10,8 +10,9 @@
 #include "femoncfg.h"
 #include "femonreceiver.h"
 
-cFemonReceiver::cFemonReceiver(int Vtype, int Vpid, int Apid, int Dpid)
-: cThread("femon receiver"),
+cFemonReceiver::cFemonReceiver(const cChannel *Channel, int ATrack, int DTrack)
+: cReceiver(Channel),
+  cThread("femon receiver"),
   m_Mutex(),
   m_Sleep(),
   m_Active(false),
@@ -21,24 +22,25 @@ cFemonReceiver::cFemonReceiver(int Vtype, int Vpid, int Apid, int Dpid)
   m_DetectLATM(this),
   m_DetectAC3(this),
   m_VideoBuffer(KILOBYTE(512), TS_SIZE, false, "Femon video"),
-  m_VideoType(Vtype),
-  m_VideoPid(Vpid),
+  m_VideoType(Channel ? Channel->Vtype(): 0),
+  m_VideoPid(Channel ? Channel->Vpid() : 0),
   m_VideoPacketCount(0),
   m_VideoBitrate(0.0),
   m_VideoValid(false),
   m_AudioBuffer(KILOBYTE(256), TS_SIZE, false, "Femon audio"),
-  m_AudioPid(Apid),
+  m_AudioPid(Channel ? Channel->Apid(ATrack) : 0),
   m_AudioPacketCount(0),
   m_AudioBitrate(0.0),
   m_AudioValid(false),
   m_AC3Buffer(KILOBYTE(256), TS_SIZE, false, "Femon AC3"),
-  m_AC3Pid(Dpid),
+  m_AC3Pid(Channel ? Channel->Dpid(DTrack) : 0),
   m_AC3PacketCount(0),
   m_AC3Bitrate(0),
   m_AC3Valid(false)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
 
+  SetPids(NULL);
   AddPid(m_VideoPid);
   AddPid(m_AudioPid);
   AddPid(m_AC3Pid);
