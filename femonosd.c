@@ -475,6 +475,12 @@ void cFemonOsd::DrawInfoWindow(void)
                    }
                    break;
 
+              case ('I' << 24): {
+                   OSDDRAWINFOLINE(*cString::sprintf("IPTV #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
+                   offset += OSDROWHEIGHT;
+                   }
+                   break;
+
               default:
                    break;
               }
