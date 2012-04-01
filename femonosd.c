@@ -11,6 +11,7 @@
 
 #include <ctype.h>
 #include <math.h>
+#include "iptvservice.h"
 #include "femoncfg.h"
 #include "femonreceiver.h"
 #include "femontools.h"
@@ -475,9 +476,21 @@ void cFemonOsd::DrawInfoWindow(void)
                    }
                    break;
 
-              case ('I' << 24): {
+              case stIptv: {
                    OSDDRAWINFOLINE(*cString::sprintf("IPTV #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
                    offset += OSDROWHEIGHT;
+                   if (m_SvdrpFrontend < 0) {
+                      cPlugin *p;
+                      IptvService_v1_0 data;
+                      data.cardIndex = cDevice::ActualDevice()->CardIndex();
+                      p = cPluginManager::CallFirstService("IptvService-v1.0", &data);
+                      if (p) {
+                         OSDDRAWINFOLEFT(tr("Protocol"),   *data.protocol);
+                         offset += OSDROWHEIGHT;
+                         OSDDRAWINFOLEFT(tr("Bitrate"),    *data.bitrate);
+                         offset += OSDROWHEIGHT;
+                         }
+                      }
                    }
                    break;
 

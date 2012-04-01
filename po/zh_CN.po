@@ -178,6 +178,12 @@ msgstr "Rid"
 msgid "Coderate"
 msgstr "码速率"
 
+msgid "Protocol"
+msgstr ""
+
+msgid "Bitrate"
+msgstr "比特率"
+
 msgid "Stream Information"
 msgstr "流信息"
 
@@ -186,9 +192,6 @@ msgstr "视频流"
 
 msgid "Codec"
 msgstr "解码模式"
-
-msgid "Bitrate"
-msgstr "比特率"
 
 msgid "Aspect Ratio"
 msgstr "纵横比"

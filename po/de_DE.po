@@ -180,6 +180,12 @@ msgstr "Rid"
 msgid "Coderate"
 msgstr "Coderate"
 
+msgid "Protocol"
+msgstr ""
+
+msgid "Bitrate"
+msgstr "Bitrate"
+
 msgid "Stream Information"
 msgstr "Streaminformation"
 
@@ -188,9 +194,6 @@ msgstr "Video Stream"
 
 msgid "Codec"
 msgstr ""
-
-msgid "Bitrate"
-msgstr "Bitrate"
 
 msgid "Aspect Ratio"
 msgstr "Seitenverhältnis"

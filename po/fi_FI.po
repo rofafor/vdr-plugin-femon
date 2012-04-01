@@ -178,6 +178,12 @@ msgstr "Radio-ID"
 msgid "Coderate"
 msgstr "Suojaustaso"
 
+msgid "Protocol"
+msgstr "Protokolla"
+
+msgid "Bitrate"
+msgstr "Bittinopeus"
+
 msgid "Stream Information"
 msgstr "Lähetteen tiedot"
 
@@ -186,9 +192,6 @@ msgstr "Kuvaraita"
 
 msgid "Codec"
 msgstr "Koodekki"
-
-msgid "Bitrate"
-msgstr "Bittinopeus"
 
 msgid "Aspect Ratio"
 msgstr "Kuvasuhde"
@@ -384,3 +387,9 @@ msgstr "Mbit/s"
 
 msgid "kbit/s"
 msgstr "kbit/s"
+
+#~ msgid "Information"
+#~ msgstr "Tiedot"
+
+#~ msgid "Statistics"
+#~ msgstr "Tilastot"
