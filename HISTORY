@@ -447,9 +447,9 @@ VDR Plugin 'femon' Revision History
 - Updated for vdr-1.7.27.
 - Cleaned up compilation warnings again.
 
-2012-xx-xx: Version 1.7.17
+2012-04-02: Version 1.7.17
 
 - Added the dynamite compatibility patch (Thanks to Lars Hanisch).
 - Silenced error log messages when accessing pseudo devices.
 - Added a new theme: PearlHD (Thanks to Taipan @ VDRPortal).
-- Added transponder info window support for IPTV devices.
+- Added the transponder info window support for IPTV devices.
