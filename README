@@ -97,9 +97,6 @@ the local device number.
 
 Notes:
 
-- The plugin supports only those DVB cards with _one_ frontend, because I
-  haven't yet figured howto do it without patching the VDR core.
-
 - Disable the stream analyze to speed up heavy zapping sessions.
 
 - The signal strength and signal-to-noise ratio values are comparable only
