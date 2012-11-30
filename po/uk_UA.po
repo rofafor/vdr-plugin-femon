@@ -1,0 +1,399 @@
+# Ukrainian translation.
+# Copyright (C) 2010 The Claws Mail Team
+# This file is distributed under the same license as the claws-mail package.
+# Yarema aka Knedlyk <yupadmin@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: vdr-femon 1.7.17\n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2010-10-10 10:10+0300\n"
+"PO-Revision-Date: 2010-10-10 10:10+0300\n"
+"Last-Translator: Yarema aka Knedlyk <yupadmin@gmail.com>\n"
+"Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\\n\n"
+
+msgid "DVB Signal Information Monitor (OSD)"
+msgstr "Монітор інформації про DVB сигнал"
+
+msgid "Signal Information"
+msgstr "Інформація про сигнал"
+
+msgid "Femon not available"
+msgstr "Femon не доступний"
+
+msgid "basic"
+msgstr "основне"
+
+msgid "transponder"
+msgstr "транспондер"
+
+msgid "stream"
+msgstr "потік"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Classic"
+msgstr "Класичний"
+
+msgid "Elchi"
+msgstr "Elchi"
+
+msgid "ST:TNG"
+msgstr "ST:TNG"
+
+msgid "DeepBlue"
+msgstr "DeepBlue"
+
+msgid "Moronimo"
+msgstr "Moronimo"
+
+msgid "Enigma"
+msgstr "Enigma"
+
+msgid "EgalsTry"
+msgstr "EgalsTry"
+
+msgid "Duotone"
+msgstr "Duotone"
+
+msgid "SilverGreen"
+msgstr "SilverGreen"
+
+msgid "PearlHD"
+msgstr "PearlHD"
+
+msgid "Hide main menu entry"
+msgstr "Сховати в головному меню"
+
+msgid "Define whether the main menu entry is hidden."
+msgstr "Визначення, чи приховувати в головному меню"
+
+msgid "Default display mode"
+msgstr "Типовий режим показу"
+
+msgid "Define the default display mode at startup."
+msgstr "Визначення типового режиму показу при запуску"
+
+msgid "Define the used OSD skin."
+msgstr "Визначення шкірки для повідомлень"
+
+msgid "Define the used OSD theme."
+msgstr "Визначення теми повідомлень"
+
+msgid "Position"
+msgstr "Позиція"
+
+msgid "Define the position of OSD."
+msgstr "Визначити позицію показу повідомлень"
+
+msgid "Downscale OSD size [%]"
+msgstr "Масштаб розміру повідомлень [%]"
+
+msgid "Define the downscale ratio for OSD size."
+msgstr "Визначити коефіцієнт масштабування розміру повідомлень"
+
+msgid "Red limit [%]"
+msgstr "Червона границя [%]"
+
+msgid "Define a limit for red bar, which is used to indicate a bad signal."
+msgstr "Визначення границі червоної поділки, яка показує поганий сигнал."
+
+msgid "Green limit [%]"
+msgstr "Зелена границя [%]"
+
+msgid "Define a limit for green bar, which is used to indicate a good signal."
+msgstr "Визначення границі зеленої поділки, яка показує добрий сигнал."
+
+msgid "OSD update interval [0.1s]"
+msgstr "Інтервал оновлення повідомлень [0.1с]"
+
+msgid ""
+"Define an interval for OSD updates. The smaller interval generates higher "
+"CPU load."
+msgstr ""
+"Визначення інтервалу оновлення повідомлень. Малий інтервал спричинює більше "
+"завантаження процесора."
+
+msgid "Analyze stream"
+msgstr "Аналіз потоку"
+
+msgid "Define whether the DVB stream is analyzed and bitrates calculated."
+msgstr "Визначення, чи проводити аналіз DVB потоку і обчислення бітрейту"
+
+msgid "Calculation interval [0.1s]"
+msgstr "Інтервал обчислення [0.1с]"
+
+msgid ""
+"Define an interval for calculation. The bigger interval generates more "
+"stable values."
+msgstr ""
+"Визначення інтервалу обчислення. Більший інтервал дає стабільніші значення."
+
+msgid "Use SVDRP service"
+msgstr "Використати SVDRP сервіс"
+
+msgid "Define whether the SVDRP service is used in client/server setups."
+msgstr ""
+"Визначення чи буде використовуватися SVDRP сервіс в налаштуваннях клієнта/"
+"сервера"
+
+msgid "SVDRP service port"
+msgstr "Порт SVDRP сервісу"
+
+msgid "Define the port number of SVDRP service."
+msgstr "Визначення номеру порту SVDRP сервісу"
+
+msgid "SVDRP service IP"
+msgstr "IP сервісу SVDRP"
+
+msgid "Define the IP address of SVDRP service."
+msgstr "Визначення IP адреси сервісу SVDRP."
+
+msgid "Help"
+msgstr "Допомога"
+
+msgid "Video"
+msgstr "Відео"
+
+msgid "Audio"
+msgstr "Аудіо"
+
+msgid "Transponder Information"
+msgstr "Інформація про транспондер"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "Шв. кодування"
+
+msgid "Protocol"
+msgstr "Протокол"
+
+msgid "Bitrate"
+msgstr "Бітрейт"
+
+msgid "Stream Information"
+msgstr "Інформація про потік"
+
+msgid "Video Stream"
+msgstr "Відео потік"
+
+msgid "Codec"
+msgstr "Кодек"
+
+msgid "Aspect Ratio"
+msgstr "Співвідношення сторін"
+
+msgid "Frame Rate"
+msgstr "Частота кадрів"
+
+msgid "Video Format"
+msgstr "Формат відео"
+
+msgid "Resolution"
+msgstr "Роздільна здатність"
+
+msgid "Audio Stream"
+msgstr "Аудіо потік"
+
+msgid "Channel Mode"
+msgstr "Режим каналу"
+
+msgid "Sampling Frequency"
+msgstr "Частота"
+
+msgid "AC-3 Stream"
+msgstr "AC-3 потік"
+
+msgid "Bit Stream Mode"
+msgstr "Режим бітового потоку:"
+
+msgid "Audio Coding Mode"
+msgstr "Режим кодування малюнка"
+
+msgid "Center Mix Level"
+msgstr "Рівень міксування в центрі"
+
+msgid "Surround Mix Level"
+msgstr "Рівень міксування заповнення"
+
+msgid "Dolby Surround Mode"
+msgstr "Режим Dolby Surround"
+
+msgid "Low Frequency Effects"
+msgstr "Ефекти низької частоти"
+
+msgid "Dialogue Normalization"
+msgstr "Нормалізація гучності"
+
+msgid "Fixed"
+msgstr "Фіксовано"
+
+msgid "Analog"
+msgstr "Аналог."
+
+msgid "MPEG-2"
+msgstr "MPEG-2"
+
+msgid "H.264"
+msgstr "H.264"
+
+msgid "MPEG-1 Layer I"
+msgstr "MPEG-1 Layer I"
+
+msgid "MPEG-1 Layer II"
+msgstr "MPEG-1 Layer II"
+
+msgid "MPEG-1 Layer III"
+msgstr "MPEG-1 Layer III"
+
+msgid "MPEG-2 Layer I"
+msgstr "MPEG-2 Layer I"
+
+msgid "MPEG-2 Layer II"
+msgstr "MPEG-2 Layer II"
+
+msgid "MPEG-2 Layer III"
+msgstr "MPEG-2 Layer III"
+
+msgid "HE-AAC"
+msgstr "HE-AAC"
+
+msgid "LATM"
+msgstr "LATM"
+
+msgid "stereo"
+msgstr "стерео"
+
+msgid "joint Stereo"
+msgstr "об’єднане стерео"
+
+msgid "dual"
+msgstr "дуальний"
+
+msgid "mono"
+msgstr "моно"
+
+msgid "interlaced"
+msgstr "черезрядкове"
+
+msgid "progressive"
+msgstr "прогресивне"
+
+msgid "reserved"
+msgstr "зарезервовано"
+
+msgid "extended"
+msgstr "розширено"
+
+msgid "unknown"
+msgstr "невідомо"
+
+msgid "component"
+msgstr "компонентно"
+
+msgid "PAL"
+msgstr "PAL"
+
+msgid "NTSC"
+msgstr "NTSC"
+
+msgid "SECAM"
+msgstr "SECAM"
+
+msgid "MAC"
+msgstr "MAC"
+
+msgid "Hz"
+msgstr "Гц"
+
+msgid "Complete Main (CM)"
+msgstr "Заповнення основного (CM)"
+
+msgid "Music and Effects (ME)"
+msgstr "Музика і ефекти (ME)"
+
+msgid "Visually Impaired (VI)"
+msgstr "Слабозорі (VI)"
+
+msgid "Hearing Impaired (HI)"
+msgstr "Погіршений слух (HI)"
+
+msgid "Dialogue (D)"
+msgstr "Діалог (D)"
+
+msgid "Commentary (C)"
+msgstr "Коментарі (C)"
+
+msgid "Emergency (E)"
+msgstr "Аварійне (E)"
+
+msgid "Voice Over (VO)"
+msgstr "Голос через (VO)"
+
+msgid "Karaoke"
+msgstr "Караоке"
+
+msgid "Ch1"
+msgstr "Кан.1"
+
+msgid "Ch2"
+msgstr "Кан.2"
+
+msgid "C"
+msgstr "C"
+
+msgid "L"
+msgstr "L"
+
+msgid "R"
+msgstr "R"
+
+msgid "S"
+msgstr "S"
+
+msgid "SL"
+msgstr "SL"
+
+msgid "SR"
+msgstr "Симв.шв."
+
+msgid "dB"
+msgstr "дБ"
+
+msgid "not indicated"
+msgstr "не вказано"
+
+msgid "MHz"
+msgstr "МГц"
+
+msgid "free"
+msgstr "вільний"
+
+msgid "Mbit/s"
+msgstr "Мбіт/c"
+
+msgid "kbit/s"
+msgstr "кбіт/с"
