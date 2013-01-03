@@ -2,7 +2,7 @@
 # Makefile for Frontend Status Monitor plugin
 #
 
-# Debugging on/off 
+# Debugging on/off
 
 #FEMON_DEBUG = 1
 
