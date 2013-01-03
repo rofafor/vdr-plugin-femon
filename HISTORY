@@ -454,6 +454,8 @@ VDR Plugin 'femon' Revision History
 - Added a new theme: PearlHD (Thanks to Taipan @ VDRPortal).
 - Added the transponder info window support for IPTV devices.
 
-2012-xx-xx: Version 1.7.18
+2013-01-03: Version 1.7.18
 
+- Updated for vdr-1.7.35.
+- Modified how the receiver is detached.
 - Added Ukrainian translation (Thanks to Yarema aka Knedlyk).

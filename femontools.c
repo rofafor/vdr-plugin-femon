@@ -88,9 +88,9 @@ cDvbDevice *getDvbDevice(cDevice* device)
 
 cString getFrontendInfo(cDvbDevice *device)
 {
-  cString info;
   struct dvb_frontend_info value;
   fe_status_t status;
+  cString info = "";
   uint16_t signal = 0;
   uint16_t snr = 0;
   uint32_t ber = 0;

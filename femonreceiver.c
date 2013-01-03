@@ -81,12 +81,12 @@ cFemonReceiver::~cFemonReceiver(void)
 void cFemonReceiver::Deactivate(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
+  Detach();
   if (m_Active) {
      m_Active = false;
      m_Sleep.Signal();
      if (Running())
         Cancel(3);
-     Detach();
      }
 }
 
