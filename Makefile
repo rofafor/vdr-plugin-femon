@@ -145,4 +145,4 @@ clean:
 
 .PHONY: cppcheck
 cppcheck:
-	@cppcheck --enable=all -v -f $(OBJS:%.o=%.c)
+	@cppcheck --language=c++ --enable=all -v -f $(OBJS:%.o=%.c)

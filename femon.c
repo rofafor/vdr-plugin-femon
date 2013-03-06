@@ -136,7 +136,7 @@ bool cPluginFemon::Service(const char *Id, void *Data)
 {
   if (strcmp(Id,"FemonService-v1.0") == 0) {
      if (Data) {
-        FemonService_v1_0 *data = (FemonService_v1_0*)Data;
+        FemonService_v1_0 *data = reinterpret_cast<FemonService_v1_0*>(Data);
         if (!cDevice::ActualDevice())
            return false;
         cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
