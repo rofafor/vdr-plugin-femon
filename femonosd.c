@@ -472,7 +472,7 @@ void cFemonOsd::DrawInfoWindow(void)
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("System"),       *getTerrestrialSystem(dtp.System()));
                    if (dtp.System())
-                   OSDDRAWINFORIGHT(trVDR("PlpId"),        *cString::sprintf("%d", dtp.PlpId()));
+                   OSDDRAWINFORIGHT(trVDR("StreamId"),     *cString::sprintf("%d", dtp.StreamId()));
                    }
                    break;
 
