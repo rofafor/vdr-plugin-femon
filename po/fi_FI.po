@@ -170,7 +170,7 @@ msgid "Nid"
 msgstr "Verkko-ID"
 
 msgid "Tid"
-msgstr "Lähete-ID"
+msgstr "TS-ID"
 
 msgid "Rid"
 msgstr "Radio-ID"
@@ -387,9 +387,3 @@ msgstr "Mbit/s"
 
 msgid "kbit/s"
 msgstr "kbit/s"
-
-#~ msgid "Information"
-#~ msgstr "Tiedot"
-
-#~ msgid "Statistics"
-#~ msgstr "Tilastot"

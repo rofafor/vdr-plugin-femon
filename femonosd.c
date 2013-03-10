@@ -434,8 +434,9 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFORIGHT(trVDR("CoderateH"),    *getCoderate(dtp.CoderateH()));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("System"),       *getSatelliteSystem(dtp.System()));
-                   if (dtp.System())
-                   OSDDRAWINFORIGHT(trVDR("RollOff"),      *getRollOff(dtp.RollOff()));
+                   if (dtp.System()) {
+                      OSDDRAWINFORIGHT(trVDR("RollOff"),   *getRollOff(dtp.RollOff()));
+                      }
                    }
                    break;
 
@@ -471,8 +472,9 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFORIGHT(trVDR("Guard"),        *getGuard(dtp.Guard()));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("System"),       *getTerrestrialSystem(dtp.System()));
-                   if (dtp.System())
-                   OSDDRAWINFORIGHT(trVDR("StreamId"),     *cString::sprintf("%d", dtp.StreamId()));
+                   if (dtp.System()) {
+                      OSDDRAWINFORIGHT(trVDR("StreamId"),  *cString::sprintf("%d", dtp.StreamId()));
+                      }
                    }
                    break;
 
