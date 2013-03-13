@@ -22,7 +22,7 @@
 #define GITVERSION ""
 #endif
 
-static const char VERSION[]       = "1.7.19" GITVERSION;
+static const char VERSION[]       = "1.7.20" GITVERSION;
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -318,6 +318,7 @@ cMenuFemonSetup::cMenuFemonSetup(void)
   themes[eFemonThemePearlHD]       = tr("PearlHD");
 
   data = femonConfig;
+  SetMenuCategory(mcSetupPlugins);
   Setup();
 }
 
