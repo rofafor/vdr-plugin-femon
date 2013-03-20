@@ -1,0 +1,390 @@
+# VDR plugin language source file.
+# Copyright (C) 2007 Rolf Ahrenberg
+# This file is distributed under the same license as the femon package.
+# Milan Hrala
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: vdr-femon 1.7.20\n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2010-10-10 10:10+0300\n"
+"PO-Revision-Date: 2010-10-10 10:10+0300\n"
+"Last-Translator: Milan Hrala <hrala.milan@gmail.com>\n"
+"Language-Team: Slovak <vdr@linuxtv.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "DVB Signal Information Monitor (OSD)"
+msgstr "DVB Informácie o signále (OSD)"
+
+msgid "Signal Information"
+msgstr "Informácie o signále"
+
+msgid "Femon not available"
+msgstr "Femon nie je k dispozícii"
+
+msgid "basic"
+msgstr "©tandardtný"
+
+msgid "transponder"
+msgstr "Transpondér"
+
+msgid "stream"
+msgstr "dátový tok"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Classic"
+msgstr "Klasický"
+
+msgid "Elchi"
+msgstr "Elchi"
+
+msgid "ST:TNG"
+msgstr "ST:TNG"
+
+msgid "DeepBlue"
+msgstr "tmavo modrá"
+
+msgid "Moronimo"
+msgstr "Moronimo"
+
+msgid "Enigma"
+msgstr "Enigma"
+
+msgid "EgalsTry"
+msgstr "EgalsTry"
+
+msgid "Duotone"
+msgstr "Duotone"
+
+msgid "SilverGreen"
+msgstr "strieborno zelená"
+
+msgid "PearlHD"
+msgstr "PearlHD"
+
+msgid "Hide main menu entry"
+msgstr "Schova» polo¾ku v hlavnom menu"
+
+msgid "Define whether the main menu entry is hidden."
+msgstr "Urèite, èi v hlavnom menu bude polo¾ka skrytá."
+
+msgid "Default display mode"
+msgstr "©tandardný re¾im zobrazenia"
+
+msgid "Define the default display mode at startup."
+msgstr "Zadajte predvolený re¾im zobrazenia pri spustení."
+
+msgid "Define the used OSD skin."
+msgstr "Zadajte pou¾itý OSD vzhµad."
+
+msgid "Define the used OSD theme."
+msgstr "Definujte pou¾itú OSD tému."
+
+msgid "Position"
+msgstr "Pozícia"
+
+msgid "Define the position of OSD."
+msgstr "Definujte pozíciu OSD."
+
+msgid "Downscale OSD size [%]"
+msgstr "Zmen¹i» veµkos» OSD [%]"
+
+msgid "Define the downscale ratio for OSD size."
+msgstr "Zadajte zmen¹enie pomeru pre OSD veµkosti."
+
+msgid "Red limit [%]"
+msgstr "Èervený limit [%]"
+
+msgid "Define a limit for red bar, which is used to indicate a bad signal."
+msgstr "Zadajte limit pre èervený pruh , ktorý sa pou¾íva na oznaèenie zlého signálu."
+
+msgid "Green limit [%]"
+msgstr "Zelený limit [%]"
+
+msgid "Define a limit for green bar, which is used to indicate a good signal."
+msgstr "Zadajte limit pre zeleného pruhu, ktorý sa pou¾ije na oznaèenie dobrého signálu."
+
+msgid "OSD update interval [0.1s]"
+msgstr "OSD aktualizaèný interval [0.1s]"
+
+msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
+msgstr "Zadajte interval pre aktualizácie OSD. Men¹í interval vytvára vy¹¹ie za»a¾enie CPU."
+
+msgid "Analyze stream"
+msgstr "Analýza dátového toku"
+
+msgid "Define whether the DVB stream is analyzed and bitrates calculated."
+msgstr "Zadajte èi sa DVB prúd analyzuje a dátový tok vypoèíta."
+
+msgid "Calculation interval [0.1s]"
+msgstr "Výpoètový interval [0.1s]"
+
+msgid "Define an interval for calculation. The bigger interval generates more stable values."
+msgstr "Zadajte interval pre výpoèet. Väè¹í interval vytvára stabilnej¹ie hodnoty."
+
+msgid "Use SVDRP service"
+msgstr "Pou¾i» SVDRP slu¾bu"
+
+msgid "Define whether the SVDRP service is used in client/server setups."
+msgstr "Zadajte èi sa pou¾ije slu¾ba SVDRP v klient / server nastaveniach."
+
+msgid "SVDRP service port"
+msgstr "Port SVDRP slu¾by"
+
+msgid "Define the port number of SVDRP service."
+msgstr "Zadajte èíslo portu slu¾by SVDRP."
+
+msgid "SVDRP service IP"
+msgstr "IP SVDRP slu¾by"
+
+msgid "Define the IP address of SVDRP service."
+msgstr "zadajte IP adresu slu¾by SVDRP."
+
+msgid "Help"
+msgstr "Pomoc"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Audio"
+msgstr "Zvuk"
+
+msgid "Transponder Information"
+msgstr "Informácie transpondéra"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "rýchlos» kódovania"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Bitrate"
+msgstr "Dátový tok"
+
+msgid "Stream Information"
+msgstr "Informácie o dátovom toku"
+
+msgid "Video Stream"
+msgstr "Video stopa"
+
+msgid "Codec"
+msgstr "kodek"
+
+msgid "Aspect Ratio"
+msgstr "Pomer strán"
+
+msgid "Frame Rate"
+msgstr "Poèet snímkov"
+
+msgid "Video Format"
+msgstr "Video formát"
+
+msgid "Resolution"
+msgstr "Rozlí¹enie"
+
+msgid "Audio Stream"
+msgstr "Zvuková stopa"
+
+msgid "Channel Mode"
+msgstr "re¾im kanála"
+
+msgid "Sampling Frequency"
+msgstr "Vzorkovacia frekvencia"
+
+msgid "AC-3 Stream"
+msgstr "AC-3 dátový tok"
+
+msgid "Bit Stream Mode"
+msgstr "re¾im bitového toku"
+
+msgid "Audio Coding Mode"
+msgstr "Re¾ím kódovania zvuku"
+
+msgid "Center Mix Level"
+msgstr "Úroveò Center mix"
+
+msgid "Surround Mix Level"
+msgstr "Úroveò Surround mix"
+
+msgid "Dolby Surround Mode"
+msgstr "Dolby Surround re¾ím"
+
+msgid "Low Frequency Effects"
+msgstr "Basové efekty"
+
+msgid "Dialogue Normalization"
+msgstr "©tandartný dialóg"
+
+msgid "Fixed"
+msgstr "Pevné"
+
+msgid "Analog"
+msgstr "Analóg"
+
+msgid "MPEG-2"
+msgstr "MPEG-2"
+
+msgid "H.264"
+msgstr "H.264"
+
+msgid "MPEG-1 Layer I"
+msgstr "MPEG-1 vrstva I"
+
+msgid "MPEG-1 Layer II"
+msgstr "MPEG-1 vrstva II"
+
+msgid "MPEG-1 Layer III"
+msgstr "MPEG-1 vrstva III"
+
+msgid "MPEG-2 Layer I"
+msgstr "MPEG-2 vrstva I"
+
+msgid "MPEG-2 Layer II"
+msgstr "MPEG-2 vrstva II"
+
+msgid "MPEG-2 Layer III"
+msgstr "MPEG-2 vrstva III"
+
+msgid "HE-AAC"
+msgstr "HE-AAC"
+
+msgid "LATM"
+msgstr "LATM"
+
+msgid "stereo"
+msgstr "stereo"
+
+msgid "joint Stereo"
+msgstr "spojené stereo"
+
+msgid "dual"
+msgstr "dvojitý"
+
+msgid "mono"
+msgstr "mono"
+
+msgid "interlaced"
+msgstr "prekladaný"
+
+msgid "progressive"
+msgstr "progresívny"
+
+msgid "reserved"
+msgstr "obsadený"
+
+msgid "extended"
+msgstr "roz¹írený"
+
+msgid "unknown"
+msgstr "neznámy"
+
+msgid "component"
+msgstr "súèas»"
+
+msgid "PAL"
+msgstr "PAL"
+
+msgid "NTSC"
+msgstr "NTSC"
+
+msgid "SECAM"
+msgstr "SECAM"
+
+msgid "MAC"
+msgstr "MAC"
+
+msgid "Hz"
+msgstr "Hz"
+
+msgid "Complete Main (CM)"
+msgstr "Kompletne hlavné (CM)"
+
+msgid "Music and Effects (ME)"
+msgstr "Hudba a efekty (ME)"
+
+msgid "Visually Impaired (VI)"
+msgstr "zrakovo postihnutí (VI)"
+
+msgid "Hearing Impaired (HI)"
+msgstr "sluchovo postihnutí (HI)"
+
+msgid "Dialogue (D)"
+msgstr "Dialóg (D)"
+
+msgid "Commentary (C)"
+msgstr "Komentár (C)"
+
+msgid "Emergency (E)"
+msgstr "Pohotovostný (E)"
+
+msgid "Voice Over (VO)"
+msgstr "Viacvrstvový hlas (VO)"
+
+msgid "Karaoke"
+msgstr "Karaoke"
+
+msgid "Ch1"
+msgstr "kanál1"
+
+msgid "Ch2"
+msgstr "kanál2"
+
+msgid "C"
+msgstr "C"
+
+msgid "L"
+msgstr "L"
+
+msgid "R"
+msgstr "R"
+
+msgid "S"
+msgstr "S"
+
+msgid "SL"
+msgstr "SL"
+
+msgid "SR"
+msgstr "SR"
+
+msgid "dB"
+msgstr "dB"
+
+msgid "not indicated"
+msgstr "nie je uvedené"
+
+msgid "MHz"
+msgstr "MHz"
+
+msgid "free"
+msgstr "voµný"
+
+msgid "Mbit/s"
+msgstr "Mbit/s"
+
+msgid "kbit/s"
+msgstr "kbit/s"
+

@@ -71,13 +71,8 @@ Left/Right    - Switch to next/previous device that provides the current channel
 
 Installation:
 
-cd /put/your/path/here/VDR/PLUGINS/src
 tar -xzf /put/your/path/here/vdr-femon-X.Y.Z.tgz
-ln -s femon-X.Y.Z femon
-cd /put/your/path/here/VDR
-make
-make plugins
-./vdr -P femon
+make -C femon-X.Y.Z install
 
 Client-server architecture:
 
