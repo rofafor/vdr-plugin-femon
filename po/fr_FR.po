@@ -19,10 +19,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "DVB Signal Information Monitor (OSD)"
-msgstr "Affiche les informations du signal DVB"
+msgstr "Moniteur sur le signal DVB"
 
 msgid "Signal Information"
-msgstr "Infos sur le signal"
+msgstr "Infos sur le signal DVB"
 
 msgid "Femon not available"
 msgstr "Femon n'est pas disponible"
@@ -187,7 +187,7 @@ msgid "Bitrate"
 msgstr "Taux d'échantillonnage fixe"
 
 msgid "Stream Information"
-msgstr "Information du flux"
+msgstr "Information sur le flux"
 
 msgid "Video Stream"
 msgstr "Flux vidéo"
