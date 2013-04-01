@@ -1,4 +1,3 @@
-
 ===================================
 VDR Plugin 'femon' Revision History
 ===================================
@@ -65,6 +64,7 @@ VDR Plugin 'femon' Revision History
 2004-09-11: Version 0.0.7
 
 -  Backported changes and fixes from version 0.1.6.
+
 
 ===================================
 VDR Plugin 'femon' Revision History
@@ -343,6 +343,7 @@ VDR Plugin 'femon' Revision History
 
 - Backported from 1.7.2.
 
+
 ===================================
 VDR Plugin 'femon' Revision History
 ===================================
@@ -465,6 +466,12 @@ VDR Plugin 'femon' Revision History
 - Updated for vdr-1.7.40.
 - Updated French translation (Thanks to Bernard Jaulin).
 
-2013-xx-xx: Version 1.7.20
 
+===================================
+VDR Plugin 'femon' Revision History
+===================================
+
+2013-04-01: Version 2.0.0
+
+- Updated for vdr-2.0.0.
 - Added Slovak translation (Thanks to Milan Hrala).
