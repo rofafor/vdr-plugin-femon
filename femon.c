@@ -204,11 +204,11 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
      if (dev2)
         dev = dev2;
      }
+  if (cReplayControl::NowReplaying() || !dev) {
+     ReplyCode = 550; // Requested action not taken
+     return cString("Cannot open femon plugin while replaying");
+     }
   if (strcasecmp(Command, "OPEN") == 0) {
-     if (cReplayControl::NowReplaying()) {
-        ReplyCode = 550; // Requested action not taken
-        return cString("Cannot open femon plugin while replaying");
-        }
      if (!cFemonOsd::Instance())
         cRemote::CallPlugin(Name());
      return cString("Opening femon plugin");
