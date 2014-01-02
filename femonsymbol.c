@@ -53,6 +53,7 @@
 #include "symbols/format480i.xpm"
 #include "symbols/format480p.xpm"
 
+static cBitmap bmOnePixel(1, 1, 1);
 static cBitmap bmStereo(stereo_xpm);
 static cBitmap bmMonoLeft(monoleft_xpm);
 static cBitmap bmMonoRight(monoright_xpm);
@@ -134,6 +135,7 @@ bool cFemonSymbolCache::Populate(void)
      Flush();
 
      // pushing order must follow the enumeration - keep original proportions except for frontend status ones
+     cacheM.Append(&bmOnePixel); // SYMBOL_ONEPIXEL
      cacheM.Append(bmStereo.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_STEREO
      cacheM.Append(bmMonoLeft.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_MONO_LEFT
      cacheM.Append(bmMonoRight.Scaled(yFactorM, yFactorM, antiAliasM)); // SYMBOL_MONO_RIGHT
@@ -197,7 +199,7 @@ bool cFemonSymbolCache::Flush(void)
 
 cBitmap& cFemonSymbolCache::Get(eSymbols symbolP)
 {
-  cBitmap *bitmapM = NULL;
+  cBitmap *bitmapM = cacheM[SYMBOL_ONEPIXEL];
 
   if (symbolP < cacheM.Size())
      bitmapM = cacheM[symbolP];

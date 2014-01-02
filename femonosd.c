@@ -490,7 +490,6 @@ void cFemonOsd::DrawInfoWindow(void)
                          OSDDRAWINFOLEFT(tr("Protocol"),   *data.protocol);
                          offset += OSDROWHEIGHT;
                          OSDDRAWINFOLEFT(tr("Bitrate"),    *data.bitrate);
-                         offset += OSDROWHEIGHT;
                          }
                       }
                    }
