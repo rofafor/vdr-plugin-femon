@@ -476,6 +476,7 @@ VDR Plugin 'femon' Revision History
 - Updated for vdr-2.0.0.
 - Added Slovak translation (Thanks to Milan Hrala).
 
-2013-xx-xx: Version 2.0.1
+2014-01-10: Version 2.0.1
 
 - Fixed a crash in SVDRP (Thanks for Lothar Englisch for reporting).
+- Fixed a memory leak and issues reported by scan-build tool.
