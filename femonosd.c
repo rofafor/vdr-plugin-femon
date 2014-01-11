@@ -835,26 +835,26 @@ bool cFemonOsd::DeviceSwitch(int direction)
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      if (channel) {
         for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
-           if (direction >= 0) {
-              if (++device >= cDevice::NumDevices())
-                 device = 0;
-              }
-           else {
-              if (--device < 0)
-                 device = cDevice::NumDevices() - 1;
-              }
-           if (cDevice::GetDevice(device)->ProvidesChannel(channel, 0)) {
-              debug("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
-              cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0, true);
-              cControl::Shutdown();
-              cDevice::GetDevice(device)->SwitchChannel(channel, true);
-              if (cDevice::GetDevice(device) == cDevice::PrimaryDevice())
-                 cDevice::GetDevice(device)->ForceTransferMode();
-              cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel));
-              cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number(), true);
-              return (true);
-              }
-           }
+            if (direction >= 0) {
+               if (++device >= cDevice::NumDevices())
+                  device = 0;
+               }
+            else {
+               if (--device < 0)
+                  device = cDevice::NumDevices() - 1;
+               }
+            if (cDevice::GetDevice(device)->ProvidesChannel(channel, 0)) {
+               debug("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
+               cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0, true);
+               cControl::Shutdown();
+               cDevice::GetDevice(device)->SwitchChannel(channel, true);
+               if (cDevice::GetDevice(device) == cDevice::PrimaryDevice())
+                  cDevice::GetDevice(device)->ForceTransferMode();
+               cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel));
+               cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number(), true);
+               return (true);
+               }
+            }
         }
      }
    return (false);
