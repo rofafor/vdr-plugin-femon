@@ -843,14 +843,71 @@ bool cFemonOsd::DeviceSwitch(int direction)
                if (--device < 0)
                   device = cDevice::NumDevices() - 1;
                }
-            if (cDevice::GetDevice(device)->ProvidesChannel(channel, 0)) {
-               debug("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
+            // Collect the current priorities of all CAM slots that can decrypt the channel:
+            int NumCamSlots = CamSlots.Count();
+            int SlotPriority[NumCamSlots];
+            int NumUsableSlots = 0;
+            bool NeedsDetachAllReceivers = false;
+            bool InternalCamNeeded = false;
+            bool ValidDevice = false;
+            cCamSlot *s = NULL;
+            cDevice *d = cDevice::GetDevice(device);
+            if (channel->Ca() >= CA_ENCRYPTED_MIN) {
+               for (cCamSlot *CamSlot = CamSlots.First(); CamSlot; CamSlot = CamSlots.Next(CamSlot)) {
+                   SlotPriority[CamSlot->Index()] = MAXPRIORITY + 1; // assumes it can't be used
+                   if (CamSlot->ModuleStatus() == msReady) {
+                      if (CamSlot->ProvidesCa(channel->Caids())) {
+                         if (!ChannelCamRelations.CamChecked(channel->GetChannelID(), CamSlot->SlotNumber())) {
+                            SlotPriority[CamSlot->Index()] = CamSlot->Priority();
+                            NumUsableSlots++;
+                            }
+                         }
+                      }
+                  }
+               if (!NumUsableSlots)
+                  InternalCamNeeded = true; // no CAM is able to decrypt this channel
+               }
+            for (int j = 0; j < NumCamSlots || !NumUsableSlots; ++j) {
+                if (NumUsableSlots && SlotPriority[j] > MAXPRIORITY)
+                   continue; // there is no CAM available in this slot
+                bool HasInternalCam = d->HasInternalCam();
+                if (InternalCamNeeded && !HasInternalCam)
+                   continue; // no CAM is able to decrypt this channel and the device uses vdr handled CAMs
+                if (NumUsableSlots && !HasInternalCam && !CamSlots.Get(j)->Assign(d, true))
+                   continue; // CAM slot can't be used with this device
+                if (d->ProvidesChannel(channel, 0, &NeedsDetachAllReceivers)) { // this device is basically able to do the job
+                   debug("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
+                   if (NumUsableSlots && !HasInternalCam && d->CamSlot() && d->CamSlot() != CamSlots.Get(j))
+                      NeedsDetachAllReceivers = true; // using a different CAM slot requires detaching receivers
+                   if (NumUsableSlots && !HasInternalCam)
+                      s = CamSlots.Get(j);
+                   ValidDevice = true;
+                   break;
+                   }
+                if (!NumUsableSlots)
+                   break; // no CAM necessary, so just one loop over the devices
+                }
+            // Do the actual switch if valid device found
+            if (d && ValidDevice) {
                cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0, true);
                cControl::Shutdown();
-               cDevice::GetDevice(device)->SwitchChannel(channel, true);
-               if (cDevice::GetDevice(device) == cDevice::PrimaryDevice())
-                  cDevice::GetDevice(device)->ForceTransferMode();
-               cControl::Launch(new cTransferControl(cDevice::GetDevice(device), channel));
+               if (NeedsDetachAllReceivers)
+                  d->DetachAllReceivers();
+               if (s) {
+                  if (s->Device() != d) {
+                     if (s->Device())
+                        s->Device()->DetachAllReceivers();
+                     if (d->CamSlot())
+                        d->CamSlot()->Assign(NULL);
+                     s->Assign(d);
+                     }
+                  }
+               else if (d->CamSlot() && !d->CamSlot()->IsDecrypting())
+                  d->CamSlot()->Assign(NULL);
+               d->SwitchChannel(channel, true);
+               if (d == cDevice::PrimaryDevice())
+                  d->ForceTransferMode();
+               cControl::Launch(new cTransferControl(d, channel));
                cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number(), true);
                return (true);
                }
