@@ -481,6 +481,6 @@ VDR Plugin 'femon' Revision History
 - Fixed a crash in SVDRP (Thanks for Lothar Englisch for reporting).
 - Fixed a memory leak and issues reported by scan-build tool.
 
-2014-01-12: Vesion 2.0.2
+2014-01-18: Version 2.0.2
 
 - Added initial support for CAMs.
