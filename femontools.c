@@ -9,6 +9,7 @@
 #define __STDC_FORMAT_MACROS
 #endif
 
+#include <ctype.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -589,4 +590,91 @@ void cFemonBitStream::SkipGolomb()
     n++;
 
   SkipBits(n);
+}
+
+// --- cSatipTransponderParameters -------------------------------------------
+
+cSatipTransponderParameters::cSatipTransponderParameters(const char *parametersP)
+: t2SystemIdM(0),
+  sisoMisoM(999),
+  pilotTonesM(0),
+  signalSourceM(1)
+{
+  Parse(parametersP);
+}
+
+const char *cSatipTransponderParameters::ParseParameter(const char *strP, int &valueP)
+{
+  if (*++strP) {
+     char *p = NULL;
+     errno = 0;
+     int n = strtol(strP, &p, 10);
+     if (!errno && p != strP) {
+        valueP = n;
+        if (valueP >= 0)
+           return p;
+        }
+     }
+  error("invalid value for parameter '%c'", *(strP - 1));
+  return NULL;
+}
+
+bool cSatipTransponderParameters::Parse(const char *strP)
+{
+  while (strP && *strP) {
+        int ignoreThis;
+        switch (toupper(*strP)) {
+          case 'H':
+          case 'L':
+          case 'V':
+          case 'R': strP++; break;
+          case 'B':
+          case 'C':
+          case 'G':
+          case 'M':
+          case 'O':
+          case 'P':
+          case 'S':
+          case 'T':
+          case 'D':
+          case 'I':
+          case 'Y': strP = ParseParameter(strP, ignoreThis);    break;
+          case 'N': strP = ParseParameter(strP, pilotTonesM);   break;
+          case 'Q': strP = ParseParameter(strP, t2SystemIdM);   break;
+          case 'X': strP = ParseParameter(strP, sisoMisoM);     break;
+          case 'Z': strP = ParseParameter(strP, signalSourceM); break;
+          default: return false;
+          }
+        }
+  return true;
+}
+
+cString cSatipTransponderParameters::T2SystemId(void)
+{
+  return cString::sprintf("%d", t2SystemIdM);
+}
+
+cString cSatipTransponderParameters::SisoMiso(void)
+{
+  switch (sisoMisoM) {
+    case 0:  return tr("SISO");
+    case 1:  return tr("MISO");
+    default: return trVDR("auto");
+    }
+  return NULL;
+}
+
+cString cSatipTransponderParameters::PilotTones(void)
+{
+  switch (pilotTonesM) {
+    case 0:  return trVDR("off");
+    case 1:  return trVDR("on");
+    default: return trVDR("auto");
+    }
+  return NULL;
+}
+
+cString cSatipTransponderParameters::SignalSource(void)
+{
+  return cString::sprintf("%d", signalSourceM);
 }

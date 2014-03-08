@@ -26,6 +26,9 @@
 
 #define FRONTEND_DEVICE "/dev/dvb/adapter%d/frontend%d"
 
+#define stSatipSat  ('Z' << 24)
+#define stSatipTerr ('Y' << 24)
+
 cDvbDevice *getDvbDevice(cDevice* device);
 
 cString getFrontendInfo(cDvbDevice *device);
@@ -83,6 +86,22 @@ public:
   void           SkipGolomb();
   void           SkipUeGolomb() { SkipGolomb(); }
   void           SkipSeGolomb() { SkipGolomb(); }
+  };
+
+class cSatipTransponderParameters {
+private:
+  int t2SystemIdM;
+  int sisoMisoM;
+  int pilotTonesM;
+  int signalSourceM;
+  const char *ParseParameter(const char *strP, int &valueP);
+  bool Parse(const char *strP);
+public:
+  cSatipTransponderParameters(const char *parametersP = NULL);
+  cString T2SystemId(void);
+  cString SisoMiso(void);
+  cString PilotTones(void);
+  cString SignalSource(void);
   };
 
 #endif // __FEMONTOOLS_H

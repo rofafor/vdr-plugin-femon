@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: vdr-femon 2.0.2\n"
+"Project-Id-Version: vdr-femon 2.0.3\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2014-01-08 01:18+0200\n"
-"PO-Revision-Date: 2014-01-08 01:18+0200\n"
+"POT-Creation-Date: 2014-03-08 03:08+0200\n"
+"PO-Revision-Date: 2014-03-08 03:08+0200\n"
 "Last-Translator: NanFeng <nfgx@21cn.com>\n"
 "Language-Team: Chinese (traditional) <vdr@linuxtv.org>\n"
 "Language: zh_TW\n"
@@ -177,6 +177,18 @@ msgstr "Rid"
 
 msgid "Coderate"
 msgstr "碼速率"
+
+msgid "SignalSource"
+msgstr ""
+
+msgid "PilotTones"
+msgstr ""
+
+msgid "T2SystemId"
+msgstr ""
+
+msgid "SISO/MISO"
+msgstr ""
 
 msgid "Protocol"
 msgstr ""
@@ -387,3 +399,9 @@ msgstr "兆位/秒"
 
 msgid "kbit/s"
 msgstr "千字節/秒"
+
+msgid "SISO"
+msgstr ""
+
+msgid "MISO"
+msgstr ""
