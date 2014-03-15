@@ -26,7 +26,6 @@ class cFemonOsd : public cOsdObject, public cThread, public cStatus {
 private:
   enum eDeviceSourceType {
     DEVICESOURCE_DVBAPI = 0,
-    DEVICESOURCE_SATIP,
     DEVICESOURCE_IPTV,
     DEVICESOURCE_PVRINPUT,
     DEVICESOURCE_COUNT

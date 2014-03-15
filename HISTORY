@@ -488,3 +488,7 @@ VDR Plugin 'femon' Revision History
 2014-03-08: Version 2.0.3
 
 - Added support for SAT>IP devices.
+
+2014-03-15: Version 2.0.4
+
+- Refactored the SAT>IP support.

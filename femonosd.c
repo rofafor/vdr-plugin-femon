@@ -478,53 +478,6 @@ void cFemonOsd::DrawInfoWindow(void)
                    }
                    break;
 
-              case stSatipSat: {
-                   cDvbTransponderParameters dtp(channel->Parameters());
-                   cSatipTransponderParameters stp(channel->Parameters());
-                   OSDDRAWINFOLINE(*cString::sprintf("SAT>IP %s #%d - %s", *getSatelliteSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
-                   offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
-                   OSDDRAWINFORIGHT(trVDR("Modulation"),   *getModulation(dtp.Modulation()));
-                   offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Srate"),        *cString::sprintf("%d", channel->Srate()));
-                   OSDDRAWINFORIGHT(trVDR("Polarization"), *cString::sprintf("%c", toupper(dtp.Polarization())));
-                   offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT(    tr("Coderate"),     *getCoderate(dtp.CoderateH()));
-                   OSDDRAWINFORIGHT(   tr("SignalSource"), *stp.SignalSource());
-                   offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("System"),       *getSatelliteSystem(dtp.System()));
-                   if (dtp.System()) {
-                      OSDDRAWINFORIGHT(tr("PilotTones"),   *stp.PilotTones());
-                      offset += OSDROWHEIGHT;
-                      OSDDRAWINFOLEFT(trVDR("RollOff"),    *getRollOff(dtp.RollOff()));
-                      }
-                   }
-                   break;
-
-              case stSatipTerr: {
-                   cDvbTransponderParameters dtp(channel->Parameters());
-                   cSatipTransponderParameters stp(channel->Parameters());
-                   OSDDRAWINFOLINE(*cString::sprintf("SAT>IP %s #%d - %s", *getTerrestrialSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
-                   offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
-                   OSDDRAWINFORIGHT(trVDR("Transmission"), *getTransmission(dtp.Transmission()));
-                   offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Bandwidth"),    *getBandwidth(dtp.Bandwidth()));
-                   OSDDRAWINFORIGHT(trVDR("Modulation"),   *getModulation(dtp.Modulation()));
-                   offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("Guard"),        *getGuard(dtp.Guard()));
-                   OSDDRAWINFORIGHT(tr   ("Coderate"),     *getCoderate(dtp.CoderateH()));
-                   offset += OSDROWHEIGHT;
-                   OSDDRAWINFOLEFT( trVDR("System"),       *getTerrestrialSystem(dtp.System()));
-                   if (dtp.System()) {
-                      OSDDRAWINFORIGHT(trVDR("StreamId"),  *cString::sprintf("%d", dtp.StreamId()));
-                      offset += OSDROWHEIGHT;
-                      OSDDRAWINFOLEFT( tr("T2SystemId"),   stp.T2SystemId());
-                      OSDDRAWINFORIGHT(tr("SISO/MISO"),    stp.SisoMiso());
-                      }
-                   }
-                   break;
-
               case stIptv: {
                    OSDDRAWINFOLINE(*cString::sprintf("IPTV #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
                    offset += OSDROWHEIGHT;
@@ -641,23 +594,6 @@ void cFemonOsd::Action(void)
            m_UNC = 0;
            m_UNCValid = false;
            break;
-      case DEVICESOURCE_SATIP:
-           m_Quality = cDevice::ActualDevice()->SignalQuality();
-           m_QualityValid = (m_Quality >= 0);
-           m_Strength = cDevice::ActualDevice()->SignalStrength();
-           m_StrengthValid = (m_Strength >= 0);
-           m_FrontendName = cDevice::ActualDevice()->DeviceName();
-           m_FrontendStatus = (fe_status_t)(cDevice::ActualDevice()->HasLock() ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
-           m_FrontendStatusValid = m_StrengthValid;
-           m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
-           m_SignalValid = m_StrengthValid;
-           m_SNR = uint16_t(m_Quality * 0xFFFF / 100);
-           m_SNRValid = m_QualityValid;
-           m_BER = 0;
-           m_BERValid = false;
-           m_UNC = 0;
-           m_UNCValid = false;
-           break;
       case DEVICESOURCE_IPTV:
            m_Quality = cDevice::ActualDevice()->SignalQuality();
            m_QualityValid = (m_Quality >= 0);
@@ -688,6 +624,23 @@ void cFemonOsd::Action(void)
               m_SNRValid = (ioctl(m_Frontend, FE_READ_SNR, &m_SNR) >= 0);
               m_BERValid = (ioctl(m_Frontend, FE_READ_BER, &m_BER) >= 0);
               m_UNCValid = (ioctl(m_Frontend, FE_READ_UNCORRECTED_BLOCKS, &m_UNC) >= 0);
+              }
+           else if (strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
+              m_Quality = cDevice::ActualDevice()->SignalQuality();
+              m_QualityValid = (m_Quality >= 0);
+              m_Strength = cDevice::ActualDevice()->SignalStrength();
+              m_StrengthValid = (m_Strength >= 0);
+              m_FrontendName = cDevice::ActualDevice()->DeviceName();
+              m_FrontendStatus = (fe_status_t)(cDevice::ActualDevice()->HasLock() ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
+              m_FrontendStatusValid = m_StrengthValid;
+              m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
+              m_SignalValid = m_StrengthValid;
+              m_SNR = uint16_t(m_Quality * 0xFFFF / 100);
+              m_SNRValid = m_QualityValid;
+              m_BER = 0;
+              m_BERValid = false;
+              m_UNC = 0;
+              m_UNCValid = false;
               }
            else if (m_SvdrpConnection.handle >= 0) {
               cmd.handle = m_SvdrpConnection.handle;
@@ -760,9 +713,7 @@ void cFemonOsd::Show(void)
 
   m_DeviceSource = DEVICESOURCE_DVBAPI;
   if (channel) {
-     if (channel->IsSourceType('Y') || channel->IsSourceType('Z'))
-        m_DeviceSource = DEVICESOURCE_SATIP;
-     else if (channel->IsSourceType('I'))
+     if (channel->IsSourceType('I'))
         m_DeviceSource = DEVICESOURCE_IPTV;
      else if (channel->IsSourceType('V'))
         m_DeviceSource = DEVICESOURCE_PVRINPUT;
@@ -780,6 +731,9 @@ void cFemonOsd::Show(void)
            memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
            return;
            }
+        }
+     else if (strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
+        // nop
         }
      else if (femonConfig.usesvdrp) {
         if (!SvdrpConnect() || !SvdrpTune())
@@ -831,9 +785,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
 
   m_DeviceSource = DEVICESOURCE_DVBAPI;
   if (channel) {
-     if (channel->IsSourceType('Y') || channel->IsSourceType('Z'))
-        m_DeviceSource = DEVICESOURCE_SATIP;
-     else if (channel->IsSourceType('I'))
+     if (channel->IsSourceType('I'))
         m_DeviceSource = DEVICESOURCE_IPTV;
      else if (channel->IsSourceType('V'))
         m_DeviceSource = DEVICESOURCE_PVRINPUT;
@@ -856,6 +808,9 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
            memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
            return;
            }
+        }
+     else if (strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
+        // nop
         }
      else if (femonConfig.usesvdrp) {
         if (!SvdrpConnect() || !SvdrpTune())

@@ -4,10 +4,10 @@
 # Yarema aka Knedlyk <yupadmin@gmail.com>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: vdr-femon 2.0.3\n"
+"Project-Id-Version: vdr-femon 2.0.4\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2014-03-08 03:08+0200\n"
-"PO-Revision-Date: 2014-03-08 03:08+0200\n"
+"POT-Creation-Date: 2014-03-15 03:15+0200\n"
+"PO-Revision-Date: 2014-03-15 03:15+0200\n"
 "Last-Translator: Yarema aka Knedlyk <yupadmin@gmail.com>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "Language: uk\n"
@@ -177,18 +177,6 @@ msgstr "Rid"
 
 msgid "Coderate"
 msgstr "Шв. кодування"
-
-msgid "SignalSource"
-msgstr ""
-
-msgid "PilotTones"
-msgstr ""
-
-msgid "T2SystemId"
-msgstr ""
-
-msgid "SISO/MISO"
-msgstr ""
 
 msgid "Protocol"
 msgstr "Протокол"
@@ -399,9 +387,3 @@ msgstr "Мбіт/c"
 
 msgid "kbit/s"
 msgstr "кбіт/с"
-
-msgid "SISO"
-msgstr ""
-
-msgid "MISO"
-msgstr ""
