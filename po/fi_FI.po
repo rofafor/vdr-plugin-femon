@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: vdr-femon 2.0.4\n"
+"Project-Id-Version: vdr-femon 2.1.0\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2014-03-15 03:15+0200\n"
-"PO-Revision-Date: 2014-03-15 03:15+0200\n"
+"POT-Creation-Date: 2014-03-16 03:16+0200\n"
+"PO-Revision-Date: 2014-03-16 03:16+0200\n"
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: Finnish <vdr@linuxtv.org>\n"
 "Language: fi\n"

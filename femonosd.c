@@ -24,7 +24,7 @@
 #define OSDWIDTH                  m_OsdWidth              // in pixels
 #define OSDHEIGHT                 m_OsdHeight             // in pixels
 #define OSDROWHEIGHT              m_Font->Height()        // in pixels
-#define OSDINFOHEIGHT             (OSDROWHEIGHT * 13)     // in pixels (13 rows)
+#define OSDINFOHEIGHT             (OSDROWHEIGHT * 14)     // in pixels (14 rows)
 #define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 6)      // in pixels (6 rows)
 #define OSDSYMBOL(id)             femonSymbols.Get(id)
 #define OSDSPACING                femonSymbols.GetSpacing()
@@ -436,6 +436,8 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFOLEFT( trVDR("System"),       *getSatelliteSystem(dtp.System()));
                    if (dtp.System()) {
                       OSDDRAWINFORIGHT(trVDR("RollOff"),   *getRollOff(dtp.RollOff()));
+                      offset += OSDROWHEIGHT;
+                      OSDDRAWINFOLEFT( trVDR("Pilot"),     *getPilot(dtp.Pilot()));
                       }
                    }
                    break;
@@ -474,6 +476,9 @@ void cFemonOsd::DrawInfoWindow(void)
                    OSDDRAWINFOLEFT( trVDR("System"),       *getTerrestrialSystem(dtp.System()));
                    if (dtp.System()) {
                       OSDDRAWINFORIGHT(trVDR("StreamId"),  *cString::sprintf("%d", dtp.StreamId()));
+                      offset += OSDROWHEIGHT;
+                      OSDDRAWINFOLEFT( trVDR("T2SystemId"),*cString::sprintf("%d", dtp.T2SystemId()));
+                      OSDDRAWINFORIGHT(trVDR("SISO/MISO"), *cString::sprintf("%d", dtp.SisoMiso()));
                       }
                    }
                    break;

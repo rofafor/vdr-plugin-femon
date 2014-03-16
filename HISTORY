@@ -492,3 +492,12 @@ VDR Plugin 'femon' Revision History
 2014-03-15: Version 2.0.4
 
 - Refactored the SAT>IP support.
+
+
+===================================
+VDR Plugin 'femon' Revision History
+===================================
+
+2014-03-16: Version 2.1.0
+
+- Updated for vdr-2.1.6.

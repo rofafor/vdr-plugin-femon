@@ -59,6 +59,7 @@ cString getModulation(int value);
 cString getTerrestrialSystem(int value);
 cString getSatelliteSystem(int value);
 cString getRollOff(int value);
+cString getPilot(int value);
 cString getResolution(int width, int height, int scan);
 cString getAspectRatio(int value);
 cString getVideoFormat(int value);

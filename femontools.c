@@ -378,6 +378,11 @@ cString getRollOff(int value)
   return cString::sprintf("%s", getUserString(value, RollOffValues));
 }
 
+cString getPilot(int value)
+{
+  return cString::sprintf("%s", getUserString(value, PilotValues));
+}
+
 cString getResolution(int width, int height, int scan)
 {
   if ((width > 0) && (height > 0)) {
