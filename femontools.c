@@ -524,8 +524,9 @@ cString getAC3DialogLevel(int value)
 
 cString getFrequencyMHz(int value)
 {
-   while (value > 20000) value /= 1000;
-   return cString::sprintf("%d %s", value, tr("MHz"));
+  double freq = value;
+  while (freq > 20000.0) freq /= 1000.0;
+  return cString::sprintf("%s %s", *dtoa(freq, "%lg"), tr("MHz"));
 }
 
 cString getAudioSamplingFreq(int value)
