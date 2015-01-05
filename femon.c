@@ -22,7 +22,7 @@
 #define GITVERSION ""
 #endif
 
-static const char VERSION[]       = "2.1.1" GITVERSION;
+static const char VERSION[]       = "2.1.2" GITVERSION;
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -371,7 +371,7 @@ void cMenuFemonSetup::Setup(void)
      Add(new cMenuEditIntItem(tr("SVDRP service port"), &data.svdrpport, 1, 65535));
      help.Append(tr("Define the port number of SVDRP service."));
 
-     Add(new cMenuEditStrItem(tr("SVDRP service IP"), data.svdrpip, MaxSvdrpIp, ".1234567890"));
+     Add(new cMenuEditStrItem(tr("SVDRP service IP"), data.svdrpip, sizeof(data.svdrpip), ".1234567890"));
      help.Append(tr("Define the IP address of SVDRP service."));
      }
 
