@@ -32,35 +32,48 @@ static cString getCA(int value)
     case 0x0464:            return cString::sprintf("EuroDec (%X)",          value); // EuroDec
     case 0x0500 ... 0x05FF: return cString::sprintf("Viaccess (%X)",         value); // France Telecom
     case 0x0600 ... 0x06FF: return cString::sprintf("Irdeto (%X)",           value); // Irdeto
-    case 0x0900 ... 0x09FF: return cString::sprintf("NDS Videoguard (%X)",   value); // News Datacom
+    case 0x0700 ... 0x07FF: return cString::sprintf("DigiCipher 2 (%X)",     value); // Jerrold/GI/Motorola 4DTV
+    case 0x0900 ... 0x09FF: return cString::sprintf("NDS Videoguard (%X)",   value); // NDS
     case 0x0B00 ... 0x0BFF: return cString::sprintf("Conax (%X)",            value); // Norwegian Telekom
-    case 0x0D00 ... 0x0DFF: return cString::sprintf("CryptoWorks (%X)",      value); // Philips
+    case 0x0D00 ... 0x0DFF: return cString::sprintf("CryptoWorks (%X)",      value); // Philips CryptoTec
     case 0x0E00 ... 0x0EFF: return cString::sprintf("PowerVu (%X)",          value); // Scientific Atlanta
     case 0x1000:            return cString::sprintf("RAS (%X)",              value); // Tandberg Television
     case 0x1200 ... 0x12FF: return cString::sprintf("NagraVision (%X)",      value); // BellVu Express
-    case 0x1700 ... 0x17FF: return cString::sprintf("BetaCrypt (%X)",        value); // BetaTechnik
+    case 0x1700 ... 0x17FF: return cString::sprintf("VCAS (%X)",             value); // Verimatrix Inc. former BetaTechnik
     case 0x1800 ... 0x18FF: return cString::sprintf("NagraVision (%X)",      value); // Kudelski SA
     case 0x22F0:            return cString::sprintf("Codicrypt (%X)",        value); // Scopus Network Technologies
     case 0x2600:            return cString::sprintf("BISS (%X)",             value); // European Broadcasting Union
+    case 0x2719:            return cString::sprintf("VanyaCas (%X)",         value); // S-Curious Research & Technology Pvt. Ltd.
     case 0x4347:            return cString::sprintf("CryptOn (%X)",          value); // CryptOn
     case 0x4800:            return cString::sprintf("Accessgate (%X)",       value); // Telemann
     case 0x4900:            return cString::sprintf("China Crypt (%X)",      value); // CryptoWorks
+    case 0x4A02:            return cString::sprintf("Tongfang (%X)",         value); // Tsinghua Tongfang Company
     case 0x4A10:            return cString::sprintf("EasyCas (%X)",          value); // EasyCas
     case 0x4A20:            return cString::sprintf("AlphaCrypt (%X)",       value); // AlphaCrypt
-    case 0x4A70:            return cString::sprintf("DreamCrypt (%X)",       value); // Dream Multimedia
     case 0x4A60:            return cString::sprintf("SkyCrypt (%X)",         value); // @Sky
     case 0x4A61:            return cString::sprintf("Neotioncrypt (%X)",     value); // Neotion
     case 0x4A62:            return cString::sprintf("SkyCrypt (%X)",         value); // @Sky
     case 0x4A63:            return cString::sprintf("Neotion SHL (%X)",      value); // Neotion
     case 0x4A64 ... 0x4A6F: return cString::sprintf("SkyCrypt (%X)",         value); // @Sky
-    case 0x4A80:            return cString::sprintf("ThalesCrypt (%X)",      value); // TPS
+    case 0x4A70:            return cString::sprintf("DreamCrypt (%X)",       value); // Dream Multimedia
+    case 0x4A80:            return cString::sprintf("ThalesCrypt (%X)",      value); // Thales Broadcast & Multimedia
     case 0x4AA1:            return cString::sprintf("KeyFly (%X)",           value); // SIDSA
-    case 0x4ABF:            return cString::sprintf("DG-Crypt (%X)",         value); // Beijing Compunicate Technology Inc.
+    case 0x4ABF:            return cString::sprintf("CTI-CAS (%X)",          value); // Beijing Compunicate Technology Inc.
+    case 0x4AC1:            return cString::sprintf("Latens (%X)",           value); // Latens Systems
     case 0x4AD0 ... 0x4AD1: return cString::sprintf("X-Crypt (%X)",          value); // XCrypt Inc.
     case 0x4AD4:            return cString::sprintf("OmniCrypt (%X)",        value); // Widevine Technologies, Inc.
-    case 0x4AE0:            return cString::sprintf("RossCrypt (%X)",        value); // Digi Raum Electronics Co. Ltd.
+    case 0x4AE0 ... 0x4AE1: return cString::sprintf("Z-Crypt (%X)",          value); // Digi Raum Electronics Co. Ltd.
+    case 0x4AE4:            return cString::sprintf("CoreCrypt (%X)",        value); // CoreTrust
+    case 0x4AE5:            return cString::sprintf("PRO-Crypt (%X)",        value); // IK SATPROF
+    case 0x4AEA:            return cString::sprintf("Cryptoguard (%X)",      value); // Gryptoguard AB
+    case 0x4AEB:            return cString::sprintf("Abel Quintic (%X)",     value); // Abel DRM Systems
+    case 0x4AF0:            return cString::sprintf("ABV (%X)",              value); // Alliance Broadcast Vision
     case 0x5500:            return cString::sprintf("Z-Crypt (%X)",          value); // Digi Raum Electronics Co. Ltd.
-    case 0x5501:            return cString::sprintf("Griffin (%X)",          value); // Griffin
+    case 0x5501:            return cString::sprintf("Griffin (%X)",          value); // Nucleus Systems Ltd.
+    case 0x5581:            return cString::sprintf("Bulcrypt (%X)",         value); // Bulcrypt
+    case 0x7BE1:            return cString::sprintf("DRE-Crypt (%X)",        value); // DRE-Crypt
+    case 0xA101:            return cString::sprintf("RosCrypt-M (%X)",       value); // NIIR
+    case 0xEAD0:            return cString::sprintf("VanyaCas (%X)",         value); // S-Curious Research & Technology Pvt. Ltd.
     default:                break;
     }
   return cString::sprintf("%X", value);
