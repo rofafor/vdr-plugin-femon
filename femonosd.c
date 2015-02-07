@@ -725,28 +725,27 @@ void cFemonOsd::Show(void)
      }
 
   if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
-     cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
-     m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
-     if (m_Frontend >= 0) {
-        if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-           if (!femonConfig.usesvdrp)
-              error("cFemonOsd::Show() cannot read frontend info.");
-           close(m_Frontend);
-           m_Frontend = -1;
-           memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+     if (!strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
+        cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
+        m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
+        if (m_Frontend >= 0) {
+           if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
+              if (!femonConfig.usesvdrp)
+                 error("cFemonOsd::Show() cannot read frontend info.");
+              close(m_Frontend);
+              m_Frontend = -1;
+              memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+              return;
+              }
+           }
+        else if (femonConfig.usesvdrp) {
+           if (!SvdrpConnect() || !SvdrpTune())
+              return;
+           }
+        else {
+           error("cFemonOsd::Show() cannot open frontend device.");
            return;
            }
-        }
-     else if (strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
-        // nop
-        }
-     else if (femonConfig.usesvdrp) {
-        if (!SvdrpConnect() || !SvdrpTune())
-           return;
-        }
-     else {
-        error("cFemonOsd::Show() cannot open frontend device.");
-        return;
         }
      }
   else
@@ -785,7 +784,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (!liveView || !channelNumber || !channel || channel->Number() != channelNumber)
+  if (!device || !liveView || !channelNumber || !channel || channel->Number() != channelNumber)
      return;
 
   m_DeviceSource = DEVICESOURCE_DVBAPI;
@@ -802,28 +801,27 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
      }
 
   if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
-     cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
-     m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
-     if (m_Frontend >= 0) {
-        if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-           if (!femonConfig.usesvdrp)
-              error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
-           close(m_Frontend);
-           m_Frontend = -1;
-           memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+     if (!strstr(*device->DeviceType(), SATIP_DEVICE)) {
+        cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
+        m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
+        if (m_Frontend >= 0) {
+           if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
+              if (!femonConfig.usesvdrp)
+                 error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
+              close(m_Frontend);
+              m_Frontend = -1;
+              memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+              return;
+              }
+           }
+        else if (femonConfig.usesvdrp) {
+           if (!SvdrpConnect() || !SvdrpTune())
+              return;
+           }
+        else {
+           error("cFemonOsd::ChannelSwitch() cannot open frontend device.");
            return;
            }
-        }
-     else if (strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
-        // nop
-        }
-     else if (femonConfig.usesvdrp) {
-        if (!SvdrpConnect() || !SvdrpTune())
-           return;
-        }
-     else {
-        error("cFemonOsd::ChannelSwitch() cannot open frontend device.");
-        return;
         }
      }
 
@@ -917,7 +915,6 @@ bool cFemonOsd::DeviceSwitch(int direction)
                 }
             // Do the actual switch if valid device found
             if (d && ValidDevice) {
-               cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), 0, true);
                cControl::Shutdown();
                if (NeedsDetachAllReceivers)
                   d->DetachAllReceivers();
@@ -936,7 +933,6 @@ bool cFemonOsd::DeviceSwitch(int direction)
                if (d == cDevice::PrimaryDevice())
                   d->ForceTransferMode();
                cControl::Launch(new cTransferControl(d, channel));
-               cStatus::MsgChannelSwitch(cDevice::PrimaryDevice(), channel->Number(), true);
                return (true);
                }
             }
