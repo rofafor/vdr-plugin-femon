@@ -518,3 +518,4 @@ VDR Plugin 'femon' Revision History
 - Updated for vdr-2.1.8.
 - Updated CA definitions.
 - Fixed the SVDRP service IP menu item (Thanks to Toerless Eckert).
+- Fixed the detaching of receiver during a channel switch.

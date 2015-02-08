@@ -784,54 +784,60 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (!device || !liveView || !channelNumber || !channel || channel->Number() != channelNumber)
+  if (!device || !liveView)
      return;
 
-  m_DeviceSource = DEVICESOURCE_DVBAPI;
-  if (channel) {
+  if (!channelNumber || !channel || channel->Number() != channelNumber) {
+     if (m_Receiver) {
+        m_Receiver->Deactivate();
+        DELETENULL(m_Receiver);
+        }
+     return;
+     }
+
+  if (channel && femonConfig.analyzestream) {
+     m_DeviceSource = DEVICESOURCE_DVBAPI;
      if (channel->IsSourceType('I'))
         m_DeviceSource = DEVICESOURCE_IPTV;
      else if (channel->IsSourceType('V'))
         m_DeviceSource = DEVICESOURCE_PVRINPUT;
-     }
 
-  if (m_Frontend >= 0) {
-     close(m_Frontend);
-     m_Frontend = -1;
-     }
+     if (m_Frontend >= 0) {
+        close(m_Frontend);
+        m_Frontend = -1;
+        }
 
-  if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
-     if (!strstr(*device->DeviceType(), SATIP_DEVICE)) {
-        cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
-        m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
-        if (m_Frontend >= 0) {
-           if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-              if (!femonConfig.usesvdrp)
-                 error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
-              close(m_Frontend);
-              m_Frontend = -1;
-              memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+     if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
+        if (!strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
+           cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
+           m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
+           if (m_Frontend >= 0) {
+              if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
+                 if (!femonConfig.usesvdrp)
+                    error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
+                 close(m_Frontend);
+                 m_Frontend = -1;
+                 memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+                 return;
+                 }
+              }
+           else if (femonConfig.usesvdrp) {
+              if (!SvdrpConnect() || !SvdrpTune())
+                 return;
+              }
+           else {
+              error("cFemonOsd::ChannelSwitch() cannot open frontend device.");
               return;
               }
            }
-        else if (femonConfig.usesvdrp) {
-           if (!SvdrpConnect() || !SvdrpTune())
-              return;
-           }
-        else {
-           error("cFemonOsd::ChannelSwitch() cannot open frontend device.");
-           return;
-           }
-        }
-     }
 
-  if (m_Receiver) {
-     m_Receiver->Deactivate();
-     DELETENULL(m_Receiver);
-     }
-  if (femonConfig.analyzestream && channel) {
-     m_Receiver = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
-     cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+        if (m_Receiver) {
+           m_Receiver->Deactivate();
+           DELETENULL(m_Receiver);
+           }
+        m_Receiver = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
+        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+        }
      }
 }
 
