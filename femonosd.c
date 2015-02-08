@@ -787,7 +787,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
   if (!device || !liveView)
      return;
 
-  if (!channelNumber || !channel || channel->Number() != channelNumber) {
+  if (!channelNumber) {
      if (m_Receiver) {
         m_Receiver->Deactivate();
         DELETENULL(m_Receiver);
