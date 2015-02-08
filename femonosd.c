@@ -929,9 +929,7 @@ bool cFemonOsd::DeviceSwitch(int direction)
                   }
                else if (d->CamSlot() && !d->CamSlot()->IsDecrypting())
                   d->CamSlot()->Assign(NULL);
-               d->SwitchChannel(channel, true);
-               if (d == cDevice::PrimaryDevice())
-                  d->ForceTransferMode();
+               d->SwitchChannel(channel, false);
                cControl::Launch(new cTransferControl(d, channel));
                return (true);
                }

@@ -508,4 +508,13 @@ VDR Plugin 'femon' Revision History
 
 2015-01-10: Version 2.1.2
 
+
+===================================
+VDR Plugin 'femon' Revision History
+===================================
+
+2015-02-19: Version 2.2.0
+
+- Updated for vdr-2.1.8.
+- Updated CA definitions.
 - Fixed the SVDRP service IP menu item (Thanks to Toerless Eckert).
