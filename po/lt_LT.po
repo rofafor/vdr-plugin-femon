@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "DVB Signal Information Monitor (OSD)"
-msgstr "DVB signalo informacijos stebėjimas (OSD)"
+msgstr "DVB signalo stebėjimas (OSD)"
 
 msgid "Signal Information"
 msgstr "Signalo informacija"
@@ -47,7 +47,7 @@ msgid "ST:TNG"
 msgstr "ST:TNG"
 
 msgid "DeepBlue"
-msgstr "DeepBlue"
+msgstr "Tamsiai mėlyna"
 
 msgid "Moronimo"
 msgstr "Moronimo"
@@ -62,7 +62,7 @@ msgid "Duotone"
 msgstr "Duotone"
 
 msgid "SilverGreen"
-msgstr "SilverGreen"
+msgstr "Sidabro žalia"
 
 msgid "PearlHD"
 msgstr "PearlHD"
@@ -92,10 +92,10 @@ msgid "Define the position of OSD."
 msgstr "Nustatyti ekrano užsklandos poziciją."
 
 msgid "Downscale OSD size [%]"
-msgstr ""
+msgstr "Sumažinti ekrano užsklandos (OSD) dydį [%]"
 
 msgid "Define the downscale ratio for OSD size."
-msgstr ""
+msgstr "Nustatyti ekrano užsklandos (OSD) mažinimo santykį."
 
 msgid "Red limit [%]"
 msgstr "Raudonoji ribą [%]"
@@ -179,7 +179,7 @@ msgid "Coderate"
 msgstr "Kodavimo dažnis"
 
 msgid "Protocol"
-msgstr ""
+msgstr "Protokolas"
 
 msgid "Bitrate"
 msgstr "Kokybė"
@@ -209,7 +209,7 @@ msgid "Audio Stream"
 msgstr "Audio srautas"
 
 msgid "Channel Mode"
-msgstr "kanalo būsena"
+msgstr "Kanalo būsena"
 
 msgid "Sampling Frequency"
 msgstr "Parodomasis dažnis"
@@ -218,13 +218,13 @@ msgid "AC-3 Stream"
 msgstr "AC-3 srautas"
 
 msgid "Bit Stream Mode"
-msgstr "Bitstream būsena"
+msgstr "Srauto būsena"
 
 msgid "Audio Coding Mode"
 msgstr "Audio kodavimas"
 
 msgid "Center Mix Level"
-msgstr "Centerinis Mix lygis"
+msgstr "Centrinis mikserio lygis"
 
 msgid "Surround Mix Level"
 msgstr "Surround Mix lygis"
@@ -239,10 +239,10 @@ msgid "Dialogue Normalization"
 msgstr "Dialogo normalizacija"
 
 msgid "Fixed"
-msgstr "Fest"
+msgstr "Sutvarkyta"
 
 msgid "Analog"
-msgstr "Analog"
+msgstr "Analoginis"
 
 msgid "MPEG-2"
 msgstr "MPEG-2"
@@ -293,7 +293,7 @@ msgid "progressive"
 msgstr "progresyvinis"
 
 msgid "reserved"
-msgstr "belegt"
+msgstr "rezervuota"
 
 msgid "extended"
 msgstr "išplėstas"
@@ -326,22 +326,22 @@ msgid "Music and Effects (ME)"
 msgstr "Muzika ir efektai (ME)"
 
 msgid "Visually Impaired (VI)"
-msgstr " (VI)"
+msgstr "Skirta silpnaregiams (VI)"
 
 msgid "Hearing Impaired (HI)"
-msgstr " (HI)"
+msgstr "Skirta žmoniems su klausos negalia (HI)"
 
 msgid "Dialogue (D)"
 msgstr "Dialogas (D)"
 
 msgid "Commentary (C)"
-msgstr "Komentavimas (C)"
+msgstr "Komentarai (C)"
 
 msgid "Emergency (E)"
 msgstr "Avarinis (E)"
 
 msgid "Voice Over (VO)"
-msgstr "Voice over (VO)"
+msgstr "Įgarsinta (VO)"
 
 msgid "Karaoke"
 msgstr "Karaoke"
@@ -356,10 +356,10 @@ msgid "C"
 msgstr "C"
 
 msgid "L"
-msgstr "L"
+msgstr "K"
 
 msgid "R"
-msgstr "R"
+msgstr "D"
 
 msgid "S"
 msgstr "S"
@@ -380,7 +380,7 @@ msgid "MHz"
 msgstr "MHz"
 
 msgid "free"
-msgstr "frei"
+msgstr "nekoduota"
 
 msgid "Mbit/s"
 msgstr "Mbit/s"
