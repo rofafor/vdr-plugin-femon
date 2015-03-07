@@ -232,7 +232,7 @@ void cFemonReceiver::Action(void)
 
     // calculate bitrates
     timeout = double(calcPeriod.Elapsed());
-    if (activeM && (timeout >= (100.0 * FemonConfig.calcinterval))) {
+    if (activeM && (timeout >= (100.0 * FemonConfig.GetCalcInterval()))) {
        // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
        // PES headers should be compensated!
        videoBitRateM     = (1000.0 * 8.0 * 184.0 * videoPacketCountM) / timeout;

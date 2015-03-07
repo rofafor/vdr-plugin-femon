@@ -11,8 +11,23 @@
 #include "femonsetup.h"
 
 cMenuFemonSetup::cMenuFemonSetup()
+: hideMenuM(FemonConfig.GetHideMenu()),
+  displayModeM(FemonConfig.GetDisplayMode()),
+  skinM(FemonConfig.GetSkin()),
+  themeM(FemonConfig.GetTheme()),
+  positionM(FemonConfig.GetPosition()),
+  downscaleM(FemonConfig.GetDownscale()),
+  redLimitM(FemonConfig.GetRedLimit()),
+  greenLimitM(FemonConfig.GetGreenLimit()),
+  updateIntervalM(FemonConfig.GetUpdateInterval()),
+  analyzeStreamM(FemonConfig.GetAnalyzeStream()),
+  calcIntervalM(FemonConfig.GetCalcInterval()),
+  useSvdrpM(FemonConfig.GetUseSvdrp()),
+  svdrpPortM(FemonConfig.GetSvdrpPort())
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
+  strn0cpy(svdrpIpM, FemonConfig.GetSvdrpIp(), sizeof(svdrpIpM));
+
   dispModesM[eFemonModeBasic]       = tr("basic");
   dispModesM[eFemonModeTransponder] = tr("transponder");
   dispModesM[eFemonModeStream]      = tr("stream");
@@ -32,7 +47,6 @@ cMenuFemonSetup::cMenuFemonSetup()
   themesM[eFemonThemeSilverGreen]   = tr("SilverGreen");
   themesM[eFemonThemePearlHD]       = tr("PearlHD");
 
-  dataM = FemonConfig;
   SetMenuCategory(mcSetupPlugins);
   Setup();
 }
@@ -44,49 +58,49 @@ void cMenuFemonSetup::Setup(void)
   Clear();
   helpM.Clear();
 
-  Add(new cMenuEditBoolItem(tr("Hide main menu entry"), &dataM.hidemenu));
+  Add(new cMenuEditBoolItem(tr("Hide main menu entry"), &hideMenuM));
   helpM.Append(tr("Define whether the main menu entry is hidden."));
 
-  Add(new cMenuEditStraItem(tr("Default display mode"), &dataM.displaymode, eFemonModeMaxNumber, dispModesM));
+  Add(new cMenuEditStraItem(tr("Default display mode"), &displayModeM, eFemonModeMaxNumber, dispModesM));
   helpM.Append(tr("Define the default display mode at startup."));
 
-  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Skin"), &dataM.skin, eFemonSkinMaxNumber, skinsM));
+  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Skin"), &skinM, eFemonSkinMaxNumber, skinsM));
   helpM.Append(tr("Define the used OSD skin."));
 
-  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Theme"), &dataM.theme, eFemonThemeMaxNumber, themesM));
+  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Theme"), &themeM, eFemonThemeMaxNumber, themesM));
   helpM.Append(tr("Define the used OSD theme."));
 
-  Add(new cMenuEditBoolItem(tr("Position"), &dataM.position, trVDR("bottom"), trVDR("top")));
+  Add(new cMenuEditBoolItem(tr("Position"), &positionM, trVDR("bottom"), trVDR("top")));
   helpM.Append(tr("Define the position of OSD."));
 
-  Add(new cMenuEditIntItem(tr("Downscale OSD size [%]"), &dataM.downscale, 0, 20));
+  Add(new cMenuEditIntItem(tr("Downscale OSD size [%]"), &downscaleM, 0, 20));
   helpM.Append(tr("Define the downscale ratio for OSD size."));
 
-  Add(new cMenuEditIntItem(tr("Red limit [%]"), &dataM.redlimit, 1, 50));
+  Add(new cMenuEditIntItem(tr("Red limit [%]"), &redLimitM, 1, 50));
   helpM.Append(tr("Define a limit for red bar, which is used to indicate a bad signal."));
 
-  Add(new cMenuEditIntItem(tr("Green limit [%]"), &dataM.greenlimit, 51, 100));
+  Add(new cMenuEditIntItem(tr("Green limit [%]"), &greenLimitM, 51, 100));
   helpM.Append(tr("Define a limit for green bar, which is used to indicate a good signal."));
 
-  Add(new cMenuEditIntItem(tr("OSD update interval [0.1s]"), &dataM.updateinterval, 1, 100));
+  Add(new cMenuEditIntItem(tr("OSD update interval [0.1s]"), &updateIntervalM, 1, 100));
   helpM.Append(tr("Define an interval for OSD updates. The smaller interval generates higher CPU load."));
 
-  Add(new cMenuEditBoolItem(tr("Analyze stream"), &dataM.analyzestream));
+  Add(new cMenuEditBoolItem(tr("Analyze stream"), &analyzeStreamM));
   helpM.Append(tr("Define whether the DVB stream is analyzed and bitrates calculated."));
 
-  if (FemonConfig.analyzestream) {
-     Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &dataM.calcinterval, 1, 100));
+  if (analyzeStreamM) {
+     Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &calcIntervalM, 1, 100));
      helpM.Append(tr("Define an interval for calculation. The bigger interval generates more stable values."));
      }
 
-  Add(new cMenuEditBoolItem(tr("Use SVDRP service"), &dataM.usesvdrp));
+  Add(new cMenuEditBoolItem(tr("Use SVDRP service"), &useSvdrpM));
   helpM.Append(tr("Define whether the SVDRP service is used in client/server setups."));
 
-  if (dataM.usesvdrp) {
-     Add(new cMenuEditIntItem(tr("SVDRP service port"), &dataM.svdrpport, 1, 65535));
+  if (useSvdrpM) {
+     Add(new cMenuEditIntItem(tr("SVDRP service port"), &svdrpPortM, 1, 65535));
      helpM.Append(tr("Define the port number of SVDRP service."));
 
-     Add(new cMenuEditStrItem(tr("SVDRP service IP"), dataM.svdrpip, sizeof(dataM.svdrpip), ".1234567890"));
+     Add(new cMenuEditStrItem(tr("SVDRP service IP"), svdrpIpM, sizeof(svdrpIpM), ".1234567890"));
      helpM.Append(tr("Define the IP address of SVDRP service."));
      }
 
@@ -97,34 +111,49 @@ void cMenuFemonSetup::Setup(void)
 void cMenuFemonSetup::Store(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
-  FemonConfig = dataM;
-  SetupStore("HideMenu",       FemonConfig.hidemenu);
-  SetupStore("DisplayMode",    FemonConfig.displaymode);
-  SetupStore("Skin",           FemonConfig.skin);
-  SetupStore("Theme",          FemonConfig.theme);
-  SetupStore("Position",       FemonConfig.position);
-  SetupStore("Downscale",      FemonConfig.downscale);
-  SetupStore("RedLimit",       FemonConfig.redlimit);
-  SetupStore("GreenLimit",     FemonConfig.greenlimit);
-  SetupStore("UpdateInterval", FemonConfig.updateinterval);
-  SetupStore("AnalStream",     FemonConfig.analyzestream);
-  SetupStore("CalcInterval",   FemonConfig.calcinterval);
-  SetupStore("UseSvdrp",       FemonConfig.usesvdrp);
-  SetupStore("ServerPort",     FemonConfig.svdrpport);
-  SetupStore("ServerIp",       FemonConfig.svdrpip);
+  // Store values into setup.conf
+  SetupStore("HideMenu",       hideMenuM);
+  SetupStore("DisplayMode",    displayModeM);
+  SetupStore("Skin",           skinM);
+  SetupStore("Theme",          themeM);
+  SetupStore("Position",       positionM);
+  SetupStore("Downscale",      downscaleM);
+  SetupStore("RedLimit",       redLimitM);
+  SetupStore("GreenLimit",     greenLimitM);
+  SetupStore("UpdateInterval", updateIntervalM);
+  SetupStore("AnalStream",     analyzeStreamM);
+  SetupStore("CalcInterval",   calcIntervalM);
+  SetupStore("UseSvdrp",       useSvdrpM);
+  SetupStore("ServerPort",     svdrpPortM);
+  SetupStore("ServerIp",       svdrpIpM);
+  // Update global config
+  FemonConfig.SetHideMenu(hideMenuM);
+  FemonConfig.SetDisplayMode(displayModeM);
+  FemonConfig.SetSkin(skinM);
+  FemonConfig.SetTheme(themeM);
+  FemonConfig.SetPosition(positionM);
+  FemonConfig.SetDownscale(downscaleM);
+  FemonConfig.SetRedLimit(redLimitM);
+  FemonConfig.SetGreenLimit(greenLimitM);
+  FemonConfig.SetUpdateInterval(updateIntervalM);
+  FemonConfig.SetAnalyzeStream(analyzeStreamM);
+  FemonConfig.SetCalcInterval(calcIntervalM);
+  FemonConfig.SetUseSvdrp(useSvdrpM);
+  FemonConfig.SetSvdrpPort(svdrpPortM);
+  FemonConfig.SetSvdrpIp(svdrpIpM);
 }
 
-eOSState cMenuFemonSetup::ProcessKey(eKeys Key)
+eOSState cMenuFemonSetup::ProcessKey(eKeys keyP)
 {
-  int oldUsesvdrp = dataM.usesvdrp;
-  int oldAnalyzestream = dataM.analyzestream;
+  int oldUseSvdrp = useSvdrpM;
+  int oldAnalyzeStream = analyzeStreamM;
 
-  eOSState state = cMenuSetupPage::ProcessKey(Key);
+  eOSState state = cMenuSetupPage::ProcessKey(keyP);
 
-  if (Key != kNone && (dataM.analyzestream != oldAnalyzestream || dataM.usesvdrp != oldUsesvdrp))
+  if (keyP != kNone && (analyzeStreamM != oldAnalyzeStream || useSvdrpM != oldUseSvdrp))
      Setup();
 
-  if ((Key == kInfo) && (state == osUnknown) && (Current() < helpM.Size()))
+  if ((keyP == kInfo) && (state == osUnknown) && (Current() < helpM.Size()))
      return AddSubMenu(new cMenuText(cString::sprintf("%s - %s '%s'", tr("Help"), trVDR("Plugin"), PLUGIN_NAME_I18N), helpM[Current()]));
 
   return state;

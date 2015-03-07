@@ -13,8 +13,21 @@ private:
   const char *dispModesM[eFemonModeMaxNumber];
   const char *skinsM[eFemonSkinMaxNumber];
   const char *themesM[eFemonThemeMaxNumber];
-  cFemonConfig dataM;
   cVector<const char*> helpM;
+  int hideMenuM;
+  int displayModeM;
+  int skinM;
+  int themeM;
+  int positionM;
+  int downscaleM;
+  int redLimitM;
+  int greenLimitM;
+  int updateIntervalM;
+  int analyzeStreamM;
+  int calcIntervalM;
+  int useSvdrpM;
+  int svdrpPortM;
+  char svdrpIpM[MaxSvdrpIp + 1]; // must end with additional null
   void Setup(void);
 
 protected:

@@ -29,14 +29,14 @@
 #define OSDSYMBOL(id)             femonSymbols.Get(id)
 #define OSDSPACING                femonSymbols.GetSpacing()
 #define OSDROUNDING               femonSymbols.GetRounding()
-#define IS_OSDROUNDING            (FemonConfig.skin == eFemonSkinElchi)
+#define IS_OSDROUNDING            (FemonConfig.GetSkin() == eFemonSkinElchi)
 #define IS_OSDRESOLUTION(r1, r2)  (abs(r1 - r2) < 20)
-#define OSDINFOWIN_Y(offset)      (FemonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
+#define OSDINFOWIN_Y(offset)      (FemonConfig.GetPosition() ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
 #define OSDINFOWIN_X(col)         ((col == 4) ? int(round(OSDWIDTH * 0.76)) : \
                                    (col == 3) ? int(round(OSDWIDTH * 0.51)) : \
                                    (col == 2) ? int(round(OSDWIDTH * 0.26)) : \
                                                 int(round(OSDWIDTH * 0.025)))
-#define OSDSTATUSWIN_Y(offset)    (FemonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
+#define OSDSTATUSWIN_Y(offset)    (FemonConfig.GetPosition() ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
 #define OSDSTATUSWIN_X(col)       ((col == 7) ? int(round(OSDWIDTH * 0.79)) : \
                                    (col == 6) ? int(round(OSDWIDTH * 0.68)) : \
                                    (col == 5) ? int(round(OSDWIDTH * 0.46)) : \
@@ -52,39 +52,39 @@
            x -= bm->Width() + spacing; \
            y = (OSDROWHEIGHT - bm->Height()) / 2; \
            if (y < 0) y = 0; \
-           osdM->DrawBitmap(x, OSDSTATUSWIN_Y(offset) + y, *bm, FemonTheme[FemonConfig.theme].clrTitleText, FemonTheme[FemonConfig.theme].clrTitleBackground); \
+           osdM->DrawBitmap(x, OSDSTATUSWIN_Y(offset) + y, *bm, FemonTheme[FemonConfig.GetTheme()].clrTitleText, FemonTheme[FemonConfig.GetTheme()].clrTitleBackground); \
            }
 
 #define OSDDRAWSTATUSFRONTEND(column, bitmap, status) \
-        osdM->DrawBitmap(OSDSTATUSWIN_XSYMBOL(column, x), OSDSTATUSWIN_Y(offset) + y, bitmap, (frontendStatusM & status) ? FemonTheme[FemonConfig.theme].clrActiveText : FemonTheme[FemonConfig.theme].clrRed, FemonTheme[FemonConfig.theme].clrBackground)
+        osdM->DrawBitmap(OSDSTATUSWIN_XSYMBOL(column, x), OSDSTATUSWIN_Y(offset) + y, bitmap, (frontendStatusM & status) ? FemonTheme[FemonConfig.GetTheme()].clrActiveText : FemonTheme[FemonConfig.GetTheme()].clrRed, FemonTheme[FemonConfig.GetTheme()].clrBackground)
 
 #define OSDDRAWSTATUSVALUES(label1, label2, label3, label4, label5, label6, label7) \
-        osdM->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), label1, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), label2, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), label3, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), label4, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), label5, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), label6, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), label7, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
+        osdM->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), label1, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), label2, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), label3, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), label4, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), label5, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), label6, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), label7, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM)
 
 #define OSDDRAWSTATUSBAR(value) \
         if (value > 0) { \
            int barvalue = OSDBARWIDTH(value); \
-           osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + 3, min(OSDBARWIDTH(FemonConfig.redlimit), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.theme].clrRed); \
-           if (barvalue > OSDBARWIDTH(FemonConfig.redlimit)) \
-              osdM->DrawRectangle(OSDBARWIDTH(FemonConfig.redlimit), OSDSTATUSWIN_Y(offset) + 3, min((OSDWIDTH * FemonConfig.greenlimit / 100), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.theme].clrYellow); \
-           if (barvalue > OSDBARWIDTH(FemonConfig.greenlimit)) \
-              osdM->DrawRectangle(OSDBARWIDTH(FemonConfig.greenlimit), OSDSTATUSWIN_Y(offset) + 3, barvalue, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.theme].clrGreen); \
+           osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + 3, min(OSDBARWIDTH(FemonConfig.GetRedLimit()), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.GetTheme()].clrRed); \
+           if (barvalue > OSDBARWIDTH(FemonConfig.GetRedLimit())) \
+              osdM->DrawRectangle(OSDBARWIDTH(FemonConfig.GetRedLimit()), OSDSTATUSWIN_Y(offset) + 3, min((OSDWIDTH * FemonConfig.GetGreenLimit() / 100), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.GetTheme()].clrYellow); \
+           if (barvalue > OSDBARWIDTH(FemonConfig.GetGreenLimit())) \
+              osdM->DrawRectangle(OSDBARWIDTH(FemonConfig.GetGreenLimit()), OSDSTATUSWIN_Y(offset) + 3, barvalue, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.GetTheme()].clrGreen); \
            }
 
 #define OSDDRAWSTATUSTITLEBAR(title) \
-        osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 1, FemonTheme[FemonConfig.theme].clrTitleBackground); \
-        osdM->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), title, FemonTheme[FemonConfig.theme].clrTitleText, FemonTheme[FemonConfig.theme].clrTitleBackground, fontM); \
+        osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 1, FemonTheme[FemonConfig.GetTheme()].clrTitleBackground); \
+        osdM->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), title, FemonTheme[FemonConfig.GetTheme()].clrTitleText, FemonTheme[FemonConfig.GetTheme()].clrTitleBackground, fontM); \
         if (IS_OSDROUNDING) { \
            osdM->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDROUNDING, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -2); \
            osdM->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -1); \
            } \
-        osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDSTATUSHEIGHT - 1, FemonTheme[FemonConfig.theme].clrBackground)
+        osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDSTATUSHEIGHT - 1, FemonTheme[FemonConfig.GetTheme()].clrBackground)
 
 #define OSDDRAWSTATUSBOTTOMBAR() \
         if (IS_OSDROUNDING) { \
@@ -96,32 +96,32 @@
         osdM->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - 1, clrTransparent)
 
 #define OSDDRAWINFOLEFT(label, value) \
-        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.GetTheme()].clrActiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM)
 
 #define OSDDRAWINFORIGHT(label, value) \
-        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
+        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.GetTheme()].clrActiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM)
 
 #define OSDDRAWINFOACTIVE(label, value) \
-        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.GetTheme()].clrActiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.GetTheme()].clrActiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM)
 
 #define OSDDRAWINFOINACTIVE(label, value) \
-        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
-        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
+        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.GetTheme()].clrActiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM)
 
 #define OSDDRAWINFOLINE(label) \
-        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.GetTheme()].clrActiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM)
 
 #define OSDDRAWINFOTITLEBAR(title) \
-        osdM->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset) + OSDROWHEIGHT - 1, FemonTheme[FemonConfig.theme].clrTitleBackground); \
-        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), title, FemonTheme[FemonConfig.theme].clrTitleText, FemonTheme[FemonConfig.theme].clrTitleBackground, fontM); \
+        osdM->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset) + OSDROWHEIGHT - 1, FemonTheme[FemonConfig.GetTheme()].clrTitleBackground); \
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), title, FemonTheme[FemonConfig.GetTheme()].clrTitleText, FemonTheme[FemonConfig.GetTheme()].clrTitleBackground, fontM); \
         if (IS_OSDROUNDING) { \
            osdM->DrawEllipse(0, OSDINFOWIN_Y(0), OSDROUNDING, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -2); \
            osdM->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -1); \
            } \
-        osdM->DrawRectangle(0, OSDINFOWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDINFOWIN_Y(offset) + OSDINFOHEIGHT - 1, FemonTheme[FemonConfig.theme].clrBackground)
+        osdM->DrawRectangle(0, OSDINFOWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDINFOWIN_Y(offset) + OSDINFOHEIGHT - 1, FemonTheme[FemonConfig.GetTheme()].clrBackground)
 
 #define OSDDRAWINFOBOTTOMBAR() \
         if (IS_OSDROUNDING) { \
@@ -187,11 +187,11 @@ cFemonOsd::cFemonOsd()
   frontendNameM(""),
   frontendStatusValidM(false),
   deviceSourceM(DEVICESOURCE_DVBAPI),
-  displayModeM(FemonConfig.displaymode),
-  osdWidthM(cOsd::OsdWidth() * (100 - FemonConfig.downscale) / 100),
-  osdHeightM(cOsd::OsdHeight() * (100 - FemonConfig.downscale) / 100),
-  osdLeftM(cOsd::OsdLeft() + (cOsd::OsdWidth() * FemonConfig.downscale / 200)),
-  osdTopM(cOsd::OsdTop() + (cOsd::OsdHeight() * FemonConfig.downscale / 200)),
+  displayModeM(FemonConfig.GetDisplayMode()),
+  osdWidthM(cOsd::OsdWidth() * (100 - FemonConfig.GetDownscale()) / 100),
+  osdHeightM(cOsd::OsdHeight() * (100 - FemonConfig.GetDownscale()) / 100),
+  osdLeftM(cOsd::OsdLeft() + (cOsd::OsdWidth() * FemonConfig.GetDownscale() / 200)),
+  osdTopM(cOsd::OsdTop() + (cOsd::OsdHeight() * FemonConfig.GetDownscale() / 200)),
   inputTimeM(0),
   sleepM(),
   mutexM()
@@ -706,7 +706,7 @@ void cFemonOsd::Action(void)
       }
     DrawInfoWindow();
     DrawStatusWindow();
-    sleepM.Wait(max((int)(100 * FemonConfig.updateinterval - t.Elapsed()), 3));
+    sleepM.Wait(max((int)(100 * FemonConfig.GetUpdateInterval() - t.Elapsed()), 3));
     }
 }
 
@@ -730,7 +730,7 @@ void cFemonOsd::Show(void)
         frontendM = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
         if (frontendM >= 0) {
            if (ioctl(frontendM, FE_GET_INFO, &frontendInfoM) < 0) {
-              if (!FemonConfig.usesvdrp)
+              if (!FemonConfig.GetUseSvdrp())
                  error("cFemonOsd::Show() cannot read frontend info.");
               close(frontendM);
               frontendM = -1;
@@ -738,7 +738,7 @@ void cFemonOsd::Show(void)
               return;
               }
            }
-        else if (FemonConfig.usesvdrp) {
+        else if (FemonConfig.GetUseSvdrp()) {
            if (!SvdrpConnect() || !SvdrpTune())
               return;
            }
@@ -758,8 +758,8 @@ void cFemonOsd::Show(void)
         osdM->SetAreas(Areas1, sizeof(Areas1) / sizeof(tArea));
         }
      else {
-        tArea Areas2[] = { { 0, OSDSTATUSWIN_Y(0),          OSDWIDTH - 1, OSDSTATUSWIN_Y(0) + OSDSTATUSHEIGHT - 1, FemonTheme[FemonConfig.theme].bpp },
-                           { 0, OSDINFOWIN_Y(0),            OSDWIDTH - 1, OSDINFOWIN_Y(0)   + OSDROWHEIGHT    - 1, FemonTheme[FemonConfig.theme].bpp },
+        tArea Areas2[] = { { 0, OSDSTATUSWIN_Y(0),          OSDWIDTH - 1, OSDSTATUSWIN_Y(0) + OSDSTATUSHEIGHT - 1, FemonTheme[FemonConfig.GetTheme()].bpp },
+                           { 0, OSDINFOWIN_Y(0),            OSDWIDTH - 1, OSDINFOWIN_Y(0)   + OSDROWHEIGHT    - 1, FemonTheme[FemonConfig.GetTheme()].bpp },
                            { 0, OSDINFOWIN_Y(OSDROWHEIGHT), OSDWIDTH - 1, OSDINFOWIN_Y(0)   + OSDINFOHEIGHT   - 1, 2                                 } };
         osdM->SetAreas(Areas2, sizeof(Areas2) / sizeof(tArea));
         }
@@ -770,7 +770,7 @@ void cFemonOsd::Show(void)
         receiverM->Deactivate();
         DELETENULL(receiverM);
         }
-     if (FemonConfig.analyzestream && channel) {
+     if (FemonConfig.GetAnalyzeStream() && channel) {
         receiverM = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
         cDevice::ActualDevice()->AttachReceiver(receiverM);
         }
@@ -795,7 +795,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool 
      return;
      }
 
-  if (channel && FemonConfig.analyzestream) {
+  if (channel && FemonConfig.GetAnalyzeStream()) {
      deviceSourceM = DEVICESOURCE_DVBAPI;
      if (channel->IsSourceType('I'))
         deviceSourceM = DEVICESOURCE_IPTV;
@@ -813,7 +813,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool 
            frontendM = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
            if (frontendM >= 0) {
               if (ioctl(frontendM, FE_GET_INFO, &frontendInfoM) < 0) {
-                 if (!FemonConfig.usesvdrp)
+                 if (!FemonConfig.GetUseSvdrp())
                     error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
                  close(frontendM);
                  frontendM = -1;
@@ -821,7 +821,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool 
                  return;
                  }
               }
-           else if (FemonConfig.usesvdrp) {
+           else if (FemonConfig.GetUseSvdrp()) {
               if (!SvdrpConnect() || !SvdrpTune())
                  return;
               }
@@ -849,7 +849,7 @@ void cFemonOsd::SetAudioTrack(int indexP, const char * const *tracksP)
      receiverM->Deactivate();
      DELETENULL(receiverM);
      }
-  if (FemonConfig.analyzestream) {
+  if (FemonConfig.GetAnalyzeStream()) {
      const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      if (channel) {
         receiverM = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
@@ -950,8 +950,8 @@ bool cFemonOsd::SvdrpConnect(void)
    if (svdrpConnectionM.handle < 0) {
       svdrpPluginM = cPluginManager::GetPlugin(SVDRPPLUGIN);
       if (svdrpPluginM) {
-         svdrpConnectionM.serverIp = FemonConfig.svdrpip;
-         svdrpConnectionM.serverPort = (unsigned short)FemonConfig.svdrpport;
+         svdrpConnectionM.serverIp = FemonConfig.GetSvdrpIp();
+         svdrpConnectionM.serverPort = (unsigned short)FemonConfig.GetSvdrpPort();
          svdrpConnectionM.shared = true;
          svdrpPluginM->Service("SvdrpConnection-v1.0", &svdrpConnectionM);
          if (svdrpConnectionM.handle >= 0) {

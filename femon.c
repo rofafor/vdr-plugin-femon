@@ -42,7 +42,7 @@ public:
   virtual void Housekeeping(void);
   virtual void MainThreadHook(void) {}
   virtual cString Active(void) { return NULL; }
-  virtual const char *MainMenuEntry(void) { return (FemonConfig.hidemenu ? NULL : tr(MAINMENUENTRY)); }
+  virtual const char *MainMenuEntry(void) { return (FemonConfig.GetHideMenu() ? NULL : tr(MAINMENUENTRY)); }
   virtual cOsdObject *MainMenuAction(void);
   virtual cMenuSetupPage *SetupMenu(void);
   virtual bool SetupParse(const char *nameP, const char *valueP);
@@ -119,23 +119,36 @@ cMenuSetupPage *cPluginFemon::SetupMenu(void)
 bool cPluginFemon::SetupParse(const char *nameP, const char *valueP)
 {
   // Parse your own setup parameters and store their values.
-  if      (!strcasecmp(nameP, "HideMenu"))       FemonConfig.hidemenu       = atoi(valueP);
-  else if (!strcasecmp(nameP, "DisplayMode"))    FemonConfig.displaymode    = atoi(valueP);
-  else if (!strcasecmp(nameP, "Position"))       FemonConfig.position       = atoi(valueP);
-  else if (!strcasecmp(nameP, "Skin"))           FemonConfig.skin           = atoi(valueP);
-  else if (!strcasecmp(nameP, "Theme"))          FemonConfig.theme          = atoi(valueP);
-  else if (!strcasecmp(nameP, "Downscale"))      FemonConfig.downscale      = atoi(valueP);
-  else if (!strcasecmp(nameP, "RedLimit"))       FemonConfig.redlimit       = atoi(valueP);
-  else if (!strcasecmp(nameP, "GreenLimit"))     FemonConfig.greenlimit     = atoi(valueP);
-  else if (!strcasecmp(nameP, "UpdateInterval")) FemonConfig.updateinterval = atoi(valueP);
-  else if (!strcasecmp(nameP, "AnalStream"))     FemonConfig.analyzestream  = atoi(valueP);
-  else if (!strcasecmp(nameP, "CalcInterval"))   FemonConfig.calcinterval   = atoi(valueP);
-  else if (!strcasecmp(nameP, "UseSvdrp"))       FemonConfig.usesvdrp       = atoi(valueP);
-  else if (!strcasecmp(nameP, "ServerPort"))     FemonConfig.svdrpport      = atoi(valueP);
-  else if (!strcasecmp(nameP, "ServerIp"))       strn0cpy(FemonConfig.svdrpip, valueP, sizeof(FemonConfig.svdrpip));
+  if (!strcasecmp(nameP, "HideMenu"))
+     FemonConfig.SetHideMenu(atoi(valueP));
+  else if (!strcasecmp(nameP, "DisplayMode"))
+     FemonConfig.SetDisplayMode(atoi(valueP));
+  else if (!strcasecmp(nameP, "Position"))
+     FemonConfig.SetPosition(atoi(valueP));
+  else if (!strcasecmp(nameP, "Skin"))
+     FemonConfig.SetSkin(atoi(valueP));
+  else if (!strcasecmp(nameP, "Theme"))
+     FemonConfig.SetTheme(atoi(valueP));
+  else if (!strcasecmp(nameP, "Downscale"))
+     FemonConfig.SetDownscale(atoi(valueP));
+  else if (!strcasecmp(nameP, "RedLimit"))
+     FemonConfig.SetRedLimit(atoi(valueP));
+  else if (!strcasecmp(nameP, "GreenLimit"))
+     FemonConfig.SetGreenLimit(atoi(valueP));
+  else if (!strcasecmp(nameP, "UpdateInterval"))
+     FemonConfig.SetUpdateInterval(atoi(valueP));
+  else if (!strcasecmp(nameP, "AnalStream"))
+     FemonConfig.SetAnalyzeStream(atoi(valueP));
+  else if (!strcasecmp(nameP, "CalcInterval"))
+     FemonConfig.SetCalcInterval(atoi(valueP));
+  else if (!strcasecmp(nameP, "UseSvdrp"))
+     FemonConfig.SetUseSvdrp(atoi(valueP));
+  else if (!strcasecmp(nameP, "ServerPort"))
+     FemonConfig.SetSvdrpPort(atoi(valueP));
+  else if (!strcasecmp(nameP, "ServerIp"))
+     FemonConfig.SetSvdrpIp(valueP);
   else
     return false;
-  if (FemonConfig.displaymode < 0 || FemonConfig.displaymode >= eFemonModeMaxNumber) FemonConfig.displaymode = 0;
 
   return true;
 }

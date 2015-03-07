@@ -7,26 +7,33 @@
 
 #include <string.h>
 
+#include "femontools.h"
 #include "femonconfig.h"
 
 cFemonConfig FemonConfig;
 
-cFemonConfig::cFemonConfig(void)
+cFemonConfig::cFemonConfig()
+: traceModeM(eTraceModeNormal),
+  hideMenuM(0),
+  displayModeM(0),
+  skinM(0),
+  themeM(0),
+  positionM(1),
+  downscaleM(0),
+  redLimitM(33),
+  greenLimitM(66),
+  updateIntervalM(5),
+  analyzeStreamM(1),
+  calcIntervalM(20),
+  useSvdrpM(0),
+  svdrpPortM(6419)
 {
-  hidemenu       = 0;
-  displaymode    = 0;
-  skin           = 0;
-  theme          = 0;
-  position       = 1;
-  downscale      = 0;
-  redlimit       = 33;
-  greenlimit     = 66;
-  updateinterval = 5;
-  analyzestream  = 1;
-  calcinterval   = 20;
-  usesvdrp       = 0;
-  svdrpport      = 6419;
-  strncpy(svdrpip, "0.0.0.0", sizeof(svdrpip));
+  SetSvdrpIp("0.0.0.0");
+}
+
+void cFemonConfig::SetSvdrpIp(const char *strP)
+{
+  strn0cpy(svdrpIpM, strP, sizeof(svdrpIpM));
 }
 
 const cFemonTheme FemonTheme[eFemonThemeMaxNumber] =
