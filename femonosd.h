@@ -18,6 +18,8 @@
 #include <vdr/channels.h>
 #include <vdr/transfer.h>
 #include <vdr/tools.h>
+
+#include "femonreceiver.h"
 #include "svdrpservice.h"
 
 #define MAX_BM_NUMBER 8

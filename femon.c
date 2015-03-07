@@ -5,12 +5,13 @@
  *
  */
 
+#include <getopt.h>
 #include <vdr/menu.h>
 #include <vdr/remote.h>
 #include <vdr/player.h>
 
 #include "femonconfig.h"
-#include "femonreceiver.h"
+#include "log.h"
 #include "femonosd.h"
 #include "femonsetup.h"
 #include "femonservice.h"
@@ -56,24 +57,40 @@ cPluginFemon::cPluginFemon()
   // Initialize any member variables here.
   // DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
   // VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
 }
 
 cPluginFemon::~cPluginFemon()
 {
   // Clean up after yourself!
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
 }
 
 const char *cPluginFemon::CommandLineHelp(void)
 {
   // Return a string that describes all known command line options.
-  return NULL;
+  return "  -t <mode>, --trace=<mode>  set the tracing mode\n";
 }
 
 bool cPluginFemon::ProcessArgs(int argc, char *argv[])
 {
   // Implement command line argument processing here if applicable.
+  static const struct option long_options[] = {
+    { "trace",    required_argument, NULL, 't' },
+    { NULL,       no_argument,       NULL,  0  }
+    };
+
+  cString server;
+  int c;
+  while ((c = getopt_long(argc, argv, "t:", long_options, NULL)) != -1) {
+    switch (c) {
+      case 't':
+           FemonConfig.SetTraceMode(strtol(optarg, NULL, 0));
+           break;
+      default:
+           return false;
+      }
+    }
   return true;
 }
 
@@ -102,7 +119,7 @@ void cPluginFemon::Housekeeping(void)
 cOsdObject *cPluginFemon::MainMenuAction(void)
 {
   // Perform the action when selected from the main VDR menu.
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   if (cControl::Control() || (Channels.Count() <= 0))
      Skins.Message(mtInfo, tr("Femon not available"));
   else
@@ -212,6 +229,8 @@ const char **cPluginFemon::SVDRPHelpPages(void)
     "    Print the current audio bitrate [kbit/s].",
     "DDBR\n"
     "    Print the current dolby bitrate [kbit/s].",
+    "TRAC [ <mode> ]\n"
+    "    Gets and/or sets used tracing mode.\n",
     NULL
     };
   return HelpPages;
@@ -220,6 +239,11 @@ const char **cPluginFemon::SVDRPHelpPages(void)
 cString cPluginFemon::SVDRPCommand(const char *commandP, const char *optionP, int &replyCodeP)
 {
   cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
+  if (strcasecmp(commandP, "TRAC") == 0) {
+     if (optionP && *optionP)
+        FemonConfig.SetTraceMode(strtol(optionP, NULL, 0));
+     return cString::sprintf("Tracing mode: 0x%04X\n", FemonConfig.GetTraceMode());
+     }
   if (*optionP && isnumber(optionP)) {
      cDvbDevice *dev2 = dynamic_cast<cDvbDevice*>(cDevice::GetDevice(int(strtol(optionP, NULL, 10))));
      if (dev2)

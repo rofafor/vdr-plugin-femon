@@ -11,8 +11,10 @@
 
 #include <ctype.h>
 #include <math.h>
+
 #include "iptvservice.h"
 #include "femonconfig.h"
+#include "log.h"
 #include "femonreceiver.h"
 #include "femontools.h"
 #include "femonsymbol.h"
@@ -153,7 +155,7 @@ cFemonOsd *cFemonOsd::pInstanceS = NULL;
 
 cFemonOsd *cFemonOsd::Instance(bool createP)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s (%d)", __PRETTY_FUNCTION__, createP);
   if ((pInstanceS == NULL) && createP)
   {
      pInstanceS = new cFemonOsd();
@@ -197,7 +199,7 @@ cFemonOsd::cFemonOsd()
   mutexM()
 {
   int tmp;
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   memset(&frontendStatusM, 0, sizeof(frontendStatusM));
   memset(&frontendInfoM, 0, sizeof(frontendInfoM));
   svdrpConnectionM.handle = -1;
@@ -205,23 +207,23 @@ cFemonOsd::cFemonOsd()
   fontM = cFont::CreateFont(Setup.FontSml, constrain(Setup.FontSmlSize, MINFONTSIZE, MAXFONTSIZE));
   if (!fontM || !fontM->Height()) {
      fontM = new cFemonDummyFont;
-     error("cFemonOsd::cFemonOsd() cannot create required font.");
+     error("%s Cannot create required font", __PRETTY_FUNCTION__);
      }
   tmp = 5 * OSDSYMBOL(SYMBOL_LOCK).Width() + 6 * OSDSPACING;
   if (OSDWIDTH < tmp) {
-     error("cFemonOsd::cFemonOsd() OSD width (%d) smaller than required (%d).", OSDWIDTH, tmp);
+     error("%s OSD width (%d) smaller than required (%d).", __PRETTY_FUNCTION__, OSDWIDTH, tmp);
      OSDWIDTH = tmp;
      }
   tmp = OSDINFOHEIGHT + OSDROWHEIGHT + OSDSTATUSHEIGHT;
   if (OSDHEIGHT < tmp) {
-     error("cFemonOsd::cFemonOsd() OSD height (%d) smaller than required (%d).", OSDHEIGHT, tmp);
+     error("%s OSD height (%d) smaller than required (%d).", __PRETTY_FUNCTION__, OSDHEIGHT, tmp);
      OSDHEIGHT = tmp;
      }
 }
 
 cFemonOsd::~cFemonOsd(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   sleepM.Signal();
   if (Running())
      Cancel(3);
@@ -572,7 +574,7 @@ void cFemonOsd::DrawInfoWindow(void)
 
 void cFemonOsd::Action(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   cTimeMs t;
   SvdrpCommand_v1_0 cmd;
   cmd.command = cString::sprintf("PLUG %s INFO\r\n", PLUGIN_NAME_I18N);
@@ -712,7 +714,7 @@ void cFemonOsd::Action(void)
 
 void cFemonOsd::Show(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
@@ -731,7 +733,7 @@ void cFemonOsd::Show(void)
         if (frontendM >= 0) {
            if (ioctl(frontendM, FE_GET_INFO, &frontendInfoM) < 0) {
               if (!FemonConfig.GetUseSvdrp())
-                 error("cFemonOsd::Show() cannot read frontend info.");
+                 error("%s Cannot read frontend info", __PRETTY_FUNCTION__);
               close(frontendM);
               frontendM = -1;
               memset(&frontendInfoM, 0, sizeof(frontendInfoM));
@@ -743,7 +745,7 @@ void cFemonOsd::Show(void)
               return;
            }
         else {
-           error("cFemonOsd::Show() cannot open frontend device.");
+           error("%s Cannot open frontend device", __PRETTY_FUNCTION__);
            return;
            }
         }
@@ -780,7 +782,7 @@ void cFemonOsd::Show(void)
 
 void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool liveViewP)
 {
-  debug("%s(%d,%d)\n", __PRETTY_FUNCTION__, deviceP->DeviceNumber(), channelNumberP);
+  debug1("%s (%d, %d, %d)", __PRETTY_FUNCTION__, deviceP->DeviceNumber(), channelNumberP, liveViewP);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
@@ -814,7 +816,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool 
            if (frontendM >= 0) {
               if (ioctl(frontendM, FE_GET_INFO, &frontendInfoM) < 0) {
                  if (!FemonConfig.GetUseSvdrp())
-                    error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
+                    error("%s Cannot read frontend info", __PRETTY_FUNCTION__);
                  close(frontendM);
                  frontendM = -1;
                  memset(&frontendInfoM, 0, sizeof(frontendInfoM));
@@ -826,7 +828,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool 
                  return;
               }
            else {
-              error("cFemonOsd::ChannelSwitch() cannot open frontend device.");
+              error("%s Cannot open frontend device", __PRETTY_FUNCTION__);
               return;
               }
            }
@@ -843,7 +845,7 @@ void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool 
 
 void cFemonOsd::SetAudioTrack(int indexP, const char * const *tracksP)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s (%d, )", __PRETTY_FUNCTION__, indexP);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   if (receiverM) {
      receiverM->Deactivate();
@@ -860,7 +862,7 @@ void cFemonOsd::SetAudioTrack(int indexP, const char * const *tracksP)
 
 bool cFemonOsd::DeviceSwitch(int directionP)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s (%d)", __PRETTY_FUNCTION__, directionP);
   int device = cDevice::ActualDevice()->DeviceNumber();
   int direction = sgn(directionP);
   if (device >= 0) {
@@ -908,7 +910,7 @@ bool cFemonOsd::DeviceSwitch(int directionP)
                 if (NumUsableSlots && !HasInternalCam && !CamSlots.Get(j)->Assign(d, true))
                    continue; // CAM slot can't be used with this device
                 if (d->ProvidesChannel(channel, 0, &NeedsDetachAllReceivers)) { // this device is basically able to do the job
-                   debug("%s(%d) device(%d)\n", __PRETTY_FUNCTION__, direction, device);
+                   debug1("%s (%d) device=%d", __PRETTY_FUNCTION__, direction, device);
                    if (NumUsableSlots && !HasInternalCam && d->CamSlot() && d->CamSlot() != CamSlots.Get(j))
                       NeedsDetachAllReceivers = true; // using a different CAM slot requires detaching receivers
                    if (NumUsableSlots && !HasInternalCam)
@@ -961,14 +963,14 @@ bool cFemonOsd::SvdrpConnect(void)
             svdrpPluginM->Service("SvdrpCommand-v1.0", &cmd);
             if (cmd.responseCode != 214) {
                svdrpPluginM->Service("SvdrpConnection-v1.0", &svdrpConnectionM); // close connection
-               error("cFemonOsd::SvdrpConnect() cannot find plugin '%s' on server %s.", PLUGIN_NAME_I18N, *svdrpConnectionM.serverIp);
+               error("%s Cannot find plugin '%s' on server %s", __PRETTY_FUNCTION__, PLUGIN_NAME_I18N, *svdrpConnectionM.serverIp);
                }
             }
          else
-            error("cFemonOsd::SvdrpConnect() cannot connect to SVDRP server.");
+            error("%s Cannot connect to SVDRP server", __PRETTY_FUNCTION__);
          }
       else
-         error("cFemonOsd::SvdrpConnect() cannot find plugin '%s'.", SVDRPPLUGIN);
+         error("%s Cannot find plugin '%s'", __PRETTY_FUNCTION__, SVDRPPLUGIN);
       }
    return svdrpConnectionM.handle >= 0;
 }
@@ -984,19 +986,19 @@ bool cFemonOsd::SvdrpTune(void)
          svdrpPluginM->Service("SvdrpCommand-v1.0", &cmd);
          if (cmd.responseCode == 250)
             return true;
-         error("cFemonOsd::SvdrpTune() cannot tune server channel.");
+         error("%s Cannot tune server channel", __PRETTY_FUNCTION__);
          }
       else
-         error("cFemonOsd::SvdrpTune() invalid channel.");
+         error("%s Invalid channel", __PRETTY_FUNCTION__);
       }
    else
-      error("cFemonOsd::SvdrpTune() unexpected connection state.");
+      error("%s Unexpected connection state", __PRETTY_FUNCTION__);
    return false;
 }
 
 double cFemonOsd::GetVideoBitrate(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   double value = 0.0;
 
   if (receiverM)
@@ -1007,7 +1009,7 @@ double cFemonOsd::GetVideoBitrate(void)
 
 double cFemonOsd::GetAudioBitrate(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   double value = 0.0;
 
   if (receiverM)
@@ -1018,7 +1020,7 @@ double cFemonOsd::GetAudioBitrate(void)
 
 double cFemonOsd::GetDolbyBitrate(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   double value = 0.0;
 
   if (receiverM)

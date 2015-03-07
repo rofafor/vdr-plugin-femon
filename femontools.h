@@ -14,14 +14,6 @@
 #include <vdr/remux.h>
 #include <vdr/tools.h>
 
-#ifdef DEBUG
-#define debug(x...) dsyslog("FEMON: " x);
-#define error(x...) esyslog("ERROR: " x);
-#else
-#define debug(x...) ;
-#define error(x...) esyslog("ERROR: " x);
-#endif
-
 #define ELEMENTS(x) (sizeof(x) / sizeof(x[0]))
 
 #define FRONTEND_DEVICE "/dev/dvb/adapter%d/frontend%d"

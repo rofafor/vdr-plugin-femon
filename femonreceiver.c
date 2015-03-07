@@ -6,8 +6,9 @@
  */
 
 #include <unistd.h>
-#include "femontools.h"
 #include "femonconfig.h"
+#include "log.h"
+#include "femontools.h"
 #include "femonreceiver.h"
 
 cFemonReceiver::cFemonReceiver(const cChannel *channelP, int aTrackP, int dTrackP)
@@ -38,7 +39,7 @@ cFemonReceiver::cFemonReceiver(const cChannel *channelP, int aTrackP, int dTrack
   ac3BitRateM(0),
   ac3ValidM(false)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s (, %d, %d)", __PRETTY_FUNCTION__, aTrackP, dTrackP);
 
   SetPids(NULL);
   AddPid(videoPidM);
@@ -74,13 +75,13 @@ cFemonReceiver::cFemonReceiver(const cChannel *channelP, int aTrackP, int dTrack
 
 cFemonReceiver::~cFemonReceiver(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   Deactivate();
 }
 
 void cFemonReceiver::Deactivate(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   Detach();
   if (activeM) {
      activeM = false;
@@ -92,7 +93,7 @@ void cFemonReceiver::Deactivate(void)
 
 void cFemonReceiver::Activate(bool onP)
 {
-  debug("%s(%d)\n", __PRETTY_FUNCTION__, onP);
+  debug1("%s (%d)", __PRETTY_FUNCTION__, onP);
   if (onP)
      Start();
   else
@@ -133,7 +134,7 @@ void cFemonReceiver::Receive(uchar *dataP, int lengthP)
 
 void cFemonReceiver::Action(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   cTimeMs calcPeriod(0);
   activeM = true;
 

@@ -7,6 +7,7 @@
 
 #include <vdr/menu.h>
 #include "femonconfig.h"
+#include "log.h"
 #include "femontools.h"
 #include "femonsetup.h"
 
@@ -25,7 +26,7 @@ cMenuFemonSetup::cMenuFemonSetup()
   useSvdrpM(FemonConfig.GetUseSvdrp()),
   svdrpPortM(FemonConfig.GetSvdrpPort())
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   strn0cpy(svdrpIpM, FemonConfig.GetSvdrpIp(), sizeof(svdrpIpM));
 
   dispModesM[eFemonModeBasic]       = tr("basic");
@@ -110,7 +111,7 @@ void cMenuFemonSetup::Setup(void)
 
 void cMenuFemonSetup::Store(void)
 {
-  debug("%s()\n", __PRETTY_FUNCTION__);
+  debug1("%s", __PRETTY_FUNCTION__);
   // Store values into setup.conf
   SetupStore("HideMenu",       hideMenuM);
   SetupStore("DisplayMode",    displayModeM);
