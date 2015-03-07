@@ -1,13 +1,13 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * ac3.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  * AC3 Audio Header: http://www.atsc.org/standards/a_52a.pdf
  */
 
-#include "femontools.h"
-#include "femonac3.h"
+#include "tools.h"
+#include "ac3.h"
 
 int cFemonAC3::bitrateS[32] =
 {

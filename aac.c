@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * aac.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#include "femontools.h"
-#include "femonaac.h"
+#include "tools.h"
+#include "aac.h"
 
 #define IS_HEAAC_AUDIO(buf) (((buf)[0] == 0xFF) && (((buf)[1] & 0xF6) == 0xF0))
 

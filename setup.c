@@ -1,15 +1,16 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * setup.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
 #include <vdr/menu.h>
-#include "femonconfig.h"
+
+#include "config.h"
 #include "log.h"
-#include "femontools.h"
-#include "femonsetup.h"
+#include "tools.h"
+#include "setup.h"
 
 cMenuFemonSetup::cMenuFemonSetup()
 : hideMenuM(FemonConfig.GetHideMenu()),

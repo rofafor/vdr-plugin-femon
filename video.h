@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * video.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONVIDEO_H
-#define __FEMONVIDEO_H
+#ifndef __FEMON_VIDEO_H
+#define __FEMON_VIDEO_H
 
 enum eVideoCodec {
   VIDEO_CODEC_INVALID = -1,
@@ -90,4 +90,4 @@ public:
   virtual void SetVideoBitrate(double bitRateP) = 0;
   };
 
-#endif //__FEMONVIDEO_H
+#endif //__FEMON_VIDEO_H

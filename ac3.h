@@ -1,14 +1,14 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * ac3.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONAC3_H
-#define __FEMONAC3_H
+#ifndef __FEMON_AC3_H
+#define __FEMON_AC3_H
 
-#include "femonaudio.h"
+#include "audio.h"
 
 class cFemonAC3 {
 private:
@@ -25,4 +25,4 @@ public:
   bool processAudio(const uint8_t *bufP, int lenP);
   };
 
-#endif //__FEMONAC3_H
+#endif //__FEMON_AC3_H

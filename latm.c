@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * latm.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#include "femontools.h"
-#include "femonlatm.h"
+#include "tools.h"
+#include "latm.h"
 
 int cFemonLATM::bitrateS[3][16] =
 {

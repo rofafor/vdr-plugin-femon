@@ -1,5 +1,5 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * femon.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
@@ -10,12 +10,12 @@
 #include <vdr/remote.h>
 #include <vdr/player.h>
 
-#include "femonconfig.h"
-#include "log.h"
-#include "femonosd.h"
-#include "femonsetup.h"
+#include "config.h"
 #include "femonservice.h"
-#include "femontools.h"
+#include "log.h"
+#include "osd.h"
+#include "tools.h"
+#include "setup.h"
 
 #if defined(APIVERSNUM) && APIVERSNUM < 20200
 #error "VDR-2.2.0 API version or greater is required!"

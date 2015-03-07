@@ -1,15 +1,16 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * receiver.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
 #include <unistd.h>
-#include "femonconfig.h"
+
+#include "config.h"
 #include "log.h"
-#include "femontools.h"
-#include "femonreceiver.h"
+#include "tools.h"
+#include "receiver.h"
 
 cFemonReceiver::cFemonReceiver(const cChannel *channelP, int aTrackP, int dTrackP)
 : cReceiver(channelP),

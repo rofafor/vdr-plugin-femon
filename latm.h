@@ -1,14 +1,14 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * latm.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONLATM_H
-#define __FEMONLATM_H
+#ifndef __FEMON_LATM_H
+#define __FEMON_LATM_H
 
-#include "femonaudio.h"
+#include "audio.h"
 
 class cFemonLATM {
 private:
@@ -24,4 +24,4 @@ public:
   bool processAudio(const uint8_t *bufP, int lenP);
   };
 
-#endif //__FEMONLATM_H
+#endif //__FEMON_LATM_H

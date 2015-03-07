@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * symbol.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONSYMBOL_H
-#define __FEMONSYMBOL_H
+#ifndef __FEMON_SYMBOL_H
+#define __FEMON_SYMBOL_H
 
 #include <vdr/tools.h>
 #include <vdr/osd.h>
@@ -84,4 +84,4 @@ public:
 
 extern cFemonSymbolCache femonSymbols;
 
-#endif // __FEMONSYMBOL_H
+#endif // __FEMON_SYMBOL_H

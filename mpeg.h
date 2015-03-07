@@ -1,15 +1,15 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * mpeg.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONMPEG_H
-#define __FEMONMPEG_H
+#ifndef __FEMON_MPEG_H
+#define __FEMON_MPEG_H
 
-#include "femonvideo.h"
-#include "femonaudio.h"
+#include "video.h"
+#include "audio.h"
 
 class cFemonMPEG {
 private:
@@ -28,4 +28,4 @@ public:
   bool processAudio(const uint8_t *bufP, int lenP);
   };
 
-#endif //__FEMONMPEG_H
+#endif //__FEMON_MPEG_H

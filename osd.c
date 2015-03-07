@@ -1,5 +1,5 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * osd.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
@@ -12,13 +12,13 @@
 #include <ctype.h>
 #include <math.h>
 
+#include "config.h"
 #include "iptvservice.h"
-#include "femonconfig.h"
 #include "log.h"
-#include "femonreceiver.h"
-#include "femontools.h"
-#include "femonsymbol.h"
-#include "femonosd.h"
+#include "receiver.h"
+#include "symbol.h"
+#include "tools.h"
+#include "osd.h"
 
 #define CHANNELINPUT_TIMEOUT      1000
 #define SVDRPPLUGIN               "svdrpservice"

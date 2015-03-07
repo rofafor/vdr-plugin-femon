@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * osd.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONOSD_H
-#define __FEMONOSD_H
+#ifndef __FEMON_OSD_H
+#define __FEMON_OSD_H
 
 #include <linux/dvb/frontend.h>
 #include <sys/time.h>
@@ -19,7 +19,7 @@
 #include <vdr/transfer.h>
 #include <vdr/tools.h>
 
-#include "femonreceiver.h"
+#include "receiver.h"
 #include "svdrpservice.h"
 
 #define MAX_BM_NUMBER 8
@@ -98,5 +98,5 @@ public:
   double  GetDolbyBitrate(void);
 };
 
-#endif //__FEMONOSD_H
+#endif //__FEMON_OSD_H
 

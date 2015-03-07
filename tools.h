@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * tools.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONTOOLS_H
-#define __FEMONTOOLS_H
+#ifndef __FEMON_COMMON_H
+#define __FEMON_COMMON_H
 
 #include <stdint.h>
 #include <vdr/channels.h>
@@ -80,4 +80,4 @@ public:
   void           SkipSeGolomb() { SkipGolomb(); }
   };
 
-#endif // __FEMONTOOLS_H
+#endif // __FEMON_COMMON_H

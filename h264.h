@@ -1,14 +1,14 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * h264.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONH264_H
-#define __FEMONH264_H
+#ifndef __FEMON_H264_H
+#define __FEMON_H264_H
 
-#include "femonvideo.h"
+#include "video.h"
 
 class cFemonH264 {
 private:
@@ -61,4 +61,4 @@ public:
   bool processVideo(const uint8_t *bufP, int lenP);
   };
 
-#endif //__FEMONH264_H
+#endif //__FEMON_H264_H

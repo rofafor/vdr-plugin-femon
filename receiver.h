@@ -1,24 +1,24 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * receiver.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONRECEIVER_H
-#define __FEMONRECEIVER_H
+#ifndef __FEMON_RECEIVER_H
+#define __FEMON_RECEIVER_H
 
 #include <vdr/thread.h>
 #include <vdr/receiver.h>
 
-#include "femonh264.h"
-#include "femonmpeg.h"
-#include "femonaac.h"
-#include "femonlatm.h"
-#include "femonac3.h"
-#include "femonaudio.h"
-#include "femonvideo.h"
-#include "femontools.h"
+#include "aac.h"
+#include "ac3.h"
+#include "audio.h"
+#include "h264.h"
+#include "latm.h"
+#include "mpeg.h"
+#include "tools.h"
+#include "video.h"
 
 class cFemonReceiver : public cReceiver, public cThread, public cFemonVideoIf, public cFemonAudioIf, public cFemonAC3If {
 private:
@@ -174,5 +174,5 @@ public:
                                       return ac3InfoM.lfe; };                 // boolean
   };
 
-#endif //__FEMONRECEIVER_H
+#endif //__FEMON_RECEIVER_H
 

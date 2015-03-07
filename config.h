@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * config.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONCONFIG_H
-#define __FEMONCONFIG_H
+#ifndef __FEMON_CONFIG_H
+#define __FEMON_CONFIG_H
 
 #define MaxSvdrpIp 15 // xxx.xxx.xxx.xxx
 
@@ -133,4 +133,4 @@ struct cFemonTheme
 
 extern const cFemonTheme FemonTheme[eFemonThemeMaxNumber];
 
-#endif // __FEMONCONFIG_H
+#endif // __FEMON_CONFIG_H

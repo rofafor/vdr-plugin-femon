@@ -1,13 +1,13 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * h264.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
 #include "log.h"
-#include "femontools.h"
-#include "femonh264.h"
+#include "tools.h"
+#include "h264.h"
 
 const cFemonH264::t_DAR cFemonH264::darS[] =
 {

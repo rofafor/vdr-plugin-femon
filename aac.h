@@ -1,14 +1,14 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * aac.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONAAC_H
-#define __FEMONAAC_H
+#ifndef __FEMON_AAC_H
+#define __FEMON_AAC_H
 
-#include "femonaudio.h"
+#include "audio.h"
 
 class cFemonAAC {
 private:
@@ -23,4 +23,4 @@ public:
   bool processAudio(const uint8_t *bufP, int lenP);
   };
 
-#endif //__FEMONAAC_H
+#endif //__FEMON_AAC_H

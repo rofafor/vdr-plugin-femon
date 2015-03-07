@@ -1,5 +1,5 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * config.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
@@ -7,8 +7,8 @@
 
 #include <string.h>
 
-#include "femontools.h"
-#include "femonconfig.h"
+#include "tools.h"
+#include "config.h"
 
 cFemonConfig FemonConfig;
 

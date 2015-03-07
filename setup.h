@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * setup.h: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONSETUP_H
-#define __FEMONSETUP_H
+#ifndef __FEMON_SETUP_H
+#define __FEMON_SETUP_H
 
 class cMenuFemonSetup : public cMenuSetupPage {
 private:
@@ -38,4 +38,4 @@ public:
   cMenuFemonSetup();
 };
 
-#endif // __FEMONSETUP_H
+#endif // __FEMON_SETUP_H

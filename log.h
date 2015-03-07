@@ -8,7 +8,7 @@
 #ifndef __FEMON_LOG_H
 #define __FEMON_LOG_H
 
-#include "femonconfig.h"
+#include "config.h"
 
 #define error(x...)   esyslog("FEMON-ERROR: " x)
 #define info(x...)    isyslog("FEMON: " x)

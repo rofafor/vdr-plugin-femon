@@ -1,5 +1,5 @@
 /*
- * Frontend Status Monitor plugin for the Video Disk Recorder
+ * tools.c: Frontend Status Monitor plugin for the Video Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
@@ -15,9 +15,10 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <linux/dvb/frontend.h>
-#include "femonreceiver.h"
-#include "femonosd.h"
-#include "femontools.h"
+
+#include "osd.h"
+#include "receiver.h"
+#include "tools.h"
 
 static cString getCA(int valueP)
 {

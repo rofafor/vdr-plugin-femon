@@ -1,12 +1,12 @@
 /*
- * Frontend Status Monitor plugin for the AUDIO Disk Recorder
+ * audio.h: Frontend Status Monitor plugin for the AUDIO Disk Recorder
  *
  * See the README file for copyright information and how to reach the author.
  *
  */
 
-#ifndef __FEMONAUDIO_H
-#define __FEMONAUDIO_H
+#ifndef __FEMON_AUDIO_H
+#define __FEMON_AUDIO_H
 
 enum eAudioCodec {
   AUDIO_CODEC_INVALID = -1,
@@ -147,4 +147,4 @@ public:
   virtual void SetAC3LFE(bool onoffP) = 0;
   };
 
-#endif //__FEMONAUDIO_H
+#endif //__FEMON_AUDIO_H
