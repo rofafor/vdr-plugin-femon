@@ -10,66 +10,66 @@
 #include "femoncfg.h"
 #include "femonreceiver.h"
 
-cFemonReceiver::cFemonReceiver(const cChannel *Channel, int ATrack, int DTrack)
-: cReceiver(Channel),
+cFemonReceiver::cFemonReceiver(const cChannel *channelP, int aTrackP, int dTrackP)
+: cReceiver(channelP),
   cThread("femon receiver"),
-  m_Mutex(),
-  m_Sleep(),
-  m_Active(false),
-  m_DetectH264(this),
-  m_DetectMPEG(this, this),
-  m_DetectAAC(this),
-  m_DetectLATM(this),
-  m_DetectAC3(this),
-  m_VideoBuffer(KILOBYTE(512), TS_SIZE, false, "Femon video"),
-  m_VideoType(Channel ? Channel->Vtype(): 0),
-  m_VideoPid(Channel ? Channel->Vpid() : 0),
-  m_VideoPacketCount(0),
-  m_VideoBitrate(0.0),
-  m_VideoValid(false),
-  m_AudioBuffer(KILOBYTE(256), TS_SIZE, false, "Femon audio"),
-  m_AudioPid(Channel ? Channel->Apid(ATrack) : 0),
-  m_AudioPacketCount(0),
-  m_AudioBitrate(0.0),
-  m_AudioValid(false),
-  m_AC3Buffer(KILOBYTE(256), TS_SIZE, false, "Femon AC3"),
-  m_AC3Pid(Channel ? Channel->Dpid(DTrack) : 0),
-  m_AC3PacketCount(0),
-  m_AC3Bitrate(0),
-  m_AC3Valid(false)
+  mutexM(),
+  sleepM(),
+  activeM(false),
+  detectH264M(this),
+  detectMpegM(this, this),
+  detectAacM(this),
+  detectLatmM(this),
+  detectAc3M(this),
+  videoBufferM(KILOBYTE(512), TS_SIZE, false, "Femon video"),
+  videoTypeM(channelP ? channelP->Vtype(): 0),
+  videoPidM(channelP ? channelP->Vpid() : 0),
+  videoPacketCountM(0),
+  videoBitRateM(0.0),
+  videoValidM(false),
+  audioBufferM(KILOBYTE(256), TS_SIZE, false, "Femon audio"),
+  audioPidM(channelP ? channelP->Apid(aTrackP) : 0),
+  audioPacketCountM(0),
+  audioBitRateM(0.0),
+  audioValidM(false),
+  ac3BufferM(KILOBYTE(256), TS_SIZE, false, "Femon AC3"),
+  ac3PidM(channelP ? channelP->Dpid(dTrackP) : 0),
+  ac3PacketCountM(0),
+  ac3BitRateM(0),
+  ac3ValidM(false)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
 
   SetPids(NULL);
-  AddPid(m_VideoPid);
-  AddPid(m_AudioPid);
-  AddPid(m_AC3Pid);
+  AddPid(videoPidM);
+  AddPid(audioPidM);
+  AddPid(ac3PidM);
 
-  m_VideoBuffer.SetTimeouts(0, 100);
-  m_AudioBuffer.SetTimeouts(0, 100);
-  m_AC3Buffer.SetTimeouts(0, 100);
+  videoBufferM.SetTimeouts(0, 100);
+  audioBufferM.SetTimeouts(0, 100);
+  ac3BufferM.SetTimeouts(0, 100);
 
-  m_VideoInfo.codec = VIDEO_CODEC_INVALID;
-  m_VideoInfo.format = VIDEO_FORMAT_INVALID;
-  m_VideoInfo.scan = VIDEO_SCAN_INVALID;
-  m_VideoInfo.aspectRatio = VIDEO_ASPECT_RATIO_INVALID;
-  m_VideoInfo.width = 0;
-  m_VideoInfo.height = 0;
-  m_VideoInfo.frameRate = 0;
-  m_VideoInfo.bitrate = AUDIO_BITRATE_INVALID;
-  m_AudioInfo.codec = AUDIO_CODEC_UNKNOWN;
-  m_AudioInfo.bitrate = AUDIO_BITRATE_INVALID;
-  m_AudioInfo.samplingFrequency = AUDIO_SAMPLING_FREQUENCY_INVALID;
-  m_AudioInfo.channelMode = AUDIO_CHANNEL_MODE_INVALID;
-  m_AC3Info.bitrate = AUDIO_BITRATE_INVALID;
-  m_AC3Info.samplingFrequency = AUDIO_SAMPLING_FREQUENCY_INVALID;
-  m_AC3Info.bitstreamMode = AUDIO_BITSTREAM_MODE_INVALID;
-  m_AC3Info.audioCodingMode = AUDIO_CODING_MODE_INVALID;
-  m_AC3Info.dolbySurroundMode = AUDIO_DOLBY_SURROUND_MODE_INVALID;
-  m_AC3Info.centerMixLevel = AUDIO_CENTER_MIX_LEVEL_INVALID;
-  m_AC3Info.surroundMixLevel = AUDIO_SURROUND_MIX_LEVEL_INVALID;
-  m_AC3Info.dialogLevel = 0;
-  m_AC3Info.lfe = false;
+  videoInfoM.codec = VIDEO_CODEC_INVALID;
+  videoInfoM.format = VIDEO_FORMAT_INVALID;
+  videoInfoM.scan = VIDEO_SCAN_INVALID;
+  videoInfoM.aspectRatio = VIDEO_ASPECT_RATIO_INVALID;
+  videoInfoM.width = 0;
+  videoInfoM.height = 0;
+  videoInfoM.frameRate = 0;
+  videoInfoM.bitrate = AUDIO_BITRATE_INVALID;
+  audioInfoM.codec = AUDIO_CODEC_UNKNOWN;
+  audioInfoM.bitrate = AUDIO_BITRATE_INVALID;
+  audioInfoM.samplingFrequency = AUDIO_SAMPLING_FREQUENCY_INVALID;
+  audioInfoM.channelMode = AUDIO_CHANNEL_MODE_INVALID;
+  ac3InfoM.bitrate = AUDIO_BITRATE_INVALID;
+  ac3InfoM.samplingFrequency = AUDIO_SAMPLING_FREQUENCY_INVALID;
+  ac3InfoM.bitstreamMode = AUDIO_BITSTREAM_MODE_INVALID;
+  ac3InfoM.audioCodingMode = AUDIO_CODING_MODE_INVALID;
+  ac3InfoM.dolbySurroundMode = AUDIO_DOLBY_SURROUND_MODE_INVALID;
+  ac3InfoM.centerMixLevel = AUDIO_CENTER_MIX_LEVEL_INVALID;
+  ac3InfoM.surroundMixLevel = AUDIO_SURROUND_MIX_LEVEL_INVALID;
+  ac3InfoM.dialogLevel = 0;
+  ac3InfoM.lfe = false;
 }
 
 cFemonReceiver::~cFemonReceiver(void)
@@ -82,50 +82,50 @@ void cFemonReceiver::Deactivate(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
   Detach();
-  if (m_Active) {
-     m_Active = false;
-     m_Sleep.Signal();
+  if (activeM) {
+     activeM = false;
+     sleepM.Signal();
      if (Running())
         Cancel(3);
      }
 }
 
-void cFemonReceiver::Activate(bool On)
+void cFemonReceiver::Activate(bool onP)
 {
-  debug("%s(%d)\n", __PRETTY_FUNCTION__, On);
-  if (On)
+  debug("%s(%d)\n", __PRETTY_FUNCTION__, onP);
+  if (onP)
      Start();
   else
      Deactivate();
 }
 
-void cFemonReceiver::Receive(uchar *Data, int Length)
+void cFemonReceiver::Receive(uchar *dataP, int lengthP)
 {
   // TS packet length: TS_SIZE
-  if (Running() && (*Data == TS_SYNC_BYTE) && (Length == TS_SIZE)) {
-     int len, pid = TsPid(Data);
-     if (pid == m_VideoPid) {
-        ++m_VideoPacketCount;
-        len = m_VideoBuffer.Put(Data, Length);
-        if (len != Length) {
-           m_VideoBuffer.ReportOverflow(Length - len);
-           m_VideoBuffer.Clear();
+  if (Running() && (*dataP == TS_SYNC_BYTE) && (lengthP == TS_SIZE)) {
+     int len, pid = TsPid(dataP);
+     if (pid == videoPidM) {
+        ++videoPacketCountM;
+        len = videoBufferM.Put(dataP, lengthP);
+        if (len != lengthP) {
+           videoBufferM.ReportOverflow(lengthP - len);
+           videoBufferM.Clear();
            }
         }
-     else if (pid == m_AudioPid) {
-        ++m_AudioPacketCount;
-        len = m_AudioBuffer.Put(Data, Length);
-        if (len != Length) {
-           m_AudioBuffer.ReportOverflow(Length - len);
-           m_AudioBuffer.Clear();
+     else if (pid == audioPidM) {
+        ++audioPacketCountM;
+        len = audioBufferM.Put(dataP, lengthP);
+        if (len != lengthP) {
+           audioBufferM.ReportOverflow(lengthP - len);
+           audioBufferM.Clear();
            }
         }
-     else if (pid == m_AC3Pid) {
-        ++m_AC3PacketCount;
-        len = m_AC3Buffer.Put(Data, Length);
-        if (len != Length) {
-           m_AC3Buffer.ReportOverflow(Length - len);
-           m_AC3Buffer.Clear();
+     else if (pid == ac3PidM) {
+        ++ac3PacketCountM;
+        len = ac3BufferM.Put(dataP, lengthP);
+        if (len != lengthP) {
+           ac3BufferM.ReportOverflow(lengthP - len);
+           ac3BufferM.Clear();
            }
         }
      }
@@ -135,17 +135,17 @@ void cFemonReceiver::Action(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
   cTimeMs calcPeriod(0);
-  m_Active = true;
+  activeM = true;
 
-  while (Running() && m_Active) {
+  while (Running() && activeM) {
     uint8_t *Data;
     double timeout;
     int len, Length;
     bool processed = false;
 
     // process available video data
-    while ((Data = m_VideoBuffer.Get(Length))) {
-      if (!m_Active || (Length < TS_SIZE))
+    while ((Data = videoBufferM.Get(Length))) {
+      if (!activeM || (Length < TS_SIZE))
          break;
       Length = TS_SIZE;
       if (*Data != TS_SYNC_BYTE) {
@@ -155,34 +155,34 @@ void cFemonReceiver::Action(void)
                 break;
                 }
              }
-         m_VideoBuffer.Del(Length);
+         videoBufferM.Del(Length);
          continue;
          }
       processed = true;
       if (TsPayloadStart(Data)) {
-         while (const uint8_t *p = m_VideoAssembler.GetPes(len)) {
-           if (m_VideoType == 0x1B) { // MPEG4
-              if (m_DetectH264.processVideo(p, len)) {
-                 m_VideoValid = true;
+         while (const uint8_t *p = videoAssemblerM.GetPes(len)) {
+           if (videoTypeM == 0x1B) { // MPEG4
+              if (detectH264M.processVideo(p, len)) {
+                 videoValidM = true;
                  break;
                  }
               }
            else {
-              if (m_DetectMPEG.processVideo(p, len)) {
-                 m_VideoValid = true;
+              if (detectMpegM.processVideo(p, len)) {
+                 videoValidM = true;
                  break;
                  }
               }
            }
-         m_VideoAssembler.Reset();
+         videoAssemblerM.Reset();
          }
-      m_VideoAssembler.PutTs(Data, Length);
-      m_VideoBuffer.Del(Length);
+      videoAssemblerM.PutTs(Data, Length);
+      videoBufferM.Del(Length);
       }
 
     // process available audio data
-    while ((Data = m_AudioBuffer.Get(Length))) {
-      if (!m_Active || (Length < TS_SIZE))
+    while ((Data = audioBufferM.Get(Length))) {
+      if (!activeM || (Length < TS_SIZE))
          break;
       Length = TS_SIZE;
       if (*Data != TS_SYNC_BYTE) {
@@ -192,22 +192,22 @@ void cFemonReceiver::Action(void)
                 break;
                 }
              }
-         m_AudioBuffer.Del(Length);
+         audioBufferM.Del(Length);
          continue;
          }
       processed = true;
-      if (const uint8_t *p = m_AudioAssembler.GetPes(len)) {
-         if (m_DetectAAC.processAudio(p, len) || m_DetectLATM.processAudio(p, len) || m_DetectMPEG.processAudio(p, len))
-            m_AudioValid = true;
-         m_AudioAssembler.Reset();
+      if (const uint8_t *p = audioAssemblerM.GetPes(len)) {
+         if (detectAacM.processAudio(p, len) || detectLatmM.processAudio(p, len) || detectMpegM.processAudio(p, len))
+            audioValidM = true;
+         audioAssemblerM.Reset();
          }
-      m_AudioAssembler.PutTs(Data, Length);
-      m_AudioBuffer.Del(Length);
+      audioAssemblerM.PutTs(Data, Length);
+      audioBufferM.Del(Length);
       }
 
     // process available dolby data
-    while ((Data = m_AC3Buffer.Get(Length))) {
-      if (!m_Active || (Length < TS_SIZE))
+    while ((Data = ac3BufferM.Get(Length))) {
+      if (!activeM || (Length < TS_SIZE))
          break;
       Length = TS_SIZE;
       if (*Data != TS_SYNC_BYTE) {
@@ -217,34 +217,34 @@ void cFemonReceiver::Action(void)
                 break;
                 }
              }
-         m_AC3Buffer.Del(Length);
+         ac3BufferM.Del(Length);
          continue;
          }
       processed = true;
-      if (const uint8_t *p = m_AC3Assembler.GetPes(len)) {
-         if (m_DetectAC3.processAudio(p, len))
-            m_AC3Valid = true;
-         m_AC3Assembler.Reset();
+      if (const uint8_t *p = ac3AssemblerM.GetPes(len)) {
+         if (detectAc3M.processAudio(p, len))
+            ac3ValidM = true;
+         ac3AssemblerM.Reset();
          }
-      m_AC3Assembler.PutTs(Data, Length);
-      m_AC3Buffer.Del(Length);
+      ac3AssemblerM.PutTs(Data, Length);
+      ac3BufferM.Del(Length);
       }
 
     // calculate bitrates
     timeout = double(calcPeriod.Elapsed());
-    if (m_Active && (timeout >= (100.0 * femonConfig.calcinterval))) {
+    if (activeM && (timeout >= (100.0 * FemonConfig.calcinterval))) {
        // TS packet 188 bytes - 4 byte header; MPEG standard defines 1Mbit = 1000000bit
        // PES headers should be compensated!
-       m_VideoBitrate     = (1000.0 * 8.0 * 184.0 * m_VideoPacketCount) / timeout;
-       m_VideoPacketCount = 0;
-       m_AudioBitrate     = (1000.0 * 8.0 * 184.0 * m_AudioPacketCount) / timeout;
-       m_AudioPacketCount = 0;
-       m_AC3Bitrate       = (1000.0 * 8.0 * 184.0 * m_AC3PacketCount)   / timeout;
-       m_AC3PacketCount   = 0;
+       videoBitRateM     = (1000.0 * 8.0 * 184.0 * videoPacketCountM) / timeout;
+       videoPacketCountM = 0;
+       audioBitRateM     = (1000.0 * 8.0 * 184.0 * audioPacketCountM) / timeout;
+       audioPacketCountM = 0;
+       ac3BitRateM       = (1000.0 * 8.0 * 184.0 * ac3PacketCountM)   / timeout;
+       ac3PacketCountM   = 0;
        calcPeriod.Set(0);
        }
 
     if (!processed)
-       m_Sleep.Wait(10); // to avoid busy loop and reduce cpu load
+       sleepM.Wait(10); // to avoid busy loop and reduce cpu load
     }
 }

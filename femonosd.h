@@ -31,44 +31,44 @@ private:
     DEVICESOURCE_COUNT
     };
 
-  static cFemonOsd *pInstance;
+  static cFemonOsd *pInstanceS;
 
-  cOsd             *m_Osd;
-  cFemonReceiver   *m_Receiver;
-  int               m_Frontend;
-  int               m_SvdrpFrontend;
-  double            m_SvdrpVideoBitrate;
-  double            m_SvdrpAudioBitrate;
-  SvdrpConnection_v1_0 m_SvdrpConnection;
-  cPlugin          *m_SvdrpPlugin;
-  int               m_Number;
-  int               m_OldNumber;
-  int               m_Quality;
-  bool              m_QualityValid;
-  int               m_Strength;
-  bool              m_StrengthValid;
-  uint16_t          m_SNR;
-  bool              m_SNRValid;
-  uint16_t          m_Signal;
-  bool              m_SignalValid;
-  uint32_t          m_BER;
-  bool              m_BERValid;
-  uint32_t          m_UNC;
-  bool              m_UNCValid;
-  cString           m_FrontendName;
-  fe_status_t       m_FrontendStatus;
-  bool              m_FrontendStatusValid;
-  dvb_frontend_info m_FrontendInfo;
-  eDeviceSourceType m_DeviceSource;
-  int               m_DisplayMode;
-  int               m_OsdWidth;
-  int               m_OsdHeight;
-  int               m_OsdLeft;
-  int               m_OsdTop;
-  cFont            *m_Font;
-  cTimeMs           m_InputTime;
-  cCondWait         m_Sleep;
-  cMutex            m_Mutex;
+  cOsd             *osdM;
+  cFemonReceiver   *receiverM;
+  int               frontendM;
+  int               svdrpFrontendM;
+  double            svdrpVideoBitRateM;
+  double            svdrpAudioBitRateM;
+  SvdrpConnection_v1_0 svdrpConnectionM;
+  cPlugin          *svdrpPluginM;
+  int               numberM;
+  int               oldNumberM;
+  int               qualityM;
+  bool              qualityValidM;
+  int               strengthM;
+  bool              strengthValidM;
+  uint16_t          snrM;
+  bool              snrValidM;
+  uint16_t          signalM;
+  bool              signalValidM;
+  uint32_t          berM;
+  bool              berValidM;
+  uint32_t          uncM;
+  bool              uncValidM;
+  cString           frontendNameM;
+  fe_status_t       frontendStatusM;
+  bool              frontendStatusValidM;
+  dvb_frontend_info frontendInfoM;
+  eDeviceSourceType deviceSourceM;
+  int               displayModeM;
+  int               osdWidthM;
+  int               osdHeightM;
+  int               osdLeftM;
+  int               osdTopM;
+  cFont            *fontM;
+  cTimeMs           inputTimeM;
+  cCondWait         sleepM;
+  cMutex            mutexM;
 
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);
@@ -80,17 +80,17 @@ protected:
   cFemonOsd(const cFemonOsd&);
   cFemonOsd& operator= (const cFemonOsd&);
   virtual void Action(void);
-  virtual void ChannelSwitch(const cDevice *device, int channelNumber, bool liveView);
-  virtual void SetAudioTrack(int Index, const char * const *Tracks);
+  virtual void ChannelSwitch(const cDevice *deviceP, int channelNumberP, bool liveViewP);
+  virtual void SetAudioTrack(int indexP, const char * const *tracksP);
 
 public:
-  static cFemonOsd *Instance(bool create = false);
+  static cFemonOsd *Instance(bool createP = false);
   ~cFemonOsd();
 
   virtual void Show(void);
-  virtual eOSState ProcessKey(eKeys Key);
+  virtual eOSState ProcessKey(eKeys keyP);
 
-  bool    DeviceSwitch(int direction);
+  bool    DeviceSwitch(int directionP);
   double  GetVideoBitrate(void);
   double  GetAudioBitrate(void);
   double  GetDolbyBitrate(void);

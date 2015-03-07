@@ -12,15 +12,15 @@
 
 class cFemonAAC {
 private:
-  cFemonAudioIf *m_AudioHandler;
+  cFemonAudioIf *audioHandlerM;
 
-  static int s_Samplerates[16];
+  static int sampleRateS[16];
 
 public:
-  cFemonAAC(cFemonAudioIf *audiohandler);
+  cFemonAAC(cFemonAudioIf *audioHandlerP);
   virtual ~cFemonAAC();
 
-  bool processAudio(const uint8_t *buf, int len);
+  bool processAudio(const uint8_t *bufP, int lenP);
   };
 
 #endif //__FEMONAAC_H

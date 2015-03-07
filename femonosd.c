@@ -21,22 +21,22 @@
 #define CHANNELINPUT_TIMEOUT      1000
 #define SVDRPPLUGIN               "svdrpservice"
 
-#define OSDWIDTH                  m_OsdWidth              // in pixels
-#define OSDHEIGHT                 m_OsdHeight             // in pixels
-#define OSDROWHEIGHT              m_Font->Height()        // in pixels
+#define OSDWIDTH                  osdWidthM              // in pixels
+#define OSDHEIGHT                 osdHeightM             // in pixels
+#define OSDROWHEIGHT              fontM->Height()        // in pixels
 #define OSDINFOHEIGHT             (OSDROWHEIGHT * 14)     // in pixels (14 rows)
 #define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 6)      // in pixels (6 rows)
 #define OSDSYMBOL(id)             femonSymbols.Get(id)
 #define OSDSPACING                femonSymbols.GetSpacing()
 #define OSDROUNDING               femonSymbols.GetRounding()
-#define IS_OSDROUNDING            (femonConfig.skin == eFemonSkinElchi)
+#define IS_OSDROUNDING            (FemonConfig.skin == eFemonSkinElchi)
 #define IS_OSDRESOLUTION(r1, r2)  (abs(r1 - r2) < 20)
-#define OSDINFOWIN_Y(offset)      (femonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
+#define OSDINFOWIN_Y(offset)      (FemonConfig.position ? (OSDHEIGHT - OSDINFOHEIGHT + offset) : offset)
 #define OSDINFOWIN_X(col)         ((col == 4) ? int(round(OSDWIDTH * 0.76)) : \
                                    (col == 3) ? int(round(OSDWIDTH * 0.51)) : \
                                    (col == 2) ? int(round(OSDWIDTH * 0.26)) : \
                                                 int(round(OSDWIDTH * 0.025)))
-#define OSDSTATUSWIN_Y(offset)    (femonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
+#define OSDSTATUSWIN_Y(offset)    (FemonConfig.position ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
 #define OSDSTATUSWIN_X(col)       ((col == 7) ? int(round(OSDWIDTH * 0.79)) : \
                                    (col == 6) ? int(round(OSDWIDTH * 0.68)) : \
                                    (col == 5) ? int(round(OSDWIDTH * 0.46)) : \
@@ -52,85 +52,85 @@
            x -= bm->Width() + spacing; \
            y = (OSDROWHEIGHT - bm->Height()) / 2; \
            if (y < 0) y = 0; \
-           m_Osd->DrawBitmap(x, OSDSTATUSWIN_Y(offset) + y, *bm, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground); \
+           osdM->DrawBitmap(x, OSDSTATUSWIN_Y(offset) + y, *bm, FemonTheme[FemonConfig.theme].clrTitleText, FemonTheme[FemonConfig.theme].clrTitleBackground); \
            }
 
 #define OSDDRAWSTATUSFRONTEND(column, bitmap, status) \
-        m_Osd->DrawBitmap(OSDSTATUSWIN_XSYMBOL(column, x), OSDSTATUSWIN_Y(offset) + y, bitmap, (m_FrontendStatus & status) ? femonTheme[femonConfig.theme].clrActiveText : femonTheme[femonConfig.theme].clrRed, femonTheme[femonConfig.theme].clrBackground)
+        osdM->DrawBitmap(OSDSTATUSWIN_XSYMBOL(column, x), OSDSTATUSWIN_Y(offset) + y, bitmap, (frontendStatusM & status) ? FemonTheme[FemonConfig.theme].clrActiveText : FemonTheme[FemonConfig.theme].clrRed, FemonTheme[FemonConfig.theme].clrBackground)
 
 #define OSDDRAWSTATUSVALUES(label1, label2, label3, label4, label5, label6, label7) \
-        m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), label1, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), label2, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), label3, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), label4, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), label5, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), label6, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), label7, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font)
+        osdM->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), label1, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), label2, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), label3, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), label4, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), label5, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), label6, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), label7, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
 
 #define OSDDRAWSTATUSBAR(value) \
         if (value > 0) { \
            int barvalue = OSDBARWIDTH(value); \
-           m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + 3, min(OSDBARWIDTH(femonConfig.redlimit), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrRed); \
-           if (barvalue > OSDBARWIDTH(femonConfig.redlimit)) \
-              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.redlimit), OSDSTATUSWIN_Y(offset) + 3, min((OSDWIDTH * femonConfig.greenlimit / 100), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrYellow); \
-           if (barvalue > OSDBARWIDTH(femonConfig.greenlimit)) \
-              m_Osd->DrawRectangle(OSDBARWIDTH(femonConfig.greenlimit), OSDSTATUSWIN_Y(offset) + 3, barvalue, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, femonTheme[femonConfig.theme].clrGreen); \
+           osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + 3, min(OSDBARWIDTH(FemonConfig.redlimit), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.theme].clrRed); \
+           if (barvalue > OSDBARWIDTH(FemonConfig.redlimit)) \
+              osdM->DrawRectangle(OSDBARWIDTH(FemonConfig.redlimit), OSDSTATUSWIN_Y(offset) + 3, min((OSDWIDTH * FemonConfig.greenlimit / 100), barvalue), OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.theme].clrYellow); \
+           if (barvalue > OSDBARWIDTH(FemonConfig.greenlimit)) \
+              osdM->DrawRectangle(OSDBARWIDTH(FemonConfig.greenlimit), OSDSTATUSWIN_Y(offset) + 3, barvalue, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 3, FemonTheme[FemonConfig.theme].clrGreen); \
            }
 
 #define OSDDRAWSTATUSTITLEBAR(title) \
-        m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 1, femonTheme[femonConfig.theme].clrTitleBackground); \
-        m_Osd->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), title, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font); \
+        osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset), OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT - 1, FemonTheme[FemonConfig.theme].clrTitleBackground); \
+        osdM->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), title, FemonTheme[FemonConfig.theme].clrTitleText, FemonTheme[FemonConfig.theme].clrTitleBackground, fontM); \
         if (IS_OSDROUNDING) { \
-           m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDROUNDING, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -2); \
-           m_Osd->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -1); \
+           osdM->DrawEllipse(0, OSDSTATUSWIN_Y(0), OSDROUNDING, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -2); \
+           osdM->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDROUNDING), clrTransparent, -1); \
            } \
-        m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDSTATUSHEIGHT - 1, femonTheme[femonConfig.theme].clrBackground)
+        osdM->DrawRectangle(0, OSDSTATUSWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDSTATUSWIN_Y(offset) + OSDSTATUSHEIGHT - 1, FemonTheme[FemonConfig.theme].clrBackground)
 
 #define OSDDRAWSTATUSBOTTOMBAR() \
         if (IS_OSDROUNDING) { \
-           m_Osd->DrawEllipse(0, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - OSDROUNDING, OSDROUNDING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -3); \
-           m_Osd->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - OSDROUNDING, OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -4); \
+           osdM->DrawEllipse(0, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - OSDROUNDING, OSDROUNDING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -3); \
+           osdM->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - OSDROUNDING, OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT), clrTransparent, -4); \
            }
 
 #define OSDCLEARSTATUS() \
-        m_Osd->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - 1, clrTransparent)
+        osdM->DrawRectangle(0, OSDSTATUSWIN_Y(0), OSDWIDTH, OSDSTATUSWIN_Y(OSDSTATUSHEIGHT) - 1, clrTransparent)
 
 #define OSDDRAWINFOLEFT(label, value) \
-        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), value, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font)
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDINFOWIN_X(2), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
 
 #define OSDDRAWINFORIGHT(label, value) \
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), label, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), value, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font)
+        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDINFOWIN_X(4), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
 
 #define OSDDRAWINFOACTIVE(label, value) \
-        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), value, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font)
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
 
 #define OSDDRAWINFOINACTIVE(label, value) \
-        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, femonTheme[femonConfig.theme].clrInactiveText, femonTheme[femonConfig.theme].clrBackground, m_Font); \
-        m_Osd->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), value, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font)
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrInactiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM); \
+        osdM->DrawText(OSDINFOWIN_X(3), OSDINFOWIN_Y(offset), value, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
 
 #define OSDDRAWINFOLINE(label) \
-        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, femonTheme[femonConfig.theme].clrActiveText, femonTheme[femonConfig.theme].clrBackground, m_Font)
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), label, FemonTheme[FemonConfig.theme].clrActiveText, FemonTheme[FemonConfig.theme].clrBackground, fontM)
 
 #define OSDDRAWINFOTITLEBAR(title) \
-        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset) + OSDROWHEIGHT - 1, femonTheme[femonConfig.theme].clrTitleBackground); \
-        m_Osd->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), title, femonTheme[femonConfig.theme].clrTitleText, femonTheme[femonConfig.theme].clrTitleBackground, m_Font); \
+        osdM->DrawRectangle(0, OSDINFOWIN_Y(offset), OSDWIDTH, OSDINFOWIN_Y(offset) + OSDROWHEIGHT - 1, FemonTheme[FemonConfig.theme].clrTitleBackground); \
+        osdM->DrawText(OSDINFOWIN_X(1), OSDINFOWIN_Y(offset), title, FemonTheme[FemonConfig.theme].clrTitleText, FemonTheme[FemonConfig.theme].clrTitleBackground, fontM); \
         if (IS_OSDROUNDING) { \
-           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(0), OSDROUNDING, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -2); \
-           m_Osd->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -1); \
+           osdM->DrawEllipse(0, OSDINFOWIN_Y(0), OSDROUNDING, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -2); \
+           osdM->DrawEllipse(OSDWIDTH - OSDROUNDING, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDROUNDING), clrTransparent, -1); \
            } \
-        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDINFOWIN_Y(offset) + OSDINFOHEIGHT - 1, femonTheme[femonConfig.theme].clrBackground)
+        osdM->DrawRectangle(0, OSDINFOWIN_Y(offset) + OSDROWHEIGHT, OSDWIDTH, OSDINFOWIN_Y(offset) + OSDINFOHEIGHT - 1, FemonTheme[FemonConfig.theme].clrBackground)
 
 #define OSDDRAWINFOBOTTOMBAR() \
         if (IS_OSDROUNDING) { \
-           m_Osd->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT) - OSDROUNDING, OSDROUNDING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3); \
-           m_Osd->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDINFOWIN_Y(OSDINFOHEIGHT) - OSDROUNDING, OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4); \
+           osdM->DrawEllipse(0, OSDINFOWIN_Y(OSDINFOHEIGHT) - OSDROUNDING, OSDROUNDING, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -3); \
+           osdM->DrawEllipse((OSDWIDTH - OSDROUNDING), OSDINFOWIN_Y(OSDINFOHEIGHT) - OSDROUNDING, OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT), clrTransparent, -4); \
            }
 
 #define OSDCLEARINFO() \
-        m_Osd->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT) - 1, clrTransparent)
+        osdM->DrawRectangle(0, OSDINFOWIN_Y(0), OSDWIDTH, OSDINFOWIN_Y(OSDINFOHEIGHT) - 1, clrTransparent)
 
 #ifndef MINFONTSIZE
 #define MINFONTSIZE 10
@@ -142,69 +142,69 @@
 
 class cFemonDummyFont : public cFont {
 public:
-  virtual int Width(uint c) const { return 10; }
-  virtual int Width(const char *s) const { return 50; }
+  virtual int Width(uint cP) const { return 10; }
+  virtual int Width(const char *sP) const { return 50; }
   virtual int Height(void) const { return 20; }
-  virtual void DrawText(cBitmap *Bitmap, int x, int y, const char *s, tColor ColorFg, tColor ColorBg, int Width) const {}
-  virtual void DrawText(cPixmap *Pixmap, int x, int y, const char *s, tColor ColorFg, tColor ColorBg, int Width) const {}
+  virtual void DrawText(cBitmap *bitmapP, int xP, int yP, const char *sP, tColor colorFgP, tColor colorBgP, int widthP) const {}
+  virtual void DrawText(cPixmap *pixmapP, int xP, int yP, const char *sP, tColor colorFgP, tColor colorBgP, int widthP) const {}
 };
 
-cFemonOsd *cFemonOsd::pInstance = NULL;
+cFemonOsd *cFemonOsd::pInstanceS = NULL;
 
-cFemonOsd *cFemonOsd::Instance(bool create)
+cFemonOsd *cFemonOsd::Instance(bool createP)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
-  if ((pInstance == NULL) && create)
+  if ((pInstanceS == NULL) && createP)
   {
-     pInstance = new cFemonOsd();
+     pInstanceS = new cFemonOsd();
   }
-  return (pInstance);
+  return (pInstanceS);
 }
 
 cFemonOsd::cFemonOsd()
 : cOsdObject(true), cThread("femon osd"),
-  m_Osd(NULL),
-  m_Receiver(NULL),
-  m_Frontend(-1),
-  m_SvdrpFrontend(-1),
-  m_SvdrpVideoBitrate(-1),
-  m_SvdrpAudioBitrate(-1),
-  m_SvdrpPlugin(NULL),
-  m_Number(0),
-  m_OldNumber(0),
-  m_Quality(0),
-  m_QualityValid(false),
-  m_Strength(0),
-  m_StrengthValid(false),
-  m_SNR(0),
-  m_SNRValid(false),
-  m_Signal(0),
-  m_SignalValid(false),
-  m_BER(0),
-  m_BERValid(false),
-  m_UNC(0),
-  m_UNCValid(false),
-  m_FrontendName(""),
-  m_FrontendStatusValid(false),
-  m_DeviceSource(DEVICESOURCE_DVBAPI),
-  m_DisplayMode(femonConfig.displaymode),
-  m_OsdWidth(cOsd::OsdWidth() * (100 - femonConfig.downscale) / 100),
-  m_OsdHeight(cOsd::OsdHeight() * (100 - femonConfig.downscale) / 100),
-  m_OsdLeft(cOsd::OsdLeft() + (cOsd::OsdWidth() * femonConfig.downscale / 200)),
-  m_OsdTop(cOsd::OsdTop() + (cOsd::OsdHeight() * femonConfig.downscale / 200)),
-  m_InputTime(0),
-  m_Sleep(),
-  m_Mutex()
+  osdM(NULL),
+  receiverM(NULL),
+  frontendM(-1),
+  svdrpFrontendM(-1),
+  svdrpVideoBitRateM(-1),
+  svdrpAudioBitRateM(-1),
+  svdrpPluginM(NULL),
+  numberM(0),
+  oldNumberM(0),
+  qualityM(0),
+  qualityValidM(false),
+  strengthM(0),
+  strengthValidM(false),
+  snrM(0),
+  snrValidM(false),
+  signalM(0),
+  signalValidM(false),
+  berM(0),
+  berValidM(false),
+  uncM(0),
+  uncValidM(false),
+  frontendNameM(""),
+  frontendStatusValidM(false),
+  deviceSourceM(DEVICESOURCE_DVBAPI),
+  displayModeM(FemonConfig.displaymode),
+  osdWidthM(cOsd::OsdWidth() * (100 - FemonConfig.downscale) / 100),
+  osdHeightM(cOsd::OsdHeight() * (100 - FemonConfig.downscale) / 100),
+  osdLeftM(cOsd::OsdLeft() + (cOsd::OsdWidth() * FemonConfig.downscale / 200)),
+  osdTopM(cOsd::OsdTop() + (cOsd::OsdHeight() * FemonConfig.downscale / 200)),
+  inputTimeM(0),
+  sleepM(),
+  mutexM()
 {
   int tmp;
   debug("%s()\n", __PRETTY_FUNCTION__);
-  memset(&m_FrontendStatus, 0, sizeof(m_FrontendStatus));
-  memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
-  m_SvdrpConnection.handle = -1;
+  memset(&frontendStatusM, 0, sizeof(frontendStatusM));
+  memset(&frontendInfoM, 0, sizeof(frontendInfoM));
+  svdrpConnectionM.handle = -1;
   femonSymbols.Refresh();
-  m_Font = cFont::CreateFont(Setup.FontSml, constrain(Setup.FontSmlSize, MINFONTSIZE, MAXFONTSIZE));
-  if (!m_Font || !m_Font->Height()) {
-     m_Font = new cFemonDummyFont;
+  fontM = cFont::CreateFont(Setup.FontSml, constrain(Setup.FontSmlSize, MINFONTSIZE, MAXFONTSIZE));
+  if (!fontM || !fontM->Height()) {
+     fontM = new cFemonDummyFont;
      error("cFemonOsd::cFemonOsd() cannot create required font.");
      }
   tmp = 5 * OSDSYMBOL(SYMBOL_LOCK).Width() + 6 * OSDSPACING;
@@ -222,43 +222,43 @@ cFemonOsd::cFemonOsd()
 cFemonOsd::~cFemonOsd(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
-  m_Sleep.Signal();
+  sleepM.Signal();
   if (Running())
      Cancel(3);
-  if (m_SvdrpConnection.handle >= 0) {
-     m_SvdrpPlugin = cPluginManager::GetPlugin(SVDRPPLUGIN);
-     if (m_SvdrpPlugin)
-        m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection);
+  if (svdrpConnectionM.handle >= 0) {
+     svdrpPluginM = cPluginManager::GetPlugin(SVDRPPLUGIN);
+     if (svdrpPluginM)
+        svdrpPluginM->Service("SvdrpConnection-v1.0", &svdrpConnectionM);
      }
-  if (m_Receiver) {
-     m_Receiver->Deactivate();
-     DELETENULL(m_Receiver);
+  if (receiverM) {
+     receiverM->Deactivate();
+     DELETENULL(receiverM);
      }
-  if (m_Osd)
-     DELETENULL(m_Osd);
-  if (m_Font)
-     DELETENULL(m_Font);
-  if (m_Frontend >= 0) {
-     close(m_Frontend);
-     m_Frontend = -1;
+  if (osdM)
+     DELETENULL(osdM);
+  if (fontM)
+     DELETENULL(fontM);
+  if (frontendM >= 0) {
+     close(frontendM);
+     frontendM = -1;
      }
-  pInstance = NULL;
+  pInstanceS = NULL;
 }
 
 void cFemonOsd::DrawStatusWindow(void)
 {
-  cMutexLock lock(&m_Mutex);
+  cMutexLock lock(&mutexM);
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (m_Osd && channel) {
+  if (osdM && channel) {
      cBitmap *bm = NULL;
      int offset = 0;
      int x = OSDWIDTH - OSDROUNDING;
      int y = 0;
      eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
 
-     OSDDRAWSTATUSTITLEBAR(*cString::sprintf("%d%s %s", m_Number ? m_Number : channel->Number(), m_Number ? "-" : "", channel->ShortName(true)));
-     if (m_SvdrpFrontend >= 0) {
+     OSDDRAWSTATUSTITLEBAR(*cString::sprintf("%d%s %s", numberM ? numberM : channel->Number(), numberM ? "-" : "", channel->ShortName(true)));
+     if (svdrpFrontendM >= 0) {
         bm = &OSDSYMBOL(SYMBOL_SVDRP);
         OSDDRAWSTATUSBM(OSDSPACING);
         }
@@ -296,36 +296,36 @@ void cFemonOsd::DrawStatusWindow(void)
            }
         OSDDRAWSTATUSBM(0);
         }
-     else if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
-        if      (m_Receiver->AC3_5_1()) bm = &OSDSYMBOL(SYMBOL_DD51);
-        else if (m_Receiver->AC3_2_0()) bm = &OSDSYMBOL(SYMBOL_DD20);
+     else if (receiverM && receiverM->AC3Valid() && IS_DOLBY_TRACK(track)) {
+        if      (receiverM->AC3_5_1()) bm = &OSDSYMBOL(SYMBOL_DD51);
+        else if (receiverM->AC3_2_0()) bm = &OSDSYMBOL(SYMBOL_DD20);
         else                            bm = &OSDSYMBOL(SYMBOL_DD);
         OSDDRAWSTATUSBM(OSDSPACING);
         }
-     if (m_Receiver) {
-        if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 1080)) {
-           switch (m_Receiver->VideoScan()) {
+     if (receiverM) {
+        if (IS_OSDRESOLUTION(receiverM->VideoVerticalSize(), 1080)) {
+           switch (receiverM->VideoScan()) {
               case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_1080i); break;
               case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_1080p); break;
               default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_1080);  break;
               }
            }
-        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 720)) {
-           switch (m_Receiver->VideoScan()) {
+        else if (IS_OSDRESOLUTION(receiverM->VideoVerticalSize(), 720)) {
+           switch (receiverM->VideoScan()) {
               case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_720i); break;
               case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_720p); break;
               default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_720);  break;
               }
            }
-        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 576)) {
-           switch (m_Receiver->VideoScan()) {
+        else if (IS_OSDRESOLUTION(receiverM->VideoVerticalSize(), 576)) {
+           switch (receiverM->VideoScan()) {
               case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_576i); break;
               case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_576p); break;
               default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_576);  break;
               }
            }
-        else if (IS_OSDRESOLUTION(m_Receiver->VideoVerticalSize(), 480)) {
-           switch (m_Receiver->VideoScan()) {
+        else if (IS_OSDRESOLUTION(receiverM->VideoVerticalSize(), 480)) {
+           switch (receiverM->VideoScan()) {
               case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_480i); break;
               case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_480p); break;
               default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_480);  break;
@@ -334,19 +334,19 @@ void cFemonOsd::DrawStatusWindow(void)
         else
            bm = NULL;
         OSDDRAWSTATUSBM(OSDSPACING);
-        switch (m_Receiver->VideoCodec()) {
+        switch (receiverM->VideoCodec()) {
            case VIDEO_CODEC_MPEG2: bm = &OSDSYMBOL(SYMBOL_MPEG2); break;
            case VIDEO_CODEC_H264:  bm = &OSDSYMBOL(SYMBOL_H264);  break;
            default:                bm = NULL;                     break;
            }
         OSDDRAWSTATUSBM(OSDSPACING);
-        switch (m_Receiver->VideoFormat()) {
+        switch (receiverM->VideoFormat()) {
            case VIDEO_FORMAT_PAL:  bm = &OSDSYMBOL(SYMBOL_PAL);  break;
            case VIDEO_FORMAT_NTSC: bm = &OSDSYMBOL(SYMBOL_NTSC); break;
            default:                bm = NULL;                    break;
            }
         OSDDRAWSTATUSBM(OSDSPACING);
-        switch (m_Receiver->VideoAspectRatio()) {
+        switch (receiverM->VideoAspectRatio()) {
            case VIDEO_ASPECT_RATIO_1_1:    bm = &OSDSYMBOL(SYMBOL_AR_1_1);    break;
            case VIDEO_ASPECT_RATIO_4_3:    bm = &OSDSYMBOL(SYMBOL_AR_4_3);    break;
            case VIDEO_ASPECT_RATIO_16_9:   bm = &OSDSYMBOL(SYMBOL_AR_16_9);   break;
@@ -360,24 +360,24 @@ void cFemonOsd::DrawStatusWindow(void)
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      offset += OSDROWHEIGHT;
-     if (m_StrengthValid)
-        OSDDRAWSTATUSBAR(m_Strength);
+     if (strengthValidM)
+        OSDDRAWSTATUSBAR(strengthM);
      offset += OSDROWHEIGHT;
-     if (m_QualityValid)
-        OSDDRAWSTATUSBAR(m_Quality);
+     if (qualityValidM)
+        OSDDRAWSTATUSBAR(qualityM);
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES("STR:", m_SignalValid ? *cString::sprintf("%04x", m_Signal) : "", m_SignalValid ? *cString::sprintf("(%2d%%)", m_Signal / 655) : "",
-                         "BER:", m_BERValid ? *cString::sprintf("%08x", m_BER) : "", *cString::sprintf("%s:", tr("Video")),
-                         *getBitrateMbits(m_Receiver ? m_Receiver->VideoBitrate() : (m_SvdrpFrontend >= 0 ? m_SvdrpVideoBitrate : -1.0)));
+     OSDDRAWSTATUSVALUES("STR:", signalValidM ? *cString::sprintf("%04x", signalM) : "", signalValidM ? *cString::sprintf("(%2d%%)", signalM / 655) : "",
+                         "BER:", berValidM ? *cString::sprintf("%08x", berM) : "", *cString::sprintf("%s:", tr("Video")),
+                         *getBitrateMbits(receiverM ? receiverM->VideoBitrate() : (svdrpFrontendM >= 0 ? svdrpVideoBitRateM : -1.0)));
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES("SNR:", m_SNRValid ? *cString::sprintf("%04x", m_SNR) : "", m_SNRValid ? *cString::sprintf("(%2d%%)", m_SNR / 655) : "",
-                         "UNC:", m_UNCValid ? *cString::sprintf("%08x", m_UNC) : "",
-                         *cString::sprintf("%s:", (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio")),
-                         *getBitrateKbits(m_Receiver ? ((m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) ? m_Receiver->AC3Bitrate() : m_Receiver->AudioBitrate()) : (m_SvdrpFrontend >= 0 ? m_SvdrpAudioBitrate : -1.0)));
+     OSDDRAWSTATUSVALUES("SNR:", snrValidM ? *cString::sprintf("%04x", snrM) : "", snrValidM ? *cString::sprintf("(%2d%%)", snrM / 655) : "",
+                         "UNC:", uncValidM ? *cString::sprintf("%08x", uncM) : "",
+                         *cString::sprintf("%s:", (receiverM && receiverM->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio")),
+                         *getBitrateKbits(receiverM ? ((receiverM->AC3Valid() && IS_DOLBY_TRACK(track)) ? receiverM->AC3Bitrate() : receiverM->AudioBitrate()) : (svdrpFrontendM >= 0 ? svdrpAudioBitRateM : -1.0)));
      offset += OSDROWHEIGHT;
      x = OSDSYMBOL(SYMBOL_LOCK).Width();
      y = (OSDROWHEIGHT - OSDSYMBOL(SYMBOL_LOCK).Height()) / 2;
-     if (m_FrontendStatusValid) {
+     if (frontendStatusValidM) {
         OSDDRAWSTATUSFRONTEND(1, OSDSYMBOL(SYMBOL_LOCK),    FE_HAS_LOCK);
         OSDDRAWSTATUSFRONTEND(2, OSDSYMBOL(SYMBOL_SIGNAL),  FE_HAS_SIGNAL);
         OSDDRAWSTATUSFRONTEND(3, OSDSYMBOL(SYMBOL_CARRIER), FE_HAS_CARRIER);
@@ -385,20 +385,20 @@ void cFemonOsd::DrawStatusWindow(void)
         OSDDRAWSTATUSFRONTEND(5, OSDSYMBOL(SYMBOL_SYNC),    FE_HAS_SYNC);
         }
      OSDDRAWSTATUSBOTTOMBAR();
-     m_Osd->Flush();
+     osdM->Flush();
      }
 }
 
 void cFemonOsd::DrawInfoWindow(void)
 {
-  cMutexLock lock(&m_Mutex);
+  cMutexLock lock(&mutexM);
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (m_Osd && channel) {
+  if (osdM && channel) {
      int offset = 0;
      eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
 
-     switch (m_DisplayMode) {
+     switch (displayModeM) {
        case eFemonModeTransponder:
             OSDDRAWINFOTITLEBAR(tr("Transponder Information"));
             offset += OSDROWHEIGHT;
@@ -422,7 +422,7 @@ void cFemonOsd::DrawInfoWindow(void)
             switch (channel->Source() & cSource::st_Mask) {
               case cSource::stSat: {
                    cDvbTransponderParameters dtp(channel->Parameters());
-                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getSatelliteSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
+                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getSatelliteSystem(dtp.System()), (svdrpFrontendM >= 0) ? svdrpFrontendM : cDevice::ActualDevice()->CardIndex(), *frontendNameM));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
@@ -444,7 +444,7 @@ void cFemonOsd::DrawInfoWindow(void)
 
               case cSource::stCable: {
                    cDvbTransponderParameters dtp(channel->Parameters());
-                   OSDDRAWINFOLINE(*cString::sprintf("DVB-C #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
+                   OSDDRAWINFOLINE(*cString::sprintf("DVB-C #%d - %s", (svdrpFrontendM >= 0) ? svdrpFrontendM : cDevice::ActualDevice()->CardIndex(), *frontendNameM));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Source"),       *cSource::ToString(channel->Source()));
@@ -459,7 +459,7 @@ void cFemonOsd::DrawInfoWindow(void)
 
               case cSource::stTerr: {
                    cDvbTransponderParameters dtp(channel->Parameters());
-                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getTerrestrialSystem(dtp.System()), (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
+                   OSDDRAWINFOLINE(*cString::sprintf("%s #%d - %s", *getTerrestrialSystem(dtp.System()), (svdrpFrontendM >= 0) ? svdrpFrontendM : cDevice::ActualDevice()->CardIndex(), *frontendNameM));
                    offset += OSDROWHEIGHT;
                    OSDDRAWINFOLEFT( trVDR("Frequency"),    *getFrequencyMHz(channel->Frequency()));
                    OSDDRAWINFORIGHT(trVDR("Transmission"), *getTransmission(dtp.Transmission()));
@@ -484,9 +484,9 @@ void cFemonOsd::DrawInfoWindow(void)
                    break;
 
               case stIptv: {
-                   OSDDRAWINFOLINE(*cString::sprintf("IPTV #%d - %s", (m_SvdrpFrontend >= 0) ? m_SvdrpFrontend : cDevice::ActualDevice()->CardIndex(), *m_FrontendName));
+                   OSDDRAWINFOLINE(*cString::sprintf("IPTV #%d - %s", (svdrpFrontendM >= 0) ? svdrpFrontendM : cDevice::ActualDevice()->CardIndex(), *frontendNameM));
                    offset += OSDROWHEIGHT;
-                   if (m_SvdrpFrontend < 0) {
+                   if (svdrpFrontendM < 0) {
                       cPlugin *p;
                       IptvService_v1_0 data;
                       data.cardIndex = cDevice::ActualDevice()->CardIndex();
@@ -511,53 +511,53 @@ void cFemonOsd::DrawInfoWindow(void)
             offset += OSDROWHEIGHT;
             OSDDRAWINFOACTIVE(  tr("Video Stream"),       *getVideoStream(channel->Vpid()));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Codec"),              *getVideoCodec(m_Receiver ? m_Receiver->VideoCodec() : VIDEO_CODEC_INVALID));
+            OSDDRAWINFOINACTIVE(tr("Codec"),              *getVideoCodec(receiverM ? receiverM->VideoCodec() : VIDEO_CODEC_INVALID));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Bitrate"),            *getVideoBitrate(m_Receiver ? m_Receiver->VideoBitrate() : 0, m_Receiver ? m_Receiver->VideoStreamBitrate() : 0));
+            OSDDRAWINFOINACTIVE(tr("Bitrate"),            *getVideoBitrate(receiverM ? receiverM->VideoBitrate() : 0, receiverM ? receiverM->VideoStreamBitrate() : 0));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Aspect Ratio"),       *getAspectRatio(m_Receiver ? m_Receiver->VideoAspectRatio() : VIDEO_ASPECT_RATIO_INVALID));
+            OSDDRAWINFOINACTIVE(tr("Aspect Ratio"),       *getAspectRatio(receiverM ? receiverM->VideoAspectRatio() : VIDEO_ASPECT_RATIO_INVALID));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Frame Rate"),         *getFrameRate(m_Receiver ? m_Receiver->VideoFrameRate() : 0));
+            OSDDRAWINFOINACTIVE(tr("Frame Rate"),         *getFrameRate(receiverM ? receiverM->VideoFrameRate() : 0));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Video Format"),       *getVideoFormat(m_Receiver ? m_Receiver->VideoFormat() : VIDEO_CODEC_INVALID));
+            OSDDRAWINFOINACTIVE(tr("Video Format"),       *getVideoFormat(receiverM ? receiverM->VideoFormat() : VIDEO_CODEC_INVALID));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Resolution"),         *getResolution(m_Receiver ? m_Receiver->VideoHorizontalSize() : 0, m_Receiver ? m_Receiver->VideoVerticalSize() : 0, m_Receiver ? m_Receiver->VideoScan() : VIDEO_SCAN_INVALID));
+            OSDDRAWINFOINACTIVE(tr("Resolution"),         *getResolution(receiverM ? receiverM->VideoHorizontalSize() : 0, receiverM ? receiverM->VideoVerticalSize() : 0, receiverM ? receiverM->VideoScan() : VIDEO_SCAN_INVALID));
             offset += OSDROWHEIGHT;
             OSDDRAWINFOACTIVE(  tr("Audio Stream"),       *getAudioStream(track, channel));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Codec"),              *getAudioCodec(m_Receiver ? m_Receiver->AudioCodec() : AUDIO_CODEC_INVALID));
+            OSDDRAWINFOINACTIVE(tr("Codec"),              *getAudioCodec(receiverM ? receiverM->AudioCodec() : AUDIO_CODEC_INVALID));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Channel Mode"),       *getAudioChannelMode(m_Receiver ? m_Receiver->AudioChannelMode() : AUDIO_CHANNEL_MODE_INVALID));
+            OSDDRAWINFOINACTIVE(tr("Channel Mode"),       *getAudioChannelMode(receiverM ? receiverM->AudioChannelMode() : AUDIO_CHANNEL_MODE_INVALID));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Bitrate"),            *getAudioBitrate(m_Receiver ? m_Receiver->AudioBitrate() : 0, m_Receiver ? m_Receiver->AudioStreamBitrate() : 0));
+            OSDDRAWINFOINACTIVE(tr("Bitrate"),            *getAudioBitrate(receiverM ? receiverM->AudioBitrate() : 0, receiverM ? receiverM->AudioStreamBitrate() : 0));
             offset += OSDROWHEIGHT;
-            OSDDRAWINFOINACTIVE(tr("Sampling Frequency"), *getAudioSamplingFreq(m_Receiver ? m_Receiver->AudioSamplingFreq() : AUDIO_SAMPLING_FREQUENCY_INVALID));
+            OSDDRAWINFOINACTIVE(tr("Sampling Frequency"), *getAudioSamplingFreq(receiverM ? receiverM->AudioSamplingFreq() : AUDIO_SAMPLING_FREQUENCY_INVALID));
             OSDDRAWINFOBOTTOMBAR();
             break;
 
        case eFemonModeAC3:
             OSDDRAWINFOTITLEBAR(tr("Stream Information"));
-            if (m_Receiver && m_Receiver->AC3Valid() && IS_DOLBY_TRACK(track)) {
+            if (receiverM && receiverM->AC3Valid() && IS_DOLBY_TRACK(track)) {
                offset += OSDROWHEIGHT;
                OSDDRAWINFOACTIVE(  tr("AC-3 Stream"),            *getAC3Stream(track, channel));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Bitrate"),                *getAudioBitrate(m_Receiver->AC3Bitrate(), m_Receiver->AC3StreamBitrate()));
+               OSDDRAWINFOINACTIVE(tr("Bitrate"),                *getAudioBitrate(receiverM->AC3Bitrate(), receiverM->AC3StreamBitrate()));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Sampling Frequency"),     *getAudioSamplingFreq(m_Receiver->AC3SamplingFreq()));
+               OSDDRAWINFOINACTIVE(tr("Sampling Frequency"),     *getAudioSamplingFreq(receiverM->AC3SamplingFreq()));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Bit Stream Mode"),        *getAC3BitStreamMode(m_Receiver->AC3BitStreamMode(), m_Receiver->AC3AudioCodingMode()));
+               OSDDRAWINFOINACTIVE(tr("Bit Stream Mode"),        *getAC3BitStreamMode(receiverM->AC3BitStreamMode(), receiverM->AC3AudioCodingMode()));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Audio Coding Mode"),      *getAC3AudioCodingMode(m_Receiver->AC3AudioCodingMode(), m_Receiver->AC3BitStreamMode()));
+               OSDDRAWINFOINACTIVE(tr("Audio Coding Mode"),      *getAC3AudioCodingMode(receiverM->AC3AudioCodingMode(), receiverM->AC3BitStreamMode()));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Center Mix Level"),       *getAC3CenterMixLevel(m_Receiver->AC3CenterMixLevel()));
+               OSDDRAWINFOINACTIVE(tr("Center Mix Level"),       *getAC3CenterMixLevel(receiverM->AC3CenterMixLevel()));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Surround Mix Level"),     *getAC3SurroundMixLevel(m_Receiver->AC3SurroundMixLevel()));
+               OSDDRAWINFOINACTIVE(tr("Surround Mix Level"),     *getAC3SurroundMixLevel(receiverM->AC3SurroundMixLevel()));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Dolby Surround Mode"),    *getAC3DolbySurroundMode(m_Receiver->AC3DolbySurroundMode()));
+               OSDDRAWINFOINACTIVE(tr("Dolby Surround Mode"),    *getAC3DolbySurroundMode(receiverM->AC3DolbySurroundMode()));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Low Frequency Effects"),  *cString::sprintf("%s", m_Receiver->AC3Lfe() ? trVDR("on") : trVDR("off")));
+               OSDDRAWINFOINACTIVE(tr("Low Frequency Effects"),  *cString::sprintf("%s", receiverM->AC3Lfe() ? trVDR("on") : trVDR("off")));
                offset += OSDROWHEIGHT;
-               OSDDRAWINFOINACTIVE(tr("Dialogue Normalization"), *getAC3DialogLevel(m_Receiver->AC3DialogLevel()));
+               OSDDRAWINFOINACTIVE(tr("Dialogue Normalization"), *getAC3DialogLevel(receiverM->AC3DialogLevel()));
                }
             OSDDRAWINFOBOTTOMBAR();
             break;
@@ -566,7 +566,7 @@ void cFemonOsd::DrawInfoWindow(void)
             OSDCLEARINFO();
             break;
        }
-     m_Osd->Flush();
+     osdM->Flush();
      }
 }
 
@@ -578,127 +578,127 @@ void cFemonOsd::Action(void)
   cmd.command = cString::sprintf("PLUG %s INFO\r\n", PLUGIN_NAME_I18N);
   while (Running()) {
     t.Set(0);
-    m_SvdrpFrontend = -1;
-    m_SvdrpVideoBitrate = -1.0;
-    m_SvdrpAudioBitrate = -1.0;
-    switch (m_DeviceSource) {
+    svdrpFrontendM = -1;
+    svdrpVideoBitRateM = -1.0;
+    svdrpAudioBitRateM = -1.0;
+    switch (deviceSourceM) {
       case DEVICESOURCE_PVRINPUT:
-           m_Quality = cDevice::ActualDevice()->SignalStrength();
-           m_QualityValid = (m_Quality >= 0);
-           m_Strength = cDevice::ActualDevice()->SignalStrength();
-           m_StrengthValid = (m_Strength >= 0);
-           m_FrontendName = cDevice::ActualDevice()->DeviceName();
-           m_FrontendStatus = (fe_status_t)(m_StrengthValid ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
-           m_FrontendStatusValid = m_StrengthValid;
-           m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
-           m_SignalValid = m_StrengthValid;
-           m_SNR = 0;
-           m_SNRValid = false;
-           m_BER = 0;
-           m_BERValid = false;
-           m_UNC = 0;
-           m_UNCValid = false;
+           qualityM = cDevice::ActualDevice()->SignalStrength();
+           qualityValidM = (qualityM >= 0);
+           strengthM = cDevice::ActualDevice()->SignalStrength();
+           strengthValidM = (strengthM >= 0);
+           frontendNameM = cDevice::ActualDevice()->DeviceName();
+           frontendStatusM = (fe_status_t)(strengthValidM ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
+           frontendStatusValidM = strengthValidM;
+           signalM = uint16_t(strengthM * 0xFFFF / 100);
+           signalValidM = strengthValidM;
+           snrM = 0;
+           snrValidM = false;
+           berM = 0;
+           berValidM = false;
+           uncM = 0;
+           uncValidM = false;
            break;
       case DEVICESOURCE_IPTV:
-           m_Quality = cDevice::ActualDevice()->SignalQuality();
-           m_QualityValid = (m_Quality >= 0);
-           m_Strength = cDevice::ActualDevice()->SignalStrength();
-           m_StrengthValid = (m_Strength >= 0);
-           m_FrontendName = cDevice::ActualDevice()->DeviceName();
-           m_FrontendStatus = (fe_status_t)(m_StrengthValid ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
-           m_FrontendStatusValid = m_StrengthValid;
-           m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
-           m_SignalValid = m_StrengthValid;
-           m_SNR = uint16_t(m_Quality * 0xFFFF / 100);
-           m_SNRValid = m_QualityValid;
-           m_BER = 0;
-           m_BERValid = false;
-           m_UNC = 0;
-           m_UNCValid = false;
+           qualityM = cDevice::ActualDevice()->SignalQuality();
+           qualityValidM = (qualityM >= 0);
+           strengthM = cDevice::ActualDevice()->SignalStrength();
+           strengthValidM = (strengthM >= 0);
+           frontendNameM = cDevice::ActualDevice()->DeviceName();
+           frontendStatusM = (fe_status_t)(strengthValidM ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
+           frontendStatusValidM = strengthValidM;
+           signalM = uint16_t(strengthM * 0xFFFF / 100);
+           signalValidM = strengthValidM;
+           snrM = uint16_t(qualityM * 0xFFFF / 100);
+           snrValidM = qualityValidM;
+           berM = 0;
+           berValidM = false;
+           uncM = 0;
+           uncValidM = false;
            break;
       default:
       case DEVICESOURCE_DVBAPI:
-           if (m_Frontend != -1) {
-              m_Quality = cDevice::ActualDevice()->SignalQuality();
-              m_QualityValid = (m_Quality >= 0);
-              m_Strength = cDevice::ActualDevice()->SignalStrength();
-              m_StrengthValid = (m_Strength >= 0);
-              m_FrontendName = cDevice::ActualDevice()->DeviceName();
-              m_FrontendStatusValid = (ioctl(m_Frontend, FE_READ_STATUS, &m_FrontendStatus) >= 0);
-              m_SignalValid = (ioctl(m_Frontend, FE_READ_SIGNAL_STRENGTH, &m_Signal) >= 0);
-              m_SNRValid = (ioctl(m_Frontend, FE_READ_SNR, &m_SNR) >= 0);
-              m_BERValid = (ioctl(m_Frontend, FE_READ_BER, &m_BER) >= 0);
-              m_UNCValid = (ioctl(m_Frontend, FE_READ_UNCORRECTED_BLOCKS, &m_UNC) >= 0);
+           if (frontendM != -1) {
+              qualityM = cDevice::ActualDevice()->SignalQuality();
+              qualityValidM = (qualityM >= 0);
+              strengthM = cDevice::ActualDevice()->SignalStrength();
+              strengthValidM = (strengthM >= 0);
+              frontendNameM = cDevice::ActualDevice()->DeviceName();
+              frontendStatusValidM = (ioctl(frontendM, FE_READ_STATUS, &frontendStatusM) >= 0);
+              signalValidM = (ioctl(frontendM, FE_READ_SIGNAL_STRENGTH, &signalM) >= 0);
+              snrValidM = (ioctl(frontendM, FE_READ_SNR, &snrM) >= 0);
+              berValidM = (ioctl(frontendM, FE_READ_BER, &berM) >= 0);
+              uncValidM = (ioctl(frontendM, FE_READ_UNCORRECTED_BLOCKS, &uncM) >= 0);
               }
            else if (strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
-              m_Quality = cDevice::ActualDevice()->SignalQuality();
-              m_QualityValid = (m_Quality >= 0);
-              m_Strength = cDevice::ActualDevice()->SignalStrength();
-              m_StrengthValid = (m_Strength >= 0);
-              m_FrontendName = cDevice::ActualDevice()->DeviceName();
-              m_FrontendStatus = (fe_status_t)(cDevice::ActualDevice()->HasLock() ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
-              m_FrontendStatusValid = m_StrengthValid;
-              m_Signal = uint16_t(m_Strength * 0xFFFF / 100);
-              m_SignalValid = m_StrengthValid;
-              m_SNR = uint16_t(m_Quality * 0xFFFF / 100);
-              m_SNRValid = m_QualityValid;
-              m_BER = 0;
-              m_BERValid = false;
-              m_UNC = 0;
-              m_UNCValid = false;
+              qualityM = cDevice::ActualDevice()->SignalQuality();
+              qualityValidM = (qualityM >= 0);
+              strengthM = cDevice::ActualDevice()->SignalStrength();
+              strengthValidM = (strengthM >= 0);
+              frontendNameM = cDevice::ActualDevice()->DeviceName();
+              frontendStatusM = (fe_status_t)(cDevice::ActualDevice()->HasLock() ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
+              frontendStatusValidM = strengthValidM;
+              signalM = uint16_t(strengthM * 0xFFFF / 100);
+              signalValidM = strengthValidM;
+              snrM = uint16_t(qualityM * 0xFFFF / 100);
+              snrValidM = qualityValidM;
+              berM = 0;
+              berValidM = false;
+              uncM = 0;
+              uncValidM = false;
               }
-           else if (m_SvdrpConnection.handle >= 0) {
-              cmd.handle = m_SvdrpConnection.handle;
-              m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
+           else if (svdrpConnectionM.handle >= 0) {
+              cmd.handle = svdrpConnectionM.handle;
+              svdrpPluginM->Service("SvdrpCommand-v1.0", &cmd);
               if (cmd.responseCode == 900) {
-                 m_StrengthValid = false;
-                 m_QualityValid = false;
-                 m_FrontendStatusValid = false;
-                 m_SignalValid = false;
-                 m_SNRValid = false;
-                 m_BERValid = false;
-                 m_UNCValid = false;
+                 strengthValidM = false;
+                 qualityValidM = false;
+                 frontendStatusValidM = false;
+                 signalValidM = false;
+                 snrValidM = false;
+                 berValidM = false;
+                 uncValidM = false;
                  for (cLine *line = cmd.reply.First(); line; line = cmd.reply.Next(line)) {
                      const char *s = line->Text();
 	             if (!strncasecmp(s, "CARD:", 5))
-                        m_SvdrpFrontend = (int)strtol(s + 5, NULL, 10);
+                        svdrpFrontendM = (int)strtol(s + 5, NULL, 10);
                      else if (!strncasecmp(s, "STRG:", 5)) {
-                        m_Strength = (int)strtol(s + 5, NULL, 10);
-                        m_StrengthValid = (m_Strength >= 0);
+                        strengthM = (int)strtol(s + 5, NULL, 10);
+                        strengthValidM = (strengthM >= 0);
                         }
                      else if (!strncasecmp(s, "QUAL:", 5)) {
-                        m_Quality = (int)strtol(s + 5, NULL, 10);
-                        m_QualityValid = (m_Quality >= 0);
+                        qualityM = (int)strtol(s + 5, NULL, 10);
+                        qualityValidM = (qualityM >= 0);
                         }
                      else if (!strncasecmp(s, "TYPE:", 5))
-                        m_FrontendInfo.type = (fe_type_t)strtol(s + 5, NULL, 10);
+                        frontendInfoM.type = (fe_type_t)strtol(s + 5, NULL, 10);
                      else if (!strncasecmp(s, "NAME:", 5)) {
-                        m_FrontendName = s + 5;
+                        frontendNameM = s + 5;
                         }
                      else if (!strncasecmp(s, "STAT:", 5)) {
-                        m_FrontendStatus = (fe_status_t)strtol(s + 5, NULL, 16);
-                        m_FrontendStatusValid = true;
+                        frontendStatusM = (fe_status_t)strtol(s + 5, NULL, 16);
+                        frontendStatusValidM = true;
                         }
                      else if (!strncasecmp(s, "SGNL:", 5)) {
-                        m_Signal = (uint16_t)strtol(s + 5, NULL, 16);
-                        m_SignalValid = true;
+                        signalM = (uint16_t)strtol(s + 5, NULL, 16);
+                        signalValidM = true;
                         }
                      else if (!strncasecmp(s, "SNRA:", 5)) {
-                        m_SNR = (uint16_t)strtol(s + 5, NULL, 16);
-                        m_SNRValid = true;
+                        snrM = (uint16_t)strtol(s + 5, NULL, 16);
+                        snrValidM = true;
                         }
                      else if (!strncasecmp(s, "BERA:", 5)) {
-                        m_BER = (uint32_t)strtol(s + 5, NULL, 16);
-                        m_BERValid = true;
+                        berM = (uint32_t)strtol(s + 5, NULL, 16);
+                        berValidM = true;
                         }
                      else if (!strncasecmp(s, "UNCB:", 5)) {
-                        m_UNC = (uint32_t)strtol(s + 5, NULL, 16);
-                        m_UNCValid = true;
+                        uncM = (uint32_t)strtol(s + 5, NULL, 16);
+                        uncValidM = true;
                         }
                      else if (!strncasecmp(s, "VIBR:", 5))
-                        m_SvdrpVideoBitrate = (double)strtol(s + 5, NULL, 10);
+                        svdrpVideoBitRateM = (double)strtol(s + 5, NULL, 10);
                      else if (!strncasecmp(s, "AUBR:", 5))
-                        m_SvdrpAudioBitrate = (double)strtol(s + 5, NULL, 10);
+                        svdrpAudioBitRateM = (double)strtol(s + 5, NULL, 10);
                      }
                  }
               }
@@ -706,7 +706,7 @@ void cFemonOsd::Action(void)
       }
     DrawInfoWindow();
     DrawStatusWindow();
-    m_Sleep.Wait(max((int)(100 * femonConfig.updateinterval - t.Elapsed()), 3));
+    sleepM.Wait(max((int)(100 * FemonConfig.updateinterval - t.Elapsed()), 3));
     }
 }
 
@@ -716,29 +716,29 @@ void cFemonOsd::Show(void)
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  m_DeviceSource = DEVICESOURCE_DVBAPI;
+  deviceSourceM = DEVICESOURCE_DVBAPI;
   if (channel) {
      if (channel->IsSourceType('I'))
-        m_DeviceSource = DEVICESOURCE_IPTV;
+        deviceSourceM = DEVICESOURCE_IPTV;
      else if (channel->IsSourceType('V'))
-        m_DeviceSource = DEVICESOURCE_PVRINPUT;
+        deviceSourceM = DEVICESOURCE_PVRINPUT;
      }
 
-  if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
+  if (deviceSourceM == DEVICESOURCE_DVBAPI) {
      if (!strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
         cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
-        m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
-        if (m_Frontend >= 0) {
-           if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-              if (!femonConfig.usesvdrp)
+        frontendM = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
+        if (frontendM >= 0) {
+           if (ioctl(frontendM, FE_GET_INFO, &frontendInfoM) < 0) {
+              if (!FemonConfig.usesvdrp)
                  error("cFemonOsd::Show() cannot read frontend info.");
-              close(m_Frontend);
-              m_Frontend = -1;
-              memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+              close(frontendM);
+              frontendM = -1;
+              memset(&frontendInfoM, 0, sizeof(frontendInfoM));
               return;
               }
            }
-        else if (femonConfig.usesvdrp) {
+        else if (FemonConfig.usesvdrp) {
            if (!SvdrpConnect() || !SvdrpTune())
               return;
            }
@@ -749,79 +749,79 @@ void cFemonOsd::Show(void)
         }
      }
   else
-     m_Frontend = -1;
+     frontendM = -1;
 
-  m_Osd = cOsdProvider::NewOsd(m_OsdLeft, m_OsdTop);
-  if (m_Osd) {
+  osdM = cOsdProvider::NewOsd(osdLeftM, osdTopM);
+  if (osdM) {
      tArea Areas1[] = { { 0, 0, OSDWIDTH - 1, OSDHEIGHT - 1, 8 } };
-     if (Setup.AntiAlias && m_Osd->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
-        m_Osd->SetAreas(Areas1, sizeof(Areas1) / sizeof(tArea));
+     if (Setup.AntiAlias && osdM->CanHandleAreas(Areas1, sizeof(Areas1) / sizeof(tArea)) == oeOk) {
+        osdM->SetAreas(Areas1, sizeof(Areas1) / sizeof(tArea));
         }
      else {
-        tArea Areas2[] = { { 0, OSDSTATUSWIN_Y(0),          OSDWIDTH - 1, OSDSTATUSWIN_Y(0) + OSDSTATUSHEIGHT - 1, femonTheme[femonConfig.theme].bpp },
-                           { 0, OSDINFOWIN_Y(0),            OSDWIDTH - 1, OSDINFOWIN_Y(0)   + OSDROWHEIGHT    - 1, femonTheme[femonConfig.theme].bpp },
+        tArea Areas2[] = { { 0, OSDSTATUSWIN_Y(0),          OSDWIDTH - 1, OSDSTATUSWIN_Y(0) + OSDSTATUSHEIGHT - 1, FemonTheme[FemonConfig.theme].bpp },
+                           { 0, OSDINFOWIN_Y(0),            OSDWIDTH - 1, OSDINFOWIN_Y(0)   + OSDROWHEIGHT    - 1, FemonTheme[FemonConfig.theme].bpp },
                            { 0, OSDINFOWIN_Y(OSDROWHEIGHT), OSDWIDTH - 1, OSDINFOWIN_Y(0)   + OSDINFOHEIGHT   - 1, 2                                 } };
-        m_Osd->SetAreas(Areas2, sizeof(Areas2) / sizeof(tArea));
+        osdM->SetAreas(Areas2, sizeof(Areas2) / sizeof(tArea));
         }
      OSDCLEARSTATUS();
      OSDCLEARINFO();
-     m_Osd->Flush();
-     if (m_Receiver) {
-        m_Receiver->Deactivate();
-        DELETENULL(m_Receiver);
+     osdM->Flush();
+     if (receiverM) {
+        receiverM->Deactivate();
+        DELETENULL(receiverM);
         }
-     if (femonConfig.analyzestream && channel) {
-        m_Receiver = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
-        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+     if (FemonConfig.analyzestream && channel) {
+        receiverM = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
+        cDevice::ActualDevice()->AttachReceiver(receiverM);
         }
      Start();
      }
 }
 
-void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool liveView)
+void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool liveViewP)
 {
-  debug("%s(%d,%d)\n", __PRETTY_FUNCTION__, device->DeviceNumber(), channelNumber);
+  debug("%s(%d,%d)\n", __PRETTY_FUNCTION__, deviceP->DeviceNumber(), channelNumberP);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
   const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (!device || !liveView)
+  if (!deviceP || !liveViewP)
      return;
 
-  if (!channelNumber) {
-     if (m_Receiver) {
-        m_Receiver->Deactivate();
-        DELETENULL(m_Receiver);
+  if (!channelNumberP) {
+     if (receiverM) {
+        receiverM->Deactivate();
+        DELETENULL(receiverM);
         }
      return;
      }
 
-  if (channel && femonConfig.analyzestream) {
-     m_DeviceSource = DEVICESOURCE_DVBAPI;
+  if (channel && FemonConfig.analyzestream) {
+     deviceSourceM = DEVICESOURCE_DVBAPI;
      if (channel->IsSourceType('I'))
-        m_DeviceSource = DEVICESOURCE_IPTV;
+        deviceSourceM = DEVICESOURCE_IPTV;
      else if (channel->IsSourceType('V'))
-        m_DeviceSource = DEVICESOURCE_PVRINPUT;
+        deviceSourceM = DEVICESOURCE_PVRINPUT;
 
-     if (m_Frontend >= 0) {
-        close(m_Frontend);
-        m_Frontend = -1;
+     if (frontendM >= 0) {
+        close(frontendM);
+        frontendM = -1;
         }
 
-     if (m_DeviceSource == DEVICESOURCE_DVBAPI) {
+     if (deviceSourceM == DEVICESOURCE_DVBAPI) {
         if (!strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
            cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
-           m_Frontend = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
-           if (m_Frontend >= 0) {
-              if (ioctl(m_Frontend, FE_GET_INFO, &m_FrontendInfo) < 0) {
-                 if (!femonConfig.usesvdrp)
+           frontendM = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
+           if (frontendM >= 0) {
+              if (ioctl(frontendM, FE_GET_INFO, &frontendInfoM) < 0) {
+                 if (!FemonConfig.usesvdrp)
                     error("cFemonOsd::ChannelSwitch() cannot read frontend info.");
-                 close(m_Frontend);
-                 m_Frontend = -1;
-                 memset(&m_FrontendInfo, 0, sizeof(m_FrontendInfo));
+                 close(frontendM);
+                 frontendM = -1;
+                 memset(&frontendInfoM, 0, sizeof(frontendInfoM));
                  return;
                  }
               }
-           else if (femonConfig.usesvdrp) {
+           else if (FemonConfig.usesvdrp) {
               if (!SvdrpConnect() || !SvdrpTune())
                  return;
               }
@@ -831,38 +831,38 @@ void cFemonOsd::ChannelSwitch(const cDevice * device, int channelNumber, bool li
               }
            }
 
-        if (m_Receiver) {
-           m_Receiver->Deactivate();
-           DELETENULL(m_Receiver);
+        if (receiverM) {
+           receiverM->Deactivate();
+           DELETENULL(receiverM);
            }
-        m_Receiver = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
-        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+        receiverM = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
+        cDevice::ActualDevice()->AttachReceiver(receiverM);
         }
      }
 }
 
-void cFemonOsd::SetAudioTrack(int Index, const char * const *Tracks)
+void cFemonOsd::SetAudioTrack(int indexP, const char * const *tracksP)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  if (m_Receiver) {
-     m_Receiver->Deactivate();
-     DELETENULL(m_Receiver);
+  if (receiverM) {
+     receiverM->Deactivate();
+     DELETENULL(receiverM);
      }
-  if (femonConfig.analyzestream) {
+  if (FemonConfig.analyzestream) {
      const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      if (channel) {
-        m_Receiver = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
-        cDevice::ActualDevice()->AttachReceiver(m_Receiver);
+        receiverM = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
+        cDevice::ActualDevice()->AttachReceiver(receiverM);
         }
      }
 }
 
-bool cFemonOsd::DeviceSwitch(int direction)
+bool cFemonOsd::DeviceSwitch(int directionP)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
   int device = cDevice::ActualDevice()->DeviceNumber();
-  direction = sgn(direction);
+  int direction = sgn(directionP);
   if (device >= 0) {
      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
      if (channel) {
@@ -947,21 +947,21 @@ bool cFemonOsd::DeviceSwitch(int direction)
 
 bool cFemonOsd::SvdrpConnect(void)
 {
-   if (m_SvdrpConnection.handle < 0) {
-      m_SvdrpPlugin = cPluginManager::GetPlugin(SVDRPPLUGIN);
-      if (m_SvdrpPlugin) {
-         m_SvdrpConnection.serverIp = femonConfig.svdrpip;
-         m_SvdrpConnection.serverPort = (unsigned short)femonConfig.svdrpport;
-         m_SvdrpConnection.shared = true;
-         m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection);
-         if (m_SvdrpConnection.handle >= 0) {
+   if (svdrpConnectionM.handle < 0) {
+      svdrpPluginM = cPluginManager::GetPlugin(SVDRPPLUGIN);
+      if (svdrpPluginM) {
+         svdrpConnectionM.serverIp = FemonConfig.svdrpip;
+         svdrpConnectionM.serverPort = (unsigned short)FemonConfig.svdrpport;
+         svdrpConnectionM.shared = true;
+         svdrpPluginM->Service("SvdrpConnection-v1.0", &svdrpConnectionM);
+         if (svdrpConnectionM.handle >= 0) {
             SvdrpCommand_v1_0 cmd;
-            cmd.handle = m_SvdrpConnection.handle;
+            cmd.handle = svdrpConnectionM.handle;
             cmd.command = cString::sprintf("PLUG %s\r\n", PLUGIN_NAME_I18N);
-            m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
+            svdrpPluginM->Service("SvdrpCommand-v1.0", &cmd);
             if (cmd.responseCode != 214) {
-               m_SvdrpPlugin->Service("SvdrpConnection-v1.0", &m_SvdrpConnection); // close connection
-               error("cFemonOsd::SvdrpConnect() cannot find plugin '%s' on server %s.", PLUGIN_NAME_I18N, *m_SvdrpConnection.serverIp);
+               svdrpPluginM->Service("SvdrpConnection-v1.0", &svdrpConnectionM); // close connection
+               error("cFemonOsd::SvdrpConnect() cannot find plugin '%s' on server %s.", PLUGIN_NAME_I18N, *svdrpConnectionM.serverIp);
                }
             }
          else
@@ -970,18 +970,18 @@ bool cFemonOsd::SvdrpConnect(void)
       else
          error("cFemonOsd::SvdrpConnect() cannot find plugin '%s'.", SVDRPPLUGIN);
       }
-   return m_SvdrpConnection.handle >= 0;
+   return svdrpConnectionM.handle >= 0;
 }
 
 bool cFemonOsd::SvdrpTune(void)
 {
-   if (m_SvdrpPlugin && m_SvdrpConnection.handle >= 0) {
+   if (svdrpPluginM && svdrpConnectionM.handle >= 0) {
       cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
       if (channel) {
          SvdrpCommand_v1_0 cmd;
-         cmd.handle = m_SvdrpConnection.handle;
+         cmd.handle = svdrpConnectionM.handle;
          cmd.command = cString::sprintf("CHAN %s\r\n", *channel->GetChannelID().ToString());
-         m_SvdrpPlugin->Service("SvdrpCommand-v1.0", &cmd);
+         svdrpPluginM->Service("SvdrpCommand-v1.0", &cmd);
          if (cmd.responseCode == 250)
             return true;
          error("cFemonOsd::SvdrpTune() cannot tune server channel.");
@@ -999,8 +999,8 @@ double cFemonOsd::GetVideoBitrate(void)
   debug("%s()\n", __PRETTY_FUNCTION__);
   double value = 0.0;
 
-  if (m_Receiver)
-     value = m_Receiver->VideoBitrate();
+  if (receiverM)
+     value = receiverM->VideoBitrate();
 
   return (value);
 }
@@ -1010,8 +1010,8 @@ double cFemonOsd::GetAudioBitrate(void)
   debug("%s()\n", __PRETTY_FUNCTION__);
   double value = 0.0;
 
-  if (m_Receiver)
-     value = m_Receiver->AudioBitrate();
+  if (receiverM)
+     value = receiverM->AudioBitrate();
 
   return (value);
 }
@@ -1021,34 +1021,34 @@ double cFemonOsd::GetDolbyBitrate(void)
   debug("%s()\n", __PRETTY_FUNCTION__);
   double value = 0.0;
 
-  if (m_Receiver)
-     value = m_Receiver->AC3Bitrate();
+  if (receiverM)
+     value = receiverM->AC3Bitrate();
 
   return (value);
 }
 
-eOSState cFemonOsd::ProcessKey(eKeys Key)
+eOSState cFemonOsd::ProcessKey(eKeys keyP)
 {
-  eOSState state = cOsdObject::ProcessKey(Key);
+  eOSState state = cOsdObject::ProcessKey(keyP);
   if (state == osUnknown) {
-     switch (int(Key)) {
+     switch (int(keyP)) {
        case k0:
-            if ((m_Number == 0) && (m_OldNumber != 0)) {
-               m_Number = m_OldNumber;
-               m_OldNumber = cDevice::CurrentChannel();
-               Channels.SwitchTo(m_Number);
-               m_Number = 0;
+            if ((numberM == 0) && (oldNumberM != 0)) {
+               numberM = oldNumberM;
+               oldNumberM = cDevice::CurrentChannel();
+               Channels.SwitchTo(numberM);
+               numberM = 0;
                return osContinue;
                }
        case k1 ... k9:
-            if (m_Number >= 0) {
-               m_Number = m_Number * 10 + Key - k0;
-               if (m_Number > 0) {
+            if (numberM >= 0) {
+               numberM = numberM * 10 + keyP - k0;
+               if (numberM > 0) {
                   DrawStatusWindow();
-                  cChannel *ch = Channels.GetByNumber(m_Number);
-                  m_InputTime.Set(0);
+                  cChannel *ch = Channels.GetByNumber(numberM);
+                  inputTimeM.Set(0);
                   // Lets see if there can be any useful further input:
-                  int n = ch ? m_Number * 10 : 0;
+                  int n = ch ? numberM * 10 : 0;
                   while (ch && (ch = Channels.Next(ch)) != NULL) {
                         if (!ch->GroupSep()) {
                            if (n <= ch->Number() && ch->Number() <= n + 9) {
@@ -1061,9 +1061,9 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
                         }
                   if (n > 0) {
                      // This channel is the only one that fits the input, so let's take it right away:
-                     m_OldNumber = cDevice::CurrentChannel();
-                     Channels.SwitchTo(m_Number);
-                     m_Number = 0;
+                     oldNumberM = cDevice::CurrentChannel();
+                     Channels.SwitchTo(numberM);
+                     numberM = 0;
                      }
                   }
                }
@@ -1116,20 +1116,20 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
        case kUp:
        case kDown|k_Repeat:
        case kDown:
-            m_OldNumber = cDevice::CurrentChannel();
-            cDevice::SwitchChannel(NORMALKEY(Key) == kUp ? 1 : -1);
-            m_Number = 0;
+            oldNumberM = cDevice::CurrentChannel();
+            cDevice::SwitchChannel(NORMALKEY(keyP) == kUp ? 1 : -1);
+            numberM = 0;
             break;
        case kNone:
-            if (m_Number && (m_InputTime.Elapsed() > CHANNELINPUT_TIMEOUT)) {
-               if (Channels.GetByNumber(m_Number)) {
-                  m_OldNumber = cDevice::CurrentChannel();
-                  Channels.SwitchTo(m_Number);
-                  m_Number = 0;
+            if (numberM && (inputTimeM.Elapsed() > CHANNELINPUT_TIMEOUT)) {
+               if (Channels.GetByNumber(numberM)) {
+                  oldNumberM = cDevice::CurrentChannel();
+                  Channels.SwitchTo(numberM);
+                  numberM = 0;
                   }
                else {
-                  m_InputTime.Set(0);
-                  m_Number = 0;
+                  inputTimeM.Set(0);
+                  numberM = 0;
                   }
                }
             break;
@@ -1137,8 +1137,8 @@ eOSState cFemonOsd::ProcessKey(eKeys Key)
             {
             // toggle between display modes
             cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
-            if (++m_DisplayMode == eFemonModeAC3 && channel && !channel->Dpid(0)) m_DisplayMode++;
-            if (m_DisplayMode >= eFemonModeMaxNumber) m_DisplayMode = 0;
+            if (++displayModeM == eFemonModeAC3 && channel && !channel->Dpid(0)) displayModeM++;
+            if (displayModeM >= eFemonModeMaxNumber) displayModeM = 0;
             DrawInfoWindow();
             }
             break;

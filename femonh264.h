@@ -29,19 +29,19 @@ private:
     int               h;
   } t_SAR;
 
-  cFemonVideoIf    *m_VideoHandler;
-  uint32_t          m_Width;
-  uint32_t          m_Height;
-  eVideoAspectRatio m_AspectRatio;
-  eVideoFormat      m_Format;
-  double            m_FrameRate;
-  double            m_BitRate;
-  eVideoScan        m_Scan;
-  bool              m_CpbDpbDelaysPresentFlag;
-  bool              m_PicStructPresentFlag;
-  bool              m_FrameMbsOnlyFlag;
-  bool              m_MbAdaptiveFrameFieldFlag;
-  uint32_t          m_TimeOffsetLength;
+  cFemonVideoIf    *videoHandlerM;
+  uint32_t          widthM;
+  uint32_t          heightM;
+  eVideoAspectRatio aspectRatioM;
+  eVideoFormat      formatM;
+  double            frameRateM;
+  double            bitRateM;
+  eVideoScan        scanM;
+  bool              cpbDpbDelaysPresentFlagM;
+  bool              picStructPresentFlagM;
+  bool              frameMbsOnlyFlagM;
+  bool              mbAdaptiveFrameFieldFlagM;
+  uint32_t          timeOffsetLengthM;
 
   void           reset();
   const uint8_t *nextStartCode(const uint8_t *start, const uint8_t *end);
@@ -49,16 +49,16 @@ private:
   int            parseSPS(const uint8_t *buf, int len);
   int            parseSEI(const uint8_t *buf, int len);
 
-  static const t_SAR             s_SAR[];
-  static const t_DAR             s_DAR[];
-  static const eVideoFormat      s_VideoFormats[];
-  static const uint8_t           s_SeiNumClockTsTable[9];
+  static const t_SAR             sarS[];
+  static const t_DAR             darS[];
+  static const eVideoFormat      videoFormatS[];
+  static const uint8_t           seiNumClockTsTableS[9];
 
 public:
-  cFemonH264(cFemonVideoIf *videohandler);
+  cFemonH264(cFemonVideoIf *videoHandlerP);
   virtual ~cFemonH264();
 
-  bool processVideo(const uint8_t *buf, int len);
+  bool processVideo(const uint8_t *bufP, int lenP);
   };
 
 #endif //__FEMONH264_H

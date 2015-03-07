@@ -8,7 +8,7 @@
 #include <string.h>
 #include "femoncfg.h"
 
-cFemonConfig femonConfig;
+cFemonConfig FemonConfig;
 
 cFemonConfig::cFemonConfig(void)
 {
@@ -28,7 +28,7 @@ cFemonConfig::cFemonConfig(void)
   strncpy(svdrpip, "0.0.0.0", sizeof(svdrpip));
 }
 
-const cFemonTheme femonTheme[eFemonThemeMaxNumber] =
+const cFemonTheme FemonTheme[eFemonThemeMaxNumber] =
 {
   {
     // eFemonThemeClassic

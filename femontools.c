@@ -19,88 +19,88 @@
 #include "femonosd.h"
 #include "femontools.h"
 
-static cString getCA(int value)
+static cString getCA(int valueP)
 {
   // http://www.dvb.org/index.php?id=174
   // http://en.wikipedia.org/wiki/Conditional_access_system
-  switch (value) {
-    case 0x0000:            return cString::sprintf("%s (%X)", trVDR("Free To Air"), value);  // Reserved
+  switch (valueP) {
+    case 0x0000:            return cString::sprintf("%s (%X)", trVDR("Free To Air"), valueP);  // Reserved
     case 0x0001 ... 0x009F:
-    case 0x00A2 ... 0x00FF: return cString::sprintf("%s (%X)", tr("Fixed"),  value); // Standardized systems
-    case 0x00A0 ... 0x00A1: return cString::sprintf("%s (%X)", tr("Analog"), value); // Analog signals
-    case 0x0100 ... 0x01FF: return cString::sprintf("SECA Mediaguard (%X)",  value); // Canal Plus
-    case 0x0464:            return cString::sprintf("EuroDec (%X)",          value); // EuroDec
-    case 0x0500 ... 0x05FF: return cString::sprintf("Viaccess (%X)",         value); // France Telecom
-    case 0x0600 ... 0x06FF: return cString::sprintf("Irdeto (%X)",           value); // Irdeto
-    case 0x0700 ... 0x07FF: return cString::sprintf("DigiCipher 2 (%X)",     value); // Jerrold/GI/Motorola 4DTV
-    case 0x0900 ... 0x09FF: return cString::sprintf("NDS Videoguard (%X)",   value); // NDS
-    case 0x0B00 ... 0x0BFF: return cString::sprintf("Conax (%X)",            value); // Norwegian Telekom
-    case 0x0D00 ... 0x0DFF: return cString::sprintf("CryptoWorks (%X)",      value); // Philips CryptoTec
-    case 0x0E00 ... 0x0EFF: return cString::sprintf("PowerVu (%X)",          value); // Scientific Atlanta
-    case 0x1000:            return cString::sprintf("RAS (%X)",              value); // Tandberg Television
-    case 0x1200 ... 0x12FF: return cString::sprintf("NagraVision (%X)",      value); // BellVu Express
-    case 0x1700 ... 0x17FF: return cString::sprintf("VCAS (%X)",             value); // Verimatrix Inc. former BetaTechnik
-    case 0x1800 ... 0x18FF: return cString::sprintf("NagraVision (%X)",      value); // Kudelski SA
-    case 0x22F0:            return cString::sprintf("Codicrypt (%X)",        value); // Scopus Network Technologies
-    case 0x2600:            return cString::sprintf("BISS (%X)",             value); // European Broadcasting Union
-    case 0x2719:            return cString::sprintf("VanyaCas (%X)",         value); // S-Curious Research & Technology Pvt. Ltd.
-    case 0x4347:            return cString::sprintf("CryptOn (%X)",          value); // CryptOn
-    case 0x4800:            return cString::sprintf("Accessgate (%X)",       value); // Telemann
-    case 0x4900:            return cString::sprintf("China Crypt (%X)",      value); // CryptoWorks
-    case 0x4A02:            return cString::sprintf("Tongfang (%X)",         value); // Tsinghua Tongfang Company
-    case 0x4A10:            return cString::sprintf("EasyCas (%X)",          value); // EasyCas
-    case 0x4A20:            return cString::sprintf("AlphaCrypt (%X)",       value); // AlphaCrypt
-    case 0x4A60:            return cString::sprintf("SkyCrypt (%X)",         value); // @Sky
-    case 0x4A61:            return cString::sprintf("Neotioncrypt (%X)",     value); // Neotion
-    case 0x4A62:            return cString::sprintf("SkyCrypt (%X)",         value); // @Sky
-    case 0x4A63:            return cString::sprintf("Neotion SHL (%X)",      value); // Neotion
-    case 0x4A64 ... 0x4A6F: return cString::sprintf("SkyCrypt (%X)",         value); // @Sky
-    case 0x4A70:            return cString::sprintf("DreamCrypt (%X)",       value); // Dream Multimedia
-    case 0x4A80:            return cString::sprintf("ThalesCrypt (%X)",      value); // Thales Broadcast & Multimedia
-    case 0x4AA1:            return cString::sprintf("KeyFly (%X)",           value); // SIDSA
-    case 0x4ABF:            return cString::sprintf("CTI-CAS (%X)",          value); // Beijing Compunicate Technology Inc.
-    case 0x4AC1:            return cString::sprintf("Latens (%X)",           value); // Latens Systems
-    case 0x4AD0 ... 0x4AD1: return cString::sprintf("X-Crypt (%X)",          value); // XCrypt Inc.
-    case 0x4AD4:            return cString::sprintf("OmniCrypt (%X)",        value); // Widevine Technologies, Inc.
-    case 0x4AE0 ... 0x4AE1: return cString::sprintf("Z-Crypt (%X)",          value); // Digi Raum Electronics Co. Ltd.
-    case 0x4AE4:            return cString::sprintf("CoreCrypt (%X)",        value); // CoreTrust
-    case 0x4AE5:            return cString::sprintf("PRO-Crypt (%X)",        value); // IK SATPROF
-    case 0x4AEA:            return cString::sprintf("Cryptoguard (%X)",      value); // Gryptoguard AB
-    case 0x4AEB:            return cString::sprintf("Abel Quintic (%X)",     value); // Abel DRM Systems
-    case 0x4AF0:            return cString::sprintf("ABV (%X)",              value); // Alliance Broadcast Vision
-    case 0x5500:            return cString::sprintf("Z-Crypt (%X)",          value); // Digi Raum Electronics Co. Ltd.
-    case 0x5501:            return cString::sprintf("Griffin (%X)",          value); // Nucleus Systems Ltd.
-    case 0x5581:            return cString::sprintf("Bulcrypt (%X)",         value); // Bulcrypt
-    case 0x7BE1:            return cString::sprintf("DRE-Crypt (%X)",        value); // DRE-Crypt
-    case 0xA101:            return cString::sprintf("RosCrypt-M (%X)",       value); // NIIR
-    case 0xEAD0:            return cString::sprintf("VanyaCas (%X)",         value); // S-Curious Research & Technology Pvt. Ltd.
+    case 0x00A2 ... 0x00FF: return cString::sprintf("%s (%X)", tr("Fixed"),  valueP); // Standardized systems
+    case 0x00A0 ... 0x00A1: return cString::sprintf("%s (%X)", tr("Analog"), valueP); // Analog signals
+    case 0x0100 ... 0x01FF: return cString::sprintf("SECA Mediaguard (%X)",  valueP); // Canal Plus
+    case 0x0464:            return cString::sprintf("EuroDec (%X)",          valueP); // EuroDec
+    case 0x0500 ... 0x05FF: return cString::sprintf("Viaccess (%X)",         valueP); // France Telecom
+    case 0x0600 ... 0x06FF: return cString::sprintf("Irdeto (%X)",           valueP); // Irdeto
+    case 0x0700 ... 0x07FF: return cString::sprintf("DigiCipher 2 (%X)",     valueP); // Jerrold/GI/Motorola 4DTV
+    case 0x0900 ... 0x09FF: return cString::sprintf("NDS Videoguard (%X)",   valueP); // NDS
+    case 0x0B00 ... 0x0BFF: return cString::sprintf("Conax (%X)",            valueP); // Norwegian Telekom
+    case 0x0D00 ... 0x0DFF: return cString::sprintf("CryptoWorks (%X)",      valueP); // Philips CryptoTec
+    case 0x0E00 ... 0x0EFF: return cString::sprintf("PowerVu (%X)",          valueP); // Scientific Atlanta
+    case 0x1000:            return cString::sprintf("RAS (%X)",              valueP); // Tandberg Television
+    case 0x1200 ... 0x12FF: return cString::sprintf("NagraVision (%X)",      valueP); // BellVu Express
+    case 0x1700 ... 0x17FF: return cString::sprintf("VCAS (%X)",             valueP); // Verimatrix Inc. former BetaTechnik
+    case 0x1800 ... 0x18FF: return cString::sprintf("NagraVision (%X)",      valueP); // Kudelski SA
+    case 0x22F0:            return cString::sprintf("Codicrypt (%X)",        valueP); // Scopus Network Technologies
+    case 0x2600:            return cString::sprintf("BISS (%X)",             valueP); // European Broadcasting Union
+    case 0x2719:            return cString::sprintf("VanyaCas (%X)",         valueP); // S-Curious Research & Technology Pvt. Ltd.
+    case 0x4347:            return cString::sprintf("CryptOn (%X)",          valueP); // CryptOn
+    case 0x4800:            return cString::sprintf("Accessgate (%X)",       valueP); // Telemann
+    case 0x4900:            return cString::sprintf("China Crypt (%X)",      valueP); // CryptoWorks
+    case 0x4A02:            return cString::sprintf("Tongfang (%X)",         valueP); // Tsinghua Tongfang Company
+    case 0x4A10:            return cString::sprintf("EasyCas (%X)",          valueP); // EasyCas
+    case 0x4A20:            return cString::sprintf("AlphaCrypt (%X)",       valueP); // AlphaCrypt
+    case 0x4A60:            return cString::sprintf("SkyCrypt (%X)",         valueP); // @Sky
+    case 0x4A61:            return cString::sprintf("Neotioncrypt (%X)",     valueP); // Neotion
+    case 0x4A62:            return cString::sprintf("SkyCrypt (%X)",         valueP); // @Sky
+    case 0x4A63:            return cString::sprintf("Neotion SHL (%X)",      valueP); // Neotion
+    case 0x4A64 ... 0x4A6F: return cString::sprintf("SkyCrypt (%X)",         valueP); // @Sky
+    case 0x4A70:            return cString::sprintf("DreamCrypt (%X)",       valueP); // Dream Multimedia
+    case 0x4A80:            return cString::sprintf("ThalesCrypt (%X)",      valueP); // Thales Broadcast & Multimedia
+    case 0x4AA1:            return cString::sprintf("KeyFly (%X)",           valueP); // SIDSA
+    case 0x4ABF:            return cString::sprintf("CTI-CAS (%X)",          valueP); // Beijing Compunicate Technology Inc.
+    case 0x4AC1:            return cString::sprintf("Latens (%X)",           valueP); // Latens Systems
+    case 0x4AD0 ... 0x4AD1: return cString::sprintf("X-Crypt (%X)",          valueP); // XCrypt Inc.
+    case 0x4AD4:            return cString::sprintf("OmniCrypt (%X)",        valueP); // Widevine Technologies, Inc.
+    case 0x4AE0 ... 0x4AE1: return cString::sprintf("Z-Crypt (%X)",          valueP); // Digi Raum Electronics Co. Ltd.
+    case 0x4AE4:            return cString::sprintf("CoreCrypt (%X)",        valueP); // CoreTrust
+    case 0x4AE5:            return cString::sprintf("PRO-Crypt (%X)",        valueP); // IK SATPROF
+    case 0x4AEA:            return cString::sprintf("Cryptoguard (%X)",      valueP); // Gryptoguard AB
+    case 0x4AEB:            return cString::sprintf("Abel Quintic (%X)",     valueP); // Abel DRM Systems
+    case 0x4AF0:            return cString::sprintf("ABV (%X)",              valueP); // Alliance Broadcast Vision
+    case 0x5500:            return cString::sprintf("Z-Crypt (%X)",          valueP); // Digi Raum Electronics Co. Ltd.
+    case 0x5501:            return cString::sprintf("Griffin (%X)",          valueP); // Nucleus Systems Ltd.
+    case 0x5581:            return cString::sprintf("Bulcrypt (%X)",         valueP); // Bulcrypt
+    case 0x7BE1:            return cString::sprintf("DRE-Crypt (%X)",        valueP); // DRE-Crypt
+    case 0xA101:            return cString::sprintf("RosCrypt-M (%X)",       valueP); // NIIR
+    case 0xEAD0:            return cString::sprintf("VanyaCas (%X)",         valueP); // S-Curious Research & Technology Pvt. Ltd.
     default:                break;
     }
-  return cString::sprintf("%X", value);
+  return cString::sprintf("%X", valueP);
 }
 
-static const char *getUserString(int Value, const tDvbParameterMap *Map)
+static const char *getUserString(int valueP, const tDvbParameterMap *mapP)
 {
-  const tDvbParameterMap *map = Map;
+  const tDvbParameterMap *map = mapP;
   while (map && map->userValue != -1) {
-        if (map->driverValue == Value)
+        if (map->driverValue == valueP)
            return map->userString ? trVDR(map->userString) : "---";
         map++;
         }
   return "---";
 }
 
-cDvbDevice *getDvbDevice(cDevice* device)
+cDvbDevice *getDvbDevice(cDevice* deviceP)
 {
-  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(device);
+  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(deviceP);
 #ifdef __DYNAMIC_DEVICE_PROBE
-  if (!dev && device && device->HasSubDevice())
-     dev = dynamic_cast<cDvbDevice*>(device->SubDevice());
+  if (!dev && deviceP && deviceP->HasSubDevice())
+     dev = dynamic_cast<cDvbDevice*>(deviceP->SubDevice());
 #endif
   return dev;
 }
 
-cString getFrontendInfo(cDvbDevice *device)
+cString getFrontendInfo(cDvbDevice *deviceP)
 {
   struct dvb_frontend_info value;
   fe_status_t status;
@@ -111,17 +111,17 @@ cString getFrontendInfo(cDvbDevice *device)
   uint32_t unc = 0;
   cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
 
-  if (!device)
+  if (!deviceP)
      return info;
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return info;
 
-  info = cString::sprintf("CARD:%d\nSTRG:%d\nQUAL:%d", device->CardIndex(), device->SignalStrength(), device->SignalQuality());
+  info = cString::sprintf("CARD:%d\nSTRG:%d\nQUAL:%d", deviceP->CardIndex(), deviceP->SignalStrength(), deviceP->SignalQuality());
 
   if (ioctl(fe, FE_GET_INFO, &value) >= 0)
-     info = cString::sprintf("%s\nTYPE:%d\nNAME:%s", *info, value.type, *device->DeviceName());
+     info = cString::sprintf("%s\nTYPE:%d\nNAME:%s", *info, value.type, *deviceP->DeviceName());
   if (ioctl(fe, FE_READ_STATUS, &status) >= 0)
      info = cString::sprintf("%s\nSTAT:%02X", *info, status);
   if (ioctl(fe, FE_READ_SIGNAL_STRENGTH, &signal) >= 0)
@@ -143,39 +143,39 @@ cString getFrontendInfo(cDvbDevice *device)
   return info;
 }
 
-cString getFrontendName(cDvbDevice *device)
+cString getFrontendName(cDvbDevice *deviceP)
 {
-  if (!device)
+  if (!deviceP)
      return NULL;
 
-  return (cString::sprintf("%s on device #%d", *device->DeviceName(), device->CardIndex()));
+  return (cString::sprintf("%s on deviceP #%d", *deviceP->DeviceName(), deviceP->CardIndex()));
 }
 
-cString getFrontendStatus(cDvbDevice *device)
+cString getFrontendStatus(cDvbDevice *deviceP)
 {
   fe_status_t value;
 
-  if (!device)
+  if (!deviceP)
      return NULL;
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return NULL;
   memset(&value, 0, sizeof(value));
   ioctl(fe, FE_READ_STATUS, &value);
   close(fe);
 
-  return (cString::sprintf("Status %s:%s:%s:%s:%s on device #%d", (value & FE_HAS_LOCK) ? "LOCKED" : "-", (value & FE_HAS_SIGNAL) ? "SIGNAL" : "-", (value & FE_HAS_CARRIER) ? "CARRIER" : "-", (value & FE_HAS_VITERBI) ? "VITERBI" : "-", (value & FE_HAS_SYNC) ? "SYNC" : "-", device->CardIndex()));
+  return (cString::sprintf("Status %s:%s:%s:%s:%s on deviceP #%d", (value & FE_HAS_LOCK) ? "LOCKED" : "-", (value & FE_HAS_SIGNAL) ? "SIGNAL" : "-", (value & FE_HAS_CARRIER) ? "CARRIER" : "-", (value & FE_HAS_VITERBI) ? "VITERBI" : "-", (value & FE_HAS_SYNC) ? "SYNC" : "-", deviceP->CardIndex()));
 }
 
-uint16_t getSignal(cDvbDevice *device)
+uint16_t getSignal(cDvbDevice *deviceP)
 {
   uint16_t value = 0;
 
-  if (!device)
+  if (!deviceP)
      return (value);
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
   ioctl(fe, FE_READ_SIGNAL_STRENGTH, &value);
@@ -184,14 +184,14 @@ uint16_t getSignal(cDvbDevice *device)
   return (value);
 }
 
-uint16_t getSNR(cDvbDevice *device)
+uint16_t getSNR(cDvbDevice *deviceP)
 {
   uint16_t value = 0;
 
-  if (!device)
+  if (!deviceP)
      return (value);
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
   ioctl(fe, FE_READ_SNR, &value);
@@ -200,14 +200,14 @@ uint16_t getSNR(cDvbDevice *device)
   return (value);
 }
 
-uint32_t getBER(cDvbDevice *device)
+uint32_t getBER(cDvbDevice *deviceP)
 {
   uint32_t value = 0;
 
-  if (!device)
+  if (!deviceP)
      return (value);
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
   ioctl(fe, FE_READ_BER, &value);
@@ -216,14 +216,14 @@ uint32_t getBER(cDvbDevice *device)
   return (value);
 }
 
-uint32_t getUNC(cDvbDevice *device)
+uint32_t getUNC(cDvbDevice *deviceP)
 {
   uint32_t value = 0;
 
-  if (!device)
+  if (!deviceP)
      return (value);
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, device->Adapter(), device->Frontend()), O_RDONLY | O_NONBLOCK);
+  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
   if (fe < 0)
      return (value);
   ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &value);
@@ -232,39 +232,39 @@ uint32_t getUNC(cDvbDevice *device)
   return (value);
 }
 
-cString getApids(const cChannel *channel)
+cString getApids(const cChannel *channelP)
 {
   int value = 0;
-  cString apids = cString::sprintf("%d", channel->Apid(value));
-  while (channel->Apid(++value) && (value < MAXAPIDS))
-    apids = cString::sprintf("%s, %d", *apids, channel->Apid(value));
+  cString apids = cString::sprintf("%d", channelP->Apid(value));
+  while (channelP->Apid(++value) && (value < MAXAPIDS))
+    apids = cString::sprintf("%s, %d", *apids, channelP->Apid(value));
   return apids;
 }
 
-cString getDpids(const cChannel *channel)
+cString getDpids(const cChannel *channelP)
 {
   int value = 0;
-  cString dpids = cString::sprintf("%d", channel->Dpid(value));
-  while (channel->Dpid(++value) && (value < MAXDPIDS))
-    dpids = cString::sprintf("%s, %d", *dpids, channel->Dpid(value));
+  cString dpids = cString::sprintf("%d", channelP->Dpid(value));
+  while (channelP->Dpid(++value) && (value < MAXDPIDS))
+    dpids = cString::sprintf("%s, %d", *dpids, channelP->Dpid(value));
   return dpids;
 }
 
-cString getSpids(const cChannel *channel)
+cString getSpids(const cChannel *channelP)
 {
   int value = 0;
-  cString spids = cString::sprintf("%d", channel->Spid(value));
-  while (channel->Spid(++value) && (value < MAXSPIDS))
-    spids = cString::sprintf("%s, %d", *spids, channel->Spid(value));
+  cString spids = cString::sprintf("%d", channelP->Spid(value));
+  while (channelP->Spid(++value) && (value < MAXSPIDS))
+    spids = cString::sprintf("%s, %d", *spids, channelP->Spid(value));
   return spids;
 }
 
-cString getCAids(const cChannel *channel)
+cString getCAids(const cChannel *channelP)
 {
   int value = 0;
-  cString caids = cString::sprintf("%s", *getCA(channel->Ca(value)));
-  while (channel->Ca(++value) && (value < MAXCAIDS))
-    caids = cString::sprintf("%s, %s", *caids, *getCA(channel->Ca(value)));
+  cString caids = cString::sprintf("%s", *getCA(channelP->Ca(value)));
+  while (channelP->Ca(++value) && (value < MAXCAIDS))
+    caids = cString::sprintf("%s, %s", *caids, *getCA(channelP->Ca(value)));
   return caids;
 }
 
@@ -275,37 +275,37 @@ cString getVideoStream(int value)
   return cString::sprintf("---");
 }
 
-cString getAudioStream(int value, const cChannel *channel)
+cString getAudioStream(int valueP, const cChannel *channelP)
 {
   int pid = 0;
-  if (IS_AUDIO_TRACK(value))
-     pid = int(value - ttAudioFirst);
-  if (channel && channel->Apid(pid)) {
-     if (channel->Alang(pid))
-        return cString::sprintf("#%d (%s)", channel->Apid(pid), channel->Alang(pid));
+  if (IS_AUDIO_TRACK(valueP))
+     pid = int(valueP - ttAudioFirst);
+  if (channelP && channelP->Apid(pid)) {
+     if (channelP->Alang(pid))
+        return cString::sprintf("#%d (%s)", channelP->Apid(pid), channelP->Alang(pid));
      else
-        return cString::sprintf("#%d", channel->Apid(pid));
+        return cString::sprintf("#%d", channelP->Apid(pid));
      }
   return cString::sprintf("---");
 }
 
-cString getAC3Stream(int value, const cChannel *channel)
+cString getAC3Stream(int valueP, const cChannel *channelP)
 {
   int pid = 0;
-  if (IS_DOLBY_TRACK(value))
-     pid = int(value - ttDolbyFirst);
-  if (channel && channel->Dpid(pid)) {
-     if (channel->Dlang(pid))
-        return cString::sprintf("#%d (%s)", channel->Dpid(pid), channel->Dlang(pid));
+  if (IS_DOLBY_TRACK(valueP))
+     pid = int(valueP - ttDolbyFirst);
+  if (channelP && channelP->Dpid(pid)) {
+     if (channelP->Dlang(pid))
+        return cString::sprintf("#%d (%s)", channelP->Dpid(pid), channelP->Dlang(pid));
      else
-        return cString::sprintf("#%d", channel->Dpid(pid));
+        return cString::sprintf("#%d", channelP->Dpid(pid));
      }
   return cString::sprintf("---");
 }
 
-cString getVideoCodec(int value)
+cString getVideoCodec(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case VIDEO_CODEC_MPEG2: return cString::sprintf("%s", tr("MPEG-2"));
     case VIDEO_CODEC_H264:  return cString::sprintf("%s", tr("H.264"));
     default:                break;
@@ -313,9 +313,9 @@ cString getVideoCodec(int value)
   return cString::sprintf("---");
 }
 
-cString getAudioCodec(int value)
+cString getAudioCodec(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case AUDIO_CODEC_MPEG1_I:   return cString::sprintf("%s", tr("MPEG-1 Layer I"));
     case AUDIO_CODEC_MPEG1_II:  return cString::sprintf("%s", tr("MPEG-1 Layer II"));
     case AUDIO_CODEC_MPEG1_III: return cString::sprintf("%s", tr("MPEG-1 Layer III"));
@@ -329,9 +329,9 @@ cString getAudioCodec(int value)
   return cString::sprintf("---");
 }
 
-cString getAudioChannelMode(int value)
+cString getAudioChannelMode(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case AUDIO_CHANNEL_MODE_STEREO:       return cString::sprintf("%s", tr("stereo"));
     case AUDIO_CHANNEL_MODE_JOINT_STEREO: return cString::sprintf("%s", tr("joint Stereo"));
     case AUDIO_CHANNEL_MODE_DUAL:         return cString::sprintf("%s", tr("dual"));
@@ -341,76 +341,76 @@ cString getAudioChannelMode(int value)
   return cString::sprintf("---");
 }
 
-cString getCoderate(int value)
+cString getCoderate(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, CoderateValues));
+  return cString::sprintf("%s", getUserString(valueP, CoderateValues));
 }
 
-cString getTransmission(int value)
+cString getTransmission(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, TransmissionValues));
+  return cString::sprintf("%s", getUserString(valueP, TransmissionValues));
 }
 
-cString getBandwidth(int value)
+cString getBandwidth(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, BandwidthValues));
+  return cString::sprintf("%s", getUserString(valueP, BandwidthValues));
 }
 
-cString getInversion(int value)
+cString getInversion(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, InversionValues));
+  return cString::sprintf("%s", getUserString(valueP, InversionValues));
 }
 
-cString getHierarchy(int value)
+cString getHierarchy(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, HierarchyValues));
+  return cString::sprintf("%s", getUserString(valueP, HierarchyValues));
 }
 
-cString getGuard(int value)
+cString getGuard(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, GuardValues));
+  return cString::sprintf("%s", getUserString(valueP, GuardValues));
 }
 
-cString getModulation(int value)
+cString getModulation(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, ModulationValues));
+  return cString::sprintf("%s", getUserString(valueP, ModulationValues));
 }
 
-cString getTerrestrialSystem(int value)
+cString getTerrestrialSystem(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, SystemValuesTerr));
+  return cString::sprintf("%s", getUserString(valueP, SystemValuesTerr));
 }
 
-cString getSatelliteSystem(int value)
+cString getSatelliteSystem(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, SystemValuesSat));
+  return cString::sprintf("%s", getUserString(valueP, SystemValuesSat));
 }
 
-cString getRollOff(int value)
+cString getRollOff(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, RollOffValues));
+  return cString::sprintf("%s", getUserString(valueP, RollOffValues));
 }
 
-cString getPilot(int value)
+cString getPilot(int valueP)
 {
-  return cString::sprintf("%s", getUserString(value, PilotValues));
+  return cString::sprintf("%s", getUserString(valueP, PilotValues));
 }
 
-cString getResolution(int width, int height, int scan)
+cString getResolution(int widthP, int heightP, int scanP)
 {
-  if ((width > 0) && (height > 0)) {
-     switch (scan) {
-       case VIDEO_SCAN_INTERLACED:  return cString::sprintf("%dx%d %s", width, height, tr("interlaced"));
-       case VIDEO_SCAN_PROGRESSIVE: return cString::sprintf("%dx%d %s", width, height, tr("progressive"));
-       default:                     return cString::sprintf("%dx%d",    width, height);
+  if ((widthP > 0) && (heightP > 0)) {
+     switch (scanP) {
+       case VIDEO_SCAN_INTERLACED:  return cString::sprintf("%dx%d %s", widthP, heightP, tr("interlaced"));
+       case VIDEO_SCAN_PROGRESSIVE: return cString::sprintf("%dx%d %s", widthP, heightP, tr("progressive"));
+       default:                     return cString::sprintf("%dx%d",    widthP, heightP);
        }
      }
   return cString::sprintf("---");
 }
 
-cString getAspectRatio(int value)
+cString getAspectRatio(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case VIDEO_ASPECT_RATIO_RESERVED: return cString::sprintf("%s", tr("reserved"));
     case VIDEO_ASPECT_RATIO_EXTENDED: return cString::sprintf("%s", tr("extended"));
     case VIDEO_ASPECT_RATIO_1_1:      return cString::sprintf("1:1");
@@ -436,9 +436,9 @@ cString getAspectRatio(int value)
   return cString::sprintf("---");
 }
 
-cString getVideoFormat(int value)
+cString getVideoFormat(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case VIDEO_FORMAT_UNKNOWN:   return cString::sprintf("%s", tr("unknown"));
     case VIDEO_FORMAT_RESERVED:  return cString::sprintf("%s", tr("reserved"));
     case VIDEO_FORMAT_COMPONENT: return cString::sprintf("%s", tr("component"));
@@ -451,16 +451,16 @@ cString getVideoFormat(int value)
   return cString::sprintf("---");
 }
 
-cString getFrameRate(double value)
+cString getFrameRate(double valueP)
 {
-  if (value > 0)
-     return cString::sprintf("%.2f %s", value, tr("Hz"));
+  if (valueP > 0)
+     return cString::sprintf("%.2f %s", valueP, tr("Hz"));
   return cString::sprintf("---");
 }
 
-cString getAC3BitStreamMode(int value, int coding)
+cString getAC3BitStreamMode(int valueP, int codingP)
 {
-  switch (value) {
+  switch (valueP) {
     case AUDIO_BITSTREAM_MODE_CM:     return cString::sprintf("%s", tr("Complete Main (CM)"));
     case AUDIO_BITSTREAM_MODE_ME:     return cString::sprintf("%s", tr("Music and Effects (ME)"));
     case AUDIO_BITSTREAM_MODE_VI:     return cString::sprintf("%s", tr("Visually Impaired (VI)"));
@@ -468,16 +468,16 @@ cString getAC3BitStreamMode(int value, int coding)
     case AUDIO_BITSTREAM_MODE_D:      return cString::sprintf("%s", tr("Dialogue (D)"));
     case AUDIO_BITSTREAM_MODE_C:      return cString::sprintf("%s", tr("Commentary (C)"));
     case AUDIO_BITSTREAM_MODE_E:      return cString::sprintf("%s", tr("Emergency (E)"));
-    case AUDIO_BITSTREAM_MODE_VO_KAR: return cString::sprintf("%s", (coding == 1) ? tr("Voice Over (VO)") : tr("Karaoke"));
+    case AUDIO_BITSTREAM_MODE_VO_KAR: return cString::sprintf("%s", (codingP == 1) ? tr("Voice Over (VO)") : tr("Karaoke"));
     default:                          break;
     }
   return cString::sprintf("---");
 }
 
-cString getAC3AudioCodingMode(int value, int stream)
+cString getAC3AudioCodingMode(int valueP, int streamP)
 {
-  if (stream != 7) {
-     switch (value) {
+  if (streamP != 7) {
+     switch (valueP) {
        case AUDIO_CODING_MODE_1_1: return cString::sprintf("1+1 - %s, %s", tr("Ch1"), tr("Ch2"));
        case AUDIO_CODING_MODE_1_0: return cString::sprintf("1/0 - %s", tr("C"));
        case AUDIO_CODING_MODE_2_0: return cString::sprintf("2/0 - %s, %s", tr("L"), tr("R"));
@@ -492,9 +492,9 @@ cString getAC3AudioCodingMode(int value, int stream)
   return cString::sprintf("---");
 }
 
-cString getAC3CenterMixLevel(int value)
+cString getAC3CenterMixLevel(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case AUDIO_CENTER_MIX_LEVEL_MINUS_3dB:   return cString::sprintf("-3.0 %s", tr("dB"));
     case AUDIO_CENTER_MIX_LEVEL_MINUS_4_5dB: return cString::sprintf("-4.5 %s", tr("dB"));
     case AUDIO_CENTER_MIX_LEVEL_MINUS_6dB:   return cString::sprintf("-6.0 %s", tr("dB"));
@@ -504,9 +504,9 @@ cString getAC3CenterMixLevel(int value)
   return cString::sprintf("---");
 }
 
-cString getAC3SurroundMixLevel(int value)
+cString getAC3SurroundMixLevel(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case AUDIO_SURROUND_MIX_LEVEL_MINUS_3dB: return cString::sprintf("-3 %s", tr("dB"));
     case AUDIO_SURROUND_MIX_LEVEL_MINUS_6dB: return cString::sprintf("-6 %s", tr("dB"));
     case AUDIO_SURROUND_MIX_LEVEL_0_dB:      return cString::sprintf("0 %s", tr("dB"));
@@ -516,9 +516,9 @@ cString getAC3SurroundMixLevel(int value)
   return cString::sprintf("---");
 }
 
-cString getAC3DolbySurroundMode(int value)
+cString getAC3DolbySurroundMode(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case AUDIO_DOLBY_SURROUND_MODE_NOT_INDICATED:     return cString::sprintf("%s", tr("not indicated"));
     case AUDIO_DOLBY_SURROUND_MODE_NOT_DOLBYSURROUND: return cString::sprintf("%s", trVDR("no"));
     case AUDIO_DOLBY_SURROUND_MODE_DOLBYSURROUND:     return cString::sprintf("%s", trVDR("yes"));
@@ -528,57 +528,57 @@ cString getAC3DolbySurroundMode(int value)
   return cString::sprintf("---");
 }
 
-cString getAC3DialogLevel(int value)
+cString getAC3DialogLevel(int valueP)
 {
-  if (value > 0)
-     return cString::sprintf("-%d %s", value, tr("dB"));
+  if (valueP > 0)
+     return cString::sprintf("-%d %s", valueP, tr("dB"));
   return cString::sprintf("---");
 }
 
-cString getFrequencyMHz(int value)
+cString getFrequencyMHz(int valueP)
 {
-  double freq = value;
+  double freq = valueP;
   while (freq > 20000.0) freq /= 1000.0;
   return cString::sprintf("%s %s", *dtoa(freq, "%lg"), tr("MHz"));
 }
 
-cString getAudioSamplingFreq(int value)
+cString getAudioSamplingFreq(int valueP)
 {
-  switch (value) {
+  switch (valueP) {
     case AUDIO_SAMPLING_FREQUENCY_INVALID:  return cString::sprintf("---");
     case AUDIO_SAMPLING_FREQUENCY_RESERVED: return cString::sprintf("%s", tr("reserved"));
     default:                                break;
     }
-  return cString::sprintf("%d %s", value, tr("Hz"));
+  return cString::sprintf("%d %s", valueP, tr("Hz"));
 }
 
-cString getAudioBitrate(double value, double stream)
+cString getAudioBitrate(double valueP, double streamP)
 {
-  switch ((int)stream) {
+  switch ((int)streamP) {
     case AUDIO_BITRATE_INVALID:  return cString::sprintf("---");
-    case AUDIO_BITRATE_RESERVED: return cString::sprintf("%s (%s)", tr("reserved"), *getBitrateKbits(value));
-    case AUDIO_BITRATE_FREE:     return cString::sprintf("%s (%s)", tr("free"), *getBitrateKbits(value));
+    case AUDIO_BITRATE_RESERVED: return cString::sprintf("%s (%s)", tr("reserved"), *getBitrateKbits(valueP));
+    case AUDIO_BITRATE_FREE:     return cString::sprintf("%s (%s)", tr("free"), *getBitrateKbits(valueP));
     default:                     break;
     }
-  return cString::sprintf("%s (%s)", *getBitrateKbits(stream), *getBitrateKbits(value));
+  return cString::sprintf("%s (%s)", *getBitrateKbits(streamP), *getBitrateKbits(valueP));
 }
 
-cString getVideoBitrate(double value, double stream)
+cString getVideoBitrate(double valueP, double streamP)
 {
-  return cString::sprintf("%s (%s)", *getBitrateMbits(stream), *getBitrateMbits(value));
+  return cString::sprintf("%s (%s)", *getBitrateMbits(streamP), *getBitrateMbits(valueP));
 }
 
-cString getBitrateMbits(double value)
+cString getBitrateMbits(double valueP)
 {
-  if (value > 0)
-     return cString::sprintf("%.2f %s", value / 1000000.0, tr("Mbit/s"));
+  if (valueP > 0)
+     return cString::sprintf("%.2f %s", valueP / 1000000.0, tr("Mbit/s"));
   return cString::sprintf("---");
 }
 
-cString getBitrateKbits(double value)
+cString getBitrateKbits(double valueP)
 {
-  if (value > 0)
-     return cString::sprintf("%.0f %s", value / 1000.0, tr("kbit/s"));
+  if (valueP > 0)
+     return cString::sprintf("%.0f %s", valueP / 1000.0, tr("kbit/s"));
   return cString::sprintf("---");
 }
 

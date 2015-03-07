@@ -12,17 +12,17 @@
 
 class cFemonAC3 {
 private:
-  cFemonAC3If *m_AudioHandler;
+  cFemonAC3If *audioHandlerM;
 
-  static int s_Bitrates[32];
-  static int s_Frequencies[4];
-  static int s_Frames[3][32];
+  static int bitrateS[32];
+  static int frequencieS[4];
+  static int frameS[3][32];
 
 public:
-  cFemonAC3(cFemonAC3If *audiohandler);
+  cFemonAC3(cFemonAC3If *audioHandlerP);
   virtual ~cFemonAC3();
 
-  bool processAudio(const uint8_t *buf, int len);
+  bool processAudio(const uint8_t *bufP, int lenP);
   };
 
 #endif //__FEMONAC3_H

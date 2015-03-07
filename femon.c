@@ -22,7 +22,7 @@
 #define GITVERSION ""
 #endif
 
-static const char VERSION[]       = "2.2.0" GITVERSION;
+static const char VERSION[]       = "2.2.1" GITVERSION;
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -40,13 +40,13 @@ public:
   virtual void Housekeeping(void);
   virtual void MainThreadHook(void) {}
   virtual cString Active(void) { return NULL; }
-  virtual const char *MainMenuEntry(void) { return (femonConfig.hidemenu ? NULL : tr(MAINMENUENTRY)); }
+  virtual const char *MainMenuEntry(void) { return (FemonConfig.hidemenu ? NULL : tr(MAINMENUENTRY)); }
   virtual cOsdObject *MainMenuAction(void);
   virtual cMenuSetupPage *SetupMenu(void);
-  virtual bool SetupParse(const char *Name, const char *Value);
-  virtual bool Service(const char *Id, void *Data);
+  virtual bool SetupParse(const char *nameP, const char *valueP);
+  virtual bool Service(const char *idP, void *dataP);
   virtual const char **SVDRPHelpPages(void);
-  virtual cString SVDRPCommand(const char *Command, const char *Option, int &ReplyCode);
+  virtual cString SVDRPCommand(const char *commandP, const char *optionP, int &replyCodeP);
   };
 
 cPluginFemon::cPluginFemon()
@@ -108,35 +108,35 @@ cOsdObject *cPluginFemon::MainMenuAction(void)
   return NULL;
 }
 
-bool cPluginFemon::SetupParse(const char *Name, const char *Value)
+bool cPluginFemon::SetupParse(const char *nameP, const char *valueP)
 {
   // Parse your own setup parameters and store their values.
-  if      (!strcasecmp(Name, "HideMenu"))       femonConfig.hidemenu       = atoi(Value);
-  else if (!strcasecmp(Name, "DisplayMode"))    femonConfig.displaymode    = atoi(Value);
-  else if (!strcasecmp(Name, "Position"))       femonConfig.position       = atoi(Value);
-  else if (!strcasecmp(Name, "Skin"))           femonConfig.skin           = atoi(Value);
-  else if (!strcasecmp(Name, "Theme"))          femonConfig.theme          = atoi(Value);
-  else if (!strcasecmp(Name, "Downscale"))      femonConfig.downscale      = atoi(Value);
-  else if (!strcasecmp(Name, "RedLimit"))       femonConfig.redlimit       = atoi(Value);
-  else if (!strcasecmp(Name, "GreenLimit"))     femonConfig.greenlimit     = atoi(Value);
-  else if (!strcasecmp(Name, "UpdateInterval")) femonConfig.updateinterval = atoi(Value);
-  else if (!strcasecmp(Name, "AnalStream"))     femonConfig.analyzestream  = atoi(Value);
-  else if (!strcasecmp(Name, "CalcInterval"))   femonConfig.calcinterval   = atoi(Value);
-  else if (!strcasecmp(Name, "UseSvdrp"))       femonConfig.usesvdrp       = atoi(Value);
-  else if (!strcasecmp(Name, "ServerPort"))     femonConfig.svdrpport      = atoi(Value);
-  else if (!strcasecmp(Name, "ServerIp"))       strn0cpy(femonConfig.svdrpip, Value, sizeof(femonConfig.svdrpip));
+  if      (!strcasecmp(nameP, "HideMenu"))       FemonConfig.hidemenu       = atoi(valueP);
+  else if (!strcasecmp(nameP, "DisplayMode"))    FemonConfig.displaymode    = atoi(valueP);
+  else if (!strcasecmp(nameP, "Position"))       FemonConfig.position       = atoi(valueP);
+  else if (!strcasecmp(nameP, "Skin"))           FemonConfig.skin           = atoi(valueP);
+  else if (!strcasecmp(nameP, "Theme"))          FemonConfig.theme          = atoi(valueP);
+  else if (!strcasecmp(nameP, "Downscale"))      FemonConfig.downscale      = atoi(valueP);
+  else if (!strcasecmp(nameP, "RedLimit"))       FemonConfig.redlimit       = atoi(valueP);
+  else if (!strcasecmp(nameP, "GreenLimit"))     FemonConfig.greenlimit     = atoi(valueP);
+  else if (!strcasecmp(nameP, "UpdateInterval")) FemonConfig.updateinterval = atoi(valueP);
+  else if (!strcasecmp(nameP, "AnalStream"))     FemonConfig.analyzestream  = atoi(valueP);
+  else if (!strcasecmp(nameP, "CalcInterval"))   FemonConfig.calcinterval   = atoi(valueP);
+  else if (!strcasecmp(nameP, "UseSvdrp"))       FemonConfig.usesvdrp       = atoi(valueP);
+  else if (!strcasecmp(nameP, "ServerPort"))     FemonConfig.svdrpport      = atoi(valueP);
+  else if (!strcasecmp(nameP, "ServerIp"))       strn0cpy(FemonConfig.svdrpip, valueP, sizeof(FemonConfig.svdrpip));
   else
     return false;
-  if (femonConfig.displaymode < 0 || femonConfig.displaymode >= eFemonModeMaxNumber) femonConfig.displaymode = 0;
+  if (FemonConfig.displaymode < 0 || FemonConfig.displaymode >= eFemonModeMaxNumber) FemonConfig.displaymode = 0;
 
   return true;
 }
 
-bool cPluginFemon::Service(const char *Id, void *Data)
+bool cPluginFemon::Service(const char *idP, void *dataP)
 {
-  if (strcmp(Id,"FemonService-v1.0") == 0) {
-     if (Data) {
-        FemonService_v1_0 *data = reinterpret_cast<FemonService_v1_0*>(Data);
+  if (strcmp(idP, "FemonService-v1.0") == 0) {
+     if (dataP) {
+        FemonService_v1_0 *data = reinterpret_cast<FemonService_v1_0*>(dataP);
         if (!cDevice::ActualDevice())
            return false;
         cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
@@ -196,82 +196,82 @@ const char **cPluginFemon::SVDRPHelpPages(void)
   return HelpPages;
 }
 
-cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
+cString cPluginFemon::SVDRPCommand(const char *commandP, const char *optionP, int &replyCodeP)
 {
   cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
-  if (*Option && isnumber(Option)) {
-     cDvbDevice *dev2 = dynamic_cast<cDvbDevice*>(cDevice::GetDevice(int(strtol(Option, NULL, 10))));
+  if (*optionP && isnumber(optionP)) {
+     cDvbDevice *dev2 = dynamic_cast<cDvbDevice*>(cDevice::GetDevice(int(strtol(optionP, NULL, 10))));
      if (dev2)
         dev = dev2;
      }
   if (cReplayControl::NowReplaying() || !dev) {
-     ReplyCode = 550; // Requested action not taken
+     replyCodeP = 550; // Requested action not taken
      return cString("Cannot open femon plugin while replaying");
      }
-  if (strcasecmp(Command, "OPEN") == 0) {
+  if (strcasecmp(commandP, "OPEN") == 0) {
      if (!cFemonOsd::Instance())
         cRemote::CallPlugin(Name());
      return cString("Opening femon plugin");
      }
-  else if (strcasecmp(Command, "QUIT") == 0) {
+  else if (strcasecmp(commandP, "QUIT") == 0) {
      if (cFemonOsd::Instance())
         cRemote::Put(kBack);
      return cString("Closing femon plugin");
      }
-  else if (strcasecmp(Command, "NEXT") == 0) {
+  else if (strcasecmp(commandP, "NEXT") == 0) {
      if (cFemonOsd::Instance())
         return cString::sprintf("Switching to next device: %s", cFemonOsd::Instance()->DeviceSwitch(1) ? "ok" : "failed");
      else
         return cString("Cannot switch device");
      }
-  else if (strcasecmp(Command, "PREV") == 0) {
+  else if (strcasecmp(commandP, "PREV") == 0) {
      if (cFemonOsd::Instance())
         return cString::sprintf("Switching to previous device: %s", cFemonOsd::Instance()->DeviceSwitch(-1) ? "ok" : "failed");
      else
         return cString("Cannot switch device");
      }
-  else if (strcasecmp(Command, "INFO") == 0) {
+  else if (strcasecmp(commandP, "INFO") == 0) {
      return getFrontendInfo(dev);
      }
-  else if (strcasecmp(Command, "NAME") == 0) {
+  else if (strcasecmp(commandP, "NAME") == 0) {
      return getFrontendName(dev);
      }
-  else if (strcasecmp(Command, "STAT") == 0) {
+  else if (strcasecmp(commandP, "STAT") == 0) {
      return getFrontendStatus(dev);
      }
-  else if (strcasecmp(Command, "STRG") == 0) {
+  else if (strcasecmp(commandP, "STRG") == 0) {
      return cString::sprintf("%d on device #%d", dev->SignalStrength(), dev->CardIndex());
      }
-  else if (strcasecmp(Command, "QUAL") == 0) {
+  else if (strcasecmp(commandP, "QUAL") == 0) {
      return cString::sprintf("%d on device #%d", dev->SignalQuality(), dev->CardIndex());
      }
-  else if (strcasecmp(Command, "SGNL") == 0) {
+  else if (strcasecmp(commandP, "SGNL") == 0) {
      int value = getSignal(dev);
      return cString::sprintf("%04X (%02d%%) on device #%d", value, value / 655, dev->CardIndex());
      }
-  else if (strcasecmp(Command, "SNRA") == 0) {
+  else if (strcasecmp(commandP, "SNRA") == 0) {
      int value = getSNR(dev);
      return cString::sprintf("%04X (%02d%%) on device #%d", value, value / 655, dev->CardIndex());
      }
-  else if (strcasecmp(Command, "BERA") == 0) {
+  else if (strcasecmp(commandP, "BERA") == 0) {
      return cString::sprintf("%08X on device #%d", getBER(dev), dev->CardIndex());
      }
-  else if (strcasecmp(Command, "UNCB") == 0) {
+  else if (strcasecmp(commandP, "UNCB") == 0) {
      return cString::sprintf("%08X on device #%d", getUNC(dev), dev->CardIndex());
      }
-  else if (strcasecmp(Command, "VIBR") == 0) {
+  else if (strcasecmp(commandP, "VIBR") == 0) {
      if (cFemonOsd::Instance())
         return cString::sprintf("%s on device #%d", *getBitrateMbits(cFemonOsd::Instance()->GetVideoBitrate()), cDevice::ActualDevice()->CardIndex());
      else
         return cString::sprintf("--- Mbit/s on device #%d", cDevice::ActualDevice()->CardIndex());
      }
-  else if (strcasecmp(Command, "AUBR") == 0) {
+  else if (strcasecmp(commandP, "AUBR") == 0) {
      if (cFemonOsd::Instance())
         return cString::sprintf("%s on device #%d", *getBitrateKbits(cFemonOsd::Instance()->GetAudioBitrate()), cDevice::ActualDevice()->CardIndex());
      else
         return cString::sprintf("--- kbit/s on device #%d", cDevice::ActualDevice()->CardIndex());
      }
-  else if (strcasecmp(Command, "DDBR") == 0) {
+  else if (strcasecmp(commandP, "DDBR") == 0) {
      if (cFemonOsd::Instance())
         return cString::sprintf("%s on device #%d", *getBitrateKbits(cFemonOsd::Instance()->GetDolbyBitrate()), cDevice::ActualDevice()->CardIndex());
      else
@@ -282,42 +282,42 @@ cString cPluginFemon::SVDRPCommand(const char *Command, const char *Option, int 
 
 class cMenuFemonSetup : public cMenuSetupPage {
 private:
-  const char *dispmodes[eFemonModeMaxNumber];
-  const char *skins[eFemonSkinMaxNumber];
-  const char *themes[eFemonThemeMaxNumber];
-  cFemonConfig data;
-  cVector<const char*> help;
+  const char *dispModesM[eFemonModeMaxNumber];
+  const char *skinsM[eFemonSkinMaxNumber];
+  const char *themesM[eFemonThemeMaxNumber];
+  cFemonConfig dataM;
+  cVector<const char*> helpM;
   void Setup(void);
 protected:
   virtual eOSState ProcessKey(eKeys Key);
   virtual void Store(void);
 public:
-  cMenuFemonSetup(void);
+  cMenuFemonSetup();
   };
 
-cMenuFemonSetup::cMenuFemonSetup(void)
+cMenuFemonSetup::cMenuFemonSetup()
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
-  dispmodes[eFemonModeBasic]       = tr("basic");
-  dispmodes[eFemonModeTransponder] = tr("transponder");
-  dispmodes[eFemonModeStream]      = tr("stream");
-  dispmodes[eFemonModeAC3]         = tr("AC-3");
+  dispModesM[eFemonModeBasic]       = tr("basic");
+  dispModesM[eFemonModeTransponder] = tr("transponder");
+  dispModesM[eFemonModeStream]      = tr("stream");
+  dispModesM[eFemonModeAC3]         = tr("AC-3");
 
-  skins[eFemonSkinClassic]         = tr("Classic");
-  skins[eFemonSkinElchi]           = tr("Elchi");
+  skinsM[eFemonSkinClassic]         = tr("Classic");
+  skinsM[eFemonSkinElchi]           = tr("Elchi");
 
-  themes[eFemonThemeClassic]       = tr("Classic");
-  themes[eFemonThemeElchi]         = tr("Elchi");
-  themes[eFemonThemeSTTNG]         = tr("ST:TNG");
-  themes[eFemonThemeDeepBlue]      = tr("DeepBlue");
-  themes[eFemonThemeMoronimo]      = tr("Moronimo");
-  themes[eFemonThemeEnigma]        = tr("Enigma");
-  themes[eFemonThemeEgalsTry]      = tr("EgalsTry");
-  themes[eFemonThemeDuotone]       = tr("Duotone");
-  themes[eFemonThemeSilverGreen]   = tr("SilverGreen");
-  themes[eFemonThemePearlHD]       = tr("PearlHD");
+  themesM[eFemonThemeClassic]       = tr("Classic");
+  themesM[eFemonThemeElchi]         = tr("Elchi");
+  themesM[eFemonThemeSTTNG]         = tr("ST:TNG");
+  themesM[eFemonThemeDeepBlue]      = tr("DeepBlue");
+  themesM[eFemonThemeMoronimo]      = tr("Moronimo");
+  themesM[eFemonThemeEnigma]        = tr("Enigma");
+  themesM[eFemonThemeEgalsTry]      = tr("EgalsTry");
+  themesM[eFemonThemeDuotone]       = tr("Duotone");
+  themesM[eFemonThemeSilverGreen]   = tr("SilverGreen");
+  themesM[eFemonThemePearlHD]       = tr("PearlHD");
 
-  data = femonConfig;
+  dataM = FemonConfig;
   SetMenuCategory(mcSetupPlugins);
   Setup();
 }
@@ -327,52 +327,52 @@ void cMenuFemonSetup::Setup(void)
   int current = Current();
 
   Clear();
-  help.Clear();
+  helpM.Clear();
 
-  Add(new cMenuEditBoolItem(tr("Hide main menu entry"), &data.hidemenu));
-  help.Append(tr("Define whether the main menu entry is hidden."));
+  Add(new cMenuEditBoolItem(tr("Hide main menu entry"), &dataM.hidemenu));
+  helpM.Append(tr("Define whether the main menu entry is hidden."));
 
-  Add(new cMenuEditStraItem(tr("Default display mode"), &data.displaymode, eFemonModeMaxNumber, dispmodes));
-  help.Append(tr("Define the default display mode at startup."));
+  Add(new cMenuEditStraItem(tr("Default display mode"), &dataM.displaymode, eFemonModeMaxNumber, dispModesM));
+  helpM.Append(tr("Define the default display mode at startup."));
 
-  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Skin"), &data.skin, eFemonSkinMaxNumber, skins));
-  help.Append(tr("Define the used OSD skin."));
+  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Skin"), &dataM.skin, eFemonSkinMaxNumber, skinsM));
+  helpM.Append(tr("Define the used OSD skin."));
 
-  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Theme"), &data.theme, eFemonThemeMaxNumber,themes));
-  help.Append(tr("Define the used OSD theme."));
+  Add(new cMenuEditStraItem(trVDR("Setup.OSD$Theme"), &dataM.theme, eFemonThemeMaxNumber, themesM));
+  helpM.Append(tr("Define the used OSD theme."));
 
-  Add(new cMenuEditBoolItem(tr("Position"), &data.position, trVDR("bottom"), trVDR("top")));
-  help.Append(tr("Define the position of OSD."));
+  Add(new cMenuEditBoolItem(tr("Position"), &dataM.position, trVDR("bottom"), trVDR("top")));
+  helpM.Append(tr("Define the position of OSD."));
 
-  Add(new cMenuEditIntItem(tr("Downscale OSD size [%]"), &data.downscale, 0, 20));
-  help.Append(tr("Define the downscale ratio for OSD size."));
+  Add(new cMenuEditIntItem(tr("Downscale OSD size [%]"), &dataM.downscale, 0, 20));
+  helpM.Append(tr("Define the downscale ratio for OSD size."));
 
-  Add(new cMenuEditIntItem(tr("Red limit [%]"), &data.redlimit, 1, 50));
-  help.Append(tr("Define a limit for red bar, which is used to indicate a bad signal."));
+  Add(new cMenuEditIntItem(tr("Red limit [%]"), &dataM.redlimit, 1, 50));
+  helpM.Append(tr("Define a limit for red bar, which is used to indicate a bad signal."));
 
-  Add(new cMenuEditIntItem(tr("Green limit [%]"), &data.greenlimit, 51, 100));
-  help.Append(tr("Define a limit for green bar, which is used to indicate a good signal."));
+  Add(new cMenuEditIntItem(tr("Green limit [%]"), &dataM.greenlimit, 51, 100));
+  helpM.Append(tr("Define a limit for green bar, which is used to indicate a good signal."));
 
-  Add(new cMenuEditIntItem(tr("OSD update interval [0.1s]"), &data.updateinterval, 1, 100));
-  help.Append(tr("Define an interval for OSD updates. The smaller interval generates higher CPU load."));
+  Add(new cMenuEditIntItem(tr("OSD update interval [0.1s]"), &dataM.updateinterval, 1, 100));
+  helpM.Append(tr("Define an interval for OSD updates. The smaller interval generates higher CPU load."));
 
-  Add(new cMenuEditBoolItem(tr("Analyze stream"), &data.analyzestream));
-  help.Append(tr("Define whether the DVB stream is analyzed and bitrates calculated."));
+  Add(new cMenuEditBoolItem(tr("Analyze stream"), &dataM.analyzestream));
+  helpM.Append(tr("Define whether the DVB stream is analyzed and bitrates calculated."));
 
-  if (femonConfig.analyzestream) {
-     Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &data.calcinterval, 1, 100));
-     help.Append(tr("Define an interval for calculation. The bigger interval generates more stable values."));
+  if (FemonConfig.analyzestream) {
+     Add(new cMenuEditIntItem(tr("Calculation interval [0.1s]"), &dataM.calcinterval, 1, 100));
+     helpM.Append(tr("Define an interval for calculation. The bigger interval generates more stable values."));
      }
 
-  Add(new cMenuEditBoolItem(tr("Use SVDRP service"), &data.usesvdrp));
-  help.Append(tr("Define whether the SVDRP service is used in client/server setups."));
+  Add(new cMenuEditBoolItem(tr("Use SVDRP service"), &dataM.usesvdrp));
+  helpM.Append(tr("Define whether the SVDRP service is used in client/server setups."));
 
-  if (data.usesvdrp) {
-     Add(new cMenuEditIntItem(tr("SVDRP service port"), &data.svdrpport, 1, 65535));
-     help.Append(tr("Define the port number of SVDRP service."));
+  if (dataM.usesvdrp) {
+     Add(new cMenuEditIntItem(tr("SVDRP service port"), &dataM.svdrpport, 1, 65535));
+     helpM.Append(tr("Define the port number of SVDRP service."));
 
-     Add(new cMenuEditStrItem(tr("SVDRP service IP"), data.svdrpip, sizeof(data.svdrpip), ".1234567890"));
-     help.Append(tr("Define the IP address of SVDRP service."));
+     Add(new cMenuEditStrItem(tr("SVDRP service IP"), dataM.svdrpip, sizeof(dataM.svdrpip), ".1234567890"));
+     helpM.Append(tr("Define the IP address of SVDRP service."));
      }
 
   SetCurrent(Get(current));
@@ -382,35 +382,35 @@ void cMenuFemonSetup::Setup(void)
 void cMenuFemonSetup::Store(void)
 {
   debug("%s()\n", __PRETTY_FUNCTION__);
-  femonConfig = data;
-  SetupStore("HideMenu",       femonConfig.hidemenu);
-  SetupStore("DisplayMode",    femonConfig.displaymode);
-  SetupStore("Skin",           femonConfig.skin);
-  SetupStore("Theme",          femonConfig.theme);
-  SetupStore("Position",       femonConfig.position);
-  SetupStore("Downscale",      femonConfig.downscale);
-  SetupStore("RedLimit",       femonConfig.redlimit);
-  SetupStore("GreenLimit",     femonConfig.greenlimit);
-  SetupStore("UpdateInterval", femonConfig.updateinterval);
-  SetupStore("AnalStream",     femonConfig.analyzestream);
-  SetupStore("CalcInterval",   femonConfig.calcinterval);
-  SetupStore("UseSvdrp",       femonConfig.usesvdrp);
-  SetupStore("ServerPort",     femonConfig.svdrpport);
-  SetupStore("ServerIp",       femonConfig.svdrpip);
+  FemonConfig = dataM;
+  SetupStore("HideMenu",       FemonConfig.hidemenu);
+  SetupStore("DisplayMode",    FemonConfig.displaymode);
+  SetupStore("Skin",           FemonConfig.skin);
+  SetupStore("Theme",          FemonConfig.theme);
+  SetupStore("Position",       FemonConfig.position);
+  SetupStore("Downscale",      FemonConfig.downscale);
+  SetupStore("RedLimit",       FemonConfig.redlimit);
+  SetupStore("GreenLimit",     FemonConfig.greenlimit);
+  SetupStore("UpdateInterval", FemonConfig.updateinterval);
+  SetupStore("AnalStream",     FemonConfig.analyzestream);
+  SetupStore("CalcInterval",   FemonConfig.calcinterval);
+  SetupStore("UseSvdrp",       FemonConfig.usesvdrp);
+  SetupStore("ServerPort",     FemonConfig.svdrpport);
+  SetupStore("ServerIp",       FemonConfig.svdrpip);
 }
 
 eOSState cMenuFemonSetup::ProcessKey(eKeys Key)
 {
-  int oldUsesvdrp = data.usesvdrp;
-  int oldAnalyzestream = data.analyzestream;
+  int oldUsesvdrp = dataM.usesvdrp;
+  int oldAnalyzestream = dataM.analyzestream;
 
   eOSState state = cMenuSetupPage::ProcessKey(Key);
 
-  if (Key != kNone && (data.analyzestream != oldAnalyzestream || data.usesvdrp != oldUsesvdrp))
+  if (Key != kNone && (dataM.analyzestream != oldAnalyzestream || dataM.usesvdrp != oldUsesvdrp))
      Setup();
 
-  if ((Key == kInfo) && (state == osUnknown) && (Current() < help.Size()))
-     return AddSubMenu(new cMenuText(cString::sprintf("%s - %s '%s'", tr("Help"), trVDR("Plugin"), PLUGIN_NAME_I18N), help[Current()]));
+  if ((Key == kInfo) && (state == osUnknown) && (Current() < helpM.Size()))
+     return AddSubMenu(new cMenuText(cString::sprintf("%s - %s '%s'", tr("Help"), trVDR("Plugin"), PLUGIN_NAME_I18N), helpM[Current()]));
 
   return state;
 }

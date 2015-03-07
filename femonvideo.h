@@ -75,19 +75,19 @@ public:
   virtual ~cFemonVideoIf() {}
 
   // eVideoCodec
-  virtual void SetVideoCodec(eVideoCodec codec) = 0;
+  virtual void SetVideoCodec(eVideoCodec codecP) = 0;
   // eVideoFormat
-  virtual void SetVideoFormat(eVideoFormat format) = 0;
+  virtual void SetVideoFormat(eVideoFormat formatP) = 0;
   // eVideoScan
-  virtual void SetVideoScan(eVideoScan scan) = 0;
+  virtual void SetVideoScan(eVideoScan scanP) = 0;
   // eVideoAspectRatio
-  virtual void SetVideoAspectRatio(eVideoAspectRatio aspectratio) = 0;
+  virtual void SetVideoAspectRatio(eVideoAspectRatio aspectRatioP) = 0;
   // pixels
-  virtual void SetVideoSize(int width, int height) = 0;
+  virtual void SetVideoSize(int widthP, int heightP) = 0;
   // Hz
-  virtual void SetVideoFramerate(double framerate) = 0;
+  virtual void SetVideoFramerate(double frameRateP) = 0;
   // Mbit/s
-  virtual void SetVideoBitrate(double bitrate) = 0;
+  virtual void SetVideoBitrate(double bitRateP) = 0;
   };
 
 #endif //__FEMONVIDEO_H

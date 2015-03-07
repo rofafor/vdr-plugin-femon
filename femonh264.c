@@ -8,7 +8,7 @@
 #include "femontools.h"
 #include "femonh264.h"
 
-const cFemonH264::t_DAR cFemonH264::s_DAR[] =
+const cFemonH264::t_DAR cFemonH264::darS[] =
 {
   {  VIDEO_ASPECT_RATIO_1_1,      100  },
   {  VIDEO_ASPECT_RATIO_4_3,      133  },
@@ -30,7 +30,7 @@ const cFemonH264::t_DAR cFemonH264::s_DAR[] =
   {  VIDEO_ASPECT_RATIO_2_1,      200  }
 };
 
-const cFemonH264::t_SAR cFemonH264::s_SAR[] =
+const cFemonH264::t_SAR cFemonH264::sarS[] =
 {
   { 0,   0  }, // VIDEO_ASPECT_RATIO_INVALID
   { 1,   1  }, // VIDEO_ASPECT_RATIO_1_1
@@ -51,7 +51,7 @@ const cFemonH264::t_SAR cFemonH264::s_SAR[] =
   { 2,   1  }  // VIDEO_ASPECT_RATIO_2_1
 };
 
-const eVideoFormat cFemonH264::s_VideoFormats[] =
+const eVideoFormat cFemonH264::videoFormatS[] =
 {
   VIDEO_FORMAT_COMPONENT,
   VIDEO_FORMAT_PAL,
@@ -62,25 +62,25 @@ const eVideoFormat cFemonH264::s_VideoFormats[] =
   VIDEO_FORMAT_RESERVED
 };
 
-const uint8_t cFemonH264::s_SeiNumClockTsTable[9] =
+const uint8_t cFemonH264::seiNumClockTsTableS[9] =
 {
   1, 1, 1, 2, 2, 3, 3, 2, 3
 };
 
-cFemonH264::cFemonH264(cFemonVideoIf *videohandler)
-: m_VideoHandler(videohandler),
-  m_Width(0),
-  m_Height(0),
-  m_AspectRatio(VIDEO_ASPECT_RATIO_INVALID),
-  m_Format(VIDEO_FORMAT_INVALID),
-  m_FrameRate(0),
-  m_BitRate(0),
-  m_Scan(VIDEO_SCAN_INVALID),
-  m_CpbDpbDelaysPresentFlag(false),
-  m_PicStructPresentFlag(false),
-  m_FrameMbsOnlyFlag(false),
-  m_MbAdaptiveFrameFieldFlag(false),
-  m_TimeOffsetLength(0)
+cFemonH264::cFemonH264(cFemonVideoIf *videoHandlerP)
+: videoHandlerM(videoHandlerP),
+  widthM(0),
+  heightM(0),
+  aspectRatioM(VIDEO_ASPECT_RATIO_INVALID),
+  formatM(VIDEO_FORMAT_INVALID),
+  frameRateM(0),
+  bitRateM(0),
+  scanM(VIDEO_SCAN_INVALID),
+  cpbDpbDelaysPresentFlagM(false),
+  picStructPresentFlagM(false),
+  frameMbsOnlyFlagM(false),
+  mbAdaptiveFrameFieldFlagM(false),
+  timeOffsetLengthM(0)
 {
   reset();
 }
@@ -89,18 +89,19 @@ cFemonH264::~cFemonH264()
 {
 }
 
-bool cFemonH264::processVideo(const uint8_t *buf, int len)
+bool cFemonH264::processVideo(const uint8_t *bufP, int lenP)
 {
-  uint8_t nal_data[len];
+  uint8_t nal_data[lenP];
   bool aud_found = false, sps_found = false, sei_found = true; // SEI temporarily disabled!
+  const uint8_t *buf = bufP;
   const uint8_t *start = buf;
-  const uint8_t *end = start + len;
+  const uint8_t *end = start + lenP;
 
-  if (!m_VideoHandler)
+  if (!videoHandlerM)
      return false;
 
   // skip PES header
-  if (!PesLongEnough(len))
+  if (!PesLongEnough(lenP))
       return false;
   buf += PesPayloadOffset(buf);
   start = buf;
@@ -119,7 +120,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
              if (!aud_found) {
                  switch (buf[4] >> 5) {
                    case 0: case 3: case 5: // I_FRAME
-                       //debug("H.264: Found NAL AUD at offset %d/%d\n", int(buf - start), len);
+                       //debug("H.264: Found NAL AUD at offset %d/%d\n", int(buf - start), lenP);
                        aud_found = true;
                        break;
                    case 1: case 4: case 6: // P_FRAME;
@@ -132,7 +133,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
 
         case NAL_SPS:
              if (!sps_found) {
-               //debug("H.264: Found NAL SPS at offset %d/%d\n", int(buf - start), len);
+               //debug("H.264: Found NAL SPS at offset %d/%d\n", int(buf - start), lenP);
                int nal_len = nalUnescape(nal_data, buf + 4, int(end - buf - 4));
                consumed = parseSPS(nal_data, nal_len);
                if (consumed > 0)
@@ -142,7 +143,7 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
 
         case NAL_SEI:
              if (!sei_found) {
-               //debug("H.264: Found NAL SEI at offset %d/%d\n", int(buf - start), len);
+               //debug("H.264: Found NAL SEI at offset %d/%d\n", int(buf - start), lenP);
                int nal_len = nalUnescape(nal_data, buf + 4, int(end - buf - 4));
                consumed = parseSEI(nal_data, nal_len);
                if (consumed > 0)
@@ -161,18 +162,18 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
       }
 
   if (aud_found) {
-     m_VideoHandler->SetVideoCodec(VIDEO_CODEC_H264);
+     videoHandlerM->SetVideoCodec(VIDEO_CODEC_H264);
      if (sps_found) {
-        //debug("H.264: size %dx%d, aspect %d format %d bitrate %.0f\n", m_Width, m_Height, m_AspectRatio, m_Format, m_BitRate);
-        m_VideoHandler->SetVideoFormat(m_Format);
-        m_VideoHandler->SetVideoSize(m_Width, m_Height);
-        m_VideoHandler->SetVideoAspectRatio(m_AspectRatio);
-        m_VideoHandler->SetVideoBitrate(m_BitRate);
+        //debug("H.264: size %dx%d, aspect %d format %d bitrate %.0f\n", widthM, heightM, aspectRatioM, formatM, bitRateM);
+        videoHandlerM->SetVideoFormat(formatM);
+        videoHandlerM->SetVideoSize(widthM, heightM);
+        videoHandlerM->SetVideoAspectRatio(aspectRatioM);
+        videoHandlerM->SetVideoBitrate(bitRateM);
         }
      if (sps_found || sei_found) {
-        //debug("H.264: scan %d framerate %.2f\n", m_Scan, (m_Scan == VIDEO_SCAN_PROGRESSIVE) ? (m_FrameRate / 2) : m_FrameRate);
-        m_VideoHandler->SetVideoScan(m_Scan);
-        m_VideoHandler->SetVideoFramerate((m_Scan == VIDEO_SCAN_PROGRESSIVE) ? (m_FrameRate / 2) : m_FrameRate);
+        //debug("H.264: scan %d framerate %.2f\n", scanM, (scanM == VIDEO_SCAN_PROGRESSIVE) ? (frameRateM / 2) : frameRateM);
+        videoHandlerM->SetVideoScan(scanM);
+        videoHandlerM->SetVideoFramerate((scanM == VIDEO_SCAN_PROGRESSIVE) ? (frameRateM / 2) : frameRateM);
         }
   }
 
@@ -181,60 +182,60 @@ bool cFemonH264::processVideo(const uint8_t *buf, int len)
 
 void cFemonH264::reset()
 {
-  m_CpbDpbDelaysPresentFlag = false;
-  m_PicStructPresentFlag = false;
-  m_FrameMbsOnlyFlag = false;
-  m_MbAdaptiveFrameFieldFlag = false;
-  m_TimeOffsetLength = 0;
+  cpbDpbDelaysPresentFlagM = false;
+  picStructPresentFlagM = false;
+  frameMbsOnlyFlagM = false;
+  mbAdaptiveFrameFieldFlagM = false;
+  timeOffsetLengthM = 0;
 }
 
-const uint8_t *cFemonH264::nextStartCode(const uint8_t *start, const uint8_t *end)
+const uint8_t *cFemonH264::nextStartCode(const uint8_t *startP, const uint8_t *endP)
 {
-  for (end -= 3; start < end; ++start) {
-      if ((start[0] == 0x00) && (start[1] == 0x00) && (start[2] == 0x01))
-         return start;
+  for (endP -= 3; startP < endP; ++startP) {
+      if ((startP[0] == 0x00) && (startP[1] == 0x00) && (startP[2] == 0x01))
+         return startP;
       }
-  return (end + 3);
+  return (endP + 3);
 }
 
-int cFemonH264::nalUnescape(uint8_t *dst, const uint8_t *src, int len)
+int cFemonH264::nalUnescape(uint8_t *dstP, const uint8_t *srcP, int lenP)
 {
   int s = 0, d = 0;
 
-  while (s < len) {
-    if (!src[s] && !src[s + 1]) {
+  while (s < lenP) {
+    if (!srcP[s] && !srcP[s + 1]) {
        // hit 00 00 xx
-       dst[d] = dst[d + 1] = 0;
+       dstP[d] = dstP[d + 1] = 0;
        s += 2;
        d += 2;
-       if (src[s] == 3) {
+       if (srcP[s] == 3) {
           s++; // 00 00 03 xx --> 00 00 xx
-          if (s >= len)
+          if (s >= lenP)
              return d;
           }
        }
-    dst[d++] = src[s++];
+    dstP[d++] = srcP[s++];
     }
 
   return d;
 }
 
-int cFemonH264::parseSPS(const uint8_t *buf, int len)
+int cFemonH264::parseSPS(const uint8_t *bufP, int lenP)
 {
   int profile_idc, level_idc, constraint_set3_flag, pic_order_cnt_type, i, j;
-  cFemonBitStream bs(buf, len);
+  cFemonBitStream bs(bufP, lenP);
 
-  uint32_t width = m_Width;
-  uint32_t height = m_Height;
-  eVideoAspectRatio aspect_ratio = m_AspectRatio;
-  eVideoFormat format = m_Format;
-  double frame_rate = m_FrameRate;
-  double bit_rate = m_BitRate;
-  bool cpb_dpb_delays_present_flag = m_CpbDpbDelaysPresentFlag;
-  bool pic_struct_present_flag = m_PicStructPresentFlag;
-  bool frame_mbs_only_flag = m_FrameMbsOnlyFlag;
-  bool mb_adaptive_frame_field_flag = m_MbAdaptiveFrameFieldFlag;
-  uint32_t time_offset_length = m_TimeOffsetLength;
+  uint32_t width = widthM;
+  uint32_t height = heightM;
+  eVideoAspectRatio aspect_ratio = aspectRatioM;
+  eVideoFormat format = formatM;
+  double frame_rate = frameRateM;
+  double bit_rate = bitRateM;
+  bool cpb_dpb_delays_present_flag = cpbDpbDelaysPresentFlagM;
+  bool pic_struct_present_flag = picStructPresentFlagM;
+  bool frame_mbs_only_flag = frameMbsOnlyFlagM;
+  bool mb_adaptive_frame_field_flag = mbAdaptiveFrameFieldFlagM;
+  uint32_t time_offset_length = timeOffsetLengthM;
 
   profile_idc = bs.GetBits(8);              // profile_idc
   bs.SkipBit();                             // constraint_set0_flag
@@ -523,14 +524,14 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
            sar_width  = bs.GetBits(16);     // sar_width
            sar_height = bs.GetBits(16);     // sar_height
            }
-        else if (aspect_ratio_idc < ELEMENTS(s_SAR)) {
-           sar_width  = s_SAR[aspect_ratio_idc].w;
-           sar_height = s_SAR[aspect_ratio_idc].h;
+        else if (aspect_ratio_idc < ELEMENTS(sarS)) {
+           sar_width  = sarS[aspect_ratio_idc].w;
+           sar_height = sarS[aspect_ratio_idc].h;
            }
         if (sar_width && sar_height) {
            int index = -1, ratio = int(100.0L * sar_width * width / sar_height / height);
-           for (unsigned int i = 0; i < ELEMENTS(s_DAR); ++i) {
-               if (s_DAR[i].ratio == ratio) {
+           for (unsigned int i = 0; i < ELEMENTS(darS); ++i) {
+               if (darS[i].ratio == ratio) {
                   index = i;
                   break;
                   }
@@ -542,7 +543,7 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
                  aspect_ratio = VIDEO_ASPECT_RATIO_INVALID;
               }
            else
-              aspect_ratio = s_DAR[index].dar;
+              aspect_ratio = darS[index].dar;
            //debug("H.264 SPS: DAR %dx%d (%d)\n", sar_width, sar_height, aspect_ratio);
            }
         }
@@ -551,8 +552,8 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
      if (bs.GetBit()) {                     // video_signal_type_present_flag
         uint32_t video_format;
         video_format = bs.GetBits(3);       // video_format
-        if (video_format < sizeof(s_VideoFormats) / sizeof(s_VideoFormats[0])) {
-           format = s_VideoFormats[video_format];
+        if (video_format < sizeof(videoFormatS) / sizeof(videoFormatS[0])) {
+           format = videoFormatS[video_format];
            //debug("H.264 SPS: video format %d\n", format);
            }
         bs.SkipBit();                       // video_full_range_flag
@@ -621,30 +622,30 @@ int cFemonH264::parseSPS(const uint8_t *buf, int len)
         }
      }
 
-  m_Width = width;
-  m_Height = height;
-  m_AspectRatio = aspect_ratio;
-  m_Format = format;
-  m_Scan = frame_mbs_only_flag ? VIDEO_SCAN_PROGRESSIVE : VIDEO_SCAN_INTERLACED;
-  m_FrameRate = frame_rate;
-  m_BitRate = bit_rate;
-  m_CpbDpbDelaysPresentFlag = cpb_dpb_delays_present_flag;
-  m_PicStructPresentFlag = pic_struct_present_flag;
-  m_FrameMbsOnlyFlag = frame_mbs_only_flag;
-  m_MbAdaptiveFrameFieldFlag = mb_adaptive_frame_field_flag;
-  m_TimeOffsetLength = time_offset_length;
+  widthM = width;
+  heightM = height;
+  aspectRatioM = aspect_ratio;
+  formatM = format;
+  scanM = frame_mbs_only_flag ? VIDEO_SCAN_PROGRESSIVE : VIDEO_SCAN_INTERLACED;
+  frameRateM = frame_rate;
+  bitRateM = bit_rate;
+  cpbDpbDelaysPresentFlagM = cpb_dpb_delays_present_flag;
+  picStructPresentFlagM = pic_struct_present_flag;
+  frameMbsOnlyFlagM = frame_mbs_only_flag;
+  mbAdaptiveFrameFieldFlagM = mb_adaptive_frame_field_flag;
+  timeOffsetLengthM = time_offset_length;
 
   return (bs.Index() / 8);
 }
 
-int cFemonH264::parseSEI(const uint8_t *buf, int len)
+int cFemonH264::parseSEI(const uint8_t *bufP, int lenP)
 {
   int num_referenced_subseqs, i;
-  cFemonBitStream bs(buf, len);
+  cFemonBitStream bs(bufP, lenP);
 
-  eVideoScan scan = m_Scan;
+  eVideoScan scan = scanM;
 
-  while ((bs.Index() * 8 + 16) < len) {               // sei_message
+  while ((bs.Index() * 8 + 16) < lenP) {               // sei_message
     int lastByte, payloadSize = 0, payloadType = 0;
 
     do {
@@ -659,16 +660,16 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
 
     switch (payloadType) {                               // sei_payload
       case 1:                                            // pic_timing
-           if (m_CpbDpbDelaysPresentFlag) {              // cpb_dpb_delays_present_flag
+           if (cpbDpbDelaysPresentFlagM) {              // cpb_dpb_delays_present_flag
               bs.SkipUeGolomb();                         // cpb_removal_delay
               bs.SkipUeGolomb();                         // dpb_output_delay
               }
-           if (m_PicStructPresentFlag) {                 // pic_struct_present_flag
+           if (picStructPresentFlagM) {                 // pic_struct_present_flag
               uint32_t pic_struct, ct_type = 0, i = 0;
               pic_struct = bs.GetBits(4);                // pic_struct
-              if (pic_struct >= (sizeof(s_SeiNumClockTsTable)) / sizeof(s_SeiNumClockTsTable[0]))
+              if (pic_struct >= (sizeof(seiNumClockTsTableS)) / sizeof(seiNumClockTsTableS[0]))
                  return 0;
-              if (m_FrameMbsOnlyFlag && !m_MbAdaptiveFrameFieldFlag)
+              if (frameMbsOnlyFlagM && !mbAdaptiveFrameFieldFlagM)
                  scan = VIDEO_SCAN_PROGRESSIVE;
               else {
                  switch (pic_struct) {
@@ -691,7 +692,7 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                    }
                 }
               //debug("H.264 SEI: pic struct %d scan type %d\n", pic_struct, scan);
-              for (i = 0; i < s_SeiNumClockTsTable[pic_struct]; ++i) {
+              for (i = 0; i < seiNumClockTsTableS[pic_struct]; ++i) {
                   if (bs.GetBit()) {                     // clock_timestamp_flag[i]
                      int full_timestamp_flag;
                      ct_type |= (1 << bs.GetBits(2));    // ct_type
@@ -717,8 +718,8 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
                               }
                            }
                         }
-                     if (m_TimeOffsetLength > 0)
-                        bs.SkipBits(m_TimeOffsetLength); // time_offset
+                     if (timeOffsetLengthM > 0)
+                        bs.SkipBits(timeOffsetLengthM); // time_offset
                      }
                   }
               if (i > 0)
@@ -753,7 +754,7 @@ int cFemonH264::parseSEI(const uint8_t *buf, int len)
     bs.ByteAlign();
     }
 
-  m_Scan = scan;
+  scanM = scan;
 
   return (bs.Index() / 8);
 }

@@ -113,13 +113,13 @@ public:
   virtual ~cFemonAudioIf() {}
 
   // enum
-  virtual void SetAudioCodec(eAudioCodec codec) = 0;
+  virtual void SetAudioCodec(eAudioCodec codecP) = 0;
   // kbit/s or eAudioBitrate
-  virtual void SetAudioBitrate(double bitrate) = 0;
+  virtual void SetAudioBitrate(double bitRateP) = 0;
   // Hz or eAudioSamplingFrequency
-  virtual void SetAudioSamplingFrequency(int sampling) = 0;
+  virtual void SetAudioSamplingFrequency(int samplingP) = 0;
   // eAudioChannelMode
-  virtual void SetAudioChannel(eAudioChannelMode mode) = 0;
+  virtual void SetAudioChannel(eAudioChannelMode modeP) = 0;
   };
 
 class cFemonAC3If {
@@ -128,23 +128,23 @@ public:
   virtual ~cFemonAC3If() {}
 
   // bit/s or eAudioBitrate
-  virtual void SetAC3Bitrate(int bitrate) = 0;
+  virtual void SetAC3Bitrate(int bitRateP) = 0;
   // Hz or eAudioSamplingFrequency
-  virtual void SetAC3SamplingFrequency(int sampling) = 0;
+  virtual void SetAC3SamplingFrequency(int samplingP) = 0;
   // 0..7 or eAudioBitstreamMode
-  virtual void SetAC3Bitstream(int mode) = 0;
+  virtual void SetAC3Bitstream(int modeP) = 0;
   // 0..7 or eAudioCodingMode
-  virtual void SetAC3AudioCoding(int mode) = 0;
+  virtual void SetAC3AudioCoding(int modeP) = 0;
   // eAudioDolbySurroundMode
-  virtual void SetAC3DolbySurround(int mode) = 0;
+  virtual void SetAC3DolbySurround(int modeP) = 0;
   // eAudioCenterMixLevel
-  virtual void SetAC3CenterMix(int level) = 0;
+  virtual void SetAC3CenterMix(int levelP) = 0;
   // eAudioSurroundMixLevel
-  virtual void SetAC3SurroundMix(int level) = 0;
+  virtual void SetAC3SurroundMix(int levelP) = 0;
   // -dB
-  virtual void SetAC3Dialog(int level) = 0;
+  virtual void SetAC3Dialog(int levelP) = 0;
   // boolean
-  virtual void SetAC3LFE(bool onoff) = 0;
+  virtual void SetAC3LFE(bool onoffP) = 0;
   };
 
 #endif //__FEMONAUDIO_H

@@ -39,7 +39,7 @@ public:
   char svdrpip[MaxSvdrpIp + 1]; // must end with additional null
 };
 
-extern cFemonConfig femonConfig;
+extern cFemonConfig FemonConfig;
 
 enum eFemonSkins
 {
@@ -76,6 +76,6 @@ struct cFemonTheme
   unsigned int clrGreen;
 };
 
-extern const cFemonTheme femonTheme[eFemonThemeMaxNumber];
+extern const cFemonTheme FemonTheme[eFemonThemeMaxNumber];
 
 #endif // __FEMONCFG_H

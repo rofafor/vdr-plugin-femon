@@ -12,16 +12,16 @@
 
 class cFemonLATM {
 private:
-  cFemonAudioIf *m_AudioHandler;
+  cFemonAudioIf *audioHandlerM;
 
-  static int s_Bitrates[3][16];
-  static int s_Samplerates[4];
+  static int bitrateS[3][16];
+  static int sampleRateS[4];
 
 public:
-  cFemonLATM(cFemonAudioIf *audiohandler);
+  cFemonLATM(cFemonAudioIf *audioHandlerP);
   virtual ~cFemonLATM();
 
-  bool processAudio(const uint8_t *buf, int len);
+  bool processAudio(const uint8_t *bufP, int lenP);
   };
 
 #endif //__FEMONLATM_H

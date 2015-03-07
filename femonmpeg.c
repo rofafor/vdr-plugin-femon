@@ -10,7 +10,7 @@
 
 #define IS_EXTENSION_START(buf) (((buf)[0] == 0x00) && ((buf)[1] == 0x00) && ((buf)[2] == 0x01) && ((buf)[3] == 0xB5))
 
-int cFemonMPEG::s_Bitrates[2][3][16] =
+int cFemonMPEG::bitrateS[2][3][16] =
 {
   {
     {0,  32,  48,  56,  64,  80,  96, 112, 128, 144, 160, 176, 192, 224, 256, -1}, // MPEG-2 Layer I
@@ -24,21 +24,21 @@ int cFemonMPEG::s_Bitrates[2][3][16] =
   }
 };
 
-int cFemonMPEG::s_Samplerates[2][4] =
+int cFemonMPEG::sampleRateS[2][4] =
 {
   {22050, 24000, 16000, -1}, // MPEG-2
   {44100, 48000, 32000, -1}  // MPEG-1
 };
 
-eAudioCodec cFemonMPEG::s_Formats[2][4] =
+eAudioCodec cFemonMPEG::formatS[2][4] =
 {
   {AUDIO_CODEC_MPEG2_I, AUDIO_CODEC_MPEG2_II, AUDIO_CODEC_MPEG2_III, AUDIO_CODEC_UNKNOWN}, // MPEG-2
   {AUDIO_CODEC_MPEG1_I, AUDIO_CODEC_MPEG1_II, AUDIO_CODEC_MPEG1_III, AUDIO_CODEC_UNKNOWN}  // MPEG-1
 };
 
-cFemonMPEG::cFemonMPEG(cFemonVideoIf *videohandler, cFemonAudioIf *audiohandler)
-: m_VideoHandler(videohandler),
-  m_AudioHandler(audiohandler)
+cFemonMPEG::cFemonMPEG(cFemonVideoIf *videoHandlerP, cFemonAudioIf *audioHandlerP)
+: videoHandlerM(videoHandlerP),
+  audioHandlerM(audioHandlerP)
 {
 }
 
@@ -46,17 +46,17 @@ cFemonMPEG::~cFemonMPEG()
 {
 }
 
-bool cFemonMPEG::processAudio(const uint8_t *buf, int len)
+bool cFemonMPEG::processAudio(const uint8_t *bufP, int lenP)
 {
-  cFemonBitStream bs(buf, len * 8);
+  cFemonBitStream bs(bufP, lenP * 8);
 
-  if (!m_AudioHandler)
+  if (!audioHandlerM)
      return false;
 
   // skip PES header
-  if (!PesLongEnough(len))
+  if (!PesLongEnough(lenP))
       return false;
-  bs.SkipBits(8 * PesPayloadOffset(buf));
+  bs.SkipBits(8 * PesPayloadOffset(bufP));
 
   // MPEG audio detection
   if (bs.GetBits(12) != 0xFFF)              // syncword
@@ -71,68 +71,68 @@ bool cFemonMPEG::processAudio(const uint8_t *buf, int len)
   bs.SkipBit();                             // private pid
   int mode = bs.GetBits(2);                 // mode
 
-  m_AudioHandler->SetAudioCodec(s_Formats[id][layer]);
+  audioHandlerM->SetAudioCodec(formatS[id][layer]);
 
   switch (mode) {
     case 0:
-         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_STEREO);
+         audioHandlerM->SetAudioChannel(AUDIO_CHANNEL_MODE_STEREO);
          break;
 
     case 1:
-         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_JOINT_STEREO);
+         audioHandlerM->SetAudioChannel(AUDIO_CHANNEL_MODE_JOINT_STEREO);
          break;
 
     case 2:
-         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_DUAL);
+         audioHandlerM->SetAudioChannel(AUDIO_CHANNEL_MODE_DUAL);
          break;
 
     case 3:
-         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_SINGLE);
+         audioHandlerM->SetAudioChannel(AUDIO_CHANNEL_MODE_SINGLE);
          break;
 
     default:
-         m_AudioHandler->SetAudioChannel(AUDIO_CHANNEL_MODE_INVALID);
+         audioHandlerM->SetAudioChannel(AUDIO_CHANNEL_MODE_INVALID);
          break;
   }
 
   switch (bit_rate_index) {
     case 0:
-         m_AudioHandler->SetAudioBitrate(AUDIO_BITRATE_FREE);
+         audioHandlerM->SetAudioBitrate(AUDIO_BITRATE_FREE);
          break;
 
     case 0xF:
-         m_AudioHandler->SetAudioBitrate(AUDIO_BITRATE_RESERVED);
+         audioHandlerM->SetAudioBitrate(AUDIO_BITRATE_RESERVED);
          break;
 
     default:
-         m_AudioHandler->SetAudioBitrate(1000 * s_Bitrates[id][layer][bit_rate_index]);
+         audioHandlerM->SetAudioBitrate(1000 * bitrateS[id][layer][bit_rate_index]);
          break;
   }
 
   switch (sampling_frequency) {
     case 3:
-         m_AudioHandler->SetAudioSamplingFrequency(AUDIO_SAMPLING_FREQUENCY_RESERVED);
+         audioHandlerM->SetAudioSamplingFrequency(AUDIO_SAMPLING_FREQUENCY_RESERVED);
          break;
 
     default:
-         m_AudioHandler->SetAudioSamplingFrequency(s_Samplerates[id][sampling_frequency]);
+         audioHandlerM->SetAudioSamplingFrequency(sampleRateS[id][sampling_frequency]);
          break;
   }
 
   return true;
 }
 
-bool cFemonMPEG::processVideo(const uint8_t *buf, int len)
+bool cFemonMPEG::processVideo(const uint8_t *bufP, int lenP)
 {
-  cFemonBitStream bs(buf, len * 8);
+  cFemonBitStream bs(bufP, lenP * 8);
 
-  if (!m_VideoHandler)
+  if (!videoHandlerM)
      return false;
 
   // skip PES header
-  if (!PesLongEnough(len))
+  if (!PesLongEnough(lenP))
       return false;
-  bs.SkipBits(8 * PesPayloadOffset(buf));
+  bs.SkipBits(8 * PesPayloadOffset(bufP));
 
   // MPEG-2 video detection, search for start code
   if (bs.GetBits(32) != 0x000001B3)         // sequence header
@@ -274,13 +274,13 @@ bool cFemonMPEG::processVideo(const uint8_t *buf, int len)
         }
      }
 
-  m_VideoHandler->SetVideoCodec(VIDEO_CODEC_MPEG2);
-  m_VideoHandler->SetVideoSize(horizontal_size, vertical_size);
-  m_VideoHandler->SetVideoBitrate(400.0 * (double)(bit_rate));
-  m_VideoHandler->SetVideoFramerate(frame_rate);
-  m_VideoHandler->SetVideoScan(eVideoScan(scan));
-  m_VideoHandler->SetVideoAspectRatio(eVideoAspectRatio(aspect));
-  m_VideoHandler->SetVideoFormat(eVideoFormat(format));
+  videoHandlerM->SetVideoCodec(VIDEO_CODEC_MPEG2);
+  videoHandlerM->SetVideoSize(horizontal_size, vertical_size);
+  videoHandlerM->SetVideoBitrate(400.0 * (double)(bit_rate));
+  videoHandlerM->SetVideoFramerate(frame_rate);
+  videoHandlerM->SetVideoScan(eVideoScan(scan));
+  videoHandlerM->SetVideoAspectRatio(eVideoAspectRatio(aspect));
+  videoHandlerM->SetVideoFormat(eVideoFormat(format));
 
   return true;
 }

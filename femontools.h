@@ -28,59 +28,59 @@
 
 #define SATIP_DEVICE "SAT>IP"
 
-cDvbDevice *getDvbDevice(cDevice* device);
+cDvbDevice *getDvbDevice(cDevice* deviceP);
 
-cString getFrontendInfo(cDvbDevice *device);
-cString getFrontendName(cDvbDevice *device);
-cString getFrontendStatus(cDvbDevice *device);
+cString getFrontendInfo(cDvbDevice *deviceP);
+cString getFrontendName(cDvbDevice *deviceP);
+cString getFrontendStatus(cDvbDevice *deviceP);
 
-uint16_t getSNR(cDvbDevice *device);
-uint16_t getSignal(cDvbDevice *device);
+uint16_t getSNR(cDvbDevice *deviceP);
+uint16_t getSignal(cDvbDevice *deviceP);
 
-uint32_t getBER(cDvbDevice *device);
-uint32_t getUNC(cDvbDevice *device);
+uint32_t getBER(cDvbDevice *deviceP);
+uint32_t getUNC(cDvbDevice *deviceP);
 
-cString getApids(const cChannel *channel);
-cString getDpids(const cChannel *channel);
-cString getSpids(const cChannel *channel);
-cString getCAids(const cChannel *channel);
-cString getVideoStream(int value);
-cString getVideoCodec(int value);
-cString getAudioStream(int value, const cChannel *channel);
-cString getAudioCodec(int value);
-cString getAudioChannelMode(int value);
-cString getCoderate(int value);
-cString getTransmission(int value);
-cString getBandwidth(int value);
-cString getInversion(int value);
-cString getHierarchy(int value);
-cString getGuard(int value);
-cString getModulation(int value);
-cString getTerrestrialSystem(int value);
-cString getSatelliteSystem(int value);
-cString getRollOff(int value);
-cString getPilot(int value);
-cString getResolution(int width, int height, int scan);
-cString getAspectRatio(int value);
-cString getVideoFormat(int value);
-cString getFrameRate(double value);
-cString getAC3Stream(int value, const cChannel *channel);
-cString getAC3BitStreamMode(int value, int coding);
-cString getAC3AudioCodingMode(int value, int stream);
-cString getAC3CenterMixLevel(int value);
-cString getAC3SurroundMixLevel(int value);
-cString getAC3DolbySurroundMode(int value);
-cString getAC3DialogLevel(int value);
-cString getFrequencyMHz(int value);
-cString getAudioSamplingFreq(int value);
-cString getAudioBitrate(double value, double stream);
-cString getVideoBitrate(double value, double stream);
-cString getBitrateMbits(double value);
-cString getBitrateKbits(double value);
+cString getApids(const cChannel *channelP);
+cString getDpids(const cChannel *channelP);
+cString getSpids(const cChannel *channelP);
+cString getCAids(const cChannel *channelP);
+cString getVideoStream(int valueP);
+cString getVideoCodec(int valueP);
+cString getAudioStream(int valueP, const cChannel *channelP);
+cString getAudioCodec(int valueP);
+cString getAudioChannelMode(int valueP);
+cString getCoderate(int valueP);
+cString getTransmission(int valueP);
+cString getBandwidth(int valueP);
+cString getInversion(int valueP);
+cString getHierarchy(int valueP);
+cString getGuard(int valueP);
+cString getModulation(int valueP);
+cString getTerrestrialSystem(int valueP);
+cString getSatelliteSystem(int valueP);
+cString getRollOff(int valueP);
+cString getPilot(int valueP);
+cString getResolution(int widthP, int heightP, int scanP);
+cString getAspectRatio(int valueP);
+cString getVideoFormat(int valueP);
+cString getFrameRate(double valueP);
+cString getAC3Stream(int valueP, const cChannel *channelP);
+cString getAC3BitStreamMode(int valueP, int codingP);
+cString getAC3AudioCodingMode(int valueP, int streamP);
+cString getAC3CenterMixLevel(int valueP);
+cString getAC3SurroundMixLevel(int valueP);
+cString getAC3DolbySurroundMode(int valueP);
+cString getAC3DialogLevel(int valueP);
+cString getFrequencyMHz(int valueP);
+cString getAudioSamplingFreq(int valueP);
+cString getAudioBitrate(double valueP, double streamP);
+cString getVideoBitrate(double valueP, double streamP);
+cString getBitrateMbits(double valueP);
+cString getBitrateKbits(double valueP);
 
 class cFemonBitStream : public cBitStream {
 public:
-  cFemonBitStream(const uint8_t *Data, const int Length) : cBitStream(Data, Length) {}
+  cFemonBitStream(const uint8_t *dataP, const int lengthP) : cBitStream(dataP, lengthP) {}
   uint32_t       GetUeGolomb();
   int32_t        GetSeGolomb();
   void           SkipGolomb();

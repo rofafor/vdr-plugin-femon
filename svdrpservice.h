@@ -11,11 +11,11 @@
 
 class cLine: public cListObject {
 private:
-  char *Line;
+  char *lineM;
 public:
-  const char *Text()   { return Line; }
-  cLine(const char *s) { Line = s ? strdup(s) : NULL; };
-  virtual ~cLine()     { if (Line) free(Line); };
+  const char *Text()      { return lineM; }
+  cLine(const char *strP) { lineM = strP ? strdup(strP) : NULL; };
+  virtual ~cLine()        { if (lineM) free(lineM); };
 };
 
 struct SvdrpConnection_v1_0 {
