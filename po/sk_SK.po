@@ -25,6 +25,99 @@ msgstr "Informácie o signále"
 msgid "Femon not available"
 msgstr "Femon nie je k dispozícii"
 
+msgid "Video"
+msgstr "Video"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "Zvuk"
+
+msgid "Transponder Information"
+msgstr "Informácie transpondéra"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "rýchlos» kódovania"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Bitrate"
+msgstr "Dátový tok"
+
+msgid "Stream Information"
+msgstr "Informácie o dátovom toku"
+
+msgid "Video Stream"
+msgstr "Video stopa"
+
+msgid "Codec"
+msgstr "kodek"
+
+msgid "Aspect Ratio"
+msgstr "Pomer strán"
+
+msgid "Frame Rate"
+msgstr "Poèet snímkov"
+
+msgid "Video Format"
+msgstr "Video formát"
+
+msgid "Resolution"
+msgstr "Rozlí¹enie"
+
+msgid "Audio Stream"
+msgstr "Zvuková stopa"
+
+msgid "Channel Mode"
+msgstr "re¾im kanála"
+
+msgid "Sampling Frequency"
+msgstr "Vzorkovacia frekvencia"
+
+msgid "AC-3 Stream"
+msgstr "AC-3 dátový tok"
+
+msgid "Bit Stream Mode"
+msgstr "re¾im bitového toku"
+
+msgid "Audio Coding Mode"
+msgstr "Re¾ím kódovania zvuku"
+
+msgid "Center Mix Level"
+msgstr "Úroveò Center mix"
+
+msgid "Surround Mix Level"
+msgstr "Úroveò Surround mix"
+
+msgid "Dolby Surround Mode"
+msgstr "Dolby Surround re¾ím"
+
+msgid "Low Frequency Effects"
+msgstr "Basové efekty"
+
+msgid "Dialogue Normalization"
+msgstr "©tandartný dialóg"
+
 msgid "basic"
 msgstr "©tandardtný"
 
@@ -33,9 +126,6 @@ msgstr "Transpondér"
 
 msgid "stream"
 msgstr "dátový tok"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "Klasický"
@@ -147,96 +237,6 @@ msgstr "zadajte IP adresu slu¾by SVDRP."
 
 msgid "Help"
 msgstr "Pomoc"
-
-msgid "Video"
-msgstr "Video"
-
-msgid "Audio"
-msgstr "Zvuk"
-
-msgid "Transponder Information"
-msgstr "Informácie transpondéra"
-
-msgid "Apid"
-msgstr "Apid"
-
-msgid "Dpid"
-msgstr "Dpid"
-
-msgid "Spid"
-msgstr "Spid"
-
-msgid "Nid"
-msgstr "Nid"
-
-msgid "Tid"
-msgstr "Tid"
-
-msgid "Rid"
-msgstr "Rid"
-
-msgid "Coderate"
-msgstr "rýchlos» kódovania"
-
-msgid "Protocol"
-msgstr "Protokol"
-
-msgid "Bitrate"
-msgstr "Dátový tok"
-
-msgid "Stream Information"
-msgstr "Informácie o dátovom toku"
-
-msgid "Video Stream"
-msgstr "Video stopa"
-
-msgid "Codec"
-msgstr "kodek"
-
-msgid "Aspect Ratio"
-msgstr "Pomer strán"
-
-msgid "Frame Rate"
-msgstr "Poèet snímkov"
-
-msgid "Video Format"
-msgstr "Video formát"
-
-msgid "Resolution"
-msgstr "Rozlí¹enie"
-
-msgid "Audio Stream"
-msgstr "Zvuková stopa"
-
-msgid "Channel Mode"
-msgstr "re¾im kanála"
-
-msgid "Sampling Frequency"
-msgstr "Vzorkovacia frekvencia"
-
-msgid "AC-3 Stream"
-msgstr "AC-3 dátový tok"
-
-msgid "Bit Stream Mode"
-msgstr "re¾im bitového toku"
-
-msgid "Audio Coding Mode"
-msgstr "Re¾ím kódovania zvuku"
-
-msgid "Center Mix Level"
-msgstr "Úroveò Center mix"
-
-msgid "Surround Mix Level"
-msgstr "Úroveò Surround mix"
-
-msgid "Dolby Surround Mode"
-msgstr "Dolby Surround re¾ím"
-
-msgid "Low Frequency Effects"
-msgstr "Basové efekty"
-
-msgid "Dialogue Normalization"
-msgstr "©tandartný dialóg"
 
 msgid "Fixed"
 msgstr "Pevné"

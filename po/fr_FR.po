@@ -27,6 +27,99 @@ msgstr "Infos sur le signal DVB"
 msgid "Femon not available"
 msgstr "Femon n'est pas disponible"
 
+msgid "Video"
+msgstr "Vidéo"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Transponder Information"
+msgstr "Information du transpondeur"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "Coderate"
+
+msgid "Protocol"
+msgstr "Protocole"
+
+msgid "Bitrate"
+msgstr "Taux d'échantillonnage fixe"
+
+msgid "Stream Information"
+msgstr "Information sur le flux"
+
+msgid "Video Stream"
+msgstr "Flux vidéo"
+
+msgid "Codec"
+msgstr "Codec"
+
+msgid "Aspect Ratio"
+msgstr "Format de l'image"
+
+msgid "Frame Rate"
+msgstr "Rafraîchissement"
+
+msgid "Video Format"
+msgstr "Standard vidéo"
+
+msgid "Resolution"
+msgstr "Résolution"
+
+msgid "Audio Stream"
+msgstr "Flux audio"
+
+msgid "Channel Mode"
+msgstr "Mode chaîne"
+
+msgid "Sampling Frequency"
+msgstr "Fréquence d'échantillonage"
+
+msgid "AC-3 Stream"
+msgstr "Flux AC-3"
+
+msgid "Bit Stream Mode"
+msgstr "Mode bitstream"
+
+msgid "Audio Coding Mode"
+msgstr "Mode de codage audio"
+
+msgid "Center Mix Level"
+msgstr "Niveau sonore milieu"
+
+msgid "Surround Mix Level"
+msgstr "Niveau sonore surround"
+
+msgid "Dolby Surround Mode"
+msgstr "Mode Dolby Surround"
+
+msgid "Low Frequency Effects"
+msgstr "Effets de basses"
+
+msgid "Dialogue Normalization"
+msgstr "Normalisation des dialogues"
+
 msgid "basic"
 msgstr "basique"
 
@@ -35,9 +128,6 @@ msgstr "transpondeur"
 
 msgid "stream"
 msgstr "flux"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "Classique"
@@ -149,96 +239,6 @@ msgstr "Définit l'adresse IP du service SVDRP."
 
 msgid "Help"
 msgstr "Aide"
-
-msgid "Video"
-msgstr "Vidéo"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Transponder Information"
-msgstr "Information du transpondeur"
-
-msgid "Apid"
-msgstr "Apid"
-
-msgid "Dpid"
-msgstr "Dpid"
-
-msgid "Spid"
-msgstr "Spid"
-
-msgid "Nid"
-msgstr "Nid"
-
-msgid "Tid"
-msgstr "Tid"
-
-msgid "Rid"
-msgstr "Rid"
-
-msgid "Coderate"
-msgstr "Coderate"
-
-msgid "Protocol"
-msgstr "Protocole"
-
-msgid "Bitrate"
-msgstr "Taux d'échantillonnage fixe"
-
-msgid "Stream Information"
-msgstr "Information sur le flux"
-
-msgid "Video Stream"
-msgstr "Flux vidéo"
-
-msgid "Codec"
-msgstr "Codec"
-
-msgid "Aspect Ratio"
-msgstr "Format de l'image"
-
-msgid "Frame Rate"
-msgstr "Rafraîchissement"
-
-msgid "Video Format"
-msgstr "Standard vidéo"
-
-msgid "Resolution"
-msgstr "Résolution"
-
-msgid "Audio Stream"
-msgstr "Flux audio"
-
-msgid "Channel Mode"
-msgstr "Mode chaîne"
-
-msgid "Sampling Frequency"
-msgstr "Fréquence d'échantillonage"
-
-msgid "AC-3 Stream"
-msgstr "Flux AC-3"
-
-msgid "Bit Stream Mode"
-msgstr "Mode bitstream"
-
-msgid "Audio Coding Mode"
-msgstr "Mode de codage audio"
-
-msgid "Center Mix Level"
-msgstr "Niveau sonore milieu"
-
-msgid "Surround Mix Level"
-msgstr "Niveau sonore surround"
-
-msgid "Dolby Surround Mode"
-msgstr "Mode Dolby Surround"
-
-msgid "Low Frequency Effects"
-msgstr "Effets de basses"
-
-msgid "Dialogue Normalization"
-msgstr "Normalisation des dialogues"
 
 msgid "Fixed"
 msgstr "Fixe"

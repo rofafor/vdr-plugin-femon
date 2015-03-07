@@ -6,7 +6,8 @@
  */
 
 #include <string.h>
-#include "femoncfg.h"
+
+#include "femonconfig.h"
 
 cFemonConfig FemonConfig;
 

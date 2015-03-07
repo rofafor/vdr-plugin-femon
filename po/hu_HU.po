@@ -28,6 +28,99 @@ msgstr "Jel információ"
 msgid "Femon not available"
 msgstr "Femon nem elérhetõ"
 
+msgid "Video"
+msgstr "Video"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Transponder Information"
+msgstr "Transponder infó"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "Coderate"
+
+msgid "Protocol"
+msgstr ""
+
+msgid "Bitrate"
+msgstr "Bitráta"
+
+msgid "Stream Information"
+msgstr "Adatfolyam infó"
+
+msgid "Video Stream"
+msgstr "Videó adatfolyam"
+
+msgid "Codec"
+msgstr "Kodek"
+
+msgid "Aspect Ratio"
+msgstr "Méretarány"
+
+msgid "Frame Rate"
+msgstr "Képfrissítés"
+
+msgid "Video Format"
+msgstr "Videó formátum"
+
+msgid "Resolution"
+msgstr "Felbontás"
+
+msgid "Audio Stream"
+msgstr "Hang adatfolyam"
+
+msgid "Channel Mode"
+msgstr "Hangsáv mód"
+
+msgid "Sampling Frequency"
+msgstr "Mintavételezési frekvencia"
+
+msgid "AC-3 Stream"
+msgstr "AC-3 adatfolyam"
+
+msgid "Bit Stream Mode"
+msgstr "Bit Stream mód"
+
+msgid "Audio Coding Mode"
+msgstr "Hang kódolási mód"
+
+msgid "Center Mix Level"
+msgstr "Középcsatorna keverési jelszintje"
+
+msgid "Surround Mix Level"
+msgstr "Térhatás csatorna keverési szintje"
+
+msgid "Dolby Surround Mode"
+msgstr "Dolby Surround mód"
+
+msgid "Low Frequency Effects"
+msgstr "LFE - alacsony frekvenciás effektek"
+
+msgid "Dialogue Normalization"
+msgstr "Párbeszéd jelszint normalizálása"
+
 msgid "basic"
 msgstr "alap"
 
@@ -36,9 +129,6 @@ msgstr "transponder"
 
 msgid "stream"
 msgstr "adatfolyam (stream)"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "Klasszikus"
@@ -150,96 +240,6 @@ msgstr "Meghatározza, hogy milyen IP címen fut az SVDRP szolgáltatás."
 
 msgid "Help"
 msgstr "Segítség"
-
-msgid "Video"
-msgstr "Video"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Transponder Information"
-msgstr "Transponder infó"
-
-msgid "Apid"
-msgstr "Apid"
-
-msgid "Dpid"
-msgstr "Dpid"
-
-msgid "Spid"
-msgstr "Spid"
-
-msgid "Nid"
-msgstr "Nid"
-
-msgid "Tid"
-msgstr "Tid"
-
-msgid "Rid"
-msgstr "Rid"
-
-msgid "Coderate"
-msgstr "Coderate"
-
-msgid "Protocol"
-msgstr ""
-
-msgid "Bitrate"
-msgstr "Bitráta"
-
-msgid "Stream Information"
-msgstr "Adatfolyam infó"
-
-msgid "Video Stream"
-msgstr "Videó adatfolyam"
-
-msgid "Codec"
-msgstr "Kodek"
-
-msgid "Aspect Ratio"
-msgstr "Méretarány"
-
-msgid "Frame Rate"
-msgstr "Képfrissítés"
-
-msgid "Video Format"
-msgstr "Videó formátum"
-
-msgid "Resolution"
-msgstr "Felbontás"
-
-msgid "Audio Stream"
-msgstr "Hang adatfolyam"
-
-msgid "Channel Mode"
-msgstr "Hangsáv mód"
-
-msgid "Sampling Frequency"
-msgstr "Mintavételezési frekvencia"
-
-msgid "AC-3 Stream"
-msgstr "AC-3 adatfolyam"
-
-msgid "Bit Stream Mode"
-msgstr "Bit Stream mód"
-
-msgid "Audio Coding Mode"
-msgstr "Hang kódolási mód"
-
-msgid "Center Mix Level"
-msgstr "Középcsatorna keverési jelszintje"
-
-msgid "Surround Mix Level"
-msgstr "Térhatás csatorna keverési szintje"
-
-msgid "Dolby Surround Mode"
-msgstr "Dolby Surround mód"
-
-msgid "Low Frequency Effects"
-msgstr "LFE - alacsony frekvenciás effektek"
-
-msgid "Dialogue Normalization"
-msgstr "Párbeszéd jelszint normalizálása"
 
 msgid "Fixed"
 msgstr "Állandó"

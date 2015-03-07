@@ -25,6 +25,99 @@ msgstr "頻道信息瀏覽"
 msgid "Femon not available"
 msgstr "Femon插件無法使用"
 
+msgid "Video"
+msgstr "視頻"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "音頻"
+
+msgid "Transponder Information"
+msgstr "轉發器信息"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "碼速率"
+
+msgid "Protocol"
+msgstr ""
+
+msgid "Bitrate"
+msgstr "比特率"
+
+msgid "Stream Information"
+msgstr "流信息"
+
+msgid "Video Stream"
+msgstr "視頻流"
+
+msgid "Codec"
+msgstr "解碼模式"
+
+msgid "Aspect Ratio"
+msgstr "縱橫比"
+
+msgid "Frame Rate"
+msgstr "幀速率"
+
+msgid "Video Format"
+msgstr "視頻制式"
+
+msgid "Resolution"
+msgstr "分辨率"
+
+msgid "Audio Stream"
+msgstr "音頻流"
+
+msgid "Channel Mode"
+msgstr "聲道模式"
+
+msgid "Sampling Frequency"
+msgstr "採樣頻率"
+
+msgid "AC-3 Stream"
+msgstr "AC-3流"
+
+msgid "Bit Stream Mode"
+msgstr "比特流模式"
+
+msgid "Audio Coding Mode"
+msgstr "音頻編碼模式"
+
+msgid "Center Mix Level"
+msgstr "中心混合級別"
+
+msgid "Surround Mix Level"
+msgstr "環繞混合級別"
+
+msgid "Dolby Surround Mode"
+msgstr "杜比環繞聲模式"
+
+msgid "Low Frequency Effects"
+msgstr "低頻效果"
+
+msgid "Dialogue Normalization"
+msgstr "對話正常化"
+
 msgid "basic"
 msgstr "基本"
 
@@ -33,9 +126,6 @@ msgstr "轉發器"
 
 msgid "stream"
 msgstr "數據流"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "經典"
@@ -147,96 +237,6 @@ msgstr "定義SVDRP服務的IP地址."
 
 msgid "Help"
 msgstr "幫助"
-
-msgid "Video"
-msgstr "視頻"
-
-msgid "Audio"
-msgstr "音頻"
-
-msgid "Transponder Information"
-msgstr "轉發器信息"
-
-msgid "Apid"
-msgstr "Apid"
-
-msgid "Dpid"
-msgstr "Dpid"
-
-msgid "Spid"
-msgstr "Spid"
-
-msgid "Nid"
-msgstr "Nid"
-
-msgid "Tid"
-msgstr "Tid"
-
-msgid "Rid"
-msgstr "Rid"
-
-msgid "Coderate"
-msgstr "碼速率"
-
-msgid "Protocol"
-msgstr ""
-
-msgid "Bitrate"
-msgstr "比特率"
-
-msgid "Stream Information"
-msgstr "流信息"
-
-msgid "Video Stream"
-msgstr "視頻流"
-
-msgid "Codec"
-msgstr "解碼模式"
-
-msgid "Aspect Ratio"
-msgstr "縱橫比"
-
-msgid "Frame Rate"
-msgstr "幀速率"
-
-msgid "Video Format"
-msgstr "視頻制式"
-
-msgid "Resolution"
-msgstr "分辨率"
-
-msgid "Audio Stream"
-msgstr "音頻流"
-
-msgid "Channel Mode"
-msgstr "聲道模式"
-
-msgid "Sampling Frequency"
-msgstr "採樣頻率"
-
-msgid "AC-3 Stream"
-msgstr "AC-3流"
-
-msgid "Bit Stream Mode"
-msgstr "比特流模式"
-
-msgid "Audio Coding Mode"
-msgstr "音頻編碼模式"
-
-msgid "Center Mix Level"
-msgstr "中心混合級別"
-
-msgid "Surround Mix Level"
-msgstr "環繞混合級別"
-
-msgid "Dolby Surround Mode"
-msgstr "杜比環繞聲模式"
-
-msgid "Low Frequency Effects"
-msgstr "低頻效果"
-
-msgid "Dialogue Normalization"
-msgstr "對話正常化"
 
 msgid "Fixed"
 msgstr "固定"

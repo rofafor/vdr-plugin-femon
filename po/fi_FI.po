@@ -25,6 +25,99 @@ msgstr "Signaalimittari"
 msgid "Femon not available"
 msgstr "Signaalimittari ei ole käytettävissä"
 
+msgid "Video"
+msgstr "Kuva"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "Ääni"
+
+msgid "Transponder Information"
+msgstr "Transponderin tiedot"
+
+msgid "Apid"
+msgstr "Ääni-PID"
+
+msgid "Dpid"
+msgstr "Dolby-PID"
+
+msgid "Spid"
+msgstr "Tekstitys-PID"
+
+msgid "Nid"
+msgstr "Verkko-ID"
+
+msgid "Tid"
+msgstr "TS-ID"
+
+msgid "Rid"
+msgstr "Radio-ID"
+
+msgid "Coderate"
+msgstr "Suojaustaso"
+
+msgid "Protocol"
+msgstr "Protokolla"
+
+msgid "Bitrate"
+msgstr "Bittinopeus"
+
+msgid "Stream Information"
+msgstr "Lähetteen tiedot"
+
+msgid "Video Stream"
+msgstr "Kuvaraita"
+
+msgid "Codec"
+msgstr "Koodekki"
+
+msgid "Aspect Ratio"
+msgstr "Kuvasuhde"
+
+msgid "Frame Rate"
+msgstr "Ruudunpäivitystaajuus"
+
+msgid "Video Format"
+msgstr "Kuvaformaatti"
+
+msgid "Resolution"
+msgstr "Resoluutio"
+
+msgid "Audio Stream"
+msgstr "Ääniraita"
+
+msgid "Channel Mode"
+msgstr "Kanavatila"
+
+msgid "Sampling Frequency"
+msgstr "Näytteenottotaajuus"
+
+msgid "AC-3 Stream"
+msgstr "AC-3-ääniraita"
+
+msgid "Bit Stream Mode"
+msgstr "Lähetteen tyyppi"
+
+msgid "Audio Coding Mode"
+msgstr "Äänikoodaus"
+
+msgid "Center Mix Level"
+msgstr "Keskikanavan taso"
+
+msgid "Surround Mix Level"
+msgstr "Tehostekanavien taso"
+
+msgid "Dolby Surround Mode"
+msgstr "Dolby Surround -tehoste"
+
+msgid "Low Frequency Effects"
+msgstr "LFE-kanava"
+
+msgid "Dialogue Normalization"
+msgstr "Dialogin normalisointi"
+
 msgid "basic"
 msgstr "perus"
 
@@ -33,9 +126,6 @@ msgstr "transponderi"
 
 msgid "stream"
 msgstr "lähete"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "Klassinen"
@@ -147,96 +237,6 @@ msgstr "Määrittele SVDRP-palvelun käyttämä IP-osoite."
 
 msgid "Help"
 msgstr "Opaste"
-
-msgid "Video"
-msgstr "Kuva"
-
-msgid "Audio"
-msgstr "Ääni"
-
-msgid "Transponder Information"
-msgstr "Transponderin tiedot"
-
-msgid "Apid"
-msgstr "Ääni-PID"
-
-msgid "Dpid"
-msgstr "Dolby-PID"
-
-msgid "Spid"
-msgstr "Tekstitys-PID"
-
-msgid "Nid"
-msgstr "Verkko-ID"
-
-msgid "Tid"
-msgstr "TS-ID"
-
-msgid "Rid"
-msgstr "Radio-ID"
-
-msgid "Coderate"
-msgstr "Suojaustaso"
-
-msgid "Protocol"
-msgstr "Protokolla"
-
-msgid "Bitrate"
-msgstr "Bittinopeus"
-
-msgid "Stream Information"
-msgstr "Lähetteen tiedot"
-
-msgid "Video Stream"
-msgstr "Kuvaraita"
-
-msgid "Codec"
-msgstr "Koodekki"
-
-msgid "Aspect Ratio"
-msgstr "Kuvasuhde"
-
-msgid "Frame Rate"
-msgstr "Ruudunpäivitystaajuus"
-
-msgid "Video Format"
-msgstr "Kuvaformaatti"
-
-msgid "Resolution"
-msgstr "Resoluutio"
-
-msgid "Audio Stream"
-msgstr "Ääniraita"
-
-msgid "Channel Mode"
-msgstr "Kanavatila"
-
-msgid "Sampling Frequency"
-msgstr "Näytteenottotaajuus"
-
-msgid "AC-3 Stream"
-msgstr "AC-3-ääniraita"
-
-msgid "Bit Stream Mode"
-msgstr "Lähetteen tyyppi"
-
-msgid "Audio Coding Mode"
-msgstr "Äänikoodaus"
-
-msgid "Center Mix Level"
-msgstr "Keskikanavan taso"
-
-msgid "Surround Mix Level"
-msgstr "Tehostekanavien taso"
-
-msgid "Dolby Surround Mode"
-msgstr "Dolby Surround -tehoste"
-
-msgid "Low Frequency Effects"
-msgstr "LFE-kanava"
-
-msgid "Dialogue Normalization"
-msgstr "Dialogin normalisointi"
 
 msgid "Fixed"
 msgstr "kiinteä"

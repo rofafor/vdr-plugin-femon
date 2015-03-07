@@ -25,6 +25,99 @@ msgstr "Signaaliinfo"
 msgid "Femon not available"
 msgstr "Femon ei ole kättesaadav"
 
+msgid "Video"
+msgstr "Video"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Transponder Information"
+msgstr "Transponderi info"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "Coderate"
+
+msgid "Protocol"
+msgstr ""
+
+msgid "Bitrate"
+msgstr "Bitikiirus"
+
+msgid "Stream Information"
+msgstr "Vooinfo"
+
+msgid "Video Stream"
+msgstr "Videovoog"
+
+msgid "Codec"
+msgstr "Koodek"
+
+msgid "Aspect Ratio"
+msgstr "Külgsuhe"
+
+msgid "Frame Rate"
+msgstr "Kaadrisagedus"
+
+msgid "Video Format"
+msgstr "Videoformaat"
+
+msgid "Resolution"
+msgstr "Resolutsioon"
+
+msgid "Audio Stream"
+msgstr "Audiovoog"
+
+msgid "Channel Mode"
+msgstr "Kanalimoodus"
+
+msgid "Sampling Frequency"
+msgstr "Sämplimissagedus"
+
+msgid "AC-3 Stream"
+msgstr "AC-3 voog"
+
+msgid "Bit Stream Mode"
+msgstr "Bitivoo tüüp"
+
+msgid "Audio Coding Mode"
+msgstr "Audiokodeering"
+
+msgid "Center Mix Level"
+msgstr "Keskmise kanali tase"
+
+msgid "Surround Mix Level"
+msgstr "Surround kanali tase"
+
+msgid "Dolby Surround Mode"
+msgstr "Dolby Surround'i tüüp"
+
+msgid "Low Frequency Effects"
+msgstr "LFE kanal"
+
+msgid "Dialogue Normalization"
+msgstr "Dialoogi normalisatsioon"
+
 msgid "basic"
 msgstr "standard"
 
@@ -33,9 +126,6 @@ msgstr "transponder"
 
 msgid "stream"
 msgstr "voog"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "Classic"
@@ -147,96 +237,6 @@ msgstr "SVDRP teenuse IP aadressi määritlemine."
 
 msgid "Help"
 msgstr "Abi"
-
-msgid "Video"
-msgstr "Video"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Transponder Information"
-msgstr "Transponderi info"
-
-msgid "Apid"
-msgstr "Apid"
-
-msgid "Dpid"
-msgstr "Dpid"
-
-msgid "Spid"
-msgstr "Spid"
-
-msgid "Nid"
-msgstr "Nid"
-
-msgid "Tid"
-msgstr "Tid"
-
-msgid "Rid"
-msgstr "Rid"
-
-msgid "Coderate"
-msgstr "Coderate"
-
-msgid "Protocol"
-msgstr ""
-
-msgid "Bitrate"
-msgstr "Bitikiirus"
-
-msgid "Stream Information"
-msgstr "Vooinfo"
-
-msgid "Video Stream"
-msgstr "Videovoog"
-
-msgid "Codec"
-msgstr "Koodek"
-
-msgid "Aspect Ratio"
-msgstr "Külgsuhe"
-
-msgid "Frame Rate"
-msgstr "Kaadrisagedus"
-
-msgid "Video Format"
-msgstr "Videoformaat"
-
-msgid "Resolution"
-msgstr "Resolutsioon"
-
-msgid "Audio Stream"
-msgstr "Audiovoog"
-
-msgid "Channel Mode"
-msgstr "Kanalimoodus"
-
-msgid "Sampling Frequency"
-msgstr "Sämplimissagedus"
-
-msgid "AC-3 Stream"
-msgstr "AC-3 voog"
-
-msgid "Bit Stream Mode"
-msgstr "Bitivoo tüüp"
-
-msgid "Audio Coding Mode"
-msgstr "Audiokodeering"
-
-msgid "Center Mix Level"
-msgstr "Keskmise kanali tase"
-
-msgid "Surround Mix Level"
-msgstr "Surround kanali tase"
-
-msgid "Dolby Surround Mode"
-msgstr "Dolby Surround'i tüüp"
-
-msgid "Low Frequency Effects"
-msgstr "LFE kanal"
-
-msgid "Dialogue Normalization"
-msgstr "Dialoogi normalisatsioon"
 
 msgid "Fixed"
 msgstr "Fikseeritud"

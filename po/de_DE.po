@@ -27,6 +27,99 @@ msgstr "Signalinformationen"
 msgid "Femon not available"
 msgstr "Femon nicht verfügbar"
 
+msgid "Video"
+msgstr "Video"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Transponder Information"
+msgstr "Transponderinformation"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "Coderate"
+
+msgid "Protocol"
+msgstr ""
+
+msgid "Bitrate"
+msgstr "Bitrate"
+
+msgid "Stream Information"
+msgstr "Streaminformation"
+
+msgid "Video Stream"
+msgstr "Video Stream"
+
+msgid "Codec"
+msgstr ""
+
+msgid "Aspect Ratio"
+msgstr "Seitenverhältnis"
+
+msgid "Frame Rate"
+msgstr "Bildrate"
+
+msgid "Video Format"
+msgstr "Bildformat"
+
+msgid "Resolution"
+msgstr "Auflösung"
+
+msgid "Audio Stream"
+msgstr "Audio Stream"
+
+msgid "Channel Mode"
+msgstr ""
+
+msgid "Sampling Frequency"
+msgstr "Abtastrate"
+
+msgid "AC-3 Stream"
+msgstr "AC-3 Stream"
+
+msgid "Bit Stream Mode"
+msgstr "Bitstream Modus"
+
+msgid "Audio Coding Mode"
+msgstr "Audiokodierung"
+
+msgid "Center Mix Level"
+msgstr "Center Mix Pegel"
+
+msgid "Surround Mix Level"
+msgstr "Surround Mix Pegel"
+
+msgid "Dolby Surround Mode"
+msgstr "Dolby Surround Modus"
+
+msgid "Low Frequency Effects"
+msgstr "Tieftöner Effekte"
+
+msgid "Dialogue Normalization"
+msgstr "Dialog Normalisierung"
+
 msgid "basic"
 msgstr "Standard"
 
@@ -35,9 +128,6 @@ msgstr "Transponder"
 
 msgid "stream"
 msgstr "Stream"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "Klassischer"
@@ -149,96 +239,6 @@ msgstr ""
 
 msgid "Help"
 msgstr "Hilfe"
-
-msgid "Video"
-msgstr "Video"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Transponder Information"
-msgstr "Transponderinformation"
-
-msgid "Apid"
-msgstr "Apid"
-
-msgid "Dpid"
-msgstr "Dpid"
-
-msgid "Spid"
-msgstr "Spid"
-
-msgid "Nid"
-msgstr "Nid"
-
-msgid "Tid"
-msgstr "Tid"
-
-msgid "Rid"
-msgstr "Rid"
-
-msgid "Coderate"
-msgstr "Coderate"
-
-msgid "Protocol"
-msgstr ""
-
-msgid "Bitrate"
-msgstr "Bitrate"
-
-msgid "Stream Information"
-msgstr "Streaminformation"
-
-msgid "Video Stream"
-msgstr "Video Stream"
-
-msgid "Codec"
-msgstr ""
-
-msgid "Aspect Ratio"
-msgstr "Seitenverhältnis"
-
-msgid "Frame Rate"
-msgstr "Bildrate"
-
-msgid "Video Format"
-msgstr "Bildformat"
-
-msgid "Resolution"
-msgstr "Auflösung"
-
-msgid "Audio Stream"
-msgstr "Audio Stream"
-
-msgid "Channel Mode"
-msgstr ""
-
-msgid "Sampling Frequency"
-msgstr "Abtastrate"
-
-msgid "AC-3 Stream"
-msgstr "AC-3 Stream"
-
-msgid "Bit Stream Mode"
-msgstr "Bitstream Modus"
-
-msgid "Audio Coding Mode"
-msgstr "Audiokodierung"
-
-msgid "Center Mix Level"
-msgstr "Center Mix Pegel"
-
-msgid "Surround Mix Level"
-msgstr "Surround Mix Pegel"
-
-msgid "Dolby Surround Mode"
-msgstr "Dolby Surround Modus"
-
-msgid "Low Frequency Effects"
-msgstr "Tieftöner Effekte"
-
-msgid "Dialogue Normalization"
-msgstr "Dialog Normalisierung"
 
 msgid "Fixed"
 msgstr "Fest"

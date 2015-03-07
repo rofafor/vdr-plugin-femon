@@ -72,7 +72,8 @@ all-redirect: all
 
 ### The object files (add further files here):
 
-OBJS = $(PLUGIN).o femonosd.o femonreceiver.o femoncfg.o femontools.o femonmpeg.o femonac3.o femonaac.o femonlatm.o femonh264.o femonsymbol.o
+OBJS = $(PLUGIN).o femonosd.o femonreceiver.o femonconfig.o femontools.o femonmpeg.o \
+	femonac3.o femonaac.o femonlatm.o femonh264.o femonsetup.o femonsymbol.o
 
 ### The main target:
 

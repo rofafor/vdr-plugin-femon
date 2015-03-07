@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef __FEMONCFG_H
-#define __FEMONCFG_H
+#ifndef __FEMONCONFIG_H
+#define __FEMONCONFIG_H
 
 #define MaxSvdrpIp 15 // xxx.xxx.xxx.xxx
 
@@ -78,4 +78,4 @@ struct cFemonTheme
 
 extern const cFemonTheme FemonTheme[eFemonThemeMaxNumber];
 
-#endif // __FEMONCFG_H
+#endif // __FEMONCONFIG_H

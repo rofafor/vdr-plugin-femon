@@ -25,6 +25,99 @@ msgstr "Signalo informacija"
 msgid "Femon not available"
 msgstr "Femon įskiepas nepasiekiamas"
 
+msgid "Video"
+msgstr "Video"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Transponder Information"
+msgstr "Siųstuvo informacija"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "Kodavimo dažnis"
+
+msgid "Protocol"
+msgstr "Protokolas"
+
+msgid "Bitrate"
+msgstr "Kokybė"
+
+msgid "Stream Information"
+msgstr "Srauto informacija"
+
+msgid "Video Stream"
+msgstr "Video srautas"
+
+msgid "Codec"
+msgstr "Kodekas"
+
+msgid "Aspect Ratio"
+msgstr "Proporcijos"
+
+msgid "Frame Rate"
+msgstr "Kadrų dažnis"
+
+msgid "Video Format"
+msgstr "Video formatas"
+
+msgid "Resolution"
+msgstr "Rezoliucija"
+
+msgid "Audio Stream"
+msgstr "Audio srautas"
+
+msgid "Channel Mode"
+msgstr "Kanalo būsena"
+
+msgid "Sampling Frequency"
+msgstr "Parodomasis dažnis"
+
+msgid "AC-3 Stream"
+msgstr "AC-3 srautas"
+
+msgid "Bit Stream Mode"
+msgstr "Srauto būsena"
+
+msgid "Audio Coding Mode"
+msgstr "Audio kodavimas"
+
+msgid "Center Mix Level"
+msgstr "Centrinis mikserio lygis"
+
+msgid "Surround Mix Level"
+msgstr "Surround Mix lygis"
+
+msgid "Dolby Surround Mode"
+msgstr "Dolby Surround būklė"
+
+msgid "Low Frequency Effects"
+msgstr "Žemo dažnio efektai"
+
+msgid "Dialogue Normalization"
+msgstr "Dialogo normalizacija"
+
 msgid "basic"
 msgstr "Standartinis"
 
@@ -33,9 +126,6 @@ msgstr "Siųstuvas"
 
 msgid "stream"
 msgstr "Srautas"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "Klasikinis"
@@ -147,96 +237,6 @@ msgstr "Nustatyti SVDRP įrenginio IP adresą."
 
 msgid "Help"
 msgstr "Pagalba"
-
-msgid "Video"
-msgstr "Video"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Transponder Information"
-msgstr "Siųstuvo informacija"
-
-msgid "Apid"
-msgstr "Apid"
-
-msgid "Dpid"
-msgstr "Dpid"
-
-msgid "Spid"
-msgstr "Spid"
-
-msgid "Nid"
-msgstr "Nid"
-
-msgid "Tid"
-msgstr "Tid"
-
-msgid "Rid"
-msgstr "Rid"
-
-msgid "Coderate"
-msgstr "Kodavimo dažnis"
-
-msgid "Protocol"
-msgstr "Protokolas"
-
-msgid "Bitrate"
-msgstr "Kokybė"
-
-msgid "Stream Information"
-msgstr "Srauto informacija"
-
-msgid "Video Stream"
-msgstr "Video srautas"
-
-msgid "Codec"
-msgstr "Kodekas"
-
-msgid "Aspect Ratio"
-msgstr "Proporcijos"
-
-msgid "Frame Rate"
-msgstr "Kadrų dažnis"
-
-msgid "Video Format"
-msgstr "Video formatas"
-
-msgid "Resolution"
-msgstr "Rezoliucija"
-
-msgid "Audio Stream"
-msgstr "Audio srautas"
-
-msgid "Channel Mode"
-msgstr "Kanalo būsena"
-
-msgid "Sampling Frequency"
-msgstr "Parodomasis dažnis"
-
-msgid "AC-3 Stream"
-msgstr "AC-3 srautas"
-
-msgid "Bit Stream Mode"
-msgstr "Srauto būsena"
-
-msgid "Audio Coding Mode"
-msgstr "Audio kodavimas"
-
-msgid "Center Mix Level"
-msgstr "Centrinis mikserio lygis"
-
-msgid "Surround Mix Level"
-msgstr "Surround Mix lygis"
-
-msgid "Dolby Surround Mode"
-msgstr "Dolby Surround būklė"
-
-msgid "Low Frequency Effects"
-msgstr "Žemo dažnio efektai"
-
-msgid "Dialogue Normalization"
-msgstr "Dialogo normalizacija"
 
 msgid "Fixed"
 msgstr "Sutvarkyta"

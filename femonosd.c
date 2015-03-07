@@ -12,7 +12,7 @@
 #include <ctype.h>
 #include <math.h>
 #include "iptvservice.h"
-#include "femoncfg.h"
+#include "femonconfig.h"
 #include "femonreceiver.h"
 #include "femontools.h"
 #include "femonsymbol.h"

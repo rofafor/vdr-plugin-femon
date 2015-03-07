@@ -25,6 +25,99 @@ msgstr "Інформація про сигнал"
 msgid "Femon not available"
 msgstr "Femon не доступний"
 
+msgid "Video"
+msgstr "Відео"
+
+msgid "AC-3"
+msgstr "AC-3"
+
+msgid "Audio"
+msgstr "Аудіо"
+
+msgid "Transponder Information"
+msgstr "Інформація про транспондер"
+
+msgid "Apid"
+msgstr "Apid"
+
+msgid "Dpid"
+msgstr "Dpid"
+
+msgid "Spid"
+msgstr "Spid"
+
+msgid "Nid"
+msgstr "Nid"
+
+msgid "Tid"
+msgstr "Tid"
+
+msgid "Rid"
+msgstr "Rid"
+
+msgid "Coderate"
+msgstr "Шв. кодування"
+
+msgid "Protocol"
+msgstr "Протокол"
+
+msgid "Bitrate"
+msgstr "Бітрейт"
+
+msgid "Stream Information"
+msgstr "Інформація про потік"
+
+msgid "Video Stream"
+msgstr "Відео потік"
+
+msgid "Codec"
+msgstr "Кодек"
+
+msgid "Aspect Ratio"
+msgstr "Співвідношення сторін"
+
+msgid "Frame Rate"
+msgstr "Частота кадрів"
+
+msgid "Video Format"
+msgstr "Формат відео"
+
+msgid "Resolution"
+msgstr "Роздільна здатність"
+
+msgid "Audio Stream"
+msgstr "Аудіо потік"
+
+msgid "Channel Mode"
+msgstr "Режим каналу"
+
+msgid "Sampling Frequency"
+msgstr "Частота"
+
+msgid "AC-3 Stream"
+msgstr "AC-3 потік"
+
+msgid "Bit Stream Mode"
+msgstr "Режим бітового потоку:"
+
+msgid "Audio Coding Mode"
+msgstr "Режим кодування малюнка"
+
+msgid "Center Mix Level"
+msgstr "Рівень міксування в центрі"
+
+msgid "Surround Mix Level"
+msgstr "Рівень міксування заповнення"
+
+msgid "Dolby Surround Mode"
+msgstr "Режим Dolby Surround"
+
+msgid "Low Frequency Effects"
+msgstr "Ефекти низької частоти"
+
+msgid "Dialogue Normalization"
+msgstr "Нормалізація гучності"
+
 msgid "basic"
 msgstr "основне"
 
@@ -33,9 +126,6 @@ msgstr "транспондер"
 
 msgid "stream"
 msgstr "потік"
-
-msgid "AC-3"
-msgstr "AC-3"
 
 msgid "Classic"
 msgstr "Класичний"
@@ -147,96 +237,6 @@ msgstr "Визначення IP адреси сервісу SVDRP."
 
 msgid "Help"
 msgstr "Допомога"
-
-msgid "Video"
-msgstr "Відео"
-
-msgid "Audio"
-msgstr "Аудіо"
-
-msgid "Transponder Information"
-msgstr "Інформація про транспондер"
-
-msgid "Apid"
-msgstr "Apid"
-
-msgid "Dpid"
-msgstr "Dpid"
-
-msgid "Spid"
-msgstr "Spid"
-
-msgid "Nid"
-msgstr "Nid"
-
-msgid "Tid"
-msgstr "Tid"
-
-msgid "Rid"
-msgstr "Rid"
-
-msgid "Coderate"
-msgstr "Шв. кодування"
-
-msgid "Protocol"
-msgstr "Протокол"
-
-msgid "Bitrate"
-msgstr "Бітрейт"
-
-msgid "Stream Information"
-msgstr "Інформація про потік"
-
-msgid "Video Stream"
-msgstr "Відео потік"
-
-msgid "Codec"
-msgstr "Кодек"
-
-msgid "Aspect Ratio"
-msgstr "Співвідношення сторін"
-
-msgid "Frame Rate"
-msgstr "Частота кадрів"
-
-msgid "Video Format"
-msgstr "Формат відео"
-
-msgid "Resolution"
-msgstr "Роздільна здатність"
-
-msgid "Audio Stream"
-msgstr "Аудіо потік"
-
-msgid "Channel Mode"
-msgstr "Режим каналу"
-
-msgid "Sampling Frequency"
-msgstr "Частота"
-
-msgid "AC-3 Stream"
-msgstr "AC-3 потік"
-
-msgid "Bit Stream Mode"
-msgstr "Режим бітового потоку:"
-
-msgid "Audio Coding Mode"
-msgstr "Режим кодування малюнка"
-
-msgid "Center Mix Level"
-msgstr "Рівень міксування в центрі"
-
-msgid "Surround Mix Level"
-msgstr "Рівень міксування заповнення"
-
-msgid "Dolby Surround Mode"
-msgstr "Режим Dolby Surround"
-
-msgid "Low Frequency Effects"
-msgstr "Ефекти низької частоти"
-
-msgid "Dialogue Normalization"
-msgstr "Нормалізація гучності"
 
 msgid "Fixed"
 msgstr "Фіксовано"

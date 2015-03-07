@@ -7,7 +7,7 @@
 
 #include <unistd.h>
 #include "femontools.h"
-#include "femoncfg.h"
+#include "femonconfig.h"
 #include "femonreceiver.h"
 
 cFemonReceiver::cFemonReceiver(const cChannel *channelP, int aTrackP, int dTrackP)
