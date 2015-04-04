@@ -520,6 +520,8 @@ VDR Plugin 'femon' Revision History
 - Fixed the SVDRP service IP menu item (Thanks to Toerless Eckert).
 - Fixed the detaching of receiver during a channel switch.
 
-2015-XX-XX: Version 2.2.1
+2015-04-04: Version 2.2.1
 
--
+- Got rid of FEMON_DEBUG.
+- Added support for tracing modes.
+- Removed the 'femonclient' plugin.
