@@ -101,7 +101,7 @@ void cFemonReceiver::Activate(bool onP)
      Deactivate();
 }
 
-void cFemonReceiver::Receive(uchar *dataP, int lengthP)
+void cFemonReceiver::Receive(const uchar *dataP, int lengthP)
 {
   // TS packet length: TS_SIZE
   if (Running() && (*dataP == TS_SYNC_BYTE) && (lengthP == TS_SIZE)) {

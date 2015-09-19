@@ -110,7 +110,8 @@ cString getFrontendInfo(cDvbDevice *deviceP)
   uint16_t snr = 0;
   uint32_t ber = 0;
   uint32_t unc = 0;
-  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  LOCK_CHANNELS_READ;
+  const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
 
   if (!deviceP)
      return info;

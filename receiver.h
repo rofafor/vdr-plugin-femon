@@ -59,7 +59,7 @@ private:
 
 protected:
   virtual void Activate(bool onP);
-  virtual void Receive(uchar *dataP, int lengthP);
+  virtual void Receive(const uchar *dataP, int lengthP);
   virtual void Action(void);
 
 public:

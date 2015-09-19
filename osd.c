@@ -250,7 +250,8 @@ cFemonOsd::~cFemonOsd(void)
 void cFemonOsd::DrawStatusWindow(void)
 {
   cMutexLock lock(&mutexM);
-  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  LOCK_CHANNELS_READ;
+  const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
 
   if (osdM && channel) {
      cBitmap *bm = NULL;
@@ -394,7 +395,8 @@ void cFemonOsd::DrawStatusWindow(void)
 void cFemonOsd::DrawInfoWindow(void)
 {
   cMutexLock lock(&mutexM);
-  cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  LOCK_CHANNELS_READ;
+  const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
 
   if (osdM && channel) {
      int offset = 0;
@@ -716,7 +718,8 @@ void cFemonOsd::Show(void)
 {
   debug1("%s", __PRETTY_FUNCTION__);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  LOCK_CHANNELS_READ;
+  const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
 
   deviceSourceM = DEVICESOURCE_DVBAPI;
   if (channel) {
@@ -784,7 +787,8 @@ void cFemonOsd::ChannelSwitch(const cDevice * deviceP, int channelNumberP, bool 
 {
   debug1("%s (%d, %d, %d)", __PRETTY_FUNCTION__, deviceP->DeviceNumber(), channelNumberP, liveViewP);
   eTrackType track = cDevice::PrimaryDevice()->GetCurrentAudioTrack();
-  const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+  LOCK_CHANNELS_READ;
+  const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
 
   if (!deviceP || !liveViewP)
      return;
@@ -852,7 +856,8 @@ void cFemonOsd::SetAudioTrack(int indexP, const char * const *tracksP)
      DELETENULL(receiverM);
      }
   if (FemonConfig.GetAnalyzeStream()) {
-     const cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+     LOCK_CHANNELS_READ;
+     const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
      if (channel) {
         receiverM = new cFemonReceiver(channel, IS_AUDIO_TRACK(track) ? int(track - ttAudioFirst) : 0, IS_DOLBY_TRACK(track) ? int(track - ttDolbyFirst) : 0);
         cDevice::ActualDevice()->AttachReceiver(receiverM);
@@ -866,7 +871,8 @@ bool cFemonOsd::DeviceSwitch(int directionP)
   int device = cDevice::ActualDevice()->DeviceNumber();
   int direction = sgn(directionP);
   if (device >= 0) {
-     cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+     LOCK_CHANNELS_READ;
+     const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
      if (channel) {
         for (int i = 0; i < cDevice::NumDevices() - 1; i++) {
             if (direction >= 0) {
@@ -978,7 +984,8 @@ bool cFemonOsd::SvdrpConnect(void)
 bool cFemonOsd::SvdrpTune(void)
 {
    if (svdrpPluginM && svdrpConnectionM.handle >= 0) {
-      cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+      LOCK_CHANNELS_READ;
+      const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
       if (channel) {
          SvdrpCommand_v1_0 cmd;
          cmd.handle = svdrpConnectionM.handle;
@@ -1038,7 +1045,8 @@ eOSState cFemonOsd::ProcessKey(eKeys keyP)
             if ((numberM == 0) && (oldNumberM != 0)) {
                numberM = oldNumberM;
                oldNumberM = cDevice::CurrentChannel();
-               Channels.SwitchTo(numberM);
+               LOCK_CHANNELS_READ;
+               Channels->SwitchTo(numberM);
                numberM = 0;
                return osContinue;
                }
@@ -1047,11 +1055,12 @@ eOSState cFemonOsd::ProcessKey(eKeys keyP)
                numberM = numberM * 10 + keyP - k0;
                if (numberM > 0) {
                   DrawStatusWindow();
-                  cChannel *ch = Channels.GetByNumber(numberM);
+                  LOCK_CHANNELS_READ;
+                  const cChannel *ch = Channels->GetByNumber(numberM);
                   inputTimeM.Set(0);
                   // Lets see if there can be any useful further input:
                   int n = ch ? numberM * 10 : 0;
-                  while (ch && (ch = Channels.Next(ch)) != NULL) {
+                  while (ch && (ch = Channels->Next(ch)) != NULL) {
                         if (!ch->GroupSep()) {
                            if (n <= ch->Number() && ch->Number() <= n + 9) {
                               n = 0;
@@ -1064,7 +1073,7 @@ eOSState cFemonOsd::ProcessKey(eKeys keyP)
                   if (n > 0) {
                      // This channel is the only one that fits the input, so let's take it right away:
                      oldNumberM = cDevice::CurrentChannel();
-                     Channels.SwitchTo(numberM);
+                     Channels->SwitchTo(numberM);
                      numberM = 0;
                      }
                   }
@@ -1124,9 +1133,10 @@ eOSState cFemonOsd::ProcessKey(eKeys keyP)
             break;
        case kNone:
             if (numberM && (inputTimeM.Elapsed() > CHANNELINPUT_TIMEOUT)) {
-               if (Channels.GetByNumber(numberM)) {
+               LOCK_CHANNELS_READ;
+               if (Channels->GetByNumber(numberM)) {
                   oldNumberM = cDevice::CurrentChannel();
-                  Channels.SwitchTo(numberM);
+                  Channels->SwitchTo(numberM);
                   numberM = 0;
                   }
                else {
@@ -1138,7 +1148,8 @@ eOSState cFemonOsd::ProcessKey(eKeys keyP)
        case kOk:
             {
             // toggle between display modes
-            cChannel *channel = Channels.GetByNumber(cDevice::CurrentChannel());
+            LOCK_CHANNELS_READ;
+            const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
             if (++displayModeM == eFemonModeAC3 && channel && !channel->Dpid(0)) displayModeM++;
             if (displayModeM >= eFemonModeMaxNumber) displayModeM = 0;
             DrawInfoWindow();
