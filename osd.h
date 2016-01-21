@@ -72,6 +72,7 @@ private:
   cCondWait         sleepM;
   cMutex            mutexM;
 
+  bool AttachFrontend(void);
   void DrawStatusWindow(void);
   void DrawInfoWindow(void);
   bool SvdrpConnect(void);
