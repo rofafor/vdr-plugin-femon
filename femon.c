@@ -25,7 +25,7 @@
 #define GITVERSION ""
 #endif
 
-static const char VERSION[]       = "2.2.1" GITVERSION;
+static const char VERSION[]       = "2.2.2" GITVERSION;
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 

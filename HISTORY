@@ -525,3 +525,7 @@ VDR Plugin 'femon' Revision History
 - Got rid of FEMON_DEBUG.
 - Added support for tracing modes.
 - Removed the 'femonclient' plugin.
+
+2015-xx-xx: Version 2.2.2
+
+- Fixed frontend handling during a device switch.
