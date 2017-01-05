@@ -144,6 +144,7 @@
 
 class cFemonDummyFont : public cFont {
 public:
+  virtual int Width(void) const { return 10; }
   virtual int Width(uint cP) const { return 10; }
   virtual int Width(const char *sP) const { return 50; }
   virtual int Height(void) const { return 20; }
