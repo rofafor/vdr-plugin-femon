@@ -19,6 +19,7 @@
 #include "symbols/dolbydigital51.xpm"
 #include "symbols/mpeg2.xpm"
 #include "symbols/h264.xpm"
+#include "symbols/h265.xpm"
 #include "symbols/ntsc.xpm"
 #include "symbols/pal.xpm"
 #include "symbols/encrypted.xpm"
@@ -64,6 +65,7 @@ static cBitmap bmDolbyDigital20(dolbydigital20_xpm);
 static cBitmap bmDolbyDigital51(dolbydigital51_xpm);
 static cBitmap bmMpeg2(mpeg2_xpm);
 static cBitmap bmH264(h264_xpm);
+static cBitmap bmH265(h265_xpm);
 static cBitmap bmPal(pal_xpm);
 static cBitmap bmNtsc(ntsc_xpm);
 static cBitmap bmEncrypted(encrypted_xpm);
@@ -146,6 +148,7 @@ bool cFemonSymbolCache::Populate(void)
      cacheM.Append(bmDolbyDigital51.Scaled(yFactorM, yFactorM, antiAliasM));  // SYMBOL_DD51
      cacheM.Append(bmMpeg2.Scaled(yFactorM, yFactorM, antiAliasM));           // SYMBOL_MPEG2
      cacheM.Append(bmH264.Scaled(yFactorM, yFactorM, antiAliasM));            // SYMBOL_H264
+     cacheM.Append(bmH265.Scaled(yFactorM, yFactorM, antiAliasM));            // SYMBOL_H265
      cacheM.Append(bmPal.Scaled(yFactorM, yFactorM, antiAliasM));             // SYMBOL_PAL
      cacheM.Append(bmNtsc.Scaled(yFactorM, yFactorM, antiAliasM));            // SYMBOL_NTSC
      cacheM.Append(bmEncrypted.Scaled(yFactorM, yFactorM, antiAliasM));       // SYMBOL_ENCRYPTED

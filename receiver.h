@@ -15,6 +15,7 @@
 #include "ac3.h"
 #include "audio.h"
 #include "h264.h"
+#include "h265.h"
 #include "latm.h"
 #include "mpeg.h"
 #include "tools.h"
@@ -27,6 +28,7 @@ private:
   bool              activeM;
 
   cFemonH264        detectH264M;
+  cFemonH265        detectH265M;
   cFemonMPEG        detectMpegM;
   cFemonAAC         detectAacM;
   cFemonLATM        detectLatmM;

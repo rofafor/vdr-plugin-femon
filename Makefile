@@ -61,7 +61,7 @@ all-redirect: all
 
 ### The object files (add further files here):
 
-OBJS = $(PLUGIN).o aac.o ac3.o config.o h264.o latm.o mpeg.o osd.o receiver.o setup.o symbol.o tools.o
+OBJS = $(PLUGIN).o aac.o ac3.o config.o h264.o h265.o latm.o mpeg.o osd.o receiver.o setup.o symbol.o tools.o
 
 ### The main target:
 

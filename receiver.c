@@ -19,6 +19,7 @@ cFemonReceiver::cFemonReceiver(const cChannel *channelP, int aTrackP, int dTrack
   sleepM(),
   activeM(false),
   detectH264M(this),
+  detectH265M(this),
   detectMpegM(this, this),
   detectAacM(this),
   detectLatmM(this),
@@ -163,8 +164,14 @@ void cFemonReceiver::Action(void)
       processed = true;
       if (TsPayloadStart(Data)) {
          while (const uint8_t *p = videoAssemblerM.GetPes(len)) {
-           if (videoTypeM == 0x1B) { // MPEG4
+           if (videoTypeM == 0x1B) {
               if (detectH264M.processVideo(p, len)) {
+                 videoValidM = true;
+                 break;
+                 }
+              }
+           else if (videoTypeM == 0x24) {
+              if (detectH265M.processVideo(p, len)) {
                  videoValidM = true;
                  break;
                  }

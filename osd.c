@@ -341,6 +341,7 @@ void cFemonOsd::DrawStatusWindow(void)
         switch (receiverM->VideoCodec()) {
            case VIDEO_CODEC_MPEG2: bm = &OSDSYMBOL(SYMBOL_MPEG2); break;
            case VIDEO_CODEC_H264:  bm = &OSDSYMBOL(SYMBOL_H264);  break;
+           case VIDEO_CODEC_H265:  bm = &OSDSYMBOL(SYMBOL_H265);  break;
            default:                bm = NULL;                     break;
            }
         OSDDRAWSTATUSBM(OSDSPACING);
