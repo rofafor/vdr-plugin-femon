@@ -201,7 +201,7 @@ bool cFemonSymbolCache::Flush(void)
 
 cBitmap& cFemonSymbolCache::Get(eSymbols symbolP)
 {
-  cBitmap *bitmapM = cacheM[SYMBOL_ONEPIXEL];
+  cBitmap *bitmapM = &bmOnePixel;
 
   if (symbolP < cacheM.Size())
      bitmapM = cacheM[symbolP];
