@@ -43,6 +43,9 @@
 #include "symbols/six.xpm"
 #include "symbols/seven.xpm"
 #include "symbols/eight.xpm"
+#include "symbols/format2160.xpm"
+#include "symbols/format2160i.xpm"
+#include "symbols/format2160p.xpm"
 #include "symbols/format1080.xpm"
 #include "symbols/format1080i.xpm"
 #include "symbols/format1080p.xpm"
@@ -89,6 +92,9 @@ static cBitmap bmFive(five_xpm);
 static cBitmap bmSix(six_xpm);
 static cBitmap bmSeven(seven_xpm);
 static cBitmap bmEight(eight_xpm);
+static cBitmap bmFormat2160(format2160_xpm);
+static cBitmap bmFormat2160i(format2160i_xpm);
+static cBitmap bmFormat2160p(format2160p_xpm);
 static cBitmap bmFormat1080(format1080_xpm);
 static cBitmap bmFormat1080i(format1080i_xpm);
 static cBitmap bmFormat1080p(format1080p_xpm);
@@ -172,6 +178,9 @@ bool cFemonSymbolCache::Populate(void)
      cacheM.Append(bmSix.Scaled(yFactorM, yFactorM, antiAliasM));             // SYMBOL_SIX
      cacheM.Append(bmSeven.Scaled(yFactorM, yFactorM, antiAliasM));           // SYMBOL_SEVEN
      cacheM.Append(bmEight.Scaled(yFactorM, yFactorM, antiAliasM));           // SYMBOL_EIGHT
+     cacheM.Append(bmFormat2160.Scaled(yFactorM, yFactorM, antiAliasM));      // SYMBOL_FORMAT_2160
+     cacheM.Append(bmFormat2160i.Scaled(yFactorM, yFactorM, antiAliasM));     // SYMBOL_FORMAT_2160i
+     cacheM.Append(bmFormat2160p.Scaled(yFactorM, yFactorM, antiAliasM));     // SYMBOL_FORMAT_2160p
      cacheM.Append(bmFormat1080.Scaled(yFactorM, yFactorM, antiAliasM));      // SYMBOL_FORMAT_1080
      cacheM.Append(bmFormat1080i.Scaled(yFactorM, yFactorM, antiAliasM));     // SYMBOL_FORMAT_1080i
      cacheM.Append(bmFormat1080p.Scaled(yFactorM, yFactorM, antiAliasM));     // SYMBOL_FORMAT_1080p

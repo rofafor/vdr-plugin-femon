@@ -33,6 +33,7 @@ private:
   void           reset();
   const uint8_t *nextStartCode(const uint8_t *start, const uint8_t *end);
   int            nalUnescape(uint8_t *dst, const uint8_t *src, int len);
+  int            parseSPS(const uint8_t *buf, int len);
 
 public:
   cFemonH265(cFemonVideoIf *videoHandlerP);

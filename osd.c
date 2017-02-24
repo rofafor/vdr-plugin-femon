@@ -307,7 +307,14 @@ void cFemonOsd::DrawStatusWindow(void)
         OSDDRAWSTATUSBM(OSDSPACING);
         }
      if (receiverM) {
-        if (IS_OSDRESOLUTION(receiverM->VideoVerticalSize(), 1080)) {
+        if (IS_OSDRESOLUTION(receiverM->VideoVerticalSize(), 2160)) {
+           switch (receiverM->VideoScan()) {
+              case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_2160i); break;
+              case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_2160p); break;
+              default:                     bm = &OSDSYMBOL(SYMBOL_FORMAT_2160);  break;
+              }
+           }
+        else if (IS_OSDRESOLUTION(receiverM->VideoVerticalSize(), 1080)) {
            switch (receiverM->VideoScan()) {
               case VIDEO_SCAN_INTERLACED:  bm = &OSDSYMBOL(SYMBOL_FORMAT_1080i); break;
               case VIDEO_SCAN_PROGRESSIVE: bm = &OSDSYMBOL(SYMBOL_FORMAT_1080p); break;
