@@ -203,20 +203,18 @@ int cFemonH264::nalUnescape(uint8_t *dstP, const uint8_t *srcP, int lenP)
 {
   int s = 0, d = 0;
 
-  while (s < lenP) {
-    if (!srcP[s] && !srcP[s + 1]) {
-       // hit 00 00 xx
-       dstP[d] = dstP[d + 1] = 0;
-       s += 2;
-       d += 2;
-       if (srcP[s] == 3) {
-          s++; // 00 00 03 xx --> 00 00 xx
-          if (s >= lenP)
-             return d;
-          }
+  while (s < lenP - 3) {
+    if (!srcP[s] && !srcP[s + 1] && srcP[s + 2] == 3) {
+       dstP[d++] = srcP[s++];
+       dstP[d++] = srcP[s++];
+       s++; // skip emulation_prevention_three_byte
        }
-    dstP[d++] = srcP[s++];
+    else
+       dstP[d++] = srcP[s++];
     }
+
+  while (s < lenP)
+    dstP[d++] = srcP[s++];
 
   return d;
 }
@@ -553,7 +551,7 @@ int cFemonH264::parseSPS(const uint8_t *bufP, int lenP)
      if (bs.GetBit()) {                     // video_signal_type_present_flag
         uint32_t video_format;
         video_format = bs.GetBits(3);       // video_format
-        if (video_format < sizeof(videoFormatS) / sizeof(videoFormatS[0])) {
+        if (video_format < ELEMENTS(videoFormatS)) {
            format = videoFormatS[video_format];
            debug2("%s video_format=%d", __PRETTY_FUNCTION__, format);
            }
@@ -646,7 +644,7 @@ int cFemonH264::parseSEI(const uint8_t *bufP, int lenP)
 
   eVideoScan scan = scanM;
 
-  while ((bs.Index() * 8 + 16) < lenP) {               // sei_message
+  while ((bs.Index() * 8 + 16) < lenP) {                 // sei_message
     int lastByte, payloadSize = 0, payloadType = 0;
 
     do {
@@ -661,14 +659,14 @@ int cFemonH264::parseSEI(const uint8_t *bufP, int lenP)
 
     switch (payloadType) {                               // sei_payload
       case 1:                                            // pic_timing
-           if (cpbDpbDelaysPresentFlagM) {              // cpb_dpb_delays_present_flag
+           if (cpbDpbDelaysPresentFlagM) {               // cpb_dpb_delays_present_flag
               bs.SkipUeGolomb();                         // cpb_removal_delay
               bs.SkipUeGolomb();                         // dpb_output_delay
               }
-           if (picStructPresentFlagM) {                 // pic_struct_present_flag
+           if (picStructPresentFlagM) {                  // pic_struct_present_flag
               uint32_t pic_struct, ct_type = 0, i = 0;
               pic_struct = bs.GetBits(4);                // pic_struct
-              if (pic_struct >= (sizeof(seiNumClockTsTableS)) / sizeof(seiNumClockTsTableS[0]))
+              if (pic_struct >= ELEMENTS(seiNumClockTsTableS))
                  return 0;
               if (frameMbsOnlyFlagM && !mbAdaptiveFrameFieldFlagM)
                  scan = VIDEO_SCAN_PROGRESSIVE;
@@ -720,7 +718,7 @@ int cFemonH264::parseSEI(const uint8_t *bufP, int lenP)
                            }
                         }
                      if (timeOffsetLengthM > 0)
-                        bs.SkipBits(timeOffsetLengthM); // time_offset
+                        bs.SkipBits(timeOffsetLengthM);  // time_offset
                      }
                   }
               if (i > 0)

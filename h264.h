@@ -49,10 +49,10 @@ private:
   int            parseSPS(const uint8_t *buf, int len);
   int            parseSEI(const uint8_t *buf, int len);
 
-  static const t_SAR             sarS[];
-  static const t_DAR             darS[];
-  static const eVideoFormat      videoFormatS[];
-  static const uint8_t           seiNumClockTsTableS[9];
+  static const t_SAR        sarS[];
+  static const t_DAR        darS[];
+  static const eVideoFormat videoFormatS[];
+  static const uint8_t      seiNumClockTsTableS[9];
 
 public:
   cFemonH264(cFemonVideoIf *videoHandlerP);

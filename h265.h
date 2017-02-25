@@ -19,7 +19,18 @@ private:
     NAL_AUD = 35, // Access Unit Delimiter
     NAL_EOS = 36, // End of Sequence
     NAL_EOB = 37, // End of Bitstream
+    NAL_SEI = 39, // Prefix Supplemental Enchancement Information
   };
+
+  typedef struct DAR {
+    eVideoAspectRatio dar;
+    int               ratio;
+  } t_DAR;
+
+  typedef struct SAR {
+    int               w;
+    int               h;
+  } t_SAR;
 
   cFemonVideoIf    *videoHandlerM;
   uint32_t          widthM;
@@ -29,11 +40,17 @@ private:
   double            frameRateM;
   double            bitRateM;
   eVideoScan        scanM;
+  bool              frameFieldInfoPresentFlagM;
 
   void           reset();
   const uint8_t *nextStartCode(const uint8_t *start, const uint8_t *end);
   int            nalUnescape(uint8_t *dst, const uint8_t *src, int len);
   int            parseSPS(const uint8_t *buf, int len);
+  int            parseSEI(const uint8_t *buf, int len);
+
+  static const t_SAR        sarS[];
+  static const t_DAR        darS[];
+  static const eVideoFormat videoFormatS[];
 
 public:
   cFemonH265(cFemonVideoIf *videoHandlerP);
