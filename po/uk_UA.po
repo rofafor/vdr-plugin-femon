@@ -250,6 +250,9 @@ msgstr "MPEG-2"
 msgid "H.264"
 msgstr "H.264"
 
+msgid "H.265"
+msgstr "H.265"
+
 msgid "MPEG-1 Layer I"
 msgstr "MPEG-1 Layer I"
 

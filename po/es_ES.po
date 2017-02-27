@@ -1,5 +1,5 @@
 # VDR plugin language source file.
-# Copyright (C) 2007-2015 Rolf Ahrenberg
+# Copyright (C) 2007-2017 Rolf Ahrenberg
 # This file is distributed under the same license as the femon package.
 # Luis Palacios
 #
@@ -248,6 +248,9 @@ msgid "MPEG-2"
 msgstr ""
 
 msgid "H.264"
+msgstr ""
+
+msgid "H.265"
 msgstr ""
 
 msgid "MPEG-1 Layer I"

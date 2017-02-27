@@ -310,6 +310,7 @@ cString getVideoCodec(int valueP)
   switch (valueP) {
     case VIDEO_CODEC_MPEG2: return cString::sprintf("%s", tr("MPEG-2"));
     case VIDEO_CODEC_H264:  return cString::sprintf("%s", tr("H.264"));
+    case VIDEO_CODEC_H265:  return cString::sprintf("%s", tr("H.265"));
     default:                break;
     }
   return cString::sprintf("---");
