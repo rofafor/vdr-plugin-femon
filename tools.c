@@ -13,8 +13,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/ioctl.h>
-#include <linux/dvb/frontend.h>
 
 #include "osd.h"
 #include "receiver.h"
@@ -91,61 +89,42 @@ static const char *getUserString(int valueP, const tDvbParameterMap *mapP)
   return "---";
 }
 
-cDvbDevice *getDvbDevice(cDevice* deviceP)
+cString getFrontendInfo(cDevice *deviceP)
 {
-  cDvbDevice *dev = dynamic_cast<cDvbDevice*>(deviceP);
-#ifdef __DYNAMIC_DEVICE_PROBE
-  if (!dev && deviceP && deviceP->HasSubDevice())
-     dev = dynamic_cast<cDvbDevice*>(deviceP->SubDevice());
-#endif
-  return dev;
-}
-
-cString getFrontendInfo(cDvbDevice *deviceP)
-{
-  struct dvb_frontend_info value;
-  fe_status_t status;
+  const cChannel *channel;
+  int status, valid = DTV_STAT_VALID_NONE;
   cString info = "";
-  uint16_t signal = 0;
-  uint16_t snr = 0;
-  uint32_t ber = 0;
-  uint32_t unc = 0;
-  LOCK_CHANNELS_READ;
-  const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
+  double signal = 0, cnr = 0, ber = 0, per = 0;
 
   if (!deviceP)
      return info;
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
-  if (fe < 0)
-     return info;
-
-  info = cString::sprintf("CARD:%d\nSTRG:%d\nQUAL:%d", deviceP->CardIndex(), deviceP->SignalStrength(), deviceP->SignalQuality());
-
-  if (ioctl(fe, FE_GET_INFO, &value) >= 0)
-     info = cString::sprintf("%s\nTYPE:%d\nNAME:%s", *info, value.type, *deviceP->DeviceName());
-  if (ioctl(fe, FE_READ_STATUS, &status) >= 0)
-     info = cString::sprintf("%s\nSTAT:%02X", *info, status);
-  if (ioctl(fe, FE_READ_SIGNAL_STRENGTH, &signal) >= 0)
-     info = cString::sprintf("%s\nSGNL:%04X", *info, signal);
-  if (ioctl(fe, FE_READ_SNR, &snr) >= 0)
-     info = cString::sprintf("%s\nSNRA:%04X", *info, snr);
-  if (ioctl(fe, FE_READ_BER, &ber) >= 0)
-     info = cString::sprintf("%s\nBERA:%08X", *info, ber);
-  if (ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &unc) >= 0)
-     info = cString::sprintf("%s\nUNCB:%08X", *info, unc);
-  close(fe);
+  info = cString::sprintf("CARD:%d\nSTRG:%d\nQUAL:%d\nTYPE:%s\nNAME:%s", deviceP->CardIndex(), deviceP->SignalStrength(), deviceP->SignalQuality(), *deviceP->DeviceType(), *deviceP->DeviceName());
+  if (deviceP && deviceP->SignalStats(valid, &signal, &cnr, NULL, &ber, &per, &status)) {
+     if (valid & DTV_STAT_VALID_STATUS)
+        info = cString::sprintf("%s\nSTAT:%04X", *info, status);
+     if (valid & DTV_STAT_VALID_STRENGTH)
+        info = cString::sprintf("%s\nSGNL:%s", *info, *dtoa(signal, "%.2f"));
+     if (valid & DTV_STAT_VALID_CNR)
+        info = cString::sprintf("%s\nCNRA:%s", *info, *dtoa(cnr, "%.2f"));
+     if (valid & DTV_STAT_VALID_BERPOST)
+        info = cString::sprintf("%s\nBERA:%s", *info, *dtoa(ber, "%.0f"));
+     if (valid & DTV_STAT_VALID_PER)
+        info = cString::sprintf("%s\nPERA:%s", *info, *dtoa(per, "%.0f"));
+     }
 
   if (cFemonOsd::Instance())
-     info = cString::sprintf("%s\nVIBR:%.0f\nAUBR:%.0f\nDDBR:%.0f", *info, cFemonOsd::Instance()->GetVideoBitrate(), cFemonOsd::Instance()->GetAudioBitrate(), cFemonOsd::Instance()->GetDolbyBitrate());
+     info = cString::sprintf("%s\nVIBR:%s\nAUBR:%s\nDDBR:%s", *info, *dtoa(cFemonOsd::Instance()->GetVideoBitrate(), "%.0f"), *dtoa(cFemonOsd::Instance()->GetAudioBitrate(), "%.0f"), *dtoa(cFemonOsd::Instance()->GetDolbyBitrate(), "%.0f"));
 
+  LOCK_CHANNELS_READ;
+  channel = Channels->GetByNumber(cDevice::CurrentChannel());
   if (channel)
      info = cString::sprintf("%s\nCHAN:%s", *info, *channel->ToText());
 
   return info;
 }
 
-cString getFrontendName(cDvbDevice *deviceP)
+cString getFrontendName(cDevice *deviceP)
 {
   if (!deviceP)
      return NULL;
@@ -153,85 +132,69 @@ cString getFrontendName(cDvbDevice *deviceP)
   return (cString::sprintf("%s on deviceP #%d", *deviceP->DeviceName(), deviceP->CardIndex()));
 }
 
-cString getFrontendStatus(cDvbDevice *deviceP)
+cString getFrontendStatus(cDevice *deviceP)
 {
-  fe_status_t value;
+  int status;
+  int valid = DTV_STAT_VALID_NONE;
 
-  if (!deviceP)
-     return NULL;
+  if (deviceP && deviceP->SignalStats(valid, NULL, NULL, NULL, NULL, NULL, &status)) {
+     if (valid & DTV_STAT_VALID_STATUS)
+        return (cString::sprintf("Status %s:%s:%s:%s:%s on deviceP #%d", (status & DTV_STAT_HAS_LOCK) ? "LOCKED" : "-", (status & DTV_STAT_HAS_SIGNAL) ? "SIGNAL" : "-", (status & DTV_STAT_HAS_CARRIER) ? "CARRIER" : "-", (status & DTV_STAT_HAS_VITERBI) ? "VITERBI" : "-", (status & DTV_STAT_HAS_SYNC) ? "SYNC" : "-", deviceP->CardIndex()));
+     }
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
-  if (fe < 0)
-     return NULL;
-  memset(&value, 0, sizeof(value));
-  ioctl(fe, FE_READ_STATUS, &value);
-  close(fe);
-
-  return (cString::sprintf("Status %s:%s:%s:%s:%s on deviceP #%d", (value & FE_HAS_LOCK) ? "LOCKED" : "-", (value & FE_HAS_SIGNAL) ? "SIGNAL" : "-", (value & FE_HAS_CARRIER) ? "CARRIER" : "-", (value & FE_HAS_VITERBI) ? "VITERBI" : "-", (value & FE_HAS_SYNC) ? "SYNC" : "-", deviceP->CardIndex()));
+  return NULL;
 }
 
-uint16_t getSignal(cDvbDevice *deviceP)
+double getSignal(cDevice *deviceP)
 {
-  uint16_t value = 0;
+  double strength;
+  int valid = DTV_STAT_VALID_NONE;
 
-  if (!deviceP)
-     return (value);
+  if (deviceP && deviceP->SignalStats(valid, &strength, NULL, NULL, NULL, NULL, NULL)) {
+     if (valid & DTV_STAT_VALID_STRENGTH)
+        return strength;
+     }
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
-  if (fe < 0)
-     return (value);
-  ioctl(fe, FE_READ_SIGNAL_STRENGTH, &value);
-  close(fe);
-
-  return (value);
+  return 0;
 }
 
-uint16_t getSNR(cDvbDevice *deviceP)
+double getCNR(cDevice *deviceP)
 {
-  uint16_t value = 0;
+  double cnr;
+  int valid = DTV_STAT_VALID_NONE;
 
-  if (!deviceP)
-     return (value);
+  if (deviceP && deviceP->SignalStats(valid, NULL, &cnr, NULL, NULL, NULL, NULL)) {
+     if (valid & DTV_STAT_VALID_CNR)
+        return cnr;
+     }
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
-  if (fe < 0)
-     return (value);
-  ioctl(fe, FE_READ_SNR, &value);
-  close(fe);
-
-  return (value);
+  return 0;
 }
 
-uint32_t getBER(cDvbDevice *deviceP)
+double getBER(cDevice *deviceP)
 {
-  uint32_t value = 0;
+  double ber;
+  int valid = DTV_STAT_VALID_NONE;
 
-  if (!deviceP)
-     return (value);
+  if (deviceP && deviceP->SignalStats(valid, NULL, NULL, NULL, &ber, NULL, NULL)) {
+     if (valid & DTV_STAT_VALID_BERPOST)
+        return ber;
+     }
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
-  if (fe < 0)
-     return (value);
-  ioctl(fe, FE_READ_BER, &value);
-  close(fe);
-
-  return (value);
+  return 0;
 }
 
-uint32_t getUNC(cDvbDevice *deviceP)
+double getPER(cDevice *deviceP)
 {
-  uint32_t value = 0;
+  double per;
+  int valid = DTV_STAT_VALID_NONE;
 
-  if (!deviceP)
-     return (value);
+  if (deviceP && deviceP->SignalStats(valid, NULL, NULL, NULL, NULL, &per, NULL)) {
+     if (valid & DTV_STAT_VALID_PER)
+        return per;
+     }
 
-  int fe = open(*cString::sprintf(FRONTEND_DEVICE, deviceP->Adapter(), deviceP->Frontend()), O_RDONLY | O_NONBLOCK);
-  if (fe < 0)
-     return (value);
-  ioctl(fe, FE_READ_UNCORRECTED_BLOCKS, &value);
-  close(fe);
-
-  return (value);
+  return 0;
 }
 
 cString getApids(const cChannel *channelP)

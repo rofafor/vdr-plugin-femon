@@ -34,15 +34,14 @@ Terminology:
 |## Channel Name ################### [SVDRP][AR][VF][A/DD][D]|
 |[=====Signal Strength ===================|=================]|
 |[=====Signal Quality ================|=====================]|
-| STR: #0000 (0%)       BER: #00000000       Video: 0 Mbit/s |
-| SNR: #0000 (0%)       UNC: #00000000       Audio: 0 kbit/s |
+|  STR: 0   CNR: 0   BER: 0   PER: 0   Video: 0   Audio: 0   |
 | [LOCK]     [SIGNAL]     [CARRIER]     [VITERBI]     [SYNC] |
 --------------------------------------------------------------
 
-STR     - Signal strength from driver
-SNR     - Signal-to-noise ratio from driver
-BER     - Bit error rate
-UNC     - Uncorrected blocks
+STR     - Signal strength in dBm
+CNR     - Signal-to-noise ratio of the main carrier in dB
+BER     - Bit error rate after the forward error correction (FEC) done by inner code block
+PER     - Block error rate after the outer forward error correction coding
 Video   - Calculated video bitrate in Mbit/s
 Audio   - Calculated audio / AC-3 bitrate in kbit/s
 

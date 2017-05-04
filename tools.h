@@ -20,17 +20,14 @@
 
 #define SATIP_DEVICE "SAT>IP"
 
-cDvbDevice *getDvbDevice(cDevice* deviceP);
+cString getFrontendInfo(cDevice *deviceP);
+cString getFrontendName(cDevice *deviceP);
+cString getFrontendStatus(cDevice *deviceP);
 
-cString getFrontendInfo(cDvbDevice *deviceP);
-cString getFrontendName(cDvbDevice *deviceP);
-cString getFrontendStatus(cDvbDevice *deviceP);
-
-uint16_t getSNR(cDvbDevice *deviceP);
-uint16_t getSignal(cDvbDevice *deviceP);
-
-uint32_t getBER(cDvbDevice *deviceP);
-uint32_t getUNC(cDvbDevice *deviceP);
+double getCNR(cDevice *deviceP);
+double getSignal(cDevice *deviceP);
+double getBER(cDevice *deviceP);
+double getPER(cDevice *deviceP);
 
 cString getApids(const cChannel *channelP);
 cString getDpids(const cChannel *channelP);

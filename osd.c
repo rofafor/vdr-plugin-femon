@@ -27,7 +27,7 @@
 #define OSDHEIGHT                 osdHeightM             // in pixels
 #define OSDROWHEIGHT              fontM->Height()        // in pixels
 #define OSDINFOHEIGHT             (OSDROWHEIGHT * 14)     // in pixels (14 rows)
-#define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 6)      // in pixels (6 rows)
+#define OSDSTATUSHEIGHT           (OSDROWHEIGHT * 5)      // in pixels (5 rows)
 #define OSDSYMBOL(id)             femonSymbols.Get(id)
 #define OSDSPACING                femonSymbols.GetSpacing()
 #define OSDROUNDING               femonSymbols.GetRounding()
@@ -39,12 +39,11 @@
                                    (col == 2) ? int(round(OSDWIDTH * 0.26)) : \
                                                 int(round(OSDWIDTH * 0.025)))
 #define OSDSTATUSWIN_Y(offset)    (FemonConfig.GetPosition() ? offset : (OSDHEIGHT - OSDSTATUSHEIGHT + offset))
-#define OSDSTATUSWIN_X(col)       ((col == 7) ? int(round(OSDWIDTH * 0.79)) : \
-                                   (col == 6) ? int(round(OSDWIDTH * 0.68)) : \
-                                   (col == 5) ? int(round(OSDWIDTH * 0.46)) : \
-                                   (col == 4) ? int(round(OSDWIDTH * 0.37)) : \
-                                   (col == 3) ? int(round(OSDWIDTH * 0.21)) : \
-                                   (col == 2) ? int(round(OSDWIDTH * 0.12)) : \
+#define OSDSTATUSWIN_X(col)       ((col == 6) ? int(round(OSDWIDTH * 0.84)) : \
+                                   (col == 5) ? int(round(OSDWIDTH * 0.66)) : \
+                                   (col == 4) ? int(round(OSDWIDTH * 0.50)) : \
+                                   (col == 3) ? int(round(OSDWIDTH * 0.35)) : \
+                                   (col == 2) ? int(round(OSDWIDTH * 0.19)) : \
                                                 int(round(OSDWIDTH * 0.025)))
 #define OSDSTATUSWIN_XSYMBOL(c,w) (c * ((OSDWIDTH - (5 * w)) / 6) + ((c - 1) * w))
 #define OSDBARWIDTH(x)            (OSDWIDTH * x / 100)
@@ -60,14 +59,13 @@
 #define OSDDRAWSTATUSFRONTEND(column, bitmap, status) \
         osdM->DrawBitmap(OSDSTATUSWIN_XSYMBOL(column, x), OSDSTATUSWIN_Y(offset) + y, bitmap, (frontendStatusM & status) ? FemonTheme[FemonConfig.GetTheme()].clrActiveText : FemonTheme[FemonConfig.GetTheme()].clrRed, FemonTheme[FemonConfig.GetTheme()].clrBackground)
 
-#define OSDDRAWSTATUSVALUES(label1, label2, label3, label4, label5, label6, label7) \
+#define OSDDRAWSTATUSVALUES(label1, label2, label3, label4, label5, label6) \
         osdM->DrawText(OSDSTATUSWIN_X(1), OSDSTATUSWIN_Y(offset), label1, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
         osdM->DrawText(OSDSTATUSWIN_X(2), OSDSTATUSWIN_Y(offset), label2, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
         osdM->DrawText(OSDSTATUSWIN_X(3), OSDSTATUSWIN_Y(offset), label3, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
         osdM->DrawText(OSDSTATUSWIN_X(4), OSDSTATUSWIN_Y(offset), label4, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
         osdM->DrawText(OSDSTATUSWIN_X(5), OSDSTATUSWIN_Y(offset), label5, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
-        osdM->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), label6, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM); \
-        osdM->DrawText(OSDSTATUSWIN_X(7), OSDSTATUSWIN_Y(offset), label7, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM)
+        osdM->DrawText(OSDSTATUSWIN_X(6), OSDSTATUSWIN_Y(offset), label6, FemonTheme[FemonConfig.GetTheme()].clrInactiveText, FemonTheme[FemonConfig.GetTheme()].clrBackground, fontM)
 
 #define OSDDRAWSTATUSBAR(value) \
         if (value > 0) { \
@@ -168,7 +166,6 @@ cFemonOsd::cFemonOsd()
 : cOsdObject(true), cThread("femon osd"),
   osdM(NULL),
   receiverM(NULL),
-  frontendM(-1),
   svdrpFrontendM(-1),
   svdrpVideoBitRateM(-1),
   svdrpAudioBitRateM(-1),
@@ -179,15 +176,17 @@ cFemonOsd::cFemonOsd()
   qualityValidM(false),
   strengthM(0),
   strengthValidM(false),
-  snrM(0),
-  snrValidM(false),
+  cnrM(0),
+  cnrValidM(false),
   signalM(0),
   signalValidM(false),
   berM(0),
   berValidM(false),
-  uncM(0),
-  uncValidM(false),
+  perM(0),
+  perValidM(false),
   frontendNameM(""),
+  frontendTypeM(""),
+  frontendStatusM(DTV_STAT_HAS_NONE),
   frontendStatusValidM(false),
   deviceSourceM(DEVICESOURCE_DVBAPI),
   displayModeM(FemonConfig.GetDisplayMode()),
@@ -201,8 +200,6 @@ cFemonOsd::cFemonOsd()
 {
   int tmp;
   debug1("%s", __PRETTY_FUNCTION__);
-  memset(&frontendStatusM, 0, sizeof(frontendStatusM));
-  memset(&frontendInfoM, 0, sizeof(frontendInfoM));
   svdrpConnectionM.handle = -1;
   femonSymbols.Refresh();
   fontM = cFont::CreateFont(Setup.FontSml, constrain(Setup.FontSmlSize, MINFONTSIZE, MAXFONTSIZE));
@@ -241,10 +238,6 @@ cFemonOsd::~cFemonOsd(void)
      DELETENULL(osdM);
   if (fontM)
      DELETENULL(fontM);
-  if (frontendM >= 0) {
-     close(frontendM);
-     frontendM = -1;
-     }
   pInstanceS = NULL;
 }
 
@@ -378,23 +371,22 @@ void cFemonOsd::DrawStatusWindow(void)
      if (qualityValidM)
         OSDDRAWSTATUSBAR(qualityM);
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES("STR:", signalValidM ? *cString::sprintf("%04x", signalM) : "", signalValidM ? *cString::sprintf("(%2d%%)", signalM / 655) : "",
-                         "BER:", berValidM ? *cString::sprintf("%08x", berM) : "", *cString::sprintf("%s:", tr("Video")),
-                         *getBitrateMbits(receiverM ? receiverM->VideoBitrate() : (svdrpFrontendM >= 0 ? svdrpVideoBitRateM : -1.0)));
-     offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES("SNR:", snrValidM ? *cString::sprintf("%04x", snrM) : "", snrValidM ? *cString::sprintf("(%2d%%)", snrM / 655) : "",
-                         "UNC:", uncValidM ? *cString::sprintf("%08x", uncM) : "",
-                         *cString::sprintf("%s:", (receiverM && receiverM->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio")),
-                         *getBitrateKbits(receiverM ? ((receiverM->AC3Valid() && IS_DOLBY_TRACK(track)) ? receiverM->AC3Bitrate() : receiverM->AudioBitrate()) : (svdrpFrontendM >= 0 ? svdrpAudioBitRateM : -1.0)));
+     OSDDRAWSTATUSVALUES(signalValidM ? *cString::sprintf("STR: %.2f dBm", signalM) : "STR: ---",
+                         cnrValidM ? *cString::sprintf("CNR: %.2f dB", cnrM) : "CNR: ---",
+                         berValidM ? *cString::sprintf("BER: %.0f", berM) : "BER: ---",
+                         perValidM ? *cString::sprintf("PER: %.0f", perM) : "PER: ---",
+                         *cString::sprintf("%s: %s", tr("Video"), *getBitrateMbits(receiverM ? receiverM->VideoBitrate() : (svdrpFrontendM >= 0 ? svdrpVideoBitRateM : -1.0))),
+                         *cString::sprintf("%s: %s", (receiverM && receiverM->AC3Valid() && IS_DOLBY_TRACK(track)) ? tr("AC-3") : tr("Audio"), *getBitrateKbits(receiverM ? ((receiverM->AC3Valid() && IS_DOLBY_TRACK(track)) ? receiverM->AC3Bitrate() : receiverM->AudioBitrate()) : (svdrpFrontendM >= 0 ? svdrpAudioBitRateM : -1.0)))
+                        );
      offset += OSDROWHEIGHT;
      x = OSDSYMBOL(SYMBOL_LOCK).Width();
      y = (OSDROWHEIGHT - OSDSYMBOL(SYMBOL_LOCK).Height()) / 2;
      if (frontendStatusValidM) {
-        OSDDRAWSTATUSFRONTEND(1, OSDSYMBOL(SYMBOL_LOCK),    FE_HAS_LOCK);
-        OSDDRAWSTATUSFRONTEND(2, OSDSYMBOL(SYMBOL_SIGNAL),  FE_HAS_SIGNAL);
-        OSDDRAWSTATUSFRONTEND(3, OSDSYMBOL(SYMBOL_CARRIER), FE_HAS_CARRIER);
-        OSDDRAWSTATUSFRONTEND(4, OSDSYMBOL(SYMBOL_VITERBI), FE_HAS_VITERBI);
-        OSDDRAWSTATUSFRONTEND(5, OSDSYMBOL(SYMBOL_SYNC),    FE_HAS_SYNC);
+        OSDDRAWSTATUSFRONTEND(1, OSDSYMBOL(SYMBOL_LOCK),    DTV_STAT_HAS_LOCK);
+        OSDDRAWSTATUSFRONTEND(2, OSDSYMBOL(SYMBOL_SIGNAL),  DTV_STAT_HAS_SIGNAL);
+        OSDDRAWSTATUSFRONTEND(3, OSDSYMBOL(SYMBOL_CARRIER), DTV_STAT_HAS_CARRIER);
+        OSDDRAWSTATUSFRONTEND(4, OSDSYMBOL(SYMBOL_VITERBI), DTV_STAT_HAS_VITERBI);
+        OSDDRAWSTATUSFRONTEND(5, OSDSYMBOL(SYMBOL_SYNC),    DTV_STAT_HAS_SYNC);
         }
      OSDDRAWSTATUSBOTTOMBAR();
      osdM->Flush();
@@ -601,16 +593,16 @@ void cFemonOsd::Action(void)
            strengthM = cDevice::ActualDevice()->SignalStrength();
            strengthValidM = (strengthM >= 0);
            frontendNameM = cDevice::ActualDevice()->DeviceName();
-           frontendStatusM = (fe_status_t)(strengthValidM ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
+           frontendStatusM = strengthValidM ? (DTV_STAT_HAS_SIGNAL | DTV_STAT_HAS_CARRIER | DTV_STAT_HAS_VITERBI | DTV_STAT_HAS_SYNC | DTV_STAT_HAS_LOCK) : DTV_STAT_HAS_NONE;
            frontendStatusValidM = strengthValidM;
-           signalM = uint16_t(strengthM * 0xFFFF / 100);
+           signalM = strengthM;
            signalValidM = strengthValidM;
-           snrM = 0;
-           snrValidM = false;
+           cnrM = 0;
+           cnrValidM = false;
            berM = 0;
            berValidM = false;
-           uncM = 0;
-           uncValidM = false;
+           perM = 0;
+           perValidM = false;
            break;
       case DEVICESOURCE_IPTV:
            qualityM = cDevice::ActualDevice()->SignalQuality();
@@ -618,49 +610,20 @@ void cFemonOsd::Action(void)
            strengthM = cDevice::ActualDevice()->SignalStrength();
            strengthValidM = (strengthM >= 0);
            frontendNameM = cDevice::ActualDevice()->DeviceName();
-           frontendStatusM = (fe_status_t)(strengthValidM ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
+           frontendStatusM = strengthValidM ? (DTV_STAT_HAS_SIGNAL | DTV_STAT_HAS_CARRIER | DTV_STAT_HAS_VITERBI | DTV_STAT_HAS_SYNC | DTV_STAT_HAS_LOCK) : DTV_STAT_HAS_NONE;
            frontendStatusValidM = strengthValidM;
-           signalM = uint16_t(strengthM * 0xFFFF / 100);
+           signalM = strengthM;
            signalValidM = strengthValidM;
-           snrM = uint16_t(qualityM * 0xFFFF / 100);
-           snrValidM = qualityValidM;
+           cnrM = qualityM;
+           cnrValidM = qualityValidM;
            berM = 0;
            berValidM = false;
-           uncM = 0;
-           uncValidM = false;
+           perM = 0;
+           perValidM = false;
            break;
       default:
       case DEVICESOURCE_DVBAPI:
-           if (frontendM != -1) {
-              qualityM = cDevice::ActualDevice()->SignalQuality();
-              qualityValidM = (qualityM >= 0);
-              strengthM = cDevice::ActualDevice()->SignalStrength();
-              strengthValidM = (strengthM >= 0);
-              frontendNameM = cDevice::ActualDevice()->DeviceName();
-              frontendStatusValidM = (ioctl(frontendM, FE_READ_STATUS, &frontendStatusM) >= 0);
-              signalValidM = (ioctl(frontendM, FE_READ_SIGNAL_STRENGTH, &signalM) >= 0);
-              snrValidM = (ioctl(frontendM, FE_READ_SNR, &snrM) >= 0);
-              berValidM = (ioctl(frontendM, FE_READ_BER, &berM) >= 0);
-              uncValidM = (ioctl(frontendM, FE_READ_UNCORRECTED_BLOCKS, &uncM) >= 0);
-              }
-           else if (strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
-              qualityM = cDevice::ActualDevice()->SignalQuality();
-              qualityValidM = (qualityM >= 0);
-              strengthM = cDevice::ActualDevice()->SignalStrength();
-              strengthValidM = (strengthM >= 0);
-              frontendNameM = cDevice::ActualDevice()->DeviceName();
-              frontendStatusM = (fe_status_t)(cDevice::ActualDevice()->HasLock() ? (FE_HAS_LOCK | FE_HAS_SIGNAL | FE_HAS_CARRIER | FE_HAS_VITERBI | FE_HAS_SYNC) : 0);
-              frontendStatusValidM = strengthValidM;
-              signalM = uint16_t(strengthM * 0xFFFF / 100);
-              signalValidM = strengthValidM;
-              snrM = uint16_t(qualityM * 0xFFFF / 100);
-              snrValidM = qualityValidM;
-              berM = 0;
-              berValidM = false;
-              uncM = 0;
-              uncValidM = false;
-              }
-           else if (svdrpConnectionM.handle >= 0) {
+           if (svdrpConnectionM.handle >= 0) {
               cmd.handle = svdrpConnectionM.handle;
               svdrpPluginM->Service("SvdrpCommand-v1.0", &cmd);
               if (cmd.responseCode == 900) {
@@ -668,9 +631,9 @@ void cFemonOsd::Action(void)
                  qualityValidM = false;
                  frontendStatusValidM = false;
                  signalValidM = false;
-                 snrValidM = false;
+                 cnrValidM = false;
                  berValidM = false;
-                 uncValidM = false;
+                 perValidM = false;
                  for (cLine *line = cmd.reply.First(); line; line = cmd.reply.Next(line)) {
                      const char *s = line->Text();
 	             if (!strncasecmp(s, "CARD:", 5))
@@ -683,36 +646,59 @@ void cFemonOsd::Action(void)
                         qualityM = (int)strtol(s + 5, NULL, 10);
                         qualityValidM = (qualityM >= 0);
                         }
-                     else if (!strncasecmp(s, "TYPE:", 5))
-                        frontendInfoM.type = (fe_type_t)strtol(s + 5, NULL, 10);
+                     else if (!strncasecmp(s, "TYPE:", 5)) {
+                        frontendTypeM = s + 5;
+                        }
                      else if (!strncasecmp(s, "NAME:", 5)) {
                         frontendNameM = s + 5;
                         }
                      else if (!strncasecmp(s, "STAT:", 5)) {
-                        frontendStatusM = (fe_status_t)strtol(s + 5, NULL, 16);
+                        frontendStatusM = strtol(s + 5, NULL, 16);
                         frontendStatusValidM = true;
                         }
                      else if (!strncasecmp(s, "SGNL:", 5)) {
-                        signalM = (uint16_t)strtol(s + 5, NULL, 16);
+                        signalM = atod(s + 5);
                         signalValidM = true;
                         }
-                     else if (!strncasecmp(s, "SNRA:", 5)) {
-                        snrM = (uint16_t)strtol(s + 5, NULL, 16);
-                        snrValidM = true;
+                     else if (!strncasecmp(s, "CNRA:", 5)) {
+                        cnrM = atod(s + 5);
+                        cnrValidM = true;
                         }
                      else if (!strncasecmp(s, "BERA:", 5)) {
-                        berM = (uint32_t)strtol(s + 5, NULL, 16);
+                        berM = atod(s + 5);
                         berValidM = true;
                         }
-                     else if (!strncasecmp(s, "UNCB:", 5)) {
-                        uncM = (uint32_t)strtol(s + 5, NULL, 16);
-                        uncValidM = true;
+                     else if (!strncasecmp(s, "PERA:", 5)) {
+                        perM = atod(s + 5);
+                        perValidM = true;
                         }
                      else if (!strncasecmp(s, "VIBR:", 5))
-                        svdrpVideoBitRateM = (double)strtol(s + 5, NULL, 10);
+                        svdrpVideoBitRateM = atod(s + 5);
                      else if (!strncasecmp(s, "AUBR:", 5))
-                        svdrpAudioBitRateM = (double)strtol(s + 5, NULL, 10);
+                        svdrpAudioBitRateM = atod(s + 5);
                      }
+                 }
+              }
+           else {
+              int valid;
+              qualityM = cDevice::ActualDevice()->SignalQuality();
+              qualityValidM = (qualityM >= 0);
+              strengthM = cDevice::ActualDevice()->SignalStrength();
+              strengthValidM = (strengthM >= 0);
+              frontendNameM = cDevice::ActualDevice()->DeviceName();
+              if (cDevice::ActualDevice()->SignalStats(valid, &signalM, &cnrM, NULL, &berM, &perM, &frontendStatusM)) {
+                 frontendStatusValidM = valid & DTV_STAT_VALID_STATUS;
+                 signalValidM = valid & DTV_STAT_VALID_STRENGTH;
+                 cnrValidM = valid & DTV_STAT_VALID_CNR;
+                 berValidM = valid & DTV_STAT_VALID_BERPOST;
+                 perValidM = valid & DTV_STAT_VALID_PER;
+                 }
+              else {
+                 frontendStatusValidM = false;
+                 signalValidM = false;
+                 cnrValidM = false;
+                 berValidM = false;
+                 perValidM = false;
                  }
               }
            break;
@@ -765,11 +751,6 @@ bool cFemonOsd::AttachFrontend(void)
   LOCK_CHANNELS_READ;
   const cChannel *channel = Channels->GetByNumber(cDevice::CurrentChannel());
 
-  if (frontendM >= 0) {
-     close(frontendM);
-     frontendM = -1;
-     }
-
   deviceSourceM = DEVICESOURCE_DVBAPI;
   if (channel) {
      if (channel->IsSourceType('I'))
@@ -780,30 +761,12 @@ bool cFemonOsd::AttachFrontend(void)
 
   if (deviceSourceM == DEVICESOURCE_DVBAPI) {
      if (!strstr(*cDevice::ActualDevice()->DeviceType(), SATIP_DEVICE)) {
-        cDvbDevice *dev = getDvbDevice(cDevice::ActualDevice());
-        frontendM = dev ? open(*cString::sprintf(FRONTEND_DEVICE, dev->Adapter(), dev->Frontend()), O_RDONLY | O_NONBLOCK) : -1;
-        if (frontendM >= 0) {
-           if (ioctl(frontendM, FE_GET_INFO, &frontendInfoM) < 0) {
-              if (!FemonConfig.GetUseSvdrp())
-                 error("%s Cannot read frontend info", __PRETTY_FUNCTION__);
-              close(frontendM);
-              frontendM = -1;
-              memset(&frontendInfoM, 0, sizeof(frontendInfoM));
-              return false;
-              }
-           }
-        else if (FemonConfig.GetUseSvdrp()) {
+        if (FemonConfig.GetUseSvdrp()) {
            if (!SvdrpConnect() || !SvdrpTune())
               return false;
            }
-        else {
-           error("%s Cannot open frontend device", __PRETTY_FUNCTION__);
-           return false;
-           }
         }
      }
-  else
-     frontendM = -1;
 
   return true;
 }

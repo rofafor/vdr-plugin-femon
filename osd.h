@@ -8,9 +8,7 @@
 #ifndef __FEMON_OSD_H
 #define __FEMON_OSD_H
 
-#include <linux/dvb/frontend.h>
 #include <sys/time.h>
-#include <sys/ioctl.h>
 #include <vdr/osd.h>
 #include <vdr/thread.h>
 #include <vdr/status.h>
@@ -37,7 +35,6 @@ private:
 
   cOsd             *osdM;
   cFemonReceiver   *receiverM;
-  int               frontendM;
   int               svdrpFrontendM;
   double            svdrpVideoBitRateM;
   double            svdrpAudioBitRateM;
@@ -49,16 +46,17 @@ private:
   bool              qualityValidM;
   int               strengthM;
   bool              strengthValidM;
-  uint16_t          snrM;
-  bool              snrValidM;
-  uint16_t          signalM;
+  double            cnrM;
+  bool              cnrValidM;
+  double            signalM;
   bool              signalValidM;
-  uint32_t          berM;
+  double            berM;
   bool              berValidM;
-  uint32_t          uncM;
-  bool              uncValidM;
+  double            perM;
+  bool              perValidM;
   cString           frontendNameM;
-  fe_status_t       frontendStatusM;
+  cString           frontendTypeM;
+  int               frontendStatusM;
   bool              frontendStatusValidM;
   dvb_frontend_info frontendInfoM;
   eDeviceSourceType deviceSourceM;
