@@ -531,7 +531,10 @@ VDR Plugin 'femon' Revision History
 VDR Plugin 'femon' Revision History
 ===================================
 
-2015-XX-XX: Version 2.3.0
+2017-06-24: Version 2.3.0
 
-- Updated for vdr-2.3.1.
+- Updated for vdr-2.3.7.
+- Added support for H.265 video codec.
 - Fixed frontend handling during a device switch.
+- Added Polish translation (Thanks to Tomasz Nowak).
+- Updated German translation (Thanks to Andreas Brachold).

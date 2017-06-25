@@ -17,8 +17,8 @@
 #include "tools.h"
 #include "setup.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 20306
-#error "VDR-2.3.6 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 20307
+#error "VDR-2.3.7 API version or greater is required!"
 #endif
 
 #ifndef GITVERSION

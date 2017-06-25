@@ -9,13 +9,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: vdr-femon 2.3.0\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2015-04-04 04:04+0300\n"
-"PO-Revision-Date: 2015-04-04 04:04+0300\n"
+"POT-Creation-Date: 2017-06-24 06:24+0300\n"
+"PO-Revision-Date: 2017-06-24 06:24+0300\n"
 "Last-Translator: Christian Wieninger\n"
 "Language-Team: German <vdr@linuxtv.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "DVB Signal Information Monitor (OSD)"
@@ -25,7 +25,7 @@ msgid "Signal Information"
 msgstr "Signalinformationen"
 
 msgid "Femon not available"
-msgstr "Femon nicht verf�gbar"
+msgstr "Femon nicht verfügbar"
 
 msgid "Video"
 msgstr "Video"
@@ -61,7 +61,7 @@ msgid "Coderate"
 msgstr "Coderate"
 
 msgid "Protocol"
-msgstr ""
+msgstr "Protokoll"
 
 msgid "Bitrate"
 msgstr "Bitrate"
@@ -70,28 +70,28 @@ msgid "Stream Information"
 msgstr "Streaminformation"
 
 msgid "Video Stream"
-msgstr "Video Stream"
+msgstr "Videostream"
 
 msgid "Codec"
-msgstr ""
+msgstr "Codec"
 
 msgid "Aspect Ratio"
-msgstr "Seitenverh�ltnis"
+msgstr "Seitenverhältnis"
 
 msgid "Frame Rate"
 msgstr "Bildrate"
 
 msgid "Video Format"
-msgstr "Bildformat"
+msgstr "Videoformat"
 
 msgid "Resolution"
-msgstr "Aufl�sung"
+msgstr "Auflösung"
 
 msgid "Audio Stream"
-msgstr "Audio Stream"
+msgstr "Audiostream"
 
 msgid "Channel Mode"
-msgstr ""
+msgstr "Kanalmodus"
 
 msgid "Sampling Frequency"
 msgstr "Abtastrate"
@@ -115,7 +115,7 @@ msgid "Dolby Surround Mode"
 msgstr "Dolby Surround Modus"
 
 msgid "Low Frequency Effects"
-msgstr "Tieft�ner Effekte"
+msgstr "Tieftöner Effekte"
 
 msgid "Dialogue Normalization"
 msgstr "Dialog Normalisierung"
@@ -160,82 +160,82 @@ msgid "PearlHD"
 msgstr "PearlHD"
 
 msgid "Hide main menu entry"
-msgstr "Hauptmen�eintrag verstecken"
+msgstr "Hauptmenüeintrag verstecken"
 
 msgid "Define whether the main menu entry is hidden."
-msgstr ""
+msgstr "Legt fest, ob der Hauptmenüeintrag ausgeblendet ist."
 
 msgid "Default display mode"
 msgstr "Standard Anzeigemodus"
 
 msgid "Define the default display mode at startup."
-msgstr ""
+msgstr "Definiert den Standard-Anzeigemodus beim Start."
 
 msgid "Define the used OSD skin."
-msgstr ""
+msgstr "Definiert die verwendete OSD-Oberfläche."
 
 msgid "Define the used OSD theme."
-msgstr ""
+msgstr "Definiert das verwendete OSD-Theme."
 
 msgid "Position"
 msgstr "Position"
 
 msgid "Define the position of OSD."
-msgstr ""
+msgstr "Definiert die Position des OSD."
 
 msgid "Downscale OSD size [%]"
-msgstr ""
+msgstr "OSD Größe verkleinern [%]"
 
 msgid "Define the downscale ratio for OSD size."
-msgstr ""
+msgstr "Definiert den Verkleinerungsfaktor der OSD-Größe."
 
 msgid "Red limit [%]"
 msgstr "Grenze Rot [%]"
 
 msgid "Define a limit for red bar, which is used to indicate a bad signal."
-msgstr ""
+msgstr "Definiert einen Grenzwert für den roten Balken, um ein schlechtes Signal zu kennzeichnen."
 
 msgid "Green limit [%]"
-msgstr "Grenze Gr�n [%]"
+msgstr "Grenze Grün [%]"
 
 msgid "Define a limit for green bar, which is used to indicate a good signal."
-msgstr ""
+msgstr "Definiert einen Grenzwert für den grünen Balken, um ein gutes Signal zu kennzeichnen."
 
 msgid "OSD update interval [0.1s]"
 msgstr "OSD Updateintervall [0.1s]"
 
 msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
-msgstr ""
+msgstr "Definiert den Intervall für OSD-Updates. Ein kleineres Intervall erzeugt eine höhere CPU-Last."
 
 msgid "Analyze stream"
 msgstr "Stream analysieren"
 
 msgid "Define whether the DVB stream is analyzed and bitrates calculated."
-msgstr ""
+msgstr "Definiert ob der DVB-Stream analysiert und die Bitraten berechnet werden."
 
 msgid "Calculation interval [0.1s]"
 msgstr "Berechnungsintervall [0.1s]"
 
 msgid "Define an interval for calculation. The bigger interval generates more stable values."
-msgstr ""
+msgstr "Definiert den Intervall für die Berechnung. Ein größerer Intervall erzeugt stabilere Werte."
 
 msgid "Use SVDRP service"
-msgstr "SVDRP Service verwenden"
+msgstr "SVDRP-Service verwenden"
 
 msgid "Define whether the SVDRP service is used in client/server setups."
-msgstr ""
+msgstr "Legt fest, ob der SVDRP-Service in Client/Server-Setups verwendet wird."
 
 msgid "SVDRP service port"
-msgstr "SVDRP Service Port"
+msgstr "SVDRP-Service Port"
 
 msgid "Define the port number of SVDRP service."
-msgstr ""
+msgstr "Definiert die Portnummer des SVDRP-Service."
 
 msgid "SVDRP service IP"
-msgstr "SVDRP Service IP"
+msgstr "SVDRP-Service IP"
 
 msgid "Define the IP address of SVDRP service."
-msgstr ""
+msgstr "Definiert die IP-Adresse des SVDRP-Service."
 
 msgid "Help"
 msgstr "Hilfe"
@@ -247,67 +247,67 @@ msgid "Analog"
 msgstr "Analog"
 
 msgid "MPEG-2"
-msgstr ""
+msgstr "MPEG-2"
 
 msgid "H.264"
-msgstr ""
+msgstr "H.264"
 
 msgid "H.265"
-msgstr ""
+msgstr "H.265"
 
 msgid "MPEG-1 Layer I"
-msgstr ""
+msgstr "MPEG-1 Layer I"
 
 msgid "MPEG-1 Layer II"
-msgstr ""
+msgstr "MPEG-1 Layer II"
 
 msgid "MPEG-1 Layer III"
-msgstr ""
+msgstr "MPEG-1 Layer III"
 
 msgid "MPEG-2 Layer I"
-msgstr ""
+msgstr "MPEG-2 Layer I"
 
 msgid "MPEG-2 Layer II"
-msgstr ""
+msgstr "MPEG-2 Layer II"
 
 msgid "MPEG-2 Layer III"
-msgstr ""
+msgstr "MPEG-2 Layer III"
 
 msgid "HE-AAC"
-msgstr ""
+msgstr "HE-AAC"
 
 msgid "LATM"
-msgstr ""
+msgstr "LATM"
 
 msgid "stereo"
-msgstr ""
+msgstr "Stereo"
 
 msgid "joint Stereo"
-msgstr ""
+msgstr "Joint-Stereo"
 
 msgid "dual"
-msgstr ""
+msgstr "Dual"
 
 msgid "mono"
-msgstr ""
+msgstr "Mono"
 
 msgid "interlaced"
-msgstr ""
+msgstr "Interlaced"
 
 msgid "progressive"
-msgstr ""
+msgstr "Progressiv"
 
 msgid "reserved"
 msgstr "belegt"
 
 msgid "extended"
-msgstr ""
+msgstr "erweitert"
 
 msgid "unknown"
 msgstr "unbekannt"
 
 msgid "component"
-msgstr ""
+msgstr "Komponentenvideo"
 
 msgid "PAL"
 msgstr "PAL"
@@ -316,10 +316,10 @@ msgid "NTSC"
 msgstr "NTSC"
 
 msgid "SECAM"
-msgstr ""
+msgstr "SECAM"
 
 msgid "MAC"
-msgstr ""
+msgstr "MAC"
 
 msgid "Hz"
 msgstr "Hz"
@@ -334,7 +334,7 @@ msgid "Visually Impaired (VI)"
 msgstr "Sehbehindert (VI)"
 
 msgid "Hearing Impaired (HI)"
-msgstr "H�rbehindert (HI)"
+msgstr "Hörbehindert (HI)"
 
 msgid "Dialogue (D)"
 msgstr "Dialog (D)"
@@ -346,7 +346,7 @@ msgid "Emergency (E)"
 msgstr "Notfall (E)"
 
 msgid "Voice Over (VO)"
-msgstr "�berlagerte Stimme (VO)"
+msgstr "Überlagerte Stimme (VO)"
 
 msgid "Karaoke"
 msgstr "Karaoke"
