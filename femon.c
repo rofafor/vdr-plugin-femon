@@ -17,15 +17,15 @@
 #include "tools.h"
 #include "setup.h"
 
-#if defined(APIVERSNUM) && APIVERSNUM < 20307
-#error "VDR-2.3.7 API version or greater is required!"
+#if defined(APIVERSNUM) && APIVERSNUM < 20400
+#error "VDR-2.4.0 API version or greater is required!"
 #endif
 
 #ifndef GITVERSION
 #define GITVERSION ""
 #endif
 
-static const char VERSION[]       = "2.3.0" GITVERSION;
+static const char VERSION[]       = "2.4.0" GITVERSION;
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 

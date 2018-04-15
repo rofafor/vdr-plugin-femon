@@ -538,3 +538,12 @@ VDR Plugin 'femon' Revision History
 - Fixed frontend handling during a device switch.
 - Added Polish translation (Thanks to Tomasz Nowak).
 - Updated German translation (Thanks to Andreas Brachold).
+
+
+===================================
+VDR Plugin 'femon' Revision History
+===================================
+
+2018-04-15: Version 2.4.0
+
+- Updated for vdr-2.4.0.
