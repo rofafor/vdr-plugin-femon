@@ -11,6 +11,7 @@
 class cMenuFemonSetup : public cMenuSetupPage {
 private:
   const char *dispModesM[eFemonModeMaxNumber];
+  const char *signalUnitsM[eFemonSignalUnitMaxNumber];
   const char *skinsM[eFemonSkinMaxNumber];
   const char *themesM[eFemonThemeMaxNumber];
   cVector<const char*> helpM;
@@ -20,6 +21,7 @@ private:
   int themeM;
   int positionM;
   int downscaleM;
+  int signalUnitM;
   int redLimitM;
   int greenLimitM;
   int updateIntervalM;

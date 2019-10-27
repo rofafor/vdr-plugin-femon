@@ -371,7 +371,7 @@ void cFemonOsd::DrawStatusWindow(void)
      if (qualityValidM)
         OSDDRAWSTATUSBAR(qualityM);
      offset += OSDROWHEIGHT;
-     OSDDRAWSTATUSVALUES(signalValidM ? *cString::sprintf("STR: %.2f dBm", signalM) : "STR: ---",
+     OSDDRAWSTATUSVALUES(signalValidM ? *cString::sprintf("STR: %s", *getSignalStrength(signalM)) : "STR: ---",
                          cnrValidM ? *cString::sprintf("CNR: %.2f dB", cnrM) : "CNR: ---",
                          berValidM ? *cString::sprintf("BER: %.0f", berM) : "BER: ---",
                          perValidM ? *cString::sprintf("PER: %.0f", perM) : "PER: ---",

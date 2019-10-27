@@ -547,3 +547,7 @@ VDR Plugin 'femon' Revision History
 2018-04-15: Version 2.4.0
 
 - Updated for vdr-2.4.0.
+
+2019-xx-xx: Version 2.4.1
+
+- Added signal level units (Thanks to Winfried).

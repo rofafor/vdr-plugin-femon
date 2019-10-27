@@ -19,6 +19,7 @@ cMenuFemonSetup::cMenuFemonSetup()
   themeM(FemonConfig.GetTheme()),
   positionM(FemonConfig.GetPosition()),
   downscaleM(FemonConfig.GetDownscale()),
+  signalUnitM(FemonConfig.GetSignalUnit()),
   redLimitM(FemonConfig.GetRedLimit()),
   greenLimitM(FemonConfig.GetGreenLimit()),
   updateIntervalM(FemonConfig.GetUpdateInterval()),
@@ -30,24 +31,28 @@ cMenuFemonSetup::cMenuFemonSetup()
   debug1("%s", __PRETTY_FUNCTION__);
   strn0cpy(svdrpIpM, FemonConfig.GetSvdrpIp(), sizeof(svdrpIpM));
 
-  dispModesM[eFemonModeBasic]       = tr("basic");
-  dispModesM[eFemonModeTransponder] = tr("transponder");
-  dispModesM[eFemonModeStream]      = tr("stream");
-  dispModesM[eFemonModeAC3]         = tr("AC-3");
+  dispModesM[eFemonModeBasic]        = tr("basic");
+  dispModesM[eFemonModeTransponder]  = tr("transponder");
+  dispModesM[eFemonModeStream]       = tr("stream");
+  dispModesM[eFemonModeAC3]          = tr("AC-3");
 
-  skinsM[eFemonSkinClassic]         = tr("Classic");
-  skinsM[eFemonSkinElchi]           = tr("Elchi");
+  signalUnitsM[eFemonSignalUnitdBm]  = tr("dBm");
+  signalUnitsM[eFemonSignalUnitdBuV] = tr("dBuV");
+  signalUnitsM[eFemonSignalUnitdBV]  = tr("dBV");
 
-  themesM[eFemonThemeClassic]       = tr("Classic");
-  themesM[eFemonThemeElchi]         = tr("Elchi");
-  themesM[eFemonThemeSTTNG]         = tr("ST:TNG");
-  themesM[eFemonThemeDeepBlue]      = tr("DeepBlue");
-  themesM[eFemonThemeMoronimo]      = tr("Moronimo");
-  themesM[eFemonThemeEnigma]        = tr("Enigma");
-  themesM[eFemonThemeEgalsTry]      = tr("EgalsTry");
-  themesM[eFemonThemeDuotone]       = tr("Duotone");
-  themesM[eFemonThemeSilverGreen]   = tr("SilverGreen");
-  themesM[eFemonThemePearlHD]       = tr("PearlHD");
+  skinsM[eFemonSkinClassic]          = tr("Classic");
+  skinsM[eFemonSkinElchi]            = tr("Elchi");
+
+  themesM[eFemonThemeClassic]        = tr("Classic");
+  themesM[eFemonThemeElchi]          = tr("Elchi");
+  themesM[eFemonThemeSTTNG]          = tr("ST:TNG");
+  themesM[eFemonThemeDeepBlue]       = tr("DeepBlue");
+  themesM[eFemonThemeMoronimo]       = tr("Moronimo");
+  themesM[eFemonThemeEnigma]         = tr("Enigma");
+  themesM[eFemonThemeEgalsTry]       = tr("EgalsTry");
+  themesM[eFemonThemeDuotone]        = tr("Duotone");
+  themesM[eFemonThemeSilverGreen]    = tr("SilverGreen");
+  themesM[eFemonThemePearlHD]        = tr("PearlHD");
 
   SetMenuCategory(mcSetupPlugins);
   Setup();
@@ -77,6 +82,9 @@ void cMenuFemonSetup::Setup(void)
 
   Add(new cMenuEditIntItem(tr("Downscale OSD size [%]"), &downscaleM, 0, 20));
   helpM.Append(tr("Define the downscale ratio for OSD size."));
+
+  Add(new cMenuEditStraItem(tr("Signal level unit"), &signalUnitM, eFemonSignalUnitMaxNumber, signalUnitsM));
+  helpM.Append(tr("Define the used signal level unit."));
 
   Add(new cMenuEditIntItem(tr("Red limit [%]"), &redLimitM, 1, 50));
   helpM.Append(tr("Define a limit for red bar, which is used to indicate a bad signal."));
@@ -120,6 +128,7 @@ void cMenuFemonSetup::Store(void)
   SetupStore("Theme",          themeM);
   SetupStore("Position",       positionM);
   SetupStore("Downscale",      downscaleM);
+  SetupStore("SignalUnit",     signalUnitM);
   SetupStore("RedLimit",       redLimitM);
   SetupStore("GreenLimit",     greenLimitM);
   SetupStore("UpdateInterval", updateIntervalM);
@@ -135,6 +144,7 @@ void cMenuFemonSetup::Store(void)
   FemonConfig.SetTheme(themeM);
   FemonConfig.SetPosition(positionM);
   FemonConfig.SetDownscale(downscaleM);
+  FemonConfig.SetSignalUnit(signalUnitM);
   FemonConfig.SetRedLimit(redLimitM);
   FemonConfig.SetGreenLimit(greenLimitM);
   FemonConfig.SetUpdateInterval(updateIntervalM);

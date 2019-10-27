@@ -1,5 +1,5 @@
 # VDR plugin language source file.
-# Copyright (C) 2007-2018 Rolf Ahrenberg
+# Copyright (C) 2007-2019 Rolf Ahrenberg
 # This file is distributed under the same license as the femon package.
 # Rolf Ahrenberg
 #
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: vdr-femon 2.4.0\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2018-04-15 04:15+0300\n"
+"POT-Creation-Date: 2019-10-27 16:29+0200\n"
 "PO-Revision-Date: 2018-04-15 04:15+0300\n"
 "Last-Translator: Rolf Ahrenberg\n"
 "Language-Team: Finnish <vdr@linuxtv.org>\n"
@@ -127,8 +127,17 @@ msgstr "transponderi"
 msgid "stream"
 msgstr "lähete"
 
+msgid "dBm"
+msgstr "dBm"
+
+msgid "dBuV"
+msgstr "dBuV"
+
+msgid "dBV"
+msgstr "dBV"
+
 msgid "Classic"
-msgstr "Klassinen"
+msgstr ""
 
 msgid "Elchi"
 msgstr "Elchi"
@@ -186,6 +195,12 @@ msgstr "Pienennä näytön kokoa [%]"
 
 msgid "Define the downscale ratio for OSD size."
 msgstr "Määrittele näytön pienennyssuhde."
+
+msgid "Signal level unit"
+msgstr "Signaalitason yksikkö"
+
+msgid "Define the used signal level unit."
+msgstr "Määrittele yksikkö signaalin tasolle."
 
 msgid "Red limit [%]"
 msgstr "Punaisen taso [%]"
@@ -390,3 +405,6 @@ msgstr "Mbit/s"
 
 msgid "kbit/s"
 msgstr "kbit/s"
+
+#~ msgid "Clasxsic"
+#~ msgstr "Klassinen"

@@ -20,6 +20,7 @@ cFemonConfig::cFemonConfig()
   themeM(0),
   positionM(1),
   downscaleM(0),
+  signalUnitM(0),
   redLimitM(33),
   greenLimitM(66),
   updateIntervalM(5),

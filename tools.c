@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "config.h"
 #include "osd.h"
 #include "receiver.h"
 #include "tools.h"
@@ -195,6 +196,17 @@ double getPER(cDevice *deviceP)
      }
 
   return 0;
+}
+
+cString getSignalStrength(double strengthP)
+{
+  switch (FemonConfig.GetSignalUnit()) {
+    case eFemonSignalUnitdBm:  return cString::sprintf("%.2f %s", strengthP, tr("dBm"));
+    case eFemonSignalUnitdBuV: return cString::sprintf("%.2f %s", strengthP + (120 - 11.25), tr("dBuV"));
+    case eFemonSignalUnitdBV:  return cString::sprintf("%.2f %s", strengthP - 11.25, tr("dBV"));
+    default:                   break;
+    }
+  return cString::sprintf("---");
 }
 
 cString getApids(const cChannel *channelP)

@@ -127,6 +127,15 @@ msgstr "транспондер"
 msgid "stream"
 msgstr "потік"
 
+msgid "dBm"
+msgstr "dBm"
+
+msgid "dBuV"
+msgstr "dBuV"
+
+msgid "dBV"
+msgstr "dBV"
+
 msgid "Classic"
 msgstr "Класичний"
 
@@ -186,6 +195,12 @@ msgstr "Масштаб розміру повідомлень [%]"
 
 msgid "Define the downscale ratio for OSD size."
 msgstr "Визначити коефіцієнт масштабування розміру повідомлень"
+
+msgid "Signal level unit"
+msgstr ""
+
+msgid "Define the used signal level unit."
+msgstr ""
 
 msgid "Red limit [%]"
 msgstr "Червона границя [%]"

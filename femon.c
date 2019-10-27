@@ -25,7 +25,7 @@
 #define GITVERSION ""
 #endif
 
-static const char VERSION[]       = "2.4.0" GITVERSION;
+static const char VERSION[]       = "2.4.1" GITVERSION;
 static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
 static const char MAINMENUENTRY[] = trNOOP("Signal Information");
 
@@ -165,6 +165,8 @@ bool cPluginFemon::SetupParse(const char *nameP, const char *valueP)
      FemonConfig.SetSvdrpPort(atoi(valueP));
   else if (!strcasecmp(nameP, "ServerIp"))
      FemonConfig.SetSvdrpIp(valueP);
+  else if (!strcasecmp(nameP, "SignalUnit"))
+     FemonConfig.SetSignalUnit(atoi(valueP));
   else
     return false;
 
@@ -292,7 +294,7 @@ cString cPluginFemon::SVDRPCommand(const char *commandP, const char *optionP, in
      return cString::sprintf("%d on device #%d", dev->SignalQuality(), dev->CardIndex());
      }
   else if (strcasecmp(commandP, "SGNL") == 0) {
-     return cString::sprintf("%.2f dBm on device #%d", getSignal(dev), dev->CardIndex());
+     return cString::sprintf("%s on device #%d", *getSignalStrength(getSignal(dev)), dev->CardIndex());
      }
   else if (strcasecmp(commandP, "CNRA") == 0) {
      return cString::sprintf("%.2f dB on device #%d", getCNR(dev), dev->CardIndex());

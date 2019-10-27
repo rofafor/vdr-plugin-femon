@@ -1,5 +1,5 @@
 # VDR plugin language source file.
-# Copyright (C) 2007-2018 Rolf Ahrenberg
+# Copyright (C) 2007-2019 Rolf Ahrenberg
 # This file is distributed under the same license as the femon package.
 # Luis Palacios
 #
@@ -127,6 +127,15 @@ msgstr "Transpondedor"
 msgid "stream"
 msgstr "Flujo"
 
+msgid "dBm"
+msgstr "dBm"
+
+msgid "dBuV"
+msgstr "dBuV"
+
+msgid "dBV"
+msgstr "dBV"
+
 msgid "Classic"
 msgstr "Clásico"
 
@@ -185,6 +194,12 @@ msgid "Downscale OSD size [%]"
 msgstr ""
 
 msgid "Define the downscale ratio for OSD size."
+msgstr ""
+
+msgid "Signal level unit"
+msgstr ""
+
+msgid "Define the used signal level unit."
 msgstr ""
 
 msgid "Red limit [%]"

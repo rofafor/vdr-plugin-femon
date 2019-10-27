@@ -29,6 +29,7 @@ double getSignal(cDevice *deviceP);
 double getBER(cDevice *deviceP);
 double getPER(cDevice *deviceP);
 
+cString getSignalStrength(double strengthP);
 cString getApids(const cChannel *channelP);
 cString getDpids(const cChannel *channelP);
 cString getSpids(const cChannel *channelP);

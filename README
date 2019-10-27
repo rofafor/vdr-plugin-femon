@@ -38,7 +38,7 @@ Terminology:
 | [LOCK]     [SIGNAL]     [CARRIER]     [VITERBI]     [SYNC] |
 --------------------------------------------------------------
 
-STR     - Signal strength in dBm
+STR     - Signal strength in dBm/dBuV/dbV
 CNR     - Signal-to-noise ratio of the main carrier in dB
 BER     - Bit error rate after the forward error correction (FEC) done by inner code block
 PER     - Block error rate after the outer forward error correction coding

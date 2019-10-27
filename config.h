@@ -19,6 +19,14 @@ enum eFemonModes
   eFemonModeMaxNumber
 };
 
+enum eFemonSignalUnit
+{
+  eFemonSignalUnitdBm,
+  eFemonSignalUnitdBuV,
+  eFemonSignalUnitdBV,
+  eFemonSignalUnitMaxNumber
+};
+
 class cFemonConfig
 {
 private:
@@ -29,6 +37,7 @@ private:
   int themeM;
   int positionM;
   int downscaleM;
+  int signalUnitM;
   int redLimitM;
   int greenLimitM;
   int updateIntervalM;
@@ -68,6 +77,7 @@ public:
   int GetTheme(void) const { return themeM; }
   int GetPosition(void) const { return positionM; }
   int GetDownscale(void) const { return downscaleM; }
+  int GetSignalUnit(void) const { return signalUnitM; }
   int GetRedLimit(void) const { return redLimitM; }
   int GetGreenLimit(void) const { return greenLimitM; }
   int GetUpdateInterval(void) const { return updateIntervalM; }
@@ -84,6 +94,7 @@ public:
   void SetTheme(int themeP) { themeM = themeP; }
   void SetPosition(int positionP) { positionM = positionP; }
   void SetDownscale(int downscaleP) { downscaleM = downscaleP; }
+  void SetSignalUnit(int signalUnitP) { signalUnitM = signalUnitP; }
   void SetRedLimit(int redLimitP) { redLimitM = redLimitP; }
   void SetGreenLimit(int greenLimitP) { greenLimitM = greenLimitP; }
   void SetUpdateInterval(int updateIntervalP) { updateIntervalM = updateIntervalP; }
